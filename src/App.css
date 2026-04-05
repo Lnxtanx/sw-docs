@@ -21,8 +21,13 @@
   border-right: 1px solid var(--border-color);
   background: var(--bg-sidebar);
   scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--bg-sidebar);
   transition: transform 0.3s ease;
   z-index: 40;
+}
+
+.sidebar-container::-webkit-scrollbar-track {
+  background: var(--bg-sidebar);
 }
 
 .layout-body {
@@ -233,6 +238,11 @@
   overflow-x: hidden;
   padding: 2.5rem 3rem;
   scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--bg-main);
+}
+
+.main-content::-webkit-scrollbar-track {
+  background: var(--bg-main);
 }
 
 .content-inner {

@@ -19,8 +19,9 @@ export interface ChatMessage {
     statusMessage?: string;  // Agent retrieval status (e.g. "Searching docs...")
 }
 
-const DOCS_API     = '/api/docs/ask';
-const FEEDBACK_API = '/api/docs/feedback';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+const DOCS_API     = `${API_BASE}/api/docs/ask`;
+const FEEDBACK_API = `${API_BASE}/api/docs/feedback`;
 
 const IDB_DB_NAME = 'sw-docs-chat';
 const IDB_STORE   = 'sessions';
