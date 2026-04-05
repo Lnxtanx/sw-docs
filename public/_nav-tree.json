@@ -1,108 +1,108 @@
 [
   {
     "title": "Introduction",
-    "href": "/docs/introduction"
+    "href": "/introduction"
   },
   {
     "title": "Getting Started",
-    "href": "/docs/getting/started",
+    "href": "/getting-started",
     "children": [
       {
         "title": "5-Minute Quickstart",
-        "href": "/docs/getting/started/quickstart"
+        "href": "/getting-started/quickstart"
       },
       {
         "title": "Configuration",
-        "href": "/docs/getting/started/configuration"
+        "href": "/getting-started/configuration"
       }
     ]
   },
   {
     "title": "Core Concepts",
-    "href": "/docs/core/concepts",
+    "href": "/core-concepts",
     "children": [
       {
         "title": "Migrations",
-        "href": "/docs/core/concepts/migrations"
+        "href": "/core-concepts/migrations"
       },
       {
         "title": "Drift Detection",
-        "href": "/docs/core/concepts/drift-detection"
+        "href": "/core-concepts/drift-detection"
       },
       {
         "title": "Versioning",
-        "href": "/docs/core/concepts/versioning"
+        "href": "/core-concepts/versioning"
       }
     ]
   },
   {
     "title": "API Reference",
-    "href": "/docs/api/reference",
+    "href": "/api-reference",
     "children": [
       {
         "title": "REST API Reference",
-        "href": "/docs/api/reference/rest-api"
+        "href": "/api-reference/rest-api"
       },
       {
         "title": "Authentication",
-        "href": "/docs/api/reference/authentication"
+        "href": "/api-reference/authentication"
       }
     ]
   },
   {
     "title": "Data Explorer",
-    "href": "/docs/data/explorer",
+    "href": "/data-explorer",
     "children": [
       {
         "title": "Exploring Your Data",
-        "href": "/docs/data/explorer/exploring-data"
+        "href": "/data-explorer/exploring-data"
       },
       {
         "title": "Exporting Data",
-        "href": "/docs/data/explorer/exporting-data"
+        "href": "/data-explorer/exporting-data"
       },
       {
         "title": "Resona AI",
-        "href": "/docs/data/explorer/ai-overview"
+        "href": "/data-explorer/ai-overview"
       },
       {
         "title": "AI Chat Interface",
-        "href": "/docs/data/explorer/ai-chat-interface"
+        "href": "/data-explorer/ai-chat-interface"
       },
       {
         "title": "How Resona AI Works",
-        "href": "/docs/data/explorer/agentic-workflows"
+        "href": "/data-explorer/agentic-workflows"
       },
       {
         "title": "Charts & Analysis Results",
-        "href": "/docs/data/explorer/ai-artifacts"
+        "href": "/data-explorer/ai-artifacts"
       },
       {
         "title": "Workspace & Projects",
-        "href": "/docs/data/explorer/ai-workspace"
+        "href": "/data-explorer/ai-workspace"
       }
     ]
   },
   {
     "title": "Resona AI",
-    "href": "/docs/resona/ai",
+    "href": "/resona-ai",
     "children": [
       {
         "title": "AI Chat",
-        "href": "/docs/resona/ai/ai-chat"
+        "href": "/resona-ai/ai-chat"
       },
       {
         "title": "Models and Credits",
-        "href": "/docs/resona/ai/models"
+        "href": "/resona-ai/models"
       }
     ]
   },
   {
     "title": "Schema Visualization",
-    "href": "/docs/schema/visualization"
+    "href": "/schema-visualization"
   },
   {
     "title": "Migrations",
-    "href": "/docs/migrations"
+    "href": "/migrations"
   }
 ]

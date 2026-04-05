@@ -8,9 +8,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<DocsLayout />}>
-          <Route path="docs/*" element={<DocPage />} />
+          <Route path="*" element={<DocPage />} />
           {/* Redirect root to introduction */}
-          <Route index element={<Navigate to="/docs/introduction" replace />} />
+          <Route index element={<Navigate to="/introduction" replace />} />
         </Route>
       </Routes>
     </BrowserRouter>

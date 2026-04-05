@@ -44,12 +44,12 @@ function generateNavTree() {
       const content = fs.readFileSync(indexPath, 'utf-8');
       const { data: frontmatter } = matter(content);
 
-      // Generate slug from folder name (remove number prefix)
-      const slug = folder.replace(/^\d+-/, '').replace(/-/g, '/');
+      // Generate slug from folder name (remove number prefix, keep hyphens)
+      const slug = folder.replace(/^\d+-/, '');
 
       const item = {
         title: frontmatter.title || folder,
-        href: `/docs/${slug}`,
+        href: `/${slug}`,
       };
 
       // Check for child pages

@@ -50,8 +50,8 @@
           "title": "Community & Support"
         }
       ],
-      "content": "Schema Weaver Documentation\n\nWelcome to the official documentation for Schema Weaver. This guide will help you understand the architecture, core concepts, and how to start building amazing schemas and workflows.\n\nWhat is Schema Weaver?\n\nSchema Weaver is a modern, high-performance toolset designed to help you weave complex database schemas, manage data integrity, and visualize connections seamlessly.\n\nKey Features\n\n- Schema Visualization — Beautiful ER diagrams that auto-update as you evolve your",
-      "snippet": "Welcome to the official documentation for Schema Weaver. This guide will help you understand the architecture, core concepts, and how to start building amazing schemas and workflows."
+      "content": "Schema Weaver Documentation\r\n\r\nWelcome to the official documentation for Schema Weaver. This guide will help you understand the architecture, core concepts, and how to start building amazing schemas and workflows.\r\n\r\nWhat is Schema Weaver?\r\n\r\nSchema Weaver is a modern, high-performance toolset designed to help you weave complex database schemas, manage data integrity, and visualize connections seamlessly.\r\n\r\nKey Features\r\n\r\n- Schema Visualization — Beautiful ER diagrams that auto-update as you e",
+      "snippet": ""
     },
     {
       "slug": "01-getting-started/configuration",
@@ -128,8 +128,8 @@
           "title": "Validating Your Config"
         }
       ],
-      "content": "Configuration\n\nSchema Weaver is configured through a `schema-config.json` file in your project root, along with optional environment variables. This page is a complete reference for every available option.\n\nConfiguration File Location\n\nSchema Weaver looks for config in the following order:\n\n1. Path specified via `--config` flag\n2. `./schema-config.json` in the current working directory\n3. `~/.schema-weaver/config.json` (global user config)\n\n\n\n---\n\nFull Configuration Reference\n\n\n\n---\n\n`connection",
-      "snippet": "Schema Weaver is configured through a `schema-config.json` file in your project root, along with optional environment variables. This page is a complete reference for every available option."
+      "content": "Configuration\r\n\r\nSchema Weaver is configured through a `schema-config.json` file in your project root, along with optional environment variables. This page is a complete reference for every available option.\r\n\r\nConfiguration File Location\r\n\r\nSchema Weaver looks for config in the following order:\r\n\r\n1. Path specified via `--config` flag\r\n2. `./schema-config.json` in the current working directory\r\n3. `~/.schema-weaver/config.json` (global user config)\r\n\r\n\r\n\r\n---\r\n\r\nFull Configuration Reference\r\n\r\n",
+      "snippet": ""
     },
     {
       "slug": "01-getting-started/index",
@@ -206,8 +206,8 @@
           "title": "Still having issues?"
         }
       ],
-      "content": "Getting Started\n\nGet Schema Weaver up and running in your local environment with this quick start guide.\n\nInstallation\n\nOption 1: NPM (Recommended)\n\nInstall Schema Weaver as an npm package:\n\n\n\nOption 2: Docker\n\nRun Schema Weaver in a Docker container:\n\n\n\nOption 3: Cloud Platform\n\nUse our hosted platform at [schema-weaver.io](https://schema-weaver.io) (no installation needed).\n\nBasic Setup\n\nAfter installing, initialize the setup in your project root:\n\n\n\nThis command generates a `schema-config.jso",
-      "snippet": "Get Schema Weaver up and running in your local environment with this quick start guide."
+      "content": "Getting Started\r\n\r\nGet Schema Weaver up and running in your local environment with this quick start guide.\r\n\r\nInstallation\r\n\r\nOption 1: NPM (Recommended)\r\n\r\nInstall Schema Weaver as an npm package:\r\n\r\n\r\n\r\nOption 2: Docker\r\n\r\nRun Schema Weaver in a Docker container:\r\n\r\n\r\n\r\nOption 3: Cloud Platform\r\n\r\nUse our hosted platform at [schema-weaver.io](https://schema-weaver.io) (no installation needed).\r\n\r\nBasic Setup\r\n\r\nAfter installing, initialize the setup in your project root:\r\n\r\n\r\n\r\nThis command ge",
+      "snippet": ""
     },
     {
       "slug": "01-getting-started/quickstart",
@@ -260,8 +260,8 @@
           "title": "What's Next?"
         }
       ],
-      "content": "5-Minute Quickstart\n\nThis guide takes you from zero to a working Schema Weaver setup with your first migration applied. You'll need a running PostgreSQL instance (or see [SQLite alternative](#using-sqlite-for-local-testing) below).\n\nPrerequisites\n\n- Node.js 18+ installed\n- A PostgreSQL, MySQL, or SQLite database\n- npm or yarn\n\n---\n\nStep 1 — Install Schema Weaver\n\nInstall the CLI globally or as a dev dependency in your project:\n\n\n\nVerify the installation:\n\n\n\n---\n\nStep 2 — Initialize Your Project\n",
-      "snippet": "This guide takes you from zero to a working Schema Weaver setup with your first migration applied. You'll need a running PostgreSQL instance (or see [SQLite alternative](#using-sqlite-for-local-testin"
+      "content": "5-Minute Quickstart\r\n\r\nThis guide takes you from zero to a working Schema Weaver setup with your first migration applied. You'll need a running PostgreSQL instance (or see [SQLite alternative](#using-sqlite-for-local-testing) below).\r\n\r\nPrerequisites\r\n\r\n- Node.js 18+ installed\r\n- A PostgreSQL, MySQL, or SQLite database\r\n- npm or yarn\r\n\r\n---\r\n\r\nStep 1 — Install Schema Weaver\r\n\r\nInstall the CLI globally or as a dev dependency in your project:\r\n\r\n\r\n\r\nVerify the installation:\r\n\r\n\r\n\r\n---\r\n\r\nStep 2 — ",
+      "snippet": ""
     },
     {
       "slug": "02-core-concepts/drift-detection",
@@ -334,8 +334,8 @@
           "title": "4. Investigate Root Cause"
         }
       ],
-      "content": "Drift Detection\n\nDrift detection helps you identify when your actual database schema differs from your version-controlled schema.\n\nWhat is Schema Drift?\n\nSchema drift occurs when your production database schema doesn't match what's defined in your migrations:\n\n\n\nCommon Causes\n\n1. Hotfixes\n\nEmergency SQL run directly in production without committing to version control:\n\n\n\n2. Manual Changes\n\nTeam member modifies schema manually via GUI tools like pgAdmin.\n\n3. Incomplete Migrations\n\nMigration file ",
-      "snippet": "Drift detection helps you identify when your actual database schema differs from your version-controlled schema."
+      "content": "Drift Detection\r\n\r\nDrift detection helps you identify when your actual database schema differs from your version-controlled schema.\r\n\r\nWhat is Schema Drift?\r\n\r\nSchema drift occurs when your production database schema doesn't match what's defined in your migrations:\r\n\r\n\r\n\r\nCommon Causes\r\n\r\n1. Hotfixes\r\n\r\nEmergency SQL run directly in production without committing to version control:\r\n\r\n\r\n\r\n2. Manual Changes\r\n\r\nTeam member modifies schema manually via GUI tools like pgAdmin.\r\n\r\n3. Incomplete Migra",
+      "snippet": ""
     },
     {
       "slug": "02-core-concepts/index",
@@ -384,8 +384,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Core Concepts\n\nLearn the fundamental concepts that power Schema Weaver and enable safe, version-controlled database schema management.\n\nWhat is a Schema?\n\nA database schema is the structure that defines:\n\n- Tables — Collections of related data organized in rows and columns\n- Columns — Individual fields with specific data types and constraints\n- Constraints — Rules that enforce data integrity (PRIMARY KEY, FOREIGN KEY, UNIQUE, CHECK)\n- Indexes — Performance optimizations for faster queries\n- View",
-      "snippet": "Learn the fundamental concepts that power Schema Weaver and enable safe, version-controlled database schema management."
+      "content": "Core Concepts\r\n\r\nLearn the fundamental concepts that power Schema Weaver and enable safe, version-controlled database schema management.\r\n\r\nWhat is a Schema?\r\n\r\nA database schema is the structure that defines:\r\n\r\n- Tables — Collections of related data organized in rows and columns\r\n- Columns — Individual fields with specific data types and constraints\r\n- Constraints — Rules that enforce data integrity (PRIMARY KEY, FOREIGN KEY, UNIQUE, CHECK)\r\n- Indexes — Performance optimizations for faster que",
+      "snippet": ""
     },
     {
       "slug": "02-core-concepts/migrations",
@@ -470,8 +470,8 @@
           "title": "❌ Don't"
         }
       ],
-      "content": "Migrations\n\nMaster the Schema Weaver migration system for safe, version-controlled database changes.\n\nWhat is a Migration?\n\nA migration is a timestamped, version-controlled script that modifies your database schema.\n\n\n\nCreating Migrations\n\nAutomatic Generation (Recommended)\n\nLet Schema Weaver generate migrations from your schema definitions:\n\n\n\nThis inspects your database and generates the migration:\n\n\n\nManual Creation\n\nFor complex changes, write migrations manually:\n\n\n\nGenerates:\n\n\n\nMigration W",
-      "snippet": "Master the Schema Weaver migration system for safe, version-controlled database changes."
+      "content": "Migrations\r\n\r\nMaster the Schema Weaver migration system for safe, version-controlled database changes.\r\n\r\nWhat is a Migration?\r\n\r\nA migration is a timestamped, version-controlled script that modifies your database schema.\r\n\r\n\r\n\r\nCreating Migrations\r\n\r\nAutomatic Generation (Recommended)\r\n\r\nLet Schema Weaver generate migrations from your schema definitions:\r\n\r\n\r\n\r\nThis inspects your database and generates the migration:\r\n\r\n\r\n\r\nManual Creation\r\n\r\nFor complex changes, write migrations manually:\r\n\r\n\r",
+      "snippet": ""
     },
     {
       "slug": "02-core-concepts/versioning",
@@ -568,8 +568,8 @@
           "title": "Schema Compatibility Matrix"
         }
       ],
-      "content": "Schema Versioning\n\nLearn how to manage schema versions and handle breaking changes gracefully.\n\nVersion Your Schema\n\nSemantic Versioning\n\nFollow Semantic Versioning for your schema:\n\n\n\nExamples\n\n\n\nBreaking vs Non-Breaking Changes\n\nNon-Breaking (MINOR version bump)\n\nThese are safe and don't require application changes:\n\n✅ Add new column (with default or nullable)\n✅ Add new table\n✅ Add new index\n✅ Create new view\n✅ Add new constraint (if existing data satisfies it)\n\n\n\nBreaking (MAJOR version bump)",
-      "snippet": "Learn how to manage schema versions and handle breaking changes gracefully."
+      "content": "Schema Versioning\r\n\r\nLearn how to manage schema versions and handle breaking changes gracefully.\r\n\r\nVersion Your Schema\r\n\r\nSemantic Versioning\r\n\r\nFollow Semantic Versioning for your schema:\r\n\r\n\r\n\r\nExamples\r\n\r\n\r\n\r\nBreaking vs Non-Breaking Changes\r\n\r\nNon-Breaking (MINOR version bump)\r\n\r\nThese are safe and don't require application changes:\r\n\r\n✅ Add new column (with default or nullable)\r\n✅ Add new table\r\n✅ Add new index\r\n✅ Create new view\r\n✅ Add new constraint (if existing data satisfies it)\r\n\r\n\r\n\r",
+      "snippet": ""
     },
     {
       "slug": "03-api-reference/authentication",
@@ -659,8 +659,8 @@
           "title": "Authentication Errors"
         }
       ],
-      "content": "Authentication\n\nSchema Weaver's REST API supports two authentication methods: API keys (for machine-to-machine access) and session tokens (for user-facing integrations). All API requests must include one of these.\n\n---\n\nAPI Keys\n\nAPI keys are the recommended authentication method for:\n- CI/CD pipelines\n- Backend integrations\n- Scripts and automation\n- Third-party tool connections\n\nGenerating an API Key\n\n1. Log in to [app.schema-weaver.io](https://app.schema-weaver.io)\n2. Navigate to Settings → A",
-      "snippet": "Schema Weaver's REST API supports two authentication methods: **API keys** (for machine-to-machine access) and **session tokens** (for user-facing integrations). All API requests must include one of t"
+      "content": "Authentication\r\n\r\nSchema Weaver's REST API supports two authentication methods: API keys (for machine-to-machine access) and session tokens (for user-facing integrations). All API requests must include one of these.\r\n\r\n---\r\n\r\nAPI Keys\r\n\r\nAPI keys are the recommended authentication method for:\r\n- CI/CD pipelines\r\n- Backend integrations\r\n- Scripts and automation\r\n- Third-party tool connections\r\n\r\nGenerating an API Key\r\n\r\n1. Log in to [app.schema-weaver.io](https://app.schema-weaver.io)\r\n2. Navigat",
+      "snippet": ""
     },
     {
       "slug": "03-api-reference/index",
@@ -701,8 +701,8 @@
           "title": "Rate Limiting"
         }
       ],
-      "content": "API Reference\n\nComplete documentation of Schema Weaver APIs.\n\nOverview\n\nSchema Weaver provides REST APIs for:\n\n- Migrations — Create, preview, apply, and rollback migrations\n- Schema — Inspect, diff, and validate schemas\n- Connections — Manage database connections\n- Snapshots — Access schema snapshots and history\n\nAll APIs require authentication via API key or session token.\n\nAuthentication\n\nInclude your API key in the `Authorization` header:\n\n\n\nAPI Endpoints\n\nMigrations\n\n- `POST /v1/migrations`",
-      "snippet": "Complete documentation of Schema Weaver APIs."
+      "content": "API Reference\r\n\r\nComplete documentation of Schema Weaver APIs.\r\n\r\nOverview\r\n\r\nSchema Weaver provides REST APIs for:\r\n\r\n- Migrations — Create, preview, apply, and rollback migrations\r\n- Schema — Inspect, diff, and validate schemas\r\n- Connections — Manage database connections\r\n- Snapshots — Access schema snapshots and history\r\n\r\nAll APIs require authentication via API key or session token.\r\n\r\nAuthentication\r\n\r\nInclude your API key in the `Authorization` header:\r\n\r\n\r\n\r\nAPI Endpoints\r\n\r\nMigrations\r\n",
+      "snippet": ""
     },
     {
       "slug": "03-api-reference/rest-api",
@@ -840,8 +840,8 @@
           "title": "HTTP Status Codes"
         }
       ],
-      "content": "REST API Reference\n\nAll Schema Weaver REST API endpoints are available under:\n\n\n\nFor self-hosted deployments, replace the base URL with your instance URL (e.g., `http://localhost:4242/api/v1`).\n\n> Authentication required: All endpoints require an API key or session token. See [Authentication](/docs/api-reference/authentication).\n\n---\n\nConnections\n\nList Connections\n\n\n\nReturns all database connections in the workspace.\n\nResponse:\n\n\n\nCreate Connection\n\n\n\nRequest body:\n\n\n\nResponse: `201 Created` wit",
-      "snippet": "All Schema Weaver REST API endpoints are available under:"
+      "content": "REST API Reference\r\n\r\nAll Schema Weaver REST API endpoints are available under:\r\n\r\n\r\n\r\nFor self-hosted deployments, replace the base URL with your instance URL (e.g., `http://localhost:4242/api/v1`).\r\n\r\n> Authentication required: All endpoints require an API key or session token. See [Authentication](/docs/api-reference/authentication).\r\n\r\n---\r\n\r\nConnections\r\n\r\nList Connections\r\n\r\n\r\n\r\nReturns all database connections in the workspace.\r\n\r\nResponse:\r\n\r\n\r\n\r\nCreate Connection\r\n\r\n\r\n\r\nRequest body:\r\n\r",
+      "snippet": ""
     },
     {
       "slug": "04-data-explorer/agentic-workflows",
@@ -933,8 +933,8 @@
           "title": "Iteration Limit"
         }
       ],
-      "content": "How Resona AI Works\n\nResona AI is not a simple chatbot. It is an agentic system — when you ask a question, it breaks the problem down into steps, calls specialized tools to gather and analyze data, and synthesizes the results into a complete answer. You can watch every step happen in real time.\n\n![Resona AI agentic interface showing the planning and execution phases](/images/data-explorer/resona-ai.png)\n\n---\n\nThe Three Phases\n\nEvery Resona response goes through three phases, visible in the Agent",
-      "snippet": "Resona AI is not a simple chatbot. It is an **agentic system** — when you ask a question, it breaks the problem down into steps, calls specialized tools to gather and analyze data, and synthesizes the"
+      "content": "How Resona AI Works\r\n\r\nResona AI is not a simple chatbot. It is an agentic system — when you ask a question, it breaks the problem down into steps, calls specialized tools to gather and analyze data, and synthesizes the results into a complete answer. You can watch every step happen in real time.\r\n\r\n![Resona AI agentic interface showing the planning and execution phases](/images/data-explorer/resona-ai.png)\r\n\r\n---\r\n\r\nThe Three Phases\r\n\r\nEvery Resona response goes through three phases, visible in",
+      "snippet": ""
     },
     {
       "slug": "04-data-explorer/ai-artifacts",
@@ -1070,8 +1070,8 @@
           "title": "Artifact Placeholder (Streaming)"
         }
       ],
-      "content": "Charts & Analysis Results\n\nWhen Resona AI finishes an analysis, it outputs artifacts — rich interactive components embedded directly in the chat. These are not static images. You can expand them, sort them, pin them to a dashboard, and export their underlying SQL.\n\n![Resona AI chat response with an expanded interactive data table artifact](/images/data-explorer/resoan-ai-chat-expand-table.png)\n\n---\n\nData Tables\n\nWhen Resona runs a SQL query or returns row-level results, it renders them as an int",
-      "snippet": "When Resona AI finishes an analysis, it outputs **artifacts** — rich interactive components embedded directly in the chat. These are not static images. You can expand them, sort them, pin them to a da"
+      "content": "Charts & Analysis Results\r\n\r\nWhen Resona AI finishes an analysis, it outputs artifacts — rich interactive components embedded directly in the chat. These are not static images. You can expand them, sort them, pin them to a dashboard, and export their underlying SQL.\r\n\r\n![Resona AI chat response with an expanded interactive data table artifact](/images/data-explorer/resoan-ai-chat-expand-table.png)\r\n\r\n---\r\n\r\nData Tables\r\n\r\nWhen Resona runs a SQL query or returns row-level results, it renders them",
+      "snippet": ""
     },
     {
       "slug": "04-data-explorer/ai-chat-interface",
@@ -1119,8 +1119,8 @@
           "title": "Keyboard Shortcuts"
         }
       ],
-      "content": "AI Chat Interface\n\nResona AI is the agentic assistant built directly into the Data Explorer. You interact with it through a chat panel — type a question in plain English, and Resona queries your database, runs analysis tools, and returns results as interactive charts, tables, and reports.\n\n![Resona AI chat panel showing a table mention with table overview context](/images/data-explorer/resona-ai-@mention-table-overview.png)\n\nOpening the AI Panel\n\nClick the Resona AI button in the Data Explorer s",
-      "snippet": "Resona AI is the agentic assistant built directly into the Data Explorer. You interact with it through a chat panel — type a question in plain English, and Resona queries your database, runs analysis "
+      "content": "AI Chat Interface\r\n\r\nResona AI is the agentic assistant built directly into the Data Explorer. You interact with it through a chat panel — type a question in plain English, and Resona queries your database, runs analysis tools, and returns results as interactive charts, tables, and reports.\r\n\r\n![Resona AI chat panel showing a table mention with table overview context](/images/data-explorer/resona-ai-@mention-table-overview.png)\r\n\r\nOpening the AI Panel\r\n\r\nClick the Resona AI button in the Data Ex",
+      "snippet": ""
     },
     {
       "slug": "04-data-explorer/ai-overview",
@@ -1163,8 +1163,8 @@
           "title": "What's in This Section"
         }
       ],
-      "content": "Resona AI\n\nResona AI is the agentic data assistant built into the Data Explorer. You describe what you want to know in plain English — Resona figures out which tables to query, runs the analysis, and returns the results as interactive charts, tables, and reports.\n\n![Resona AI panel open inside the Data Explorer with an active conversation and chart artifact](/images/data-explorer/resona-ai.png)\n\n---\n\nWhat Resona Can Do\n\nExplore and query your data\n\nAsk questions without writing SQL. Resona autom",
-      "snippet": "Resona AI is the agentic data assistant built into the Data Explorer. You describe what you want to know in plain English — Resona figures out which tables to query, runs the analysis, and returns the"
+      "content": "Resona AI\r\n\r\nResona AI is the agentic data assistant built into the Data Explorer. You describe what you want to know in plain English — Resona figures out which tables to query, runs the analysis, and returns the results as interactive charts, tables, and reports.\r\n\r\n![Resona AI panel open inside the Data Explorer with an active conversation and chart artifact](/images/data-explorer/resona-ai.png)\r\n\r\n---\r\n\r\nWhat Resona Can Do\r\n\r\nExplore and query your data\r\n\r\nAsk questions without writing SQL. ",
+      "snippet": ""
     },
     {
       "slug": "04-data-explorer/ai-workspace",
@@ -1230,8 +1230,8 @@
           "title": "Connection Health"
         }
       ],
-      "content": "Workspace & Projects\n\nResona AI stores everything it generates. The Workspace holds exported files, Projects organize your analysis sessions, and Artifact History gives you a searchable archive of every chart and result ever produced.\n\n![Resona AI interface showing the workspace and project organization panel](/images/data-explorer/resona-ai.png)\n\n---\n\nWorkspace\n\nThe Workspace is a persistent file store for reports and exports generated by Resona. It is accessible from the `W` shortcut or the wo",
-      "snippet": "Resona AI stores everything it generates. The **Workspace** holds exported files, **Projects** organize your analysis sessions, and **Artifact History** gives you a searchable archive of every chart a"
+      "content": "Workspace & Projects\r\n\r\nResona AI stores everything it generates. The Workspace holds exported files, Projects organize your analysis sessions, and Artifact History gives you a searchable archive of every chart and result ever produced.\r\n\r\n![Resona AI interface showing the workspace and project organization panel](/images/data-explorer/resona-ai.png)\r\n\r\n---\r\n\r\nWorkspace\r\n\r\nThe Workspace is a persistent file store for reports and exports generated by Resona. It is accessible from the `W` shortcut",
+      "snippet": ""
     },
     {
       "slug": "04-data-explorer/exploring-data",
@@ -1362,8 +1362,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Exploring Your Data\n\nOnce you've [connected a database](/docs/data-explorer/connecting-database), the Data Explorer gives you a two-panel interface for browsing live data — a sidebar of tables on the left and a high-performance data grid on the right.\n\n---\n\nInterface Layout\n\n![The Data Explorer showing the two-column layout with left sidebar and main data grid](/images/data-explorer/data-explorer.png)\n\n| Region | Purpose |\n|--------|---------|\n| Left sidebar | Schema selector, table search, tabl",
-      "snippet": "Once you've [connected a database](/docs/data-explorer/connecting-database), the Data Explorer gives you a two-panel interface for browsing live data — a sidebar of tables on the left and a high-perfo"
+      "content": "Exploring Your Data\r\n\r\nOnce you've [connected a database](/docs/data-explorer/connecting-database), the Data Explorer gives you a two-panel interface for browsing live data — a sidebar of tables on the left and a high-performance data grid on the right.\r\n\r\n---\r\n\r\nInterface Layout\r\n\r\n![The Data Explorer showing the two-column layout with left sidebar and main data grid](/images/data-explorer/data-explorer.png)\r\n\r\n| Region | Purpose |\r\n|--------|---------|\r\n| Left sidebar | Schema selector, table ",
+      "snippet": ""
     },
     {
       "slug": "04-data-explorer/exporting-data",
@@ -1472,8 +1472,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Exporting Data\n\nThe Data Explorer lets you export data in multiple formats — either a single table or your entire database schema as a ZIP archive. Exports are triggered directly from the browser and download instantly.\n\n---\n\nExport Button\n\n![The Export button and format selection dropdown in the Data Explorer action bar](/images/data-explorer/export.png)\n\nThe Export button appears in the top-right action bar when you have a connection selected. Click it to open a dropdown with two sections:\n\n1.",
-      "snippet": "The Data Explorer lets you export data in multiple formats — either a single table or your entire database schema as a ZIP archive. Exports are triggered directly from the browser and download instant"
+      "content": "Exporting Data\r\n\r\nThe Data Explorer lets you export data in multiple formats — either a single table or your entire database schema as a ZIP archive. Exports are triggered directly from the browser and download instantly.\r\n\r\n---\r\n\r\nExport Button\r\n\r\n![The Export button and format selection dropdown in the Data Explorer action bar](/images/data-explorer/export.png)\r\n\r\nThe Export button appears in the top-right action bar when you have a connection selected. Click it to open a dropdown with two sec",
+      "snippet": ""
     },
     {
       "slug": "04-data-explorer/index",
@@ -1539,8 +1539,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Data Explorer\n\nThe Data Explorer is a built-in SQL workbench that lets you connect to your databases, run queries, and explore your data — all inside Schema Weaver. It integrates with Resona AI so you can ask questions in plain English and get runnable SQL back instantly.\n\nWhat You Can Do\n\n- Browse live data — Two-panel layout with a table sidebar and a high-performance data grid\n- Smart column sizing — Canvas-measured, 95th-percentile column widths that auto-fit your data\n- Filter & sort — Serv",
-      "snippet": "The Data Explorer is a built-in SQL workbench that lets you connect to your databases, run queries, and explore your data — all inside Schema Weaver. It integrates with Resona AI so you can ask questi"
+      "content": "Data Explorer\r\n\r\nThe Data Explorer is a built-in SQL workbench that lets you connect to your databases, run queries, and explore your data — all inside Schema Weaver. It integrates with Resona AI so you can ask questions in plain English and get runnable SQL back instantly.\r\n\r\nWhat You Can Do\r\n\r\n- Browse live data — Two-panel layout with a table sidebar and a high-performance data grid\r\n- Smart column sizing — Canvas-measured, 95th-percentile column widths that auto-fit your data\r\n- Filter & sor",
+      "snippet": ""
     },
     {
       "slug": "05-resona-ai/ai-chat",
@@ -1634,8 +1634,8 @@
           "title": "Tips for Better Results"
         }
       ],
-      "content": "AI Chat\n\nResona AI Chat lets you have a back-and-forth conversation with your database. Ask questions in plain English, refine your results, and build up complex analyses step by step — without writing a single line of SQL.\n\n---\n\nOpening AI Chat\n\nFrom the Data Explorer\n\nClick the AI Assist button in the top-right of the query editor, or press `Ctrl+Shift+A`.\n\nStandalone Chat Panel\n\nClick Resona AI in the main navigation sidebar to open the full-width chat interface.\n\nKeyboard Shortcut\n\nFrom anyw",
-      "snippet": "Resona AI Chat lets you have a back-and-forth conversation with your database. Ask questions in plain English, refine your results, and build up complex analyses step by step — without writing a singl"
+      "content": "AI Chat\r\n\r\nResona AI Chat lets you have a back-and-forth conversation with your database. Ask questions in plain English, refine your results, and build up complex analyses step by step — without writing a single line of SQL.\r\n\r\n---\r\n\r\nOpening AI Chat\r\n\r\nFrom the Data Explorer\r\n\r\nClick the AI Assist button in the top-right of the query editor, or press `Ctrl+Shift+A`.\r\n\r\nStandalone Chat Panel\r\n\r\nClick Resona AI in the main navigation sidebar to open the full-width chat interface.\r\n\r\nKeyboard Sho",
+      "snippet": ""
     },
     {
       "slug": "05-resona-ai/index",
@@ -1697,8 +1697,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Resona AI\n\nResona is Schema Weaver's built-in AI data assistant. It understands your database schema and lets you explore, query, and analyze your data using natural language — no SQL expertise required.\n\nWhat Resona Can Do\n\nNatural Language to SQL\n\nAsk questions about your data in plain English. Resona generates optimized SQL, explains it step by step, and runs it for you:\n\n> \"How many new users signed up each week over the last 3 months?\"\n\n\n\nAutomatic Chart Generation\n\nWhen results contain num",
-      "snippet": "Resona is Schema Weaver's built-in AI data assistant. It understands your database schema and lets you explore, query, and analyze your data using natural language — no SQL expertise required."
+      "content": "Resona AI\r\n\r\nResona is Schema Weaver's built-in AI data assistant. It understands your database schema and lets you explore, query, and analyze your data using natural language — no SQL expertise required.\r\n\r\nWhat Resona Can Do\r\n\r\nNatural Language to SQL\r\n\r\nAsk questions about your data in plain English. Resona generates optimized SQL, explains it step by step, and runs it for you:\r\n\r\n> \"How many new users signed up each week over the last 3 months?\"\r\n\r\n\r\n\r\nAutomatic Chart Generation\r\n\r\nWhen res",
+      "snippet": ""
     },
     {
       "slug": "05-resona-ai/models",
@@ -1802,8 +1802,8 @@
           "title": "FAQ"
         }
       ],
-      "content": "Models and Credits\n\nResona AI supports multiple large language models so you can balance speed, quality, and cost. Each query consumes credits from your monthly allowance based on which model you use.\n\n---\n\nAvailable Models\n\n| Model | Provider | Credits | Context Window | Best For |\n|-------|----------|---------|----------------|----------|\n| Free model | Schema Weaver | 0 | 8k tokens | Basic lookups, simple queries |\n| GPT-4o mini | OpenAI | 1x | 128k tokens | Everyday queries, fast iteration |",
-      "snippet": "Resona AI supports multiple large language models so you can balance speed, quality, and cost. Each query consumes credits from your monthly allowance based on which model you use."
+      "content": "Models and Credits\r\n\r\nResona AI supports multiple large language models so you can balance speed, quality, and cost. Each query consumes credits from your monthly allowance based on which model you use.\r\n\r\n---\r\n\r\nAvailable Models\r\n\r\n| Model | Provider | Credits | Context Window | Best For |\r\n|-------|----------|---------|----------------|----------|\r\n| Free model | Schema Weaver | 0 | 8k tokens | Basic lookups, simple queries |\r\n| GPT-4o mini | OpenAI | 1x | 128k tokens | Everyday queries, fast ",
+      "snippet": ""
     },
     {
       "slug": "06-schema-visualization/index",
@@ -1925,8 +1925,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Schema Visualization\n\nSchema Weaver automatically generates interactive Entity-Relationship (ER) diagrams from your live database. Explore tables, relationships, and constraints visually — no manual diagramming required.\n\n---\n\nOpening the ER Diagram\n\nCloud Platform\n\nNavigate to your project and click Schema in the top navigation. The ER diagram loads automatically from your connected database.\n\nCLI (Local Web UI)\n\n\n\nThe diagram renders in seconds for most schemas. For very large schemas (500+ ta",
-      "snippet": "Schema Weaver automatically generates interactive Entity-Relationship (ER) diagrams from your live database. Explore tables, relationships, and constraints visually — no manual diagramming required."
+      "content": "Schema Visualization\r\n\r\nSchema Weaver automatically generates interactive Entity-Relationship (ER) diagrams from your live database. Explore tables, relationships, and constraints visually — no manual diagramming required.\r\n\r\n---\r\n\r\nOpening the ER Diagram\r\n\r\nCloud Platform\r\n\r\nNavigate to your project and click Schema in the top navigation. The ER diagram loads automatically from your connected database.\r\n\r\nCLI (Local Web UI)\r\n\r\n\r\n\r\nThe diagram renders in seconds for most schemas. For very large ",
+      "snippet": ""
     },
     {
       "slug": "07-migrations/index",
@@ -2053,8 +2053,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Migrations Deep Dive\n\nThis guide goes beyond the basics to cover production-grade migration workflows: CI/CD integration, zero-downtime patterns, multi-environment management, conflict resolution, and the Atlas engine that powers Schema Weaver's DDL safety checks.\n\n> New to migrations? Start with [Core Concepts: Migrations](/docs/core-concepts/migrations) for the fundamentals, then come back here.\n\n---\n\nHow Schema Weaver's Migration Engine Works\n\nSchema Weaver uses [Atlas](https://atlasgo.io) un",
-      "snippet": "This guide goes beyond the basics to cover production-grade migration workflows: CI/CD integration, zero-downtime patterns, multi-environment management, conflict resolution, and the Atlas engine that"
+      "content": "Migrations Deep Dive\r\n\r\nThis guide goes beyond the basics to cover production-grade migration workflows: CI/CD integration, zero-downtime patterns, multi-environment management, conflict resolution, and the Atlas engine that powers Schema Weaver's DDL safety checks.\r\n\r\n> New to migrations? Start with [Core Concepts: Migrations](/docs/core-concepts/migrations) for the fundamentals, then come back here.\r\n\r\n---\r\n\r\nHow Schema Weaver's Migration Engine Works\r\n\r\nSchema Weaver uses [Atlas](https://atla",
+      "snippet": ""
     }
   ]
 }

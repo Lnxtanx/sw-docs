@@ -70,7 +70,7 @@ function generateLlmsTxt() {
       const { data: fm } = matter(raw);
       const title = fm.title || file.slug;
       const desc = fm.description || '';
-      const href = `/docs/${file.slug}`;
+      const href = `/${file.slug}`;
       lines.push(`- [${title}](${href})${desc ? ': ' + desc : ''}`);
     }
 

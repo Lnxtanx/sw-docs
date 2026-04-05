@@ -21,11 +21,12 @@ export function Breadcrumbs() {
 
   useEffect(() => {
     const generateBreadcrumbs = async () => {
+      // Home icon only — no redundant "Docs" label on docs.schemaweaver.com
       const items: BreadcrumbItem[] = [
-        { label: 'Docs', href: '/docs/introduction' },
+        { label: 'Home', href: '/introduction' },
       ];
 
-      if (pathname === '/' || pathname === '/docs/introduction') {
+      if (pathname === '/' || pathname === '/introduction') {
         setBreadcrumbs(items);
         return;
       }
@@ -43,28 +44,25 @@ export function Breadcrumbs() {
             path: BreadcrumbItem[] = []
           ): BreadcrumbItem[] | null => {
             for (const item of trees) {
-              if (target.includes(item.href.replace(/^\/docs\/?/, ''))) {
+              if (target.startsWith(item.href.replace(/\/$/, ''))) {
                 const newPath = [...path, { label: item.title, href: item.href }];
 
-                // Check if target matches exactly this item
-                if (target === item.href.replace(/^\/docs\/?/, '')) {
+                // Exact match
+                if (target === item.href) {
                   return newPath;
                 }
 
                 // Check children
                 if (item.children) {
                   const childResult = findPath(item.children, target, newPath);
-                  if (childResult) {
-                    return childResult;
-                  }
+                  if (childResult) return childResult;
                 }
               }
             }
             return null;
           };
 
-          const pathSegments = pathname.replace(/^\/docs\/?/, '');
-          const navPath = findPath(navTree, pathSegments);
+          const navPath = findPath(navTree, pathname);
 
           if (navPath) {
             setBreadcrumbs([...items, ...navPath]);
@@ -76,8 +74,8 @@ export function Breadcrumbs() {
       }
 
       // Fallback: generate from URL segments
-      const paths = pathname.replace(/^\/docs\/?/, '').split('/').filter(Boolean);
-      let currentPath = '/docs';
+      const paths = pathname.replace(/^\//, '').split('/').filter(Boolean);
+      let currentPath = '';
 
       for (const segment of paths) {
         currentPath += `/${segment}`;

@@ -43,7 +43,7 @@ function walkDocsFolder(dir, prefix = '') {
     
     let cleanName = entry.name.replace(/\.mdx$/, '');
     if (entry.isDirectory()) {
-      cleanName = entry.name.replace(/^\d+-/, '').replace(/-/g, '/');
+      cleanName = entry.name.replace(/^\d+-/, ''); // keep hyphens — "data-explorer" not "data/explorer"
     }
 
     const slug = prefix ? (entry.name === 'index.mdx' ? prefix : `${prefix}/${cleanName}`) : cleanName;

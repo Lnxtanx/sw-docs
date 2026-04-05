@@ -53,6 +53,57 @@ export function DocPage() {
     return () => { setPageContext(null); };
   }, [content, slug, setPageContext]);
 
+  // ── Dynamic SEO meta tags ─────────────────────────────────────────────────
+  useEffect(() => {
+    if (!content) return;
+
+    const pageTitle = content.frontmatter?.title;
+    const pageDesc  = content.frontmatter?.description;
+    const canonical = `https://docs.schemaweaver.com${window.location.pathname}`;
+
+    // <title>
+    document.title = pageTitle
+      ? `${pageTitle} — Schema Weaver Docs`
+      : 'Schema Weaver Docs';
+
+    // <meta name="description">
+    let descTag = document.querySelector<HTMLMetaElement>('meta[name="description"]');
+    if (!descTag) {
+      descTag = document.createElement('meta');
+      descTag.name = 'description';
+      document.head.appendChild(descTag);
+    }
+    if (pageDesc) descTag.content = pageDesc;
+
+    // <link rel="canonical">
+    let canonTag = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonTag) {
+      canonTag = document.createElement('link');
+      canonTag.rel = 'canonical';
+      document.head.appendChild(canonTag);
+    }
+    canonTag.href = canonical;
+
+    // Open Graph
+    const setMeta = (prop: string, val: string) => {
+      let tag = document.querySelector<HTMLMetaElement>(`meta[property="${prop}"]`);
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.setAttribute('property', prop);
+        document.head.appendChild(tag);
+      }
+      tag.content = val;
+    };
+    if (pageTitle) setMeta('og:title', `${pageTitle} — Schema Weaver Docs`);
+    if (pageDesc)  setMeta('og:description', pageDesc);
+    setMeta('og:url', canonical);
+
+    // Restore defaults on unmount
+    return () => {
+      document.title = 'Schema Weaver Docs';
+    };
+  }, [content]);
+
   // ── Attach lightbox click handlers to MDX images ─────────────────────────
   useEffect(() => {
     const container = mdxRef.current;

@@ -62,6 +62,12 @@ async function buildAll() {
       'LLMs.txt Generator'
     );
 
+    // 5. Generate sitemap.xml
+    await runScript(
+      path.join(__dirname, 'generate-sitemap.js'),
+      'Sitemap Generator'
+    );
+
     console.log('✅ All build steps completed successfully!');
     process.exit(0);
   } catch (error) {
