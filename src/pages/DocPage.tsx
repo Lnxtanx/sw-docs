@@ -5,10 +5,11 @@
  * Renders page action bar (Copy + Share) and compiled MDX HTML.
  */
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { useParams, useOutletContext } from 'react-router-dom';
 import { Copy, Check, Share2 } from 'lucide-react';
 import { useDocContent } from '../hooks/useDocContent.js';
+import { ImageLightbox } from '../components/docs/ImageLightbox.js';
 import type { Heading } from '../lib/mdx/types.js';
 import type { PageContext } from '../components/layout/DocsLayout.js';
 
@@ -25,6 +26,10 @@ export function DocPage() {
 
   const [copied, setCopied] = useState(false);
   const [shared, setShared] = useState(false);
+
+  // ── Lightbox state ────────────────────────────────────────────────────────
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
+  const mdxRef = useRef<HTMLDivElement>(null);
 
   // ── Push headings to layout (TOC) ─────────────────────────────────────────
   useEffect(() => {
@@ -47,6 +52,24 @@ export function DocPage() {
     // On unmount, clear context (handles navigating away from a doc page)
     return () => { setPageContext(null); };
   }, [content, slug, setPageContext]);
+
+  // ── Attach lightbox click handlers to MDX images ─────────────────────────
+  useEffect(() => {
+    const container = mdxRef.current;
+    if (!container) return;
+
+    const imgs = container.querySelectorAll<HTMLImageElement>('img');
+    const handlers: Array<() => void> = [];
+
+    imgs.forEach(img => {
+      const handler = () => setLightbox({ src: img.src, alt: img.alt || '' });
+      img.addEventListener('click', handler);
+      img.style.cursor = 'zoom-in';
+      handlers.push(() => img.removeEventListener('click', handler));
+    });
+
+    return () => handlers.forEach(off => off());
+  }, [content]); // re-run whenever content changes (page navigation)
 
   // ── Copy page as plain text ───────────────────────────────────────────────
   const handleCopy = useCallback(async () => {
@@ -135,9 +158,19 @@ export function DocPage() {
 
       {/* Rendered MDX content */}
       <div
+        ref={mdxRef}
         className="mdx-content"
         dangerouslySetInnerHTML={{ __html: content.content }}
       />
+
+      {/* Image lightbox */}
+      {lightbox && (
+        <ImageLightbox
+          src={lightbox.src}
+          alt={lightbox.alt}
+          onClose={() => setLightbox(null)}
+        />
+      )}
 
       {/* Related links */}
       {content.frontmatter.related && content.frontmatter.related.length > 0 && (
