@@ -1,0 +1,500 @@
+---
+title: REST API Reference
+description: Complete reference for all Schema Weaver REST API endpoints
+tags: [api, rest, endpoints, reference]
+order: 2
+sidebar_group: "API Reference"
+---
+
+# REST API Reference
+
+All Schema Weaver REST API endpoints are available under:
+
+```
+https://api.schema-weaver.io/v1
+```
+
+For self-hosted deployments, replace the base URL with your instance URL (e.g., `http://localhost:4242/api/v1`).
+
+> **Authentication required:** All endpoints require an API key or session token. See [Authentication](/docs/api-reference/authentication).
+
+---
+
+## Connections
+
+### List Connections
+
+```
+GET /v1/connections
+```
+
+Returns all database connections in the workspace.
+
+**Response:**
+
+```json
+{
+  "connections": [
+    {
+      "id": "conn_01hx3gp9d2z4m",
+      "name": "production",
+      "driver": "postgres",
+      "host": "db.example.com",
+      "port": 5432,
+      "database": "myapp_prod",
+      "ssl": true,
+      "status": "connected",
+      "created_at": "2024-01-15T10:30:00Z"
+    }
+  ]
+}
+```
+
+### Create Connection
+
+```
+POST /v1/connections
+```
+
+**Request body:**
+
+```json
+{
+  "name": "staging",
+  "driver": "postgres",
+  "url": "postgresql://user:pass@staging.example.com:5432/myapp_staging",
+  "ssl": true
+}
+```
+
+**Response:** `201 Created` with the connection object.
+
+### Get Connection
+
+```
+GET /v1/connections/:id
+```
+
+### Update Connection
+
+```
+PUT /v1/connections/:id
+```
+
+**Request body:** Any fields from the create request.
+
+### Delete Connection
+
+```
+DELETE /v1/connections/:id
+```
+
+**Response:** `204 No Content`
+
+### Test Connection
+
+```
+POST /v1/connections/:id/test
+```
+
+**Response:**
+
+```json
+{
+  "status": "connected",
+  "latency_ms": 12,
+  "server_version": "PostgreSQL 15.2",
+  "schema_count": 1,
+  "table_count": 42
+}
+```
+
+---
+
+## Migrations
+
+### List Migrations
+
+```
+GET /v1/migrations?connection_id=conn_01hx3gp9d2z4m&status=applied
+```
+
+**Query parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `connection_id` | string | Filter by connection |
+| `status` | string | `applied`, `pending`, `failed` |
+| `limit` | number | Max results (default: 50) |
+| `offset` | number | Pagination offset |
+
+**Response:**
+
+```json
+{
+  "migrations": [
+    {
+      "id": "mig_01hx3abc",
+      "version": "20240324091500",
+      "name": "add_verified_to_users",
+      "filename": "20240324091500_add_verified_to_users.sql",
+      "status": "applied",
+      "applied_at": "2024-03-24T09:15:32Z",
+      "duration_ms": 245,
+      "applied_by": "ci-deploy",
+      "checksum": "sha256:abc123..."
+    }
+  ],
+  "total": 12,
+  "pending": 0
+}
+```
+
+### Get Migration
+
+```
+GET /v1/migrations/:id
+```
+
+Returns full migration details including the SQL content.
+
+### Create Migration
+
+```
+POST /v1/migrations
+```
+
+**Request body:**
+
+```json
+{
+  "connection_id": "conn_01hx3gp9d2z4m",
+  "name": "add_phone_to_users",
+  "sql_up": "ALTER TABLE users ADD COLUMN phone TEXT;",
+  "sql_down": "ALTER TABLE users DROP COLUMN phone;"
+}
+```
+
+**Response:** `201 Created` with the migration object.
+
+### Preview Migration
+
+```
+POST /v1/migrations/:id/preview
+```
+
+Performs a dry-run and returns what changes would be made.
+
+**Response:**
+
+```json
+{
+  "migration_id": "mig_01hx3abc",
+  "changes": [
+    { "type": "add_column", "table": "users", "column": "phone", "data_type": "TEXT" }
+  ],
+  "warnings": [],
+  "risk_level": "low",
+  "estimated_duration_ms": 100
+}
+```
+
+### Apply Migration
+
+```
+POST /v1/migrations/:id/apply
+```
+
+**Request body:**
+
+```json
+{
+  "connection_id": "conn_01hx3gp9d2z4m",
+  "dry_run": false
+}
+```
+
+**Response:**
+
+```json
+{
+  "migration_id": "mig_01hx3abc",
+  "status": "applied",
+  "applied_at": "2024-03-24T09:15:32Z",
+  "duration_ms": 245,
+  "rows_affected": 0
+}
+```
+
+### Rollback Migration
+
+```
+POST /v1/migrations/:id/rollback
+```
+
+**Response:**
+
+```json
+{
+  "migration_id": "mig_01hx3abc",
+  "status": "rolled_back",
+  "rolled_back_at": "2024-03-24T09:20:00Z",
+  "duration_ms": 122
+}
+```
+
+---
+
+## Schema
+
+### Get Schema
+
+```
+GET /v1/schema?connection_id=conn_01hx3gp9d2z4m
+```
+
+Returns the full schema for a connection.
+
+**Query parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `connection_id` | string | Required — which connection to inspect |
+| `schema` | string | Database schema name (default: `public`) |
+| `include_views` | boolean | Include views (default: `true`) |
+| `include_indexes` | boolean | Include index details (default: `true`) |
+
+**Response:**
+
+```json
+{
+  "connection_id": "conn_01hx3gp9d2z4m",
+  "schema": "public",
+  "inspected_at": "2024-03-24T09:00:00Z",
+  "tables": [
+    {
+      "name": "users",
+      "estimated_rows": 12847,
+      "size_bytes": 2097152,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('users_id_seq')",
+          "primary_key": true
+        }
+      ],
+      "indexes": [...],
+      "foreign_keys": [...]
+    }
+  ]
+}
+```
+
+### Diff Schemas
+
+```
+POST /v1/schema/diff
+```
+
+Compare the schema of two connections (or a connection against a snapshot).
+
+**Request body:**
+
+```json
+{
+  "source": {
+    "connection_id": "conn_staging"
+  },
+  "target": {
+    "connection_id": "conn_production"
+  }
+}
+```
+
+**Response:**
+
+```json
+{
+  "diff": {
+    "added": [
+      { "type": "column", "table": "users", "column": "verified", "data_type": "boolean" }
+    ],
+    "removed": [],
+    "modified": [
+      { "type": "index", "table": "orders", "index": "idx_orders_status", "change": "added" }
+    ]
+  },
+  "summary": "1 column added, 1 index added"
+}
+```
+
+### Inspect Table
+
+```
+GET /v1/schema/table?connection_id=conn_01hx&table=users
+```
+
+Returns detailed metadata for a single table.
+
+---
+
+## Drift Detection
+
+### Check Drift
+
+```
+POST /v1/drift/check
+```
+
+**Request body:**
+
+```json
+{
+  "connection_id": "conn_01hx3gp9d2z4m"
+}
+```
+
+**Response:**
+
+```json
+{
+  "connection_id": "conn_01hx3gp9d2z4m",
+  "status": "drift_detected",
+  "checked_at": "2024-03-24T10:00:00Z",
+  "drift": {
+    "unexpected": [
+      { "type": "column", "table": "users", "name": "legacy_id", "data_type": "integer" }
+    ],
+    "missing": [
+      { "type": "column", "table": "users", "name": "verified", "data_type": "boolean" }
+    ]
+  },
+  "risk_level": "high"
+}
+```
+
+### Get Drift History
+
+```
+GET /v1/drift/history?connection_id=conn_01hx&limit=10
+```
+
+---
+
+## Snapshots
+
+### List Snapshots
+
+```
+GET /v1/snapshots?connection_id=conn_01hx
+```
+
+### Get Snapshot
+
+```
+GET /v1/snapshots/:id
+```
+
+### Create Snapshot
+
+```
+POST /v1/snapshots
+```
+
+```json
+{
+  "connection_id": "conn_01hx3gp9d2z4m",
+  "label": "pre-v2-release"
+}
+```
+
+### Delete Snapshot
+
+```
+DELETE /v1/snapshots/:id
+```
+
+---
+
+## Resona AI
+
+### Chat Completion
+
+```
+POST /v1/resona/chat
+```
+
+**Request body:**
+
+```json
+{
+  "connection_id": "conn_01hx3gp9d2z4m",
+  "messages": [
+    { "role": "user", "content": "How many users signed up this week?" }
+  ],
+  "model": "gpt-4o-mini"
+}
+```
+
+**Response:**
+
+```json
+{
+  "message": {
+    "role": "assistant",
+    "content": "There were 347 new users this week.",
+    "sql": "SELECT COUNT(*) FROM users WHERE created_at >= DATE_TRUNC('week', NOW());",
+    "result": { "rows": [{ "count": 347 }] }
+  },
+  "credits_used": 1,
+  "credits_remaining": 657
+}
+```
+
+### Get Usage
+
+```
+GET /v1/resona/usage
+```
+
+Returns credit usage for the current billing period.
+
+---
+
+## Error Responses
+
+All errors follow this format:
+
+```json
+{
+  "error": {
+    "code": "MIGRATION_CONFLICT",
+    "message": "Migration 20240324 conflicts with an already-applied migration.",
+    "details": {
+      "conflicting_migration": "20240323_similar_change"
+    }
+  }
+}
+```
+
+### HTTP Status Codes
+
+| Code | Meaning |
+|------|---------|
+| `200` | Success |
+| `201` | Created |
+| `204` | No Content (successful delete) |
+| `400` | Bad Request — invalid parameters |
+| `401` | Unauthorized — missing or invalid API key |
+| `403` | Forbidden — insufficient permissions |
+| `404` | Not Found |
+| `409` | Conflict — e.g., migration already applied |
+| `422` | Unprocessable Entity — validation error |
+| `429` | Too Many Requests — rate limit exceeded |
+| `500` | Internal Server Error |
+
+---
+
+**Next:** [Authentication](/docs/api-reference/authentication)

@@ -1,0 +1,30 @@
+# Schema Weaver Documentation
+
+> Schema Weaver — modern database schema management with visual diff, migration generation, and drift detection.
+
+## Pages
+
+- [Introduction](/docs/introduction): Welcome to Schema Weaver documentation. Learn about the platform and its core capabilities.
+- [Configuration](/docs/getting-started/configuration): Complete reference for schema-config.json options and environment variables
+- [Getting Started](/docs/getting-started): Get Schema Weaver up and running in 5 minutes
+- [5-Minute Quickstart](/docs/getting-started/quickstart): Get Schema Weaver running and apply your first migration in under 5 minutes
+- [Drift Detection](/docs/core-concepts/drift-detection): Understand and manage schema drift in your databases
+- [Core Concepts](/docs/core-concepts): Understand the fundamental concepts that power Schema Weaver
+- [Migrations](/docs/core-concepts/migrations): Master the migration system for safe, version-controlled schema changes
+- [Versioning](/docs/core-concepts/versioning): Manage schema versions and handle breaking changes
+- [Authentication](/docs/api-reference/authentication): API key and session token authentication for Schema Weaver REST API
+- [API Reference](/docs/api-reference): Complete API documentation for Schema Weaver
+- [REST API Reference](/docs/api-reference/rest-api): Complete reference for all Schema Weaver REST API endpoints
+- [How Resona AI Works](/docs/data-explorer/agentic-workflows): Understand the agentic loop, tool execution pipeline, and the full set of analysis tools Resona uses to answer your data questions
+- [Charts & Analysis Results](/docs/data-explorer/ai-artifacts): Understand the artifact types Resona AI generates — charts, stat blocks, and data tables — and how to interact with them
+- [AI Chat Interface](/docs/data-explorer/ai-chat-interface): Use Resona AI inside the Data Explorer to query, analyze, and visualize your data using natural language
+- [Resona AI](/docs/data-explorer/ai-overview): Overview of Resona AI inside the Data Explorer — what it can do, how to access it, and where to go next
+- [Workspace & Projects](/docs/data-explorer/ai-workspace): Manage generated reports, organize analysis into projects, and browse your full artifact history in the Data Explorer
+- [Exploring Your Data](/docs/data-explorer/exploring-data): Browse tables, inspect columns, filter rows, and analyze column statistics in the Data Explorer grid
+- [Exporting Data](/docs/data-explorer/exporting-data): Export individual tables or entire database schemas to CSV, JSON, NDJSON, Excel, and SQL formats
+- [Data Explorer](/docs/data-explorer): Query your databases interactively with the Schema Weaver Data Explorer
+- [AI Chat](/docs/resona-ai/ai-chat): Use Resona AI Chat to query your database with natural language
+- [Resona AI](/docs/resona-ai): Meet Resona, the AI-powered data assistant built into Schema Weaver
+- [Models and Credits](/docs/resona-ai/models): Available AI models in Resona, credit costs, and plan limits
+- [Schema Visualization](/docs/schema-visualization): Explore and understand your database structure with interactive ER diagrams
+- [Migrations](/docs/migrations): Deep dive into Schema Weaver's Atlas-powered migration engine — CI/CD, rollbacks, and advanced patterns

@@ -1,0 +1,258 @@
+---
+title: Schema Visualization
+description: Explore and understand your database structure with interactive ER diagrams
+tags: [visualization, er-diagram, schema, relationships]
+order: 6
+sidebar_group: "Schema Visualization"
+---
+
+# Schema Visualization
+
+Schema Weaver automatically generates interactive Entity-Relationship (ER) diagrams from your live database. Explore tables, relationships, and constraints visually — no manual diagramming required.
+
+---
+
+## Opening the ER Diagram
+
+### Cloud Platform
+
+Navigate to your project and click **Schema** in the top navigation. The ER diagram loads automatically from your connected database.
+
+### CLI (Local Web UI)
+
+```bash
+schema-weaver ui
+# Open http://localhost:4242/schema
+```
+
+The diagram renders in seconds for most schemas. For very large schemas (500+ tables), initial rendering may take 10–15 seconds.
+
+---
+
+## What's Shown in the Diagram
+
+Each table is rendered as a card showing:
+
+```
+┌─────────────────────────┐
+│  users                  │
+├─────────────────────────┤
+│ 🔑 id          BIGINT   │
+│    email       TEXT     │
+│    name        TEXT     │
+│    role        TEXT     │
+│    created_at  TIMESTAMPTZ │
+└─────────────────────────┘
+```
+
+**Relationship lines** connect tables via foreign keys:
+
+```
+users ──────────────< orders
+  (one user can have many orders)
+
+orders >──────────── products
+  (via order_items join table)
+```
+
+Line styles:
+- **Solid line** — foreign key constraint enforced at the database level
+- **Dashed line** — inferred relationship (column name matches but no FK constraint)
+- **Arrow style** — crow's foot notation: one-to-many, many-to-many, one-to-one
+
+---
+
+## Navigating the Diagram
+
+### Zoom and Pan
+
+| Action | Mouse | Touchpad |
+|--------|-------|---------|
+| Zoom in/out | Scroll wheel | Pinch |
+| Pan | Click and drag background | Two-finger drag |
+| Reset view | Double-click background | — |
+| Fit all tables | Click **Fit** button | — |
+
+### Keyboard Shortcuts
+
+| Action | Shortcut |
+|--------|---------|
+| Fit all to screen | `F` |
+| Zoom to 100% | `0` |
+| Zoom in | `+` |
+| Zoom out | `-` |
+| Find table | `Ctrl+F` / `⌘F` |
+
+### Finding a Table
+
+Press `Ctrl+F` and type a table name. The diagram scrolls to and highlights the matching table.
+
+---
+
+## Focusing on Relationships
+
+Click any table card to highlight it and all its direct relationships. Tables not connected to it are dimmed.
+
+This is useful for understanding the blast radius of a change — "if I change the `users` table, what other tables are affected?"
+
+### Expanding Relationship Depth
+
+By default, clicking a table shows depth-1 relationships (directly connected tables). Use the **depth selector** in the top toolbar to show depth-2 (tables connected to connected tables) or deeper.
+
+```
+Depth 1:  users → orders
+Depth 2:  users → orders → order_items → products
+Depth 3:  users → orders → order_items → products → categories
+```
+
+---
+
+## Table Details Panel
+
+Click a table name to open the details panel on the right side:
+
+### Columns Tab
+
+| Column | Shows |
+|--------|-------|
+| Name | Column identifier |
+| Type | Data type with precision (e.g., `VARCHAR(255)`) |
+| Nullable | Whether NULL is allowed |
+| Default | Default value or expression |
+| Constraints | PK, FK, UNIQUE, CHECK |
+
+### Indexes Tab
+
+Lists all indexes on the table:
+
+```
+idx_users_email       UNIQUE  (email)
+idx_users_role        BTREE   (role)
+idx_users_created_at  BTREE   (created_at DESC)
+```
+
+### Foreign Keys Tab
+
+Both **inbound** and **outbound** foreign keys:
+
+```
+Outbound (this table references):
+  users.id → subscriptions.user_id
+
+Inbound (other tables reference this):
+  orders.user_id → users.id
+  sessions.user_id → users.id
+  audit_log.actor_id → users.id
+```
+
+### SQL Tab
+
+The full `CREATE TABLE` statement as it exists in the database.
+
+---
+
+## Layout Options
+
+The diagram supports multiple layout algorithms. Switch via **View → Layout**:
+
+| Layout | Best For |
+|--------|---------|
+| Auto (force-directed) | General use, balances space |
+| Hierarchical | Schemas with clear parent-child structure |
+| Circular | Highlighting clusters of related tables |
+| Manual | Full control — drag and drop tables anywhere |
+
+Manual positions are saved per-user and persist across sessions.
+
+---
+
+## Filtering the Diagram
+
+For large schemas, filter what's visible:
+
+### By Schema (PostgreSQL)
+
+Select which PostgreSQL schemas to display (e.g., `public`, `analytics`, `audit`).
+
+### By Tag
+
+If you've tagged tables in `schema-config.json`, filter by tag:
+
+```json
+{
+  "visualization": {
+    "tags": {
+      "users": ["core", "pii"],
+      "orders": ["core", "billing"],
+      "audit_log": ["audit"]
+    }
+  }
+}
+```
+
+### By Table Name
+
+Type in the **Filter tables** box in the toolbar. Supports wildcards: `order*` matches `orders`, `order_items`, `order_history`.
+
+### Hiding Tables
+
+Right-click any table → **Hide table**. Hidden tables still appear in the sidebar list.
+
+---
+
+## Snapshots and Diff View
+
+### Viewing a Past Schema
+
+Schema Weaver stores schema snapshots after every migration. Navigate to **Schema → History** to browse past snapshots and view the diagram as it looked at any point in time.
+
+### Comparing Two Snapshots
+
+Select two snapshots and click **Compare**. The diff view highlights:
+
+- **Green** tables/columns — added
+- **Red** tables/columns — removed
+- **Yellow** tables/columns — modified
+
+This is extremely useful for code review: "what exactly changed between last week's deploy and this week's?"
+
+---
+
+## Exporting the Diagram
+
+Export the current view via **File → Export**:
+
+| Format | Use Case |
+|--------|---------|
+| PNG | Screenshots, documentation |
+| SVG | Scalable graphics, presentations |
+| PDF | Print-ready diagrams |
+| JSON | Raw schema data for tooling |
+| SQL (DDL) | Reconstructible `CREATE TABLE` statements |
+
+Exports capture only the currently visible tables (respecting filters and hidden tables).
+
+---
+
+## Embedding the Diagram
+
+On Pro and Enterprise plans, embed a read-only diagram in your internal docs or wiki using an iframe:
+
+```html
+<iframe
+  src="https://app.schema-weaver.io/embed/schema/YOUR_PROJECT_ID?token=PUBLIC_EMBED_TOKEN"
+  width="100%"
+  height="600"
+  frameborder="0">
+</iframe>
+```
+
+Generate a public embed token under **Project Settings → Sharing → Embed Token**.
+
+---
+
+## Next Steps
+
+- [Migrations Deep Dive](/docs/migrations) — Understand how schema changes are managed
+- [Core Concepts: Drift Detection](/docs/core-concepts/drift-detection) — Keep your diagram in sync with reality
+- [API Reference](/docs/api-reference) — Access schema data programmatically

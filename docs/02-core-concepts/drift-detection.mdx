@@ -1,0 +1,149 @@
+---
+title: Drift Detection
+description: Understand and manage schema drift in your databases
+tags: [drift, monitoring, validation]
+order: 2
+sidebar_group: "Core Concepts"
+---
+
+# Drift Detection
+
+Drift detection helps you identify when your actual database schema differs from your version-controlled schema.
+
+## What is Schema Drift?
+
+Schema drift occurs when your production database schema doesn't match what's defined in your migrations:
+
+```
+Version Control (Expected)    vs    Production Database (Actual)
+├─ users table                      ├─ users table
+├─ id (int pk)                      ├─ id (int pk)
+├─ email (text unique) ✓            ├─ email (text unique) ✓
+├─ created_at (timestamp) ✓         ├─ created_at (timestamp) ✓
+└─ (nothing else)                   ├─ legacy_field (text) ❌ unexpected
+                                    └─ status (int) ❌ unexpected
+```
+
+## Common Causes
+
+### 1. Hotfixes
+
+Emergency SQL run directly in production without committing to version control:
+
+```bash
+# DON'T DO THIS:
+psql production_db -c "ALTER TABLE users ADD COLUMN emergency_flag BOOLEAN;"
+```
+
+### 2. Manual Changes
+
+Team member modifies schema manually via GUI tools like pgAdmin.
+
+### 3. Incomplete Migrations
+
+Migration file created but not applied to all environments:
+
+```
+Staging:    [✓ Applied] users.phone_number
+Production: [✗ Missing] users.phone_number ← DRIFT!
+```
+
+### 4. Failed Rollbacks
+
+Rollback script fails partially, leaving schema in inconsistent state.
+
+### 5. Third-party Tools
+
+Extensions or backups modify schema without integration with Schema Weaver.
+
+## Detecting Drift
+
+### Manual Check
+
+```bash
+npx schema-weaver drift check
+```
+
+Output:
+```
+Schema Drift Report
+═════════════════════════════════════════
+
+Connection: production
+Status: ⚠ DRIFT DETECTED
+
+Unexpected objects (in DB, not in migrations):
+  • Column: users.legacy_field (TEXT)
+  • Index: idx_old_users_status
+  • Constraint: check_valid_status
+
+Missing objects (in migrations, not in DB):
+  • Column: users.phone_number (TEXT)
+
+═════════════════════════════════════════
+Risk Level: HIGH (unexpected columns)
+Recommendation: Investigate and reconcile
+```
+
+### Automatic Monitoring
+
+Enable periodic drift checks:
+
+```json
+{
+  "driftDetection": {
+    "enabled": true,
+    "interval": "6h",
+    "alertOn": "error"
+  }
+}
+```
+
+Checks every 6 hours and alerts on issues.
+
+## Resolving Drift
+
+### 1. Document Unexpected Changes
+
+If changes are intentional, document them:
+
+```bash
+npx schema-weaver drift accept --object users.legacy_field
+```
+
+This records: "We intentionally have this field that's not in migrations."
+
+### 2. Create Missing Migrations
+
+If migrations are missing from production, apply them:
+
+```bash
+npx schema-weaver migrate apply
+```
+
+### 3. Clean Up Production
+
+If unexpected columns exist and are truly unwanted:
+
+```bash
+# Generate migration to remove unexpected objects
+npx schema-weaver migration gen --fix-drift
+
+# Review the generated migration
+cat migrations/auto_fix_drift_20240323.sql
+
+# Apply it
+npx schema-weaver migrate apply
+```
+
+### 4. Investigate Root Cause
+
+For each drift instance:
+
+1. **When did it happen?** — Check migration history timestamps
+2. **Who made changes?** — Check git blame on migrations/
+3. **Why wasn't it tracked?** — Process improvement
+
+---
+
+**Next:** [Versioning](/docs/core-concepts/versioning)

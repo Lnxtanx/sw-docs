@@ -1,0 +1,75 @@
+---
+title: API Reference
+description: Complete API documentation for Schema Weaver
+tags: [api, endpoints, reference]
+order: 3
+sidebar_group: "API Reference"
+---
+
+# API Reference
+
+Complete documentation of Schema Weaver APIs.
+
+## Overview
+
+Schema Weaver provides REST APIs for:
+
+- **Migrations** — Create, preview, apply, and rollback migrations
+- **Schema** — Inspect, diff, and validate schemas
+- **Connections** — Manage database connections
+- **Snapshots** — Access schema snapshots and history
+
+All APIs require authentication via API key or session token.
+
+## Authentication
+
+Include your API key in the `Authorization` header:
+
+```bash
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+  https://api.schema-weaver.io/v1/connections
+```
+
+## API Endpoints
+
+### Migrations
+
+- `POST /v1/migrations` — Create a new migration
+- `GET /v1/migrations/:id` — Get migration details
+- `POST /v1/migrations/:id/preview` — Preview migration
+- `POST /v1/migrations/:id/apply` — Apply migration
+- `POST /v1/migrations/:id/rollback` — Rollback migration
+
+### Schema
+
+- `GET /v1/schema` — Get current schema
+- `POST /v1/schema/diff` — Compare two schemas
+- `POST /v1/schema/inspect` — Inspect schema structure
+
+### Connections
+
+- `GET /v1/connections` — List all connections
+- `POST /v1/connections` — Create new connection
+- `GET /v1/connections/:id` — Get connection details
+- `PUT /v1/connections/:id` — Update connection
+- `DELETE /v1/connections/:id` — Delete connection
+
+## Rate Limiting
+
+API requests are rate limited:
+
+- **Free tier:** 1,000 requests/day
+- **Pro tier:** 100,000 requests/day
+- **Enterprise:** Unlimited
+
+Rate limit headers:
+
+```
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 999
+X-RateLimit-Reset: 1234567890
+```
+
+---
+
+**Full endpoint documentation coming soon.**

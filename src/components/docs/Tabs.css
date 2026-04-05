@@ -1,0 +1,91 @@
+/* Tabs Component Styles */
+
+.tabs-wrapper {
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tabs-header {
+  background: var(--bg-hover);
+  border-bottom: 1px solid var(--border-color);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tabs-list {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  gap: 0;
+}
+
+.tabs-trigger {
+  background: none;
+  border: none;
+  padding: 1rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 2px solid transparent;
+  position: relative;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tabs-trigger:hover {
+  color: var(--text-main);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.tabs-trigger.active {
+  color: var(--accent-color);
+  border-bottom-color: var(--accent-color);
+}
+
+.tabs-content {
+  padding: 0;
+  background: var(--bg-main);
+}
+
+.tabs-pane {
+  padding: 0;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Pre inside tabs should not have extra margin */
+.tabs-pane pre {
+  margin: 0;
+  border-radius: 0;
+}
+
+.tabs-pane .code-block-wrapper {
+  margin: 0;
+}
+
+.tabs-pane .code-block-container {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  border-radius: 0;
+}
+
+/* Mobile: Horizontal scroll for tabs */
+@media (max-width: 768px) {
+  .tabs-trigger {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+}

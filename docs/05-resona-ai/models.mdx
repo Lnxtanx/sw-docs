@@ -1,0 +1,248 @@
+---
+title: Models and Credits
+description: Available AI models in Resona, credit costs, and plan limits
+tags: [resona, models, credits, pricing, gpt-4o, claude]
+order: 3
+sidebar_group: "Resona AI"
+---
+
+# Models and Credits
+
+Resona AI supports multiple large language models so you can balance speed, quality, and cost. Each query consumes credits from your monthly allowance based on which model you use.
+
+---
+
+## Available Models
+
+| Model | Provider | Credits | Context Window | Best For |
+|-------|----------|---------|----------------|----------|
+| Free model | Schema Weaver | 0 | 8k tokens | Basic lookups, simple queries |
+| GPT-4o mini | OpenAI | 1x | 128k tokens | Everyday queries, fast iteration |
+| GPT-4o | OpenAI | 7x | 128k tokens | Complex analysis, multi-table joins |
+| Claude Sonnet | Anthropic | 14x | 200k tokens | Nuanced reasoning, very large schemas |
+
+### Free Model
+
+The free model is a smaller, fine-tuned model optimized specifically for SQL generation. It's fast and costs zero credits, but:
+- Limited to simpler, single-table queries
+- Less accurate on complex joins and aggregates
+- Rate-limited: 20 queries per hour per user
+- No chart generation
+
+Use the free model when you're exploring a schema or writing straightforward `SELECT` statements.
+
+### GPT-4o mini
+
+OpenAI's fastest capable model. Excellent for most Data Explorer use cases:
+- Strong SQL generation across all major dialects
+- Good at multi-table joins and aggregates
+- Chart suggestions included
+- **1 credit per query**
+
+This is the recommended default model for everyday use.
+
+### GPT-4o
+
+OpenAI's most capable model. Use this when GPT-4o mini gives an incorrect or suboptimal query:
+- Best-in-class accuracy for complex analytical queries
+- Handles very large schemas (100+ tables) reliably
+- Explains query optimization in depth
+- **7 credits per query**
+
+### Claude Sonnet
+
+Anthropic's Claude Sonnet model. Particularly strong at:
+- Schemas with complex naming conventions or abbreviations
+- Long, multi-step reasoning chains
+- Explaining schema structure and data relationships clearly
+- Queries requiring deep business logic understanding
+- **14 credits per query**
+
+> Claude Sonnet has a 200k token context window. This makes it the best choice for extremely large schemas (300+ tables) where fitting the full schema into context matters.
+
+---
+
+## Credit System
+
+Credits are the unit of measure for Resona AI usage. Each plan comes with a monthly credit allowance.
+
+### How Credits Are Calculated
+
+One "credit" is defined as the cost of a single GPT-4o mini query.
+
+| Model | Relative Cost | Example: 100 queries |
+|-------|-------------|---------------------|
+| Free model | 0x | 0 credits |
+| GPT-4o mini | 1x | 100 credits |
+| GPT-4o | 7x | 700 credits |
+| Claude Sonnet | 14x | 1,400 credits |
+
+### What Counts as a Query
+
+- Each time you send a message to Resona AI Chat = 1 query
+- Follow-up messages in the same conversation each cost credits
+- Starting a new conversation does not cost credits
+- Viewing query history is free
+- Re-running a saved query does not cost AI credits (the query runs directly, no AI involved)
+
+### Credits Do Not Roll Over
+
+Monthly credits reset on the 1st of each calendar month. Unused credits are not carried over to the following month.
+
+---
+
+## Plan Credit Limits
+
+| Plan | Monthly Credits | Overage |
+|------|----------------|---------|
+| Free | 50 credits | Blocked until next cycle |
+| Pro | 1,000 credits | $0.02 per extra credit |
+| Enterprise | Custom | Negotiated |
+
+### Free Plan
+
+50 credits per month. Practically:
+- 50 queries with GPT-4o mini
+- 7 queries with GPT-4o
+- 3 queries with Claude Sonnet
+
+This is enough for light exploration. For regular use, upgrade to Pro.
+
+### Pro Plan
+
+1,000 credits per month. Practically:
+- 1,000 queries with GPT-4o mini
+- ~142 queries with GPT-4o
+- ~71 queries with Claude Sonnet
+- Or any mix
+
+Overage charges: $0.02 per credit beyond 1,000. You can set a **credit cap** to prevent unexpected charges:
+
+```
+Settings → Billing → Resona AI → Monthly Credit Cap: 1,500
+```
+
+When the cap is reached, Resona falls back to the free model automatically (or stops, depending on your setting).
+
+### Enterprise Plan
+
+Enterprises get a negotiated monthly credit pool shared across all team members. Contact sales to discuss volume pricing and custom model access.
+
+---
+
+## Checking Your Credit Usage
+
+### In the App
+
+Go to **Settings → Usage** to see:
+- Credits used this month
+- Credits remaining
+- Breakdown by model
+- Per-user usage (admins only)
+
+### Via API
+
+```bash
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+  https://api.schema-weaver.io/v1/resona/usage
+
+# Response:
+{
+  "period": "2024-03-01/2024-03-31",
+  "credits_used": 342,
+  "credits_limit": 1000,
+  "credits_remaining": 658,
+  "breakdown": {
+    "free_model": 0,
+    "gpt-4o-mini": 180,
+    "gpt-4o": 112,
+    "claude-sonnet": 50
+  }
+}
+```
+
+---
+
+## Setting Default Model
+
+Set the default model for all AI Chat sessions in your config:
+
+```json
+{
+  "resona": {
+    "defaultModel": "gpt-4o-mini"
+  }
+}
+```
+
+Or per-user via **Settings → Resona AI → Default Model**.
+
+### Model Override per Conversation
+
+You can switch models at any point during a conversation using the model selector in the chat header. The switch takes effect on the next message.
+
+---
+
+## Model Selection Guide
+
+Use this flowchart to choose the right model:
+
+```
+Is your question simple (single table, basic filter)?
+  YES → Free model (if accuracy is okay) or GPT-4o mini
+  NO  ↓
+
+Does it involve 3+ tables or complex aggregations?
+  YES → GPT-4o
+  NO  ↓
+
+Is your schema very large (100+ tables) or oddly named?
+  YES → Claude Sonnet
+  NO  → GPT-4o mini
+```
+
+### Rule of Thumb
+
+Start with **GPT-4o mini**. If the generated SQL is wrong or incomplete, switch to **GPT-4o** or **Claude Sonnet** for that question.
+
+---
+
+## Bringing Your Own API Key (BYOK)
+
+On the Pro and Enterprise plans, you can use your own OpenAI or Anthropic API keys. This means:
+- Queries are billed to your own account at the provider's rates
+- Credits are NOT consumed for BYOK model queries
+- Your data governance policies apply to the API calls
+
+Configure BYOK in **Settings → Resona AI → API Keys**:
+
+```json
+{
+  "resona": {
+    "openaiApiKey": "${OPENAI_API_KEY}",
+    "anthropicApiKey": "${ANTHROPIC_API_KEY}"
+  }
+}
+```
+
+> With BYOK, Resona still enforces schema exclusions and read-only mode. Only the underlying model API call is routed through your key.
+
+---
+
+## FAQ
+
+**Q: Does Resona send my data to OpenAI or Anthropic?**
+No. Only your schema metadata (table/column names, types, constraints) and your question text are sent. Query results stay on your infrastructure.
+
+**Q: What happens when I run out of credits?**
+You'll see a warning at 80% usage. At 100%, Resona falls back to the free model. You can upgrade your plan or wait until the next monthly reset.
+
+**Q: Can I share credits across a team?**
+Yes, on Pro and Enterprise plans, credits are pooled across all workspace members. Admins can set per-user limits under **Settings → Team → Credit Limits**.
+
+**Q: Are there volume discounts?**
+Yes, on Enterprise plans. Contact [sales@schema-weaver.io](mailto:sales@schema-weaver.io).
+
+---
+
+**Next:** [Schema Visualization](/docs/schema-visualization)

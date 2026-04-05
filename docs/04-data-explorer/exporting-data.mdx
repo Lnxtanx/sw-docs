@@ -1,0 +1,246 @@
+---
+title: Exporting Data
+description: Export individual tables or entire database schemas to CSV, JSON, NDJSON, Excel, and SQL formats
+tags: [data-explorer, export, csv, json, excel, sql, download]
+order: 2
+sidebar_group: "Data Explorer"
+---
+
+# Exporting Data
+
+The Data Explorer lets you export data in multiple formats — either a single table or your entire database schema as a ZIP archive. Exports are triggered directly from the browser and download instantly.
+
+---
+
+## Export Button
+
+![The Export button and format selection dropdown in the Data Explorer action bar](/images/data-explorer/export.png)
+
+The **Export** button appears in the top-right action bar when you have a connection selected. Click it to open a dropdown with two sections:
+
+1. **Export Current Table** — downloads the currently selected table
+2. **Export Entire Database (ZIP)** — bundles all tables in the active schema into a ZIP archive
+
+---
+
+## Single Table Export
+
+Select a table in the sidebar, then open the Export dropdown. You'll see the table name with each format option:
+
+| Format | File Extension | Description |
+|--------|---------------|-------------|
+| **CSV** | `.csv` | Comma-separated values, UTF-8 encoded. Universally compatible with spreadsheets, BI tools, and scripting languages |
+| **JSON** | `.json` | Array of objects. Each row is a JSON object with column names as keys |
+| **NDJSON** | `.ndjson` | Newline-delimited JSON. One JSON object per line — ideal for streaming processors, log tools, and `jq` |
+| **Excel** | `.xlsx` | Native Excel spreadsheet. Formatted data with proper column types |
+| **SQL** | `.sql` | `INSERT INTO` statements. Ready to replay into another database |
+
+### Export Parameters
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| Max rows | 10,000 | Maximum number of rows exported per table |
+| Schema | Current schema | The schema of the selected table |
+
+### File Naming
+
+Downloaded files are named with the table name and current date:
+
+```
+users_2026-04-04.csv
+orders_2026-04-04.xlsx
+products_2026-04-04.sql
+```
+
+### Example: CSV Export
+
+Clicking `users - CSV` generates a file like:
+
+```csv
+id,email,name,role,created_at
+1,alice@acme.io,Alice Smith,admin,2025-01-15T08:30:00Z
+2,bob@corp.com,Bob Jones,user,2025-02-20T14:22:00Z
+3,carol@dev.io,Carol Lee,editor,2025-03-10T09:15:00Z
+```
+
+### Example: JSON Export
+
+```json
+[
+  {
+    "id": 1,
+    "email": "alice@acme.io",
+    "name": "Alice Smith",
+    "role": "admin",
+    "created_at": "2025-01-15T08:30:00Z"
+  },
+  {
+    "id": 2,
+    "email": "bob@corp.com",
+    "name": "Bob Jones",
+    "role": "user",
+    "created_at": "2025-02-20T14:22:00Z"
+  }
+]
+```
+
+### Example: NDJSON Export
+
+```json
+{"id":1,"email":"alice@acme.io","name":"Alice Smith","role":"admin","created_at":"2025-01-15T08:30:00Z"}
+{"id":2,"email":"bob@corp.com","name":"Bob Jones","role":"user","created_at":"2025-02-20T14:22:00Z"}
+```
+
+### Example: SQL Export
+
+```sql
+INSERT INTO users (id, email, name, role, created_at)
+VALUES (1, 'alice@acme.io', 'Alice Smith', 'admin', '2025-01-15T08:30:00Z');
+
+INSERT INTO users (id, email, name, role, created_at)
+VALUES (2, 'bob@corp.com', 'Bob Jones', 'user', '2025-02-20T14:22:00Z');
+```
+
+---
+
+## Full Database Export (ZIP)
+
+To export **all tables** in the current schema at once, click the green **"Export Entire Database (ZIP)"** section in the export dropdown.
+
+### How It Works
+
+1. Click the collapsible "Export Entire Database (ZIP)" header to reveal format options
+2. Select a format (CSV, JSON, NDJSON, Excel, or SQL)
+3. A toast notification confirms the export has started:
+
+> *Exporting schema 'public'... Preparing ZIP archive of CSV files. This may take a moment depending on database size.*
+
+4. The server bundles every table in the schema into a single ZIP file and streams it to your browser
+
+### ZIP Structure
+
+```
+schema_export_2026-04-04.zip
+├── users.csv
+├── orders.csv
+├── products.csv
+├── invoices.csv
+├── sessions.csv
+└── ...
+```
+
+Each file inside the ZIP follows the same format as a single-table export.
+
+### Timing
+
+Export time depends on:
+- Number of tables in the schema
+- Total row count across all tables
+- Network speed between the server and database
+- Chosen format (SQL and Excel are slightly slower than CSV)
+
+> For large databases, the export button shows a loading spinner and disables re-clicking while the ZIP is being prepared.
+
+---
+
+## Export States & Edge Cases
+
+| State | Behavior |
+|-------|----------|
+| **No connection** | Dropdown shows "Select a connection to export data" |
+| **No table selected** | Table export section shows "Select a table to export rows" |
+| **Export in progress** | Button shows spinning loader, dropdown is disabled |
+| **Database export** | Green-themed options, collapsible section, toast notification |
+
+---
+
+## API Reference
+
+Exports use direct URL-based downloads. No authentication token is passed in the URL — the browser's session cookie handles auth.
+
+### Single Table Export
+
+```
+GET /api/data/{connectionId}/tables/{tableName}/export
+    ?schemaName=public
+    &maxRows=10000
+    &format=csv
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `schemaName` | string | `public` | Database schema |
+| `maxRows` | number | `10000` | Row limit |
+| `format` | string | `csv` | One of: `csv`, `json`, `ndjson`, `excel`, `sql` |
+
+### Full Schema Export
+
+```
+GET /api/data/{connectionId}/export-all
+    ?schemaName=public
+    &format=csv
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `schemaName` | string | `public` | Database schema to export |
+| `format` | string | `csv` | One of: `csv`, `json`, `ndjson`, `excel`, `sql` |
+
+Response: ZIP archive streamed as `application/zip`.
+
+---
+
+## Use Cases
+
+### Data Migration
+
+Export your schema as SQL and replay it in another environment:
+
+```bash
+# Export from Schema Weaver, then import
+psql -h new-host -d newdb -f users_2026-04-04.sql
+```
+
+### Reporting & Analysis
+
+Export as CSV or Excel for use in:
+- Google Sheets / Microsoft Excel
+- Tableau / Power BI / Metabase
+- Pandas / R / Jupyter notebooks
+
+### Backup Snapshots
+
+Use the full database export to create periodic data snapshots:
+
+```bash
+# Automate with curl
+curl -o backup.zip \
+  "https://app.schema-weaver.io/api/data/{connId}/export-all?schemaName=public&format=csv"
+```
+
+### Data Processing Pipelines
+
+Export as NDJSON for streaming ingestion:
+
+```bash
+# Process with jq
+cat users.ndjson | jq 'select(.role == "admin")' > admins.ndjson
+```
+
+---
+
+## Limits
+
+| Constraint | Value |
+|-----------|-------|
+| Max rows per table export | 10,000 (configurable) |
+| Max tables per ZIP | All tables in selected schema |
+| Supported formats | CSV, JSON, NDJSON, Excel (.xlsx), SQL |
+| Max concurrent exports | 1 per browser session |
+
+---
+
+## Next Steps
+
+- [Exploring Your Data](/docs/data-explorer/exploring-data) — filtering, sorting, and column statistics
+- [Resona AI Chat](/docs/resona-ai/ai-chat) — use natural language to analyze and export data

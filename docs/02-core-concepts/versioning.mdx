@@ -1,0 +1,185 @@
+---
+title: Versioning
+description: Manage schema versions and handle breaking changes
+tags: [versioning, compatibility, releases]
+order: 3
+sidebar_group: "Core Concepts"
+---
+
+# Schema Versioning
+
+Learn how to manage schema versions and handle breaking changes gracefully.
+
+## Version Your Schema
+
+### Semantic Versioning
+
+Follow Semantic Versioning for your schema:
+
+```
+MAJOR.MINOR.PATCH
+  ↓      ↓      ↓
+  1      2      3
+
+1.2.3
+├─ MAJOR (1): Breaking changes (column dropped, type changed)
+├─ MINOR (2): Non-breaking additions (new column, new table)
+└─ PATCH (3): Bug fixes (index optimization, constraint fix)
+```
+
+### Examples
+
+```
+0.1.0 → 1.0.0  (MAJOR: Breaking changes for v1 release)
+1.0.0 → 1.1.0  (MINOR: Add new column to users table)
+1.1.0 → 1.1.1  (PATCH: Fix missing index on users.email)
+```
+
+## Breaking vs Non-Breaking Changes
+
+### Non-Breaking (MINOR version bump)
+
+These are safe and don't require application changes:
+
+✅ Add new column (with default or nullable)
+✅ Add new table
+✅ Add new index
+✅ Create new view
+✅ Add new constraint (if existing data satisfies it)
+
+```sql
+-- Safe: Application doesn't need to change
+ALTER TABLE users ADD COLUMN phone_number TEXT;
+```
+
+### Breaking (MAJOR version bump)
+
+These require application updates:
+
+⚠️ Remove column
+⚠️ Remove table
+⚠️ Rename column
+⚠️ Change column type (narrowing precision)
+⚠️ Add NOT NULL constraint without default
+⚠️ Drop index (performance impact)
+
+```sql
+-- Breaking: Application using users.status will break
+ALTER TABLE users DROP COLUMN status;
+```
+
+## Handling Breaking Changes
+
+### 1. Deprecation Period
+
+Before breaking, announce deprecation:
+
+```sql
+-- v1.2.0: Mark field as deprecated (documentation)
+-- Schema change will be in v2.0.0
+
+-- v2.0.0: Now safe to remove
+ALTER TABLE users DROP COLUMN legacy_status;
+```
+
+### 2. Compatibility Layer
+
+Support both old and new column names temporarily:
+
+```sql
+-- v1.1.0: Add new column
+ALTER TABLE users ADD COLUMN email_address TEXT;
+
+-- Keep old column for compatibility (create view if needed)
+CREATE VIEW users_compat AS
+SELECT id, email as email_address, created_at FROM users;
+```
+
+Later, after applications migrate:
+
+```sql
+-- v2.0.0: Remove old column
+ALTER TABLE users DROP COLUMN email;
+```
+
+### 3. Multi-step Migrations
+
+For complex changes, split into multiple releases:
+
+```
+v1.2.0: Add new column with default
+   ↓ (Wait for application update)
+v1.2.1: Copy data from old column to new
+   ↓ (Monitor for issues)
+v2.0.0: Remove old column
+```
+
+## Version Management
+
+### Tag Versions
+
+Tag your schema versions in Git:
+
+```bash
+git tag schema/v1.2.0 -m "Schema v1.2.0: Add phone field"
+git push origin schema/v1.2.0
+```
+
+### Document Changes
+
+Create a CHANGELOG:
+
+```markdown
+# Schema Changelog
+
+## [1.2.0] - 2024-03-23
+
+### Added
+- Column: users.phone_number
+- Index: idx_users_phone
+
+### Changed
+- users.email now requires unique constraint
+
+## [1.1.0] - 2024-03-15
+
+### Added
+- Table: audit_logs
+- Column: users.created_at
+
+### Fixed
+- Missing index on products.category
+```
+
+### Multi-Environment Versioning
+
+Track which version is deployed where:
+
+```
+Environment | Version | Last Update       | Status
+------------|---------|-------------------|--------
+Development | 1.2.1   | 2024-03-23 10:00 | ✓ Latest
+Staging     | 1.2.0   | 2024-03-21 15:30 | ⚠ Pending
+Production  | 1.1.0   | 2024-03-15 08:45 | ⚠ Outdated
+```
+
+## Schema Compatibility Matrix
+
+Create a matrix showing which application versions work with which schema versions:
+
+```
+            | Schema 1.0 | Schema 1.1 | Schema 2.0
+------------|-----------|-----------|----------
+App v1.0    | ✓ OK      | ✓ OK      | ✗ FAIL
+App v2.0    | ✗ FAIL    | ✓ OK      | ✓ OK
+App v2.1    | ✗ FAIL    | ⚠ Limited | ✓ OK
+```
+
+Use this to plan deployments:
+1. Ensure app and schema versions are compatible
+2. Deploy in correct order (usually schema first, then app)
+3. Verify compatibility after deployment
+
+---
+
+**Done with Core Concepts.** Explore the [API Reference](/docs/api-reference) or return to [Introduction](/docs/introduction).

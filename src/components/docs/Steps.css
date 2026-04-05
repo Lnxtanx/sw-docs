@@ -1,0 +1,116 @@
+/* Steps Component Styles */
+
+.steps-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+  counter-reset: step-counter;
+}
+
+.steps-item {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+/* Connecting line between steps */
+.steps-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: calc(0.875rem + 1px);
+  top: 3.5rem;
+  width: 2px;
+  height: calc(100% + 0.5rem);
+  background: var(--border-color);
+}
+
+.steps-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--accent-color);
+  color: white;
+  font-weight: 700;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.steps-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  padding-top: 0.25rem;
+}
+
+.steps-title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.steps-body {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.steps-body p {
+  margin: 0.5rem 0;
+}
+
+.steps-body p:first-child {
+  margin-top: 0;
+}
+
+.steps-body p:last-child {
+  margin-bottom: 0;
+}
+
+.steps-body code {
+  background: var(--bg-hover);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.steps-body ul,
+.steps-body ol {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.steps-body li {
+  margin: 0.25rem 0;
+}
+
+.steps-body pre {
+  margin: 0.75rem 0;
+}
+
+/* Code blocks inside steps */
+.steps-body .code-block-wrapper {
+  margin: 0.75rem 0;
+}
+
+@media (max-width: 768px) {
+  .steps-item {
+    gap: 1rem;
+  }
+
+  .steps-marker {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.85rem;
+  }
+
+  .steps-item:not(:last-child)::after {
+    left: calc(0.75rem + 1px);
+  }
+}

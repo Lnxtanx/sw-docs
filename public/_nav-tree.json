@@ -1,0 +1,108 @@
+[
+  {
+    "title": "Introduction",
+    "href": "/docs/introduction"
+  },
+  {
+    "title": "Getting Started",
+    "href": "/docs/getting/started",
+    "children": [
+      {
+        "title": "5-Minute Quickstart",
+        "href": "/docs/getting/started/quickstart"
+      },
+      {
+        "title": "Configuration",
+        "href": "/docs/getting/started/configuration"
+      }
+    ]
+  },
+  {
+    "title": "Core Concepts",
+    "href": "/docs/core/concepts",
+    "children": [
+      {
+        "title": "Migrations",
+        "href": "/docs/core/concepts/migrations"
+      },
+      {
+        "title": "Drift Detection",
+        "href": "/docs/core/concepts/drift-detection"
+      },
+      {
+        "title": "Versioning",
+        "href": "/docs/core/concepts/versioning"
+      }
+    ]
+  },
+  {
+    "title": "API Reference",
+    "href": "/docs/api/reference",
+    "children": [
+      {
+        "title": "REST API Reference",
+        "href": "/docs/api/reference/rest-api"
+      },
+      {
+        "title": "Authentication",
+        "href": "/docs/api/reference/authentication"
+      }
+    ]
+  },
+  {
+    "title": "Data Explorer",
+    "href": "/docs/data/explorer",
+    "children": [
+      {
+        "title": "Exploring Your Data",
+        "href": "/docs/data/explorer/exploring-data"
+      },
+      {
+        "title": "Exporting Data",
+        "href": "/docs/data/explorer/exporting-data"
+      },
+      {
+        "title": "Resona AI",
+        "href": "/docs/data/explorer/ai-overview"
+      },
+      {
+        "title": "AI Chat Interface",
+        "href": "/docs/data/explorer/ai-chat-interface"
+      },
+      {
+        "title": "How Resona AI Works",
+        "href": "/docs/data/explorer/agentic-workflows"
+      },
+      {
+        "title": "Charts & Analysis Results",
+        "href": "/docs/data/explorer/ai-artifacts"
+      },
+      {
+        "title": "Workspace & Projects",
+        "href": "/docs/data/explorer/ai-workspace"
+      }
+    ]
+  },
+  {
+    "title": "Resona AI",
+    "href": "/docs/resona/ai",
+    "children": [
+      {
+        "title": "AI Chat",
+        "href": "/docs/resona/ai/ai-chat"
+      },
+      {
+        "title": "Models and Credits",
+        "href": "/docs/resona/ai/models"
+      }
+    ]
+  },
+  {
+    "title": "Schema Visualization",
+    "href": "/docs/schema/visualization"
+  },
+  {
+    "title": "Migrations",
+    "href": "/docs/migrations"
+  }
+]

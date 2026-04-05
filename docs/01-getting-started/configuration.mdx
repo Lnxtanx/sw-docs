@@ -1,0 +1,341 @@
+---
+title: Configuration
+description: Complete reference for schema-config.json options and environment variables
+tags: [configuration, setup, environment]
+order: 3
+sidebar_group: "Getting Started"
+---
+
+# Configuration
+
+Schema Weaver is configured through a `schema-config.json` file in your project root, along with optional environment variables. This page is a complete reference for every available option.
+
+## Configuration File Location
+
+Schema Weaver looks for config in the following order:
+
+1. Path specified via `--config` flag
+2. `./schema-config.json` in the current working directory
+3. `~/.schema-weaver/config.json` (global user config)
+
+```bash
+# Use a custom config path
+schema-weaver migrate apply --config ./config/production.json
+```
+
+---
+
+## Full Configuration Reference
+
+```json
+{
+  "connections": [...],
+  "migrationsDir": "./migrations",
+  "snapshotsDir": "./snapshots",
+  "driftDetection": { ... },
+  "migrations": { ... },
+  "logging": { ... },
+  "resona": { ... }
+}
+```
+
+---
+
+## `connections`
+
+An array of database connection objects.
+
+```json
+{
+  "connections": [
+    {
+      "name": "development",
+      "driver": "postgres",
+      "url": "${DATABASE_URL}",
+      "ssl": false,
+      "poolSize": 5,
+      "queryTimeout": 30000
+    },
+    {
+      "name": "staging",
+      "driver": "postgres",
+      "url": "${STAGING_DATABASE_URL}",
+      "ssl": true,
+      "sslMode": "require"
+    }
+  ]
+}
+```
+
+### Connection Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `name` | `string` | — | Unique identifier for this connection (required) |
+| `driver` | `string` | — | Database driver: `postgres`, `mysql`, `sqlite` (required) |
+| `url` | `string` | — | Connection URL (required; supports env var substitution) |
+| `ssl` | `boolean` | `false` | Enable SSL/TLS for the connection |
+| `sslMode` | `string` | `"prefer"` | SSL mode: `disable`, `require`, `verify-ca`, `verify-full` |
+| `poolSize` | `number` | `10` | Maximum number of connections in the pool |
+| `idleTimeout` | `number` | `30000` | Milliseconds before an idle connection is closed |
+| `queryTimeout` | `number` | `60000` | Milliseconds before a query times out |
+| `schema` | `string` | `"public"` | Default schema to use (PostgreSQL only) |
+
+### Connection URL Formats
+
+**PostgreSQL:**
+```
+postgresql://username:password@host:port/database
+postgres://username:password@host:port/database?sslmode=require
+```
+
+**MySQL:**
+```
+mysql://username:password@host:port/database
+mysql://username:password@host:port/database?charset=utf8mb4
+```
+
+**SQLite:**
+```
+file:./relative/path/to/db.sqlite
+file:/absolute/path/to/db.sqlite
+file::memory:   ← in-memory (testing only)
+```
+
+---
+
+## `migrationsDir`
+
+Directory where migration files are stored. Defaults to `./migrations`.
+
+```json
+{
+  "migrationsDir": "./db/migrations"
+}
+```
+
+> Migration filenames must match the pattern `YYYYMMDDHHMMSS_description.sql` or `NNN_description.sql`. Schema Weaver applies them in lexicographic order.
+
+---
+
+## `snapshotsDir`
+
+Directory for storing schema snapshots. Defaults to `./snapshots`.
+
+```json
+{
+  "snapshotsDir": "./db/snapshots"
+}
+```
+
+Schema snapshots are created automatically after each successful migration. They are JSON files that capture the full schema state.
+
+---
+
+## `driftDetection`
+
+Controls automatic drift detection behavior.
+
+```json
+{
+  "driftDetection": {
+    "enabled": true,
+    "interval": "6h",
+    "connections": ["production"],
+    "alertOn": "warning",
+    "webhookUrl": "${DRIFT_WEBHOOK_URL}",
+    "ignoreObjects": [
+      "public.schema_migrations",
+      "public.legacy_*"
+    ]
+  }
+}
+```
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `enabled` | `boolean` | `false` | Enable background drift monitoring |
+| `interval` | `string` | `"6h"` | How often to check: `"1h"`, `"6h"`, `"24h"` |
+| `connections` | `string[]` | all | Which connections to monitor |
+| `alertOn` | `string` | `"error"` | Alert threshold: `"info"`, `"warning"`, `"error"` |
+| `webhookUrl` | `string` | — | POST drift reports to this URL |
+| `ignoreObjects` | `string[]` | `[]` | Glob patterns for objects to exclude from drift checks |
+
+---
+
+## `migrations`
+
+Fine-grained control over migration behavior.
+
+```json
+{
+  "migrations": {
+    "transactional": true,
+    "lockTimeout": 30000,
+    "autoSnapshot": true,
+    "requireReview": false,
+    "dangerousOps": "warn",
+    "namingFormat": "timestamp"
+  }
+}
+```
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `transactional` | `boolean` | `true` | Wrap each migration in a transaction |
+| `lockTimeout` | `number` | `30000` | Milliseconds to wait for a DB lock before failing |
+| `autoSnapshot` | `boolean` | `true` | Create a snapshot after each successful migration |
+| `requireReview` | `boolean` | `false` | Block `migrate apply` unless migration has a `reviewed: true` marker |
+| `dangerousOps` | `string` | `"warn"` | How to handle dangerous DDL: `"allow"`, `"warn"`, `"block"` |
+| `namingFormat` | `string` | `"timestamp"` | Migration filename format: `"timestamp"` or `"sequential"` |
+
+### Dangerous Operations
+
+When `dangerousOps` is set to `"block"`, Schema Weaver will refuse to apply migrations that contain:
+
+- `DROP TABLE` without `IF EXISTS`
+- `DROP COLUMN`
+- `ALTER COLUMN ... TYPE` (type narrowing)
+- `TRUNCATE`
+
+Override for a specific migration by adding a comment:
+
+```sql
+-- schema-weaver: allow-dangerous
+ALTER TABLE users DROP COLUMN legacy_id;
+```
+
+---
+
+## `logging`
+
+Control what Schema Weaver prints to stdout.
+
+```json
+{
+  "logging": {
+    "level": "info",
+    "format": "pretty",
+    "outputFile": "./logs/schema-weaver.log"
+  }
+}
+```
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `level` | `string` | `"info"` | Log verbosity: `"debug"`, `"info"`, `"warn"`, `"error"` |
+| `format` | `string` | `"pretty"` | Output format: `"pretty"` (human) or `"json"` (machine) |
+| `outputFile` | `string` | — | Also write logs to this file path |
+
+---
+
+## `resona`
+
+Configuration for the Resona AI integration (Data Explorer + AI Chat).
+
+```json
+{
+  "resona": {
+    "enabled": true,
+    "defaultModel": "gpt-4o-mini",
+    "maxQueryRows": 500,
+    "allowedConnections": ["development", "staging"],
+    "readOnly": true
+  }
+}
+```
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `enabled` | `boolean` | `true` | Enable the Resona AI features |
+| `defaultModel` | `string` | `"gpt-4o-mini"` | Default model for AI chat |
+| `maxQueryRows` | `number` | `1000` | Maximum rows returned by any query |
+| `allowedConnections` | `string[]` | all | Which connections the Data Explorer can access |
+| `readOnly` | `boolean` | `true` | Restrict Data Explorer to `SELECT` statements only |
+
+---
+
+## Environment Variables
+
+Schema Weaver reads the following environment variables. These override the corresponding `schema-config.json` values.
+
+| Variable | Description |
+|----------|-------------|
+| `DATABASE_URL` | Default database connection URL |
+| `SW_CONFIG_PATH` | Path to `schema-config.json` |
+| `SW_MIGRATIONS_DIR` | Override `migrationsDir` |
+| `SW_LOG_LEVEL` | Override `logging.level` |
+| `SW_ENV` | Active environment name (e.g., `production`) |
+| `SW_API_KEY` | API key for Schema Weaver cloud |
+| `RESONA_API_KEY` | API key for Resona AI features |
+
+### Using `.env` Files
+
+Schema Weaver automatically loads `.env` files in the project root via `dotenv`:
+
+```bash
+# .env
+DATABASE_URL=postgresql://alice:secret@localhost:5432/myapp_dev
+SW_LOG_LEVEL=debug
+```
+
+```bash
+# .env.production
+DATABASE_URL=postgresql://prod_user:${DB_PASS}@db.example.com:5432/myapp
+SW_LOG_LEVEL=warn
+```
+
+> **Never commit `.env` files with real credentials.** Add `.env` to your `.gitignore`. Commit a `.env.example` with placeholder values instead.
+
+---
+
+## Multiple Environments
+
+Use separate config files per environment and select them with `--config`:
+
+```
+config/
+├── schema-config.dev.json
+├── schema-config.staging.json
+└── schema-config.production.json
+```
+
+```bash
+# Apply to staging
+schema-weaver migrate apply --config config/schema-config.staging.json
+
+# Check production drift
+schema-weaver drift check --config config/schema-config.production.json
+```
+
+Or use the `SW_ENV` variable with a single config file that references environment-specific connection strings:
+
+```json
+{
+  "connections": [
+    {
+      "name": "default",
+      "driver": "postgres",
+      "url": "${DATABASE_URL}"
+    }
+  ]
+}
+```
+
+---
+
+## Validating Your Config
+
+Run the built-in config validator to catch errors before deploying:
+
+```bash
+schema-weaver config validate
+
+# ✅ schema-config.json is valid
+# ✅ connections[0] (development) — reachable
+# ⚠ driftDetection.webhookUrl — not set (optional)
+```
+
+---
+
+**Next Step:** [Core Concepts](/docs/core-concepts)

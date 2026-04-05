@@ -1,0 +1,266 @@
+---
+title: 5-Minute Quickstart
+description: Get Schema Weaver running and apply your first migration in under 5 minutes
+tags: [quickstart, setup, tutorial]
+order: 2
+sidebar_group: "Getting Started"
+---
+
+# 5-Minute Quickstart
+
+This guide takes you from zero to a working Schema Weaver setup with your first migration applied. You'll need a running PostgreSQL instance (or see [SQLite alternative](#using-sqlite-for-local-testing) below).
+
+## Prerequisites
+
+- Node.js 18+ installed
+- A PostgreSQL, MySQL, or SQLite database
+- npm or yarn
+
+---
+
+## Step 1 — Install Schema Weaver
+
+Install the CLI globally or as a dev dependency in your project:
+
+```bash
+# Global install (recommended for solo use)
+npm install -g schema-weaver
+
+# Or as a project dev dependency
+npm install --save-dev schema-weaver
+```
+
+Verify the installation:
+
+```bash
+schema-weaver --version
+# schema-weaver v2.1.0
+```
+
+---
+
+## Step 2 — Initialize Your Project
+
+Navigate to your project root and run:
+
+```bash
+cd my-project
+schema-weaver init
+```
+
+This creates two files:
+
+```
+my-project/
+├── schema-config.json     ← database connection config
+└── migrations/            ← migration files live here
+    └── .gitkeep
+```
+
+The generated `schema-config.json` looks like:
+
+```json
+{
+  "connections": [
+    {
+      "name": "development",
+      "driver": "postgres",
+      "url": "postgresql://user:password@localhost:5432/mydb"
+    }
+  ],
+  "migrationsDir": "./migrations",
+  "driftDetection": {
+    "enabled": true,
+    "interval": "6h"
+  }
+}
+```
+
+---
+
+## Step 3 — Connect Your Database
+
+Edit `schema-config.json` with your actual connection details:
+
+```json
+{
+  "connections": [
+    {
+      "name": "development",
+      "driver": "postgres",
+      "url": "postgresql://alice:secret@localhost:5432/my_app_dev"
+    }
+  ],
+  "migrationsDir": "./migrations"
+}
+```
+
+> **Security tip:** Never commit database credentials. Use environment variable substitution instead:
+>
+> ```json
+> { "url": "${DATABASE_URL}" }
+> ```
+>
+> Schema Weaver automatically reads from your environment variables.
+
+Test the connection:
+
+```bash
+schema-weaver validate-connection
+
+# ✅ development — connected (PostgreSQL 15.2)
+```
+
+---
+
+## Step 4 — Create Your First Migration
+
+Create a migration file:
+
+```bash
+schema-weaver migration create create_users_table
+```
+
+This generates `migrations/20240324120000_create_users_table.sql`. Open it and add your schema:
+
+```sql
+-- UP: Apply this migration
+BEGIN;
+
+CREATE TABLE users (
+  id          BIGSERIAL PRIMARY KEY,
+  email       TEXT UNIQUE NOT NULL,
+  name        TEXT,
+  role        TEXT NOT NULL DEFAULT 'member',
+  created_at  TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at  TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_role  ON users(role);
+
+COMMIT;
+
+-- DOWN: Rollback this migration
+BEGIN;
+
+DROP INDEX IF EXISTS idx_users_role;
+DROP INDEX IF EXISTS idx_users_email;
+DROP TABLE IF EXISTS users;
+
+COMMIT;
+```
+
+---
+
+## Step 5 — Preview the Migration
+
+Always preview before applying:
+
+```bash
+schema-weaver migrate --preview
+```
+
+Output:
+
+```
+Migration Preview
+═════════════════════════════════════════════════════════
+Migration: 20240324120000_create_users_table.sql
+
+  + Table:  users
+  + Column: users.id           (BIGSERIAL, PRIMARY KEY)
+  + Column: users.email        (TEXT, UNIQUE NOT NULL)
+  + Column: users.name         (TEXT)
+  + Column: users.role         (TEXT, NOT NULL, DEFAULT 'member')
+  + Column: users.created_at   (TIMESTAMPTZ, DEFAULT NOW())
+  + Column: users.updated_at   (TIMESTAMPTZ, DEFAULT NOW())
+  + Index:  idx_users_email
+  + Index:  idx_users_role
+
+Warnings: none
+Risk: LOW
+
+Ready to apply? Run: schema-weaver migrate apply
+═════════════════════════════════════════════════════════
+```
+
+---
+
+## Step 6 — Apply the Migration
+
+```bash
+schema-weaver migrate apply
+```
+
+Output:
+
+```
+Applying migrations to: development
+═════════════════════════════════════════════════════════
+  ✓ 20240324120000_create_users_table.sql  (312ms)
+═════════════════════════════════════════════════════════
+1 migration applied successfully.
+Snapshot saved: snapshot_20240324120312.json
+```
+
+---
+
+## Step 7 — Verify the Schema
+
+Check the current migration status:
+
+```bash
+schema-weaver status
+```
+
+Output:
+
+```
+Schema Weaver v2.1.0
+═════════════════════════════════════════════════════════
+Connection:   development (PostgreSQL 15.2)
+Migrations:   1 applied, 0 pending
+Drift status: ✅ Clean
+Last applied: 20240324_create_users_table (2 seconds ago)
+═════════════════════════════════════════════════════════
+```
+
+You're done! Your first migration is live.
+
+---
+
+## Using SQLite for Local Testing
+
+If you don't have a PostgreSQL instance handy, SQLite works great for local development:
+
+```json
+{
+  "connections": [
+    {
+      "name": "local",
+      "driver": "sqlite",
+      "url": "file:./dev.db"
+    }
+  ],
+  "migrationsDir": "./migrations"
+}
+```
+
+No server setup required — Schema Weaver creates the file automatically.
+
+---
+
+## What's Next?
+
+| Topic | Description |
+|-------|-------------|
+| [Configuration](/docs/getting-started/configuration) | Full `schema-config.json` reference and environment variables |
+| [Core Concepts](/docs/core-concepts) | Understand migrations, drift detection, and versioning |
+| [Data Explorer](/docs/data-explorer) | Query your database with AI assistance |
+| [Resona AI](/docs/resona-ai) | Ask questions in natural language, get SQL + charts |
+| [Migrations Deep Dive](/docs/migrations) | Advanced migration patterns, CI/CD integration |
+
+---
+
+**Next Step:** [Configuration Reference](/docs/getting-started/configuration)
