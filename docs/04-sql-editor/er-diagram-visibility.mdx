@@ -1,0 +1,142 @@
+---
+title: Visibility & Node Types
+description: Control exactly which PostgreSQL object types and which schema namespaces are shown in the ER Diagram — declutter large schemas and focus on what matters
+tags: [sql-editor, er-diagram, visibility, node-types, filters, schemas, postgresql]
+order: 4.4
+sidebar_group: "SQL Editor"
+related:
+  - title: ER Diagram Overview
+    path: /sql-editor/er-diagram
+  - title: Grouping & Schema Clusters
+    path: /sql-editor/er-diagram-grouping
+  - title: Path Analysis
+    path: /sql-editor/er-diagram-path-analysis
+---
+
+# Visibility & Node Types
+
+The ER Diagram supports every PostgreSQL object type — tables, views, materialized views, functions, enums, domains, roles, sequences, extensions, and RLS policies. On a real production schema this can mean dozens or hundreds of extra nodes beyond your core tables. The **Visibility** controls let you show only what you need, making large diagrams readable and layout faster.
+
+> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [ER Diagram Overview](/sql-editor/er-diagram)
+
+![The Visibility dropdown panel showing Node Types and Schema Groups toggles for the ER Diagram](/images/sql-editor/er-diagram-visibilty.png)
+
+---
+
+## Opening Visibility Controls
+
+Click **Visibility** in the diagram footer (bottom-right area). A dropdown opens with two sections: **Node Types** and **Schema Groups**.
+
+Changes apply immediately — nodes that are toggled off disappear from the canvas and the layout reflows. Toggle them back on to restore them.
+
+---
+
+## Node Types
+
+The **Node Types** section lets you show or hide each category of PostgreSQL object:
+
+| Node Type | Default | What is hidden when off |
+|---|---|---|
+| **Views** | ✅ On | Regular `CREATE VIEW` nodes and the edges representing view dependencies |
+| **Materialized Views** | ✅ On | `CREATE MATERIALIZED VIEW` nodes |
+| **Functions** | ✅ On | `CREATE FUNCTION` and `CREATE PROCEDURE` nodes |
+| **Enums** | ✅ On | `CREATE TYPE … AS ENUM` nodes |
+| **Domains** | ✅ On | `CREATE DOMAIN` nodes |
+| **Roles** | ✅ On | `CREATE ROLE` nodes |
+| **Sequences** | ✅ On | `CREATE SEQUENCE` nodes |
+| **Extensions** | ✅ On | `CREATE EXTENSION` nodes |
+| **Policies** | ✅ On | `CREATE POLICY` (RLS policy) nodes |
+
+All types are on by default. For most schema review workflows, you'll want to keep **Views** and **Enums** on (they often have FK-like relationships with tables) and consider turning off **Roles**, **Sequences**, **Extensions**, and **Policies** to reduce clutter.
+
+### Recommended Visibility Profiles
+
+**For a clean table-focused view:**
+- Turn off: Functions, Roles, Sequences, Extensions, Policies
+- Keep on: Views, Materialized Views, Enums, Domains
+
+**For security review:**
+- Turn off: Functions, Sequences, Extensions
+- Keep on: Tables, Views, Policies, Roles
+
+**For maximum density (large schemas):**
+- Turn off: Functions, Roles, Sequences, Extensions, Policies, Domains
+- Use **TITLE** view mode on table nodes
+- Use [schema grouping](/sql-editor/er-diagram-grouping) to cluster by namespace
+
+**For migration review:**
+- Keep everything on
+- Use [Focus mode](/sql-editor/er-diagram#focus-mode-subgraph) on the changed table instead of hiding types
+
+---
+
+## Schema Groups
+
+The **Schema Groups** section lists every PostgreSQL schema namespace present in your project. Each schema has its own toggle:
+
+| State | Effect |
+|---|---|
+| ✅ Checked | All objects in that schema are visible |
+| ☐ Unchecked | All objects in that schema are hidden — tables, views, functions, enums, everything |
+
+### Common Use Cases
+
+**Hide system schemas**: If your schema includes `pg_catalog` or `information_schema` objects, hide them here to keep the diagram focused on your application schema.
+
+**Focus on one domain**: In a multi-schema project with `auth`, `billing`, `inventory`, and `public`, you can hide `auth` and `inventory` to focus the diagram on `billing` only.
+
+**Temporary hide during layout**: Hiding a large schema temporarily can speed up ELK layout if you're working on a different part of the diagram.
+
+### Active Filter Badge
+
+When any schema is hidden, an amber badge appears in the diagram footer showing how many schemas are currently filtered:
+
+```
+● 2 schemas hidden    ×
+```
+
+Click the × on this badge to instantly unhide all schemas and restore the full diagram.
+
+---
+
+## Column View Mode
+
+In addition to showing/hiding entire node types, you can control how much detail is shown inside each table node. Switch between view modes using the selector in the diagram footer:
+
+| Mode | What columns show | Best for |
+|---|---|---|
+| **ALL** | Every column with name, type, constraints, collapsible index/trigger/policy sections | Detailed review, documentation |
+| **KEYS** | Only primary key and foreign key columns | Understanding relationships at a glance |
+| **TITLE** | Table name only — no columns shown | Very large schemas, high-level overviews |
+
+View mode applies globally to all table, view, and materialized view nodes at once.
+
+---
+
+## Visibility and Layout
+
+Every time you toggle a node type or schema, the visible node count changes and ELK re-runs layout for the remaining nodes. This means:
+
+- **Turning things off** makes the diagram denser around the remaining nodes — run **Fit** to recenter
+- **Turning things back on** re-adds nodes; their positions are computed from scratch for the new layout unless you have manually dragged them
+
+> **Tip:** Set your visibility profile first, then run auto-layout (`Layout → Re-run auto-layout`) once to get a clean arrangement. After that, manually drag any nodes you want to reposition and lock groups if you're using [schema grouping](/sql-editor/er-diagram-grouping).
+
+---
+
+## Visibility and Path Analysis
+
+[Path Analysis](/sql-editor/er-diagram-path-analysis) respects the current visibility settings. If a schema or node type is hidden, tables in that hidden set are excluded from path calculation. This means:
+
+- Hiding a schema will make paths that pass through that schema return "No path found"
+- Hiding object types like Views removes view dependency edges from path calculation
+- Use **Exclude inferred relationships** in the path analysis settings instead of hiding schemas if you want to keep all tables visible but ignore certain edge types
+
+---
+
+## Next Steps
+
+- [ER Diagram Overview](/sql-editor/er-diagram) — full feature overview including navigation, export, and all node type details
+- [Grouping & Schema Clusters](/sql-editor/er-diagram-grouping) — cluster visible nodes by schema namespace
+- [Path Analysis](/sql-editor/er-diagram-path-analysis) — find shortest join paths through visible tables
+- [Resona AI in the ER Diagram](/sql-editor/er-diagram-ai) — AI analysis scoped to visible tables and schemas

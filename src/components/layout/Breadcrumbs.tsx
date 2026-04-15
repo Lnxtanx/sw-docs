@@ -5,7 +5,7 @@
  */
 
 import { useEffect, useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ChevronRight, Home } from 'lucide-react';
 import type { NavTreeItem } from '../../lib/mdx/types.js';
 
@@ -21,7 +21,7 @@ export function Breadcrumbs() {
 
   useEffect(() => {
     const generateBreadcrumbs = async () => {
-      // Home icon only — no redundant "Docs" label on docs.schemaweaver.com
+      // Home icon only - no redundant "Docs" label on the docs subdomain.
       const items: BreadcrumbItem[] = [
         { label: 'Home', href: '/introduction' },
       ];
@@ -31,31 +31,29 @@ export function Breadcrumbs() {
         return;
       }
 
-      // Try to find path in nav tree for proper labels
       try {
         const response = await fetch('/_nav-tree.json');
         if (response.ok) {
           const navTree: NavTreeItem[] = await response.json();
 
-          // Search nav tree for matching items
           const findPath = (
             trees: NavTreeItem[],
             target: string,
-            path: BreadcrumbItem[] = []
+            path: BreadcrumbItem[] = [],
           ): BreadcrumbItem[] | null => {
             for (const item of trees) {
               if (target.startsWith(item.href.replace(/\/$/, ''))) {
                 const newPath = [...path, { label: item.title, href: item.href }];
 
-                // Exact match
                 if (target === item.href) {
                   return newPath;
                 }
 
-                // Check children
                 if (item.children) {
                   const childResult = findPath(item.children, target, newPath);
-                  if (childResult) return childResult;
+                  if (childResult) {
+                    return childResult;
+                  }
                 }
               }
             }
@@ -63,7 +61,6 @@ export function Breadcrumbs() {
           };
 
           const navPath = findPath(navTree, pathname);
-
           if (navPath) {
             setBreadcrumbs([...items, ...navPath]);
             return;
@@ -73,7 +70,6 @@ export function Breadcrumbs() {
         console.error('Failed to load nav tree for breadcrumbs:', error);
       }
 
-      // Fallback: generate from URL segments
       const paths = pathname.replace(/^\//, '').split('/').filter(Boolean);
       let currentPath = '';
 

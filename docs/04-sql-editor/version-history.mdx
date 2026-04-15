@@ -1,0 +1,154 @@
+---
+title: Version History
+description: Browse and restore every saved snapshot of your SQL files in the Schema Weaver SQL Editor — never lose a working schema state
+tags: [sql-editor, version-history, snapshots, restore, history]
+order: 6
+sidebar_group: "SQL Editor"
+related:
+  - title: Schema Diff
+    path: /sql-editor/schema-diff
+  - title: Writing SQL
+    path: /sql-editor/writing-sql
+  - title: Database
+    path: /database
+---
+
+# Version History
+
+The SQL Editor keeps a complete snapshot history of every file in your cloud projects. Every save creates an immutable version entry — you can browse the timeline, compare any two snapshots, or restore a previous state with a single click.
+
+> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Schema Diff](/sql-editor/schema-diff)
+
+---
+
+## Opening Version History
+
+There are two ways to open the version history panel:
+
+1. **Right-click** any file in the Explorer sidebar → **Version History**
+2. **Header menu** → **History** when a file is active in the editor
+
+The panel slides in from the right, showing the full timeline for the selected file.
+
+---
+
+## The Version Timeline
+
+The history panel lists every saved version of the file, newest first:
+
+```
+Version History — auth.sql
+────────────────────────────────────────────────────────
+ ● Today, 14:32    "Added sessions table"          You
+ ● Today, 11:07    "Auto-save"                     You
+ ● Yesterday 18:44 "Moved RLS policies to auth"    teammate@company.com
+ ● Yesterday 09:12 "Initial schema"                You
+ ● Apr 12, 22:30   "Auto-save"                     You
+────────────────────────────────────────────────────────
+```
+
+Each entry shows:
+
+| Field | Description |
+|---|---|
+| **Timestamp** | When the version was saved (relative for recent, absolute for older) |
+| **Label** | A short description — auto-generated from the save context or manually set |
+| **Author** | The team member who saved this version |
+| **Indicator** | `●` for the current version, `○` for historical |
+
+---
+
+## Viewing a Past Version
+
+Click any version in the timeline to load it into a **read-only preview** in the main editor. The file tab shows `auth.sql (v2024-04-12)` to make it clear you're viewing a historical state.
+
+While previewing a past version you can:
+
+- **Read** the SQL — full syntax highlighting, no editing
+- **Copy** any text
+- **Diff against current** — click **Compare with current** to open the diff panel with this snapshot as the Left side
+- **Restore** — click **Restore this version** to make this snapshot the active content of the file
+
+---
+
+## Restoring a Version
+
+Click **Restore this version** to replace the current file content with the selected snapshot.
+
+This creates a **new version entry** at the top of the timeline with the label `Restored from [timestamp]` — the restore is non-destructive. If you restore by mistake, you can immediately restore the previous version.
+
+```
+ ● Just now        "Restored from Apr 12, 22:30"   You   ← new entry
+ ● Today, 14:32    "Added sessions table"           You
+ ● Today, 11:07    "Auto-save"                      You
+   ...
+ ● Apr 12, 22:30   "Initial schema"                 You   ← source
+```
+
+---
+
+## Labeling a Version
+
+By default, save events are labeled `Auto-save`. You can add a meaningful label:
+
+1. Right-click any version → **Edit label**
+2. Type a description (e.g. `Before adding audit triggers`)
+3. Press `Enter` to save
+
+Labels are visible to all team members with access to the project and are useful for milestone tracking (`v1.0 launch schema`, `post-incident RLS fix`, etc.).
+
+---
+
+## Comparing Two Historical Versions
+
+To compare any two snapshots (not just against current):
+
+1. Hover a version → click **Pin as Left**
+2. Click a second version → it becomes the Right side
+3. Click **Compare** — the diff panel opens with both snapshots loaded
+
+This lets you answer questions like "What changed between last Tuesday and the version we deployed Friday?"
+
+---
+
+## Version Retention
+
+| Project type | Retention |
+|---|---|
+| **Cloud project (free tier)** | 30 days of history |
+| **Cloud project (pro tier)** | Unlimited history |
+| **Local project** | No version history (local storage only) |
+
+---
+
+## How Versions Are Created
+
+A new version is created whenever:
+
+| Trigger | Label |
+|---|---|
+| **Autosave fires** (after 3 seconds of inactivity) | `Auto-save` |
+| **Manual save** (`Ctrl+S` / `Cmd+S`) | `Manual save` |
+| **File restored** from a previous snapshot | `Restored from [timestamp]` |
+| **Migration applied** (snapshot before and after) | `Pre-migration snapshot` / `Post-migration snapshot` |
+| **AI change accepted** | `AI-generated: [description]` |
+
+---
+
+## Version History and Migrations
+
+Every time a migration is applied through Schema Weaver's migration engine, two version entries are created automatically:
+
+- **Pre-migration** — a snapshot of the file immediately before the migration was applied
+- **Post-migration** — a snapshot reflecting the new state, with the migration ID as the label
+
+This gives you a reliable rollback point for every migration event. If a migration causes unexpected issues, restore to the pre-migration snapshot, fix your SQL, and re-apply.
+
+---
+
+## Next Steps
+
+- [Schema Diff](/sql-editor/schema-diff) — compare any two version snapshots in the diff panel
+- [Database](/database) — migrations create automatic version snapshots
+- [Writing SQL](/sql-editor/writing-sql) — autosave behavior and manual save
+- [Collaboration](/team-collaboration) — version history is shared with all team members on a project

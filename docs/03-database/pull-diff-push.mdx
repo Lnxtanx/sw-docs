@@ -1,0 +1,180 @@
+---
+title: Pull, Diff & Push
+description: Sync your project SQL with your live PostgreSQL database — import the live schema with pull, compare differences with diff, and preview or apply changes with push
+tags: [database, pull, diff, push, migration, schema, sync]
+order: 3
+sidebar_group: "Database"
+related:
+  - title: Migrations
+    path: /database/migrations
+  - title: Drift Detection
+    path: /database/drift-detection
+  - title: Terminal & sw Commands
+    path: /database/terminal
+---
+
+# Pull, Diff & Push
+
+The core database workflow in Schema Weaver is three steps: **pull** the live schema into your project files, **diff** to see what has changed, and **push** to apply your changes back. These three operations keep your project SQL and your live PostgreSQL database in sync.
+
+> Quick links: [Migrations](/database/migrations) · [Drift Detection](/database/drift-detection) · [Terminal & sw Commands](/database/terminal)
+
+---
+
+## The Workflow
+
+```
+First time connecting to an existing database:
+  sw pull → your SQL files now reflect the live schema
+
+Making changes:
+  Edit SQL in the editor
+  sw diff  → see exactly what DDL will run
+  sw push  → preview the migration summary
+  sw push --apply → execute it against the live database
+```
+
+You can also start from scratch — write your schema from scratch in the editor and push it to an empty database. `sw pull` is only needed when the database already has a schema you want to import.
+
+---
+
+## Pull — Import the Live Schema
+
+`sw pull` introspects the connected database and writes its current schema to the linked SQL file in your project. It reads from two sources:
+
+**Structural objects** (via Atlas DDL engine):
+- Tables — columns, data types, nullability, defaults, generated columns
+- Primary keys, foreign keys, unique constraints, check constraints
+- Indexes — including partial indexes and expression indexes
+- Sequences and identity columns
+- Enums and composite types
+- Extensions enabled in the database
+
+**Behavioral objects** (via PostgreSQL catalog queries):
+- Views and materialized views
+- Functions and stored procedures
+- Triggers
+- Row-Level Security (RLS) policies
+
+After introspection, the schema is written as canonical DDL into your linked SQL file. Schema Weaver also saves a **snapshot** of the current state — a fingerprint of the live schema that is used later for drift detection.
+
+```
+cloop sw > sw pull
+Connecting to database (pull mode: single)...
+✓ Introspected schema: 20 tables
+  Snapshot saved (0f33295b…)
+Schema pulled and written to file.
+```
+
+**When to use pull:**
+- First time connecting to an existing database with an existing schema
+- After someone made DDL changes directly on the database
+- After a database restore or import
+- To reset your project SQL to match the current live state
+
+> **Heads up:** Pull overwrites the linked SQL file with what is currently in the database. Any edits you made to that file that are not yet pushed to the database will be lost. Make sure you have pushed your changes first, or use `sw diff` to check what would be overwritten.
+
+---
+
+## Diff — See What Would Change
+
+`sw diff` compares your project SQL against the live database and shows the exact DDL statements that would be executed if you pushed. No changes are made — it is purely informational.
+
+```
+cloop sw > sw diff
+--- Live database
++++ Project SQL
+
++ CREATE TABLE notifications (
++   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
++   user_id uuid NOT NULL REFERENCES users(id),
++   message text NOT NULL,
++   read_at timestamptz
++ );
++ ALTER TABLE users ADD COLUMN last_login timestamptz;
++ CREATE INDEX idx_users_last_login ON users (last_login);
+```
+
+Lines prefixed with `+` exist in your project SQL but not in the database — they will be created on push. Lines prefixed with `-` exist in the database but not in your project SQL — they would be dropped (protected by [destructive change detection](/database/migrations#destructive-change-protection)).
+
+**When to use diff:** Before any migration, especially in production. Use `sw diff` when you want the exact raw DDL. Use `sw push` (without `--apply`) for a plain-English summary.
+
+---
+
+## Push — Preview the Migration
+
+Running `sw push` without any flags generates a human-readable summary of what would change. Nothing is applied.
+
+```
+cloop sw > sw push
+Diffing project SQL against live schema...
+  2 tables to create
+  1 column to add
+  1 index to create
+
+  Preview:
+  CREATE TABLE notifications (...);
+  ALTER TABLE users ADD COLUMN last_login timestamptz;
+  CREATE INDEX idx_users_last_login ON users (last_login);
+
+Run `sw push --apply` to execute, or `sw diff` for the raw DDL.
+```
+
+This is the recommended step before every migration. Review the summary, check that the changes are what you expect, and then run `sw push --apply`.
+
+---
+
+## Push Apply — Execute the Migration
+
+`sw push --apply` executes the migration. Every statement runs inside a transaction — if anything fails, the entire migration is rolled back and the database is left unchanged.
+
+```
+cloop sw > sw push --apply
+Applying migration...
+  ✓ CREATE TABLE notifications
+  ✓ ALTER TABLE users ADD COLUMN last_login
+  ✓ CREATE INDEX idx_users_last_login
+Migration applied. Snapshot saved (a1b2c3d4…)
+```
+
+After a successful migration, Schema Weaver:
+- Saves a new snapshot of the live schema
+- Generates reverse DDL (for rollback)
+- Records the migration in history with a timestamp and the user who applied it
+- Saves the parent hash for audit chain integrity
+
+For the full details of what happens during `sw push --apply` — advisory locking, behavioral DDL, enum handling, and more — see [Migrations](/database/migrations).
+
+---
+
+## How Diff Works
+
+Schema Weaver uses a **two-track diff engine**:
+
+**Track 1 — Structural diff (Atlas):**
+Tables, columns, indexes, constraints, and sequences are diffed using Atlas, an open-source schema migration tool. Atlas compares the canonical DDL representations of your project SQL and the live database and generates the minimal set of `ALTER TABLE`, `CREATE INDEX`, and similar statements needed to bring them in sync.
+
+**Track 2 — Behavioral diff (custom):**
+Functions, views, triggers, and RLS policies are diffed by Schema Weaver's own behavioral layer. These objects are not handled by Atlas — they are extracted from your project SQL and compared against what is currently deployed in `pg_catalog`, then applied using `CREATE OR REPLACE` (functions and views) and `DROP + CREATE` (triggers and policies).
+
+The result is a complete, accurate diff of everything in your schema — not just tables.
+
+---
+
+## Quick Reference
+
+| Command | Effect |
+|---|---|
+| `sw pull` | Import live schema → overwrite linked SQL file |
+| `sw diff` | Show raw DDL diff (no changes made) |
+| `sw push` | Preview migration summary (no changes made) |
+| `sw push --apply` | Execute the migration |
+
+---
+
+## Next Steps
+
+- [Migrations](/database/migrations) — full migration pipeline, safe mode, force mode, and destructive change protection
+- [Drift Detection](/database/drift-detection) — what happens when someone changes the database outside Schema Weaver
+- [History & Rollback](/database/history-rollback) — view migration history and reverse a migration
+- [Terminal & sw Commands](/database/terminal) — complete command reference

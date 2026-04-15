@@ -93,7 +93,7 @@ export function Header({ toggleSidebar, toggleAiPanel, aiPanelOpen }: HeaderProp
           <a
             href="https://github.com/Lnxtanx/schema-weaver"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="header-icon-link"
             aria-label="GitHub Repository"
           >

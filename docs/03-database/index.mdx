@@ -1,0 +1,117 @@
+---
+title: Database
+description: Connect Schema Weaver to your live PostgreSQL databases — manage connections, sync schemas, run migrations, detect drift, and explore your data across the SQL Editor and Data Explorer
+tags: [database, postgresql, connection, migration, pull, push, diff]
+order: 3
+sidebar_group: "Database"
+related:
+  - title: Adding a Connection
+    path: /database/adding-a-connection
+  - title: Pull, Diff & Push
+    path: /database/pull-diff-push
+  - title: Migrations
+    path: /database/migrations
+  - title: SQL Editor
+    path: /sql-editor
+  - title: Data Explorer
+    path: /data-explorer
+---
+
+# Database
+
+Schema Weaver is built for PostgreSQL. Every live-database feature — schema sync, migration, drift detection, data exploration — works exclusively with PostgreSQL. This focus means every part of the system is purpose-built for PostgreSQL's type system, DDL model, catalog structure, and extension ecosystem.
+
+> Quick links: [SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [Data Explorer](https://data.schemaweaver.vivekmind.com/)
+
+---
+
+## Where Connections Live
+
+All database connections are created and managed from the **SQL Editor**. Open the SQL Editor, click **Connect** in the footer status bar, and add your PostgreSQL credentials. Once a connection is saved, it is available everywhere in your Schema Weaver workspace — including the **Data Explorer**.
+
+You do not manage separate connections for the SQL Editor and the Data Explorer. One connection, used across both tools.
+
+---
+
+## What You Can Do With a Connection
+
+### In the SQL Editor
+
+| Capability | What it means |
+|---|---|
+| **Pull** | Introspect the live database and import its full schema into your project SQL files |
+| **Diff** | Compare your project SQL against the live database and see exactly what DDL would change |
+| **Push** | Preview, apply, and track schema migrations against the live database |
+| **Drift detection** | Find schema changes that were made directly on the database outside Schema Weaver |
+| **Migration history** | Full audit trail of every applied migration, with rollback support |
+| **Terminal** | Run `sw` commands directly from the built-in terminal |
+
+### In the Data Explorer
+
+| Capability | What it means |
+|---|---|
+| **Browse tables** | View all tables, schemas, and row counts from the live database |
+| **Run queries** | Execute SQL queries and see results in a high-performance grid |
+| **Column analysis** | Statistics, distributions, and null rates for any column |
+| **AI queries** | Ask Resona AI questions in plain English and get SQL back |
+
+---
+
+## PostgreSQL Versions Supported
+
+| Version | Support |
+|---|---|
+| PostgreSQL 12 | Full |
+| PostgreSQL 13 | Full |
+| PostgreSQL 14 | Full — `ALTER TYPE … ADD VALUE` works inside transactions |
+| PostgreSQL 15 | Full |
+| PostgreSQL 16 | Full |
+| PostgreSQL 17 | Full |
+
+---
+
+## What Schema Weaver Reads From Your Database
+
+When you pull a schema or run a diff, Schema Weaver reads from two layers:
+
+**Structural layer** (tables, indexes, constraints):
+- Tables, columns, data types, defaults, generated columns
+- Primary keys, foreign keys, unique constraints, check constraints
+- Indexes — including partial indexes and expression indexes
+- Sequences and identity columns
+- Enums and composite types
+- Extensions
+
+**Behavioral layer** (procedural objects via PostgreSQL catalog):
+- Views and materialized views
+- Functions and stored procedures
+- Triggers
+- Row-Level Security policies
+
+**Not currently pulled:**
+Collations, custom operators, foreign data wrappers, tablespaces, and event triggers are not included in pull output.
+
+---
+
+## Security
+
+Connection credentials are stored **encrypted at rest** (AES-256) in Schema Weaver's backend. They are:
+
+- Never stored in your browser
+- Never visible to other team members after the connection is saved
+- Never logged or returned by the API
+- Only used server-side when a migration, pull, or diff operation is triggered
+
+Team members can use a shared connection to run migrations and explore data, but they cannot see or extract the password.
+
+---
+
+## Next Steps
+
+- [Adding a Connection](/database/adding-a-connection) — fill in credentials, choose SSL mode, test the connection
+- [Connection Dashboard](/database/connection-dashboard) — manage your connections list, link to projects, view live activity
+- [Pull, Diff & Push](/database/pull-diff-push) — the core workflow for syncing your schema
+- [Migrations](/database/migrations) — applying changes, smart migration, and destructive change protection
+- [Drift Detection](/database/drift-detection) — detect and resolve schema changes made outside Schema Weaver
+- [History & Rollback](/database/history-rollback) — audit trail and rollback mechanics
+- [Terminal & sw Commands](/database/terminal) — run `sw` commands from the built-in terminal

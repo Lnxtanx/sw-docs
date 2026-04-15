@@ -1,0 +1,123 @@
+---
+title: Grouping & Schema Clusters
+description: Cluster your ER diagram nodes by PostgreSQL schema namespace — resizable group containers, schema color coding, per-group stats, and lock mode
+tags: [sql-editor, er-diagram, grouping, schema, clusters, namespace, layout]
+order: 4.2
+sidebar_group: "SQL Editor"
+related:
+  - title: ER Diagram Overview
+    path: /sql-editor/er-diagram
+  - title: Visibility & Node Types
+    path: /sql-editor/er-diagram-visibility
+  - title: Resona AI in the ER Diagram
+    path: /sql-editor/er-diagram-ai
+---
+
+# Grouping & Schema Clusters
+
+When **Cluster by Schema** is enabled, the ER Diagram groups all nodes by their PostgreSQL schema namespace into visually distinct containers. Tables, views, functions, and other objects that belong to `auth`, `billing`, `public`, `inventory` — or any other schema in your project — are enclosed in their own labeled group. This makes it immediately clear which domain each object belongs to and eliminates the visual noise of a flat diagram with hundreds of nodes.
+
+> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [ER Diagram Overview](/sql-editor/er-diagram)
+
+![The ER Diagram in grouping mode showing tables clustered into colored schema containers for auth, billing, inventory, and public schemas](/images/sql-editor/er-diagram-grouping.png)
+
+---
+
+## Enabling Grouping
+
+1. In the diagram footer, click the **Group** button
+2. Select **Cluster by Schema**
+3. The diagram re-runs ELK layout in two-level hierarchical mode — groups are positioned first, then their contents are laid out inside each group
+
+To disable grouping, click **Group → Cluster by Schema** again. The diagram returns to a flat layout.
+
+---
+
+## Group Containers
+
+Each schema group is rendered as a resizable container with a colored header:
+
+### Header
+
+| Element | Description |
+|---|---|
+| **Schema name** | The PostgreSQL schema name (e.g. `auth`, `billing`, `public`) |
+| **Color bar** | Each schema gets a consistent color derived from its name — the same color is used everywhere that schema appears in the UI |
+| **Tables badge** | Count of table nodes inside the group |
+| **Views badge** | Count of view/materialized view nodes inside the group |
+| **Relations badge** | Count of foreign-key edges whose both endpoints are inside the group |
+
+### Resizing Groups
+
+Drag the resize handle at the corner or edge of a group container to make it larger or smaller. This is useful when a group has many tables and the auto-layout makes it too compact to read comfortably.
+
+Click **Auto-fit** (available via right-click on the group header) to automatically resize the container to snugly fit all its children.
+
+### Moving Groups
+
+Drag the group header to reposition the entire group — all nodes inside it move together. When groups are repositioned, the cross-group FK edges update automatically to connect through the new positions.
+
+---
+
+## Locking Groups
+
+Once you've arranged your group containers in a useful layout, enable **Lock Groups** to prevent accidental repositioning:
+
+1. Click **Group** in the footer
+2. Select **Lock Groups**
+
+With groups locked:
+- Group containers cannot be dragged
+- Individual nodes inside a group can still be dragged within their container
+- Re-running auto-layout will reposition nodes inside groups but respect group positions
+
+---
+
+## Cross-Schema Relationships
+
+Foreign keys that cross schema boundaries (e.g. `billing.orders.user_id` → `auth.users.id`) are drawn as edges that exit one group container and enter another. These cross-group edges are particularly useful for understanding which schemas are tightly coupled.
+
+The edge passes through the group borders with routing that avoids overlapping node labels.
+
+---
+
+## Schema Color Coding
+
+Each schema gets a persistent color that is used consistently:
+- In the **group container** header background
+- On the **schema badge** shown on table node headers when a table's schema is not `public`
+- In the **Visibility panel** schema group list
+
+The color is derived deterministically from the schema name, so `auth` always gets the same color regardless of project.
+
+---
+
+## Two-Level ELK Layout
+
+When grouping is enabled, the ELK layout engine runs a **two-level hierarchical algorithm**:
+
+1. **Intra-group layout**: nodes within each schema are laid out relative to each other, respecting FK directions
+2. **Inter-group layout**: groups are positioned on the canvas to minimize cross-group edge crossings
+
+This two-level approach means that within-schema FK chains are readable (parent tables above child tables), while across-schema dependencies flow in the overall chosen direction (LR, TB, etc.).
+
+> **Note:** Two-level hierarchical layout has an 8-second timeout. For very large schemas (hundreds of tables across many schemas), the layout may fall back to a flat arrangement. Use [Visibility Controls](/sql-editor/er-diagram-visibility) to hide non-essential object types and reduce node count.
+
+---
+
+## Tips for Working with Groups
+
+- **Name your schemas intentionally** — the group header shows the raw PostgreSQL schema name, so `billing`, `auth`, `inventory` produce cleaner diagrams than `schema1`, `schema2`
+- **Use locking after initial layout** — run auto-layout once, fine-tune group positions, then lock to prevent accidents
+- **Use the Visibility panel to declutter** — if a schema group has many auxiliary objects (sequences, policies, roles), hide those node types to reduce group density
+- **Cross-group edges reveal coupling** — a schema group with many cross-group edges is tightly coupled to other schemas, which is useful to know before refactoring
+- **Resize before exporting** — auto-fit each group before exporting as PNG/SVG to ensure nothing is clipped
+
+---
+
+## Next Steps
+
+- [ER Diagram Overview](/sql-editor/er-diagram) — full feature overview including navigation, layout, and export
+- [Visibility & Node Types](/sql-editor/er-diagram-visibility) — control which schemas and object types are shown inside groups
+- [Resona AI in the ER Diagram](/sql-editor/er-diagram-ai) — open AI chat anchored to a specific schema group for domain-level analysis
+- [Path Analysis](/sql-editor/er-diagram-path-analysis) — trace the shortest FK path across schema boundaries

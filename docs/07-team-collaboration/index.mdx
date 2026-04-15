@@ -1,0 +1,172 @@
+---
+title: Team Collaboration
+description: Create teams, invite members, connect projects, and share database access — all managed from Settings → Collaboration in Schema Weaver
+tags: [collaboration, team, members, roles, projects, invite, access]
+order: 7
+sidebar_group: "Team Collaboration"
+related:
+  - title: SQL Editor
+    path: /sql-editor
+  - title: Database
+    path: /database
+  - title: Data Explorer
+    path: /data-explorer
+---
+
+# Team Collaboration
+
+Schema Weaver's collaboration model is built around **Teams**. You create a team, invite members by email, and connect your projects to that team. Everyone on the team gets access to the connected projects — and the database connections linked to those projects — without any credential sharing.
+
+> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [Open Data Explorer](https://data.schemaweaver.vivekmind.com/)
+
+---
+
+## Where to Find Team Settings
+
+All team management is done from the **Settings** panel:
+
+1. Click your profile or the settings icon in the SQL Editor
+2. Open **Settings → Collaboration**
+
+This opens the **Teams & Collaboration** panel where you can create teams, add members, and connect projects.
+
+![The Teams & Collaboration settings panel showing Active Team, access level, Add Teammate form, and Connected Projects](/images/sql-editor/team-colbartion.png)
+
+---
+
+## Creating a Team
+
+Click **+ New Team** in the top-right corner of the Teams & Collaboration panel. Give your team a name and confirm. The team is created immediately and you are set as its **Owner**.
+
+The **Active Team** card shows your current team and your role within it. If you belong to multiple teams, use the dropdown to switch between them.
+
+---
+
+## Your Access Level
+
+The **Your access level** card shows your current role in the active team.
+
+| Role | Privileges |
+|---|---|
+| **Owner** | Full management — invite and remove members, connect and disconnect projects, manage all settings |
+| **Member** | Access to connected projects based on project permissions |
+
+As the Owner you see the full management interface. Members see the projects they have been given access to.
+
+---
+
+## Adding Team Members
+
+Use the **Add Teammate** section to invite people to your team:
+
+1. Enter the person's email address in the **name@company.com** field
+2. Choose their role from the dropdown — **member** is the default
+3. Click **Invite**
+
+The person receives an email invitation with a link to join. If they already have a Schema Weaver account, they are added immediately upon accepting. If not, the invitation prompts them to create an account first — they do not need an existing account to receive an invite.
+
+> **Note:** Users can create an account after receiving the invitation.
+
+---
+
+## Team Members List
+
+The **Team Members** section (ACCESS CONTROL) shows everyone currently on the team, with their email address and role badge.
+
+![The Team Members list and Connected Projects section showing member roles and project access](/images/sql-editor/team-memebers-project.png)
+
+| Element | Description |
+|---|---|
+| **Profile photo** | The member's account avatar |
+| **Name and email** | Display name and email address |
+| **YOU badge** | Marks your own entry in the list |
+| **OWNER badge** | Highlights the team owner |
+| **MEMBER badge** | Standard member role |
+| **Delete icon** | Remove this member from the team (Owner only) |
+
+To remove a member, click the trash icon next to their name. Their access is revoked immediately.
+
+---
+
+## Connected Projects
+
+The **Connected Projects** section (PROJECT ACCESS) shows which of your workspace projects are attached to this team. Every project listed here is accessible to all team members.
+
+To connect a project to the team, open the project in the SQL Editor and link it to the team from the project settings. Once connected, it appears in the Connected Projects list and becomes available to all team members.
+
+Team members can open connected projects in the SQL Editor to view and edit schema files, and in the Data Explorer to browse and query live data — all using the project's shared database connection.
+
+---
+
+## Shared Database Connections
+
+When a project has a linked [PostgreSQL connection](/database/adding-a-connection), that connection is automatically available to all team members who have access to that project — in both the SQL Editor and the Data Explorer. Nobody needs to enter the database credentials manually.
+
+| Action | Owner | Member |
+|---|---|---|
+| Browse tables in Data Explorer | ✅ | ✅ |
+| Run queries in Data Explorer | ✅ | ✅ |
+| View column statistics | ✅ | ✅ |
+| Export data | ✅ | ✅ |
+| Use Resona AI on live data | ✅ | ✅ |
+| Preview migration (sw push) | ✅ | ✅ |
+| Apply migration (sw push --apply) | ✅ | ✅ |
+| Roll back a migration | ✅ | ✅ |
+| View or change connection credentials | ❌ Owner only | ❌ Never |
+
+Database credentials (host, username, password) are stored encrypted and are never displayed to any team member after the connection is saved — including the person who created it.
+
+---
+
+## What Team Members See
+
+Once added to a team and granted access to a project, a team member can:
+
+**In the SQL Editor:**
+- Open all SQL files in the connected project
+- View the full ER diagram and Schema Compiler results
+- Run `sw diff` and `sw push` to review and apply migrations
+- See the full migration history for the project's database
+
+**In the Data Explorer:**
+- Select the project's shared connection from the connection dropdown
+- Browse all tables, run queries, and view column statistics
+- Use Resona AI to analyze data and generate reports
+
+---
+
+## Audit Trail
+
+Every change made through Schema Weaver is attributed to the person who made it:
+
+| Event | What is recorded |
+|---|---|
+| File saved | User, timestamp, file, version |
+| File deleted | User, timestamp, file |
+| Member invited | Inviting user, invited email, role |
+| Migration applied | User, timestamp, DDL summary |
+| Migration rolled back | User, timestamp, migration reference |
+
+The full migration history (visible in the [Connection Dashboard](/database/connection-dashboard)) shows who applied each migration and when — giving teams a complete audit trail for compliance and incident review.
+
+---
+
+## Security
+
+- **Credentials encrypted at rest** — AES-256 encryption for all database passwords
+- **Never returned by the API** — credentials cannot be exported or retrieved after saving
+- **Access enforced at two levels** — API middleware validates every request against the user's role; database-level RLS policies enforce row access at the data layer
+
+---
+
+## Version
+
+Schema Weaver v1.0
+
+---
+
+## Next Steps
+
+- [Database](/database) — connect a PostgreSQL database to your project
+- [SQL Editor](/sql-editor) — work on schema files and migrations
+- [Data Explorer](/data-explorer) — browse and query data with shared connections

@@ -1,0 +1,189 @@
+---
+title: Migrations
+description: Apply schema changes to your live PostgreSQL database — understand the migration pipeline, use safe mode for complex type changes, and control destructive operations
+tags: [database, migration, push, apply, safe, force, pipeline, advisory-lock, transactions]
+order: 4
+sidebar_group: "Database"
+related:
+  - title: Pull, Diff & Push
+    path: /database/pull-diff-push
+  - title: Drift Detection
+    path: /database/drift-detection
+  - title: History & Rollback
+    path: /database/history-rollback
+---
+
+# Migrations
+
+`sw push --apply` applies your schema changes to the live database. Schema Weaver wraps every migration in a multi-step pipeline designed for correctness and safety — advisory locking to prevent concurrent changes, automatic drift checking before execution, and full transaction wrapping so partial failures roll back cleanly.
+
+> Quick links: [Pull, Diff & Push](/database/pull-diff-push) · [Drift Detection](/database/drift-detection) · [History & Rollback](/database/history-rollback)
+
+---
+
+## The Migration Pipeline
+
+When you run `sw push --apply`, Schema Weaver executes eight steps in sequence:
+
+### Step 1 — Schema Diff
+The structural diff runs outside any transaction. Atlas compares your project SQL against the live database and generates the DDL statements needed to bring the database in line with your project. At this stage, nothing is written to the database.
+
+### Step 2 — Validation
+The generated DDL is analyzed for common issues and automatically corrected where possible (e.g. statement ordering, dependency resolution). If a critical issue is found that cannot be auto-corrected, the migration is halted before anything executes.
+
+### Step 3 — Destructive Change Check
+The DDL is scanned for destructive operations — `DROP TABLE`, `DROP COLUMN`, incompatible type casts. If any are found, the migration is blocked unless you pass `--force`. See [Destructive Change Protection](#destructive-change-protection) below.
+
+### Step 4 — Advisory Lock
+An exclusive advisory lock is acquired on your connection before any DDL runs. The lock key is derived from your connection ID, so two simultaneous migrations against the same connection are impossible. If the lock cannot be acquired, the operation waits briefly and retries before failing with a clear message.
+
+### Step 5 — Drift Check
+Immediately before execution, Schema Weaver compares the current live schema fingerprint against the stored snapshot from your last pull or push. If someone has modified the database since your last operation, the migration is aborted with a `SCHEMA_DRIFTED` error. You must run `sw pull` to re-sync before pushing. See [Drift Detection](/database/drift-detection).
+
+### Step 6 — Structural DDL
+Tables, columns, indexes, constraints, enums, and sequences are applied via Atlas, wrapped in a transaction. If any statement fails, the entire structural DDL block is rolled back.
+
+Two special cases are handled outside the main transaction:
+- **Enum `ADD VALUE` on PostgreSQL 13 and earlier:** PostgreSQL does not allow `ALTER TYPE ... ADD VALUE` inside a transaction on PG ≤ 13. This statement is extracted and run before the transaction opens. On PG 14+, it runs inside the transaction normally.
+- **`CREATE INDEX CONCURRENTLY`:** PostgreSQL requires concurrent index builds to run outside a transaction. These are extracted and run after the transaction commits. If a concurrent build is interrupted, the rest of the migration is unaffected.
+
+### Step 7 — Behavioral DDL
+After structural changes are committed, Schema Weaver syncs behavioral objects: functions, views, triggers, and RLS policies. These are applied using idempotent patterns — `CREATE OR REPLACE` for functions and views, and `DROP + CREATE` for triggers and policies. Materialized views with a unique index are refreshed with `REFRESH MATERIALIZED VIEW CONCURRENTLY` to avoid blocking reads.
+
+### Step 8 — Snapshot and Audit
+After all DDL is applied, Schema Weaver:
+- Re-introspects the live schema and saves a new snapshot
+- Generates reverse DDL (the SQL needed to undo this migration) and stores it for rollback
+- Records the migration in history with a timestamp, the applying user, and a `parent_hash` linking this migration to the previous one in an audit chain
+
+---
+
+## Safe Mode — Complex Type Changes
+
+Some `ALTER COLUMN TYPE` operations cannot be done with a plain `ALTER TABLE` because the existing data cannot be automatically cast to the new type. For example: changing a `text` column to `integer`, or changing `numeric` to `bigint` when precision would be lost.
+
+`sw push --safe` detects these situations and applies a **multi-phase migration** that preserves all existing data.
+
+```
+cloop sw > sw push --safe
+Analyzing migration for unsafe operations...
+  ⚠ Column type change detected: orders.amount (numeric → bigint)
+  Smart migration plan:
+    Phase 1: Add shadow column
+    Phase 2: Install sync trigger
+    Phase 3: Backfill existing data (5,000 rows/batch)
+    Phase 4: Validate constraints
+    Phase 5: Atomic swap
+    Phase 6: Recreate FK constraints
+  Proceed? [y/n]
+```
+
+### The Six Phases
+
+| Phase | What happens |
+|---|---|
+| **1 — Shadow column** | A new column with the target type is added alongside the existing one (`orders.amount_new bigint`) |
+| **2 — Sync trigger** | A `BEFORE INSERT OR UPDATE` trigger is installed so any new writes are immediately mirrored to the shadow column |
+| **3 — Backfill** | Existing rows are updated in batches of 5,000 to convert the data, with a 50ms pause between batches to avoid locking pressure |
+| **4 — Validate** | Constraints and nullability are verified on the shadow column before the swap proceeds |
+| **5 — Swap** | In a single transaction: triggers are dropped, the original column is renamed away, and the shadow column takes its place |
+| **6 — FK cleanup** | Any foreign keys that referenced the original column are recreated pointing to the new column |
+
+This approach keeps the table available for reads and writes throughout — there are no long locks.
+
+### When Safe Mode Is Blocked
+
+Not every type change can be handled with safe mode. Schema Weaver blocks smart migration and reports the reason when:
+
+| Situation | Why it's blocked |
+|---|---|
+| The column is a **primary key** | A PK type change requires restructuring the entire table's FK graph; this cannot be done safely column-by-column |
+| The column is **referenced by a foreign key** in another table | The FK relationship must be resolved before the type can change |
+| The column has a **UNIQUE constraint** | The shadow column approach cannot preserve uniqueness guarantees during backfill |
+
+When blocked, Schema Weaver describes the dependency chain so you can resolve it manually before retrying.
+
+### Impossible Casts
+
+Some type changes have no valid cast expression at all. Schema Weaver detects these and throws an `UNSAFE_CAST` error before executing anything:
+
+- `uuid` ↔ `integer`, `bigint`, `smallint`
+- `text` / `varchar` → `integer`, `bigint` (lossy — text may not be numeric)
+- `boolean` ↔ `integer`
+- `jsonb` ↔ `integer`
+- `bigint` → `integer`, `smallint`
+- `integer` → `smallint`
+- `numeric`, `real`, `double precision` → `integer`, `bigint`, `smallint`
+
+For these casts, there is no automatic path — you need to backfill and convert the data manually before changing the column type.
+
+---
+
+## Force Mode — Destructive Changes
+
+`sw push --force` bypasses the destructive change protection. It is required when your migration includes:
+
+- `DROP TABLE`
+- `DROP COLUMN`
+- A type cast that cannot be performed automatically (when not using safe mode)
+
+```
+cloop sw > sw push --force
+⚠ WARNING: Destructive changes detected:
+  DROP TABLE public.old_payments
+  DROP COLUMN users.legacy_field
+Type "confirm" to proceed:
+```
+
+You must type `confirm` explicitly. There is no flag to skip the confirmation prompt.
+
+> **Data loss warning:** Force mode drops data permanently. Schema Weaver does not make a backup before applying a force migration. Verify that the data being dropped is safe to remove before proceeding.
+
+---
+
+## Destructive Change Protection
+
+The following operations are blocked by default and require `--force`:
+
+| Operation | Protected |
+|---|---|
+| `DROP TABLE` | ✅ Yes |
+| `DROP COLUMN` | ✅ Yes |
+| `ALTER COLUMN TYPE` with an incompatible cast | ✅ Yes |
+| `DROP INDEX` | No — indexes hold no row data |
+| `DROP VIEW` | No |
+| `DROP FUNCTION` | No |
+| `DROP CONSTRAINT` | No |
+
+---
+
+## Concurrent Migration Protection
+
+The advisory lock (Step 4 above) ensures that two migrations cannot run simultaneously against the same connection.
+
+If you attempt to push while another migration is in progress:
+
+```
+⚠ Another migration is in progress for this connection. Try again in a moment.
+```
+
+The lock is released automatically when the migration completes or fails. If a migration was interrupted ungracefully (e.g. a server restart), the advisory lock is released when the PostgreSQL session that held it terminates.
+
+---
+
+## Migration Commands
+
+| Command | What it does |
+|---|---|
+| `sw push` | Preview the migration — no changes applied |
+| `sw push --apply` | Apply the migration to the live database |
+| `sw push --safe` | Apply using multi-phase safe mode for complex type changes |
+| `sw push --force` | Apply including destructive operations (confirmation required) |
+
+---
+
+## Next Steps
+
+- [Drift Detection](/database/drift-detection) — what happens when the database changes between your push commands
+- [History & Rollback](/database/history-rollback) — reverse a migration you've applied
+- [Terminal & sw Commands](/database/terminal) — full command reference

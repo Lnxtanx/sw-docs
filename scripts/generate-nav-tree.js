@@ -57,22 +57,29 @@ function generateNavTree() {
         .filter(f => f.endsWith('.mdx') && f !== 'index.mdx')
         .sort();
 
-      if (childPages.length > 0) {
-        item.children = childPages
-          .map(file => {
-            const childPath = path.join(folderPath, file);
-            const childContent = fs.readFileSync(childPath, 'utf-8');
-            const { data: childFm } = matter(childContent);
-            const childSlug = file.replace('.mdx', '');
-            return {
-              title: childFm.title || childSlug,
-              href: `${item.href}/${childSlug}`,
-              _order: typeof childFm.order === 'number' ? childFm.order : 999,
-            };
-          })
-          .sort((a, b) => a._order - b._order)
-          .map(({ _order: _o, ...rest }) => rest); // strip internal _order field
-      }
+      // Include index as first child (Overview)
+      const indexChild = {
+        title: 'Overview',
+        href: item.href,
+        _order: -1,
+      };
+
+      const mappedChildren = childPages
+        .map(file => {
+          const childPath = path.join(folderPath, file);
+          const childContent = fs.readFileSync(childPath, 'utf-8');
+          const { data: childFm } = matter(childContent);
+          const childSlug = file.replace('.mdx', '');
+          return {
+            title: childFm.title || childSlug,
+            href: `${item.href}/${childSlug}`,
+            _order: typeof childFm.order === 'number' ? childFm.order : 999,
+          };
+        });
+
+      item.children = [indexChild, ...mappedChildren]
+        .sort((a, b) => a._order - b._order)
+        .map(({ _order: _o, ...rest }) => rest);
 
       tree.push(item);
     }

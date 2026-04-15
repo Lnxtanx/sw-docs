@@ -1,0 +1,179 @@
+---
+title: Data Explorer
+description: Query your PostgreSQL databases interactively with the Schema Weaver Data Explorer
+tags: [data-explorer, queries, sql, postgresql, databases]
+order: 4
+sidebar_group: "Data Explorer"
+related:
+  - title: Exploring Your Data
+    path: /data-explorer/exploring-data
+  - title: Exporting Data
+    path: /data-explorer/exporting-data
+  - title: Resona AI Overview
+    path: /data-explorer/ai-overview
+---
+
+# Data Explorer
+
+The Data Explorer is a built-in SQL workbench that lets you connect to your databases, run queries, and explore your data — all inside Schema Weaver. It integrates with Resona AI so you can ask questions in plain English and get runnable SQL back instantly.
+
+> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [Docs Home](https://docs.schemaweaver.vivekmind.com/) · [Schema Weaver Landing](https://schemaweaver.vivekmind.com/) · [SQL Editor](https://sql.schemaweaver.vivekmind.com/)
+
+## What can you do in Data Explorer?
+
+- **Browse live data** — Two-panel layout with a table sidebar and a high-performance data grid
+- **Smart column sizing** — Canvas-measured, 95th-percentile column widths that auto-fit your data
+- **Filter & sort** — Server-side filtering with typed operators and one-click column sorting
+- **Toggle columns** — Show/hide columns to focus on the data that matters
+- **Column statistics** — Click any column header to see null %, distinct count, top values, and more
+- **Click-to-copy** — Click any cell to copy its value to the clipboard
+- **Export data** — Download single tables or entire schemas as CSV, JSON, NDJSON, Excel, or SQL
+- **Full database export** — ZIP archive of every table in the current schema
+- **Write and run SQL** — Full-featured Monaco editor with syntax highlighting and autocomplete
+- **AI-assisted analysis** — Resona AI writes SQL, analyzes tables, generates visual charts, and compiles PowerPoint reports.
+- **Agentic Workflows** — Thinking, Tool Execution, and Synthesis phases for deep data exploration.
+- **Rich Artifacts** — Interactive tables, charts, stat blocks, and Mermaid diagrams embedded in chat.
+- **Workspace Storage** — Persist generated reports, slide decks, and PDF exports.
+
+---
+
+## Which databases does Data Explorer support today?
+
+| Database | Version | Status |
+|----------|---------|--------|
+| PostgreSQL | 12+ | Fully supported |
+
+---
+
+## How do you access Data Explorer?
+
+### Cloud Platform
+
+Open [data.schemaweaver.vivekmind.com](https://data.schemaweaver.vivekmind.com/) and click **Data Explorer** in the left sidebar if you're entering from the main Schema Weaver experience.
+
+### Self-hosted / CLI
+
+If you're running the Schema Weaver web interface locally:
+
+```bash
+schema-weaver ui
+# Starting UI at http://localhost:4242
+```
+
+Navigate to `http://localhost:4242/explorer` in your browser.
+
+---
+
+## Overview of the Interface
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│  Connection ▾  │  Filter  Columns  ↻  Export │  ~24.5K rows    │
+├──────────────────┬───────────────────────────────────────────────┤
+│  Schema ▸ public │  #  │ 🔑 id    │ email          │ role       │
+│  ──────────────  │     │ int4     │ varchar        │ varchar?   │
+│  🔍 Filter...    │  ── │ ──────── │ ────────────── │ ────────── │
+│  ──────────────  │  1  │ 1        │ alice@acme.io  │ admin      │
+│  24 tables       │  2  │ 2        │ bob@corp.com   │ user       │
+│  ──────────────  │  3  │ 3        │ carol@dev.io   │ editor     │
+│  ▸ users    47K  │  4  │ 4        │ dave@org.com   │ [NULL]     │
+│  ▸ orders   31K  │  …  │ …        │ …              │ …          │
+│  ▸ products 12K  │─────┴──────────┴────────────────┴────────────│
+│  ▸ invoices  8K  │  1–50 of ~47.0K                ◀ Prev  Next │
+│  ──────────────  │                                              │
+│  ⚙ Settings  AI │                                              │
+└──────────────────┴──────────────────────────────────────────────┘
+```
+
+### Left Sidebar
+
+- **Schema Selector** — Dropdown to switch between database schemas
+- **Table Search** — Filter the table list instantly as you type
+- **Table List** — Scrollable list with row estimates, PK warnings, and AI shortcuts
+- **Resona AI [AI]** — Toggle the integrated agentic chat interface
+- **Dashboard [D]** — View your pinned charts and metrics
+- **Workspace [W]** — Manage persisted files and reports
+
+### Right Panel — Data Grid
+
+- **Action Bar** — Filter controls, column visibility toggle, refresh, export button, row count
+- **Column Headers** — Type badges, PK/FK indicators, sortable, resizable, click for statistics
+- **Row Grid** — Paginated rows with click-to-copy, NULL formatting, boolean badges, and FK arrows
+- **Pagination** — Cursor-based, 50 rows per page, with row range and estimated total
+
+---
+
+## Quick Start Workflow
+
+1. Open [Data Explorer](https://data.schemaweaver.vivekmind.com/) and select a PostgreSQL connection from the connection selector — connections are added from the [SQL Editor](/database/adding-a-connection)
+2. Browse the schema tree on the left to find a table
+3. Click the table name to open a quick preview
+4. Use **AI Assist** or the chat interface if you need help writing a query
+5. Use `@table_name` in the AI chat to focus the analysis on specific context
+6. Pin interesting charts to your dashboard for ongoing monitoring
+
+---
+
+## Resona AI Integration
+
+Resona AI is more than just a chatbot; it's a co-pilot for your data. It understands your schema and can perform complex multi-step analysis without you writing a single line of SQL.
+
+- **Mentions** — Type `@` to select tables and provide context to the agent.
+- **Live Progress** — Watch the agent plan its steps and execute tools against your database in real-time.
+- **Rich Visualization** — Get bar charts, line graphs, and correlation matrices instantly.
+- **Professional Reports** — Ask Resona to "generate a slide deck for investors" and download it as a PPTX from your workspace.
+
+---
+
+## Security and Permissions
+
+By default the Data Explorer operates in **read-only mode**, meaning only `SELECT` statements are allowed. This protects production data from accidental mutations.
+
+To enable write access for a specific connection:
+
+```json
+{
+  "resona": {
+    "readOnly": false,
+    "allowedConnections": ["development"]
+  }
+}
+```
+
+> **Best practice:** Keep `readOnly: true` for any production connection. Use a read-replica if you need heavy analytical queries.
+
+### Row-Level Data Masking
+
+For sensitive columns (PII, payment data), configure automatic masking:
+
+```json
+{
+  "resona": {
+    "masking": [
+      { "table": "users", "column": "email", "type": "email" },
+      { "table": "users", "column": "phone_number", "type": "phone" },
+      { "table": "payments", "column": "card_last4", "type": "redact" }
+    ]
+  }
+}
+```
+
+Masked columns display as `a***@***.com`, `***-***-1234`, or `[REDACTED]`.
+
+---
+
+## Next Steps
+
+- [Exploring Your Data](/data-explorer/exploring-data) — filters, column stats, smart sizing, and grid features
+- [Exporting Data](/data-explorer/exporting-data) — CSV, JSON, Excel, SQL, and full-database ZIP export
+- [AI Chat Interface](/data-explorer/ai-chat-interface) — @mentions, model selection, and voice input
+- [Agentic Workflows](/data-explorer/agentic-workflows) — understanding planning, tools, and synthesis
+- [Artifacts & Visualizations](/data-explorer/ai-artifacts) — interactive charts, stats, and dashboard pinning
+- [Workspace & Organization](/data-explorer/ai-workspace) — projects, file persistence, and artifact history
+
+## Related Schema Weaver Links
+
+- [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) — launch the live Data Explorer app
+- [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) — move into deeper SQL workflows
+- [Schema Weaver Landing](https://schemaweaver.vivekmind.com/) — product overview and entry point
+- [Docs Home](https://docs.schemaweaver.vivekmind.com/) — browse the rest of the documentation

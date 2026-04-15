@@ -1,0 +1,144 @@
+---
+title: SQL Editor
+description: Write, organize, and analyze PostgreSQL schemas in the Schema Weaver SQL Editor — the primary workspace for schema development
+tags: [sql-editor, schema, postgresql, workspace, projects]
+order: 4
+sidebar_group: "SQL Editor"
+related:
+  - title: File Manager
+    path: /sql-editor/file-manager
+  - title: Writing SQL
+    path: /sql-editor/writing-sql
+  - title: Schema Compiler
+    path: /sql-editor/schema-compiler
+  - title: ER Diagram
+    path: /sql-editor/er-diagram
+---
+
+# SQL Editor
+
+The SQL Editor is the primary workspace in Schema Weaver. It's where you write PostgreSQL schema definitions, organize them into projects and files, analyze your schema quality with the built-in compiler, and visualize table relationships as an interactive ER diagram — all in one place.
+
+> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [Docs Home](https://docs.schemaweaver.vivekmind.com/) · [Data Explorer](https://docs.schemaweaver.vivekmind.com/data-explorer/) · [Schema Weaver Landing](https://schemaweaver.vivekmind.com/)
+
+![The Schema Weaver SQL Editor showing the Explorer sidebar, multi-file tabs, SQL code editor, and the ER diagram panel](/images/sql-editor/sql-editor.png)
+
+---
+
+## What can you do in the SQL Editor?
+
+| Capability | Description |
+|---|---|
+| **Multi-file projects** | Organize schemas into cloud projects with folders and files |
+| **Syntax-highlighted editing** | PostgreSQL-aware editor with color coding and auto-indent |
+| **Tab-based workflow** | Open multiple files simultaneously, switch between them instantly |
+| **Schema Compiler** | 20-layer static analysis that grades your schema A–F and surfaces issues |
+| **ER Diagram** | Auto-generated visual diagram of tables and relationships from your SQL |
+| **Schema Diff** | Side-by-side comparison of two schema states with visual highlighting |
+| **Version History** | Browse and restore every saved snapshot of your files |
+| **Resona AI** | Generate SQL with natural language, explain schemas, and review diffs |
+| **Database Connections** | Link your project to a live PostgreSQL database for drift detection and migrations — managed in the [Database](/database) section |
+| **Team Collaboration** | Invite members to a project with read, write, or admin roles |
+
+---
+
+## Interface Layout
+
+![The Schema Weaver SQL Editor showing the Explorer sidebar, multi-file tabs, SQL code editor, and the ER diagram panel](/images/sql-editor/sql-editor.png)
+
+### Left Sidebar — Explorer
+
+| Region | Purpose |
+|---|---|
+| **Project name** | Shows the active project with a back arrow to return to the dashboard |
+| **PROJECT FILES** | Collapsible tree of all files and folders in the active project |
+| **OPEN EDITORS** | Quick list of currently open tabs |
+| **Filter files** | Instant search across all file and folder names |
+| **Action icons** | New file, new folder, collapse all, toggle sidebar |
+
+### Center — Editor
+
+The main code editing area with syntax highlighting, tab management, and split/fullscreen controls. Each open file gets its own tab in the header bar.
+
+### Bottom — Status Bar
+
+| Button | Opens |
+|---|---|
+| **Connect** | Database connection panel — link to a live PostgreSQL database |
+| **Compiler** | Schema analysis panel with grade, issue list, and recommendations |
+| **Diff** | Side-by-side schema diff between two SQL states |
+| **Graph** | ER diagram visualizing all tables and relationships |
+
+---
+
+## Core Concepts
+
+### Projects
+
+A **project** is the top-level container for related schema files. Projects can be:
+
+- **Cloud** — Stored in Schema Weaver's backend, accessible from any device, shareable with teams
+- **Local** — Stored in your browser, single-device only, no sharing
+
+Each project has its own folder structure, file set, and optional database connection.
+
+### Files and Folders
+
+Inside a project you can create any hierarchy of folders and `.sql` files. The SQL Editor **merges all files in a project** when computing the ER diagram, running the Schema Compiler, and preparing migration diffs — so you can split your schema across as many files as makes sense for your team.
+
+### The Compilation Pipeline
+
+Every time you type SQL, the editor:
+
+1. **Parses** the SQL using a multi-phase PostgreSQL parser
+2. **Merges** all project files into a single schema
+3. **Compiles** the merged schema through 20 analysis layers
+4. **Renders** the ER diagram from the compiled output
+5. **Grades** the schema and surfaces any detected issues
+
+This all happens in the browser — no server round-trips required for the analysis.
+
+---
+
+## Supported PostgreSQL Objects
+
+| Object Type | Support |
+|---|---|
+| Tables | ✅ Full — columns, constraints, defaults |
+| Indexes | ✅ Full — B-tree, GiST, GIN, partial, expression |
+| Views | ✅ Full — regular and materialized |
+| Functions & Procedures | ✅ Full — PL/pgSQL, SQL, argument types |
+| Triggers | ✅ Full — row/statement, BEFORE/AFTER/INSTEAD OF |
+| Row-Level Security | ✅ Full — policies, enforcement |
+| Enums & Custom Types | ✅ Full — enums, domains, composite, range |
+| Foreign Keys | ✅ Full — with cascade rules and relationship visualization |
+| Sequences | ✅ Full — identity columns, serial detection |
+| Extensions | ✅ Detected — pgcrypto, uuid-ossp, PostGIS, etc. |
+| Partitions | ✅ Full — RANGE, LIST, HASH, inheritance trees |
+| Schemas (namespaces) | ✅ Supported — multi-schema projects |
+
+---
+
+## Quick Start
+
+1. Open [sql.schemaweaver.vivekmind.com](https://sql.schemaweaver.vivekmind.com/) and sign in
+2. Click **New** on the dashboard to create your first project
+3. Create a file (e.g. `schema.sql`) inside the project
+4. Paste or write your PostgreSQL `CREATE TABLE` statements
+5. Watch the ER diagram build automatically in the **Graph** panel
+6. Open **Compiler** in the footer to see your schema grade and any detected issues
+7. Optionally link a live database with **Connect** to enable drift detection
+
+---
+
+## Next Steps
+
+- [File Manager](/sql-editor/file-manager) — projects, cloud storage, folders, drag-and-drop
+- [Writing SQL](/sql-editor/writing-sql) — tabs, syntax highlighting, autosave, split view
+- [Schema Compiler](/sql-editor/schema-compiler) — grades, issues, 20-layer analysis
+- [ER Diagram](/sql-editor/er-diagram) — visual schema, layout, subgraphs, path analysis
+- [Schema Diff](/sql-editor/schema-diff) — comparing schema versions side-by-side
+- [Version History](/sql-editor/version-history) — browsing and restoring past snapshots
+- [Resona AI](/sql-editor/ai-assistant) — SQL generation, explanations, and review
+- [Database](/database) — connect to a live PostgreSQL database, run migrations, and detect drift
+- [Collaboration](/team-collaboration) — team projects, member roles, sharing

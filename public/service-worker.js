@@ -2,7 +2,7 @@
  * Service Worker for offline support and caching
  */
 
-const CACHE_NAME = 'sw-docs-v1';
+const CACHE_NAME = 'sw-docs-v2';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -57,12 +57,23 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // SPA Navigation handling: Fallback to index.html for navigation requests
+  // Navigation requests should preserve real 404 responses.
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const responseToCache = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(request, responseToCache));
+          }
+          return response;
+        })
         .catch(() => {
-          return caches.match('/index.html') || caches.match('/');
+          return caches.match(request).then((cached) => (
+            cached ||
+            caches.match('/404.html') ||
+            new Response('Page not available offline', { status: 404 })
+          ));
         })
     );
     return;

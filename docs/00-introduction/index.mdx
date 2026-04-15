@@ -1,94 +1,86 @@
 ---
 title: Introduction
-description: Welcome to Schema Weaver documentation. Learn about the platform and its core capabilities.
-tags: [getting-started, overview]
+description: Welcome to Schema Weaver — a PostgreSQL schema management platform with a visual SQL Editor, ER diagram, migration engine, Data Explorer, and AI assistant
+tags: [getting-started, overview, schema-weaver, postgresql]
 order: 0
 sidebar_group: null
+related:
+  - title: SQL Editor
+    path: /sql-editor
+  - title: Database
+    path: /database
+  - title: Data Explorer
+    path: /data-explorer
 ---
 
-# Schema Weaver Documentation
+# [Schema Weaver](https://schemaweaver.vivekmind.com/) Documentation
 
-Welcome to the official documentation for Schema Weaver. This guide will help you understand the architecture, core concepts, and how to start building amazing schemas and workflows.
+Welcome to the official documentation for Schema Weaver. This guide covers everything from connecting your first PostgreSQL database to running migrations, exploring your data, and collaborating with your team.
+
+---
 
 ## What is Schema Weaver?
 
-Schema Weaver is a modern, high-performance toolset designed to help you weave complex database schemas, manage data integrity, and visualize connections seamlessly.
-
-### Key Features
-
-- **Schema Visualization** — Beautiful ER diagrams that auto-update as you evolve your schema
-- **Smart Migrations** — Atlas-powered safe DDL with drift detection and rollback support
-- **Data Explorer** — Query your database with an AI-assisted interface
-- **Real-time Collaboration** — Work together on schema changes with built-in version history
-- **Compliance Ready** — Audit trails, access controls, and migration versioning for regulated industries
-
-## Getting Started
-
-Ready to dive in? Here's the quickest path:
-
-1. **Install Schema Weaver** — `npm install schema-weaver` or use our cloud platform
-2. **Connect Your Database** — Point to PostgreSQL, MySQL, or other supported databases
-3. **Visualize Your Schema** — Auto-generates an interactive ER diagram
-4. **Plan Migrations** — Use our migration engine to safely evolve your schema
-5. **Deploy Changes** — Apply migrations with confidence and zero downtime
-
-## Quick Navigation
-
-### Popular Topics
-
-- **[Getting Started Guide](/docs/getting-started)** — 5-minute setup walkthrough
-- **[Core Concepts](/docs/core-concepts)** — Migrations, drift detection, versioning
-- **[API Reference](/docs/api-reference)** — Complete endpoint documentation
-- **[GitHub Repository](https://github.com/Lnxtanx/schema-weaver)** — Source code & issues
-
-## Why Schema Weaver?
-
-### Problem: Manual Schema Management
-
-Most teams manage database schemas through:
-- Manual SQL scripts (error-prone)
-- Unversioned changes (lost history)
-- No rollback mechanism (risky)
-- Scattered documentation (conflicting sources of truth)
-
-### Solution: Schema as Code
-
-With Schema Weaver, your schema is:
-- **Version controlled** — Every change tracked in Git
-- **Validated** — Drift detection catches unexpected changes
-- **Reviewable** — PRs for schema changes with migration diffs
-- **Safe** — Smart migration engine prevents breaking changes
-- **Observable** — Audit logs and deployment history
-
-## For Different Roles
-
-**Database Administrators**
-- Monitor schema drift in real-time
-- Approve migrations before deployment
-- Audit all schema changes with timestamps
-- Manage access controls and permissions
-
-**Developers**
-- Version schema with application code
-- Preview migrations before applying
-- Rollback safely if issues arise
-- Understand schema dependencies
-
-**DevOps / Platform Engineers**
-- CI/CD integration for automated deployments
-- Multi-environment management (dev → staging → prod)
-- Disaster recovery with snapshots
-- Compliance reporting and audit trails
-
-## Community & Support
-
-Have questions? Join our community:
-
-- **Discord** — Real-time support from the team
-- **GitHub Issues** — Report bugs or request features
-- **Email Support** — [support@schema-weaver.io](mailto:support@schema-weaver.io)
-- **Documentation** — You're reading it! 📖
+Schema Weaver is a PostgreSQL schema management platform. It gives you a visual SQL Editor for writing and organizing your schema, an auto-generated ER diagram that updates as you type, a migration engine for safely pushing changes to your live database, and an AI-powered Data Explorer for querying and analyzing your data — all in one workspace.
 
 ---
 
-**Next Step:** [Getting Started Guide](/docs/getting-started)
+## The Two Product Surfaces
+
+| Surface | What it's for | Link |
+|---|---|---|
+| **SQL Editor** | Write schema, analyze it with the compiler, visualize it as an ER diagram, and manage migrations against a live database | [sql.schemaweaver.vivekmind.com](https://sql.schemaweaver.vivekmind.com/) |
+| **Data Explorer** | Browse tables, run SQL queries, analyze columns, and use Resona AI to explore data in natural language | [data.schemaweaver.vivekmind.com](https://data.schemaweaver.vivekmind.com/) |
+
+Both surfaces share the same database connections, projects, and team memberships. You connect a database once and it is available everywhere.
+
+---
+
+## What You Can Do
+
+**Schema Development**
+- Write PostgreSQL DDL across multiple files and folders in a structured project
+- See your schema graded and analyzed across 20 quality layers in real time
+- Visualize every table, view, function, and relationship as an interactive ER diagram
+- Use Resona AI to generate SQL, explain schema decisions, and run surgical edits across files
+
+**Database Sync**
+- Pull the live schema from any PostgreSQL database into your project files
+- Diff your project SQL against the live database before pushing
+- Apply migrations safely — with advisory locking, drift detection, and automatic rollback support
+- Detect when someone changed the database outside of Schema Weaver
+
+**Data Exploration**
+- Browse any table with a high-performance, filterable data grid
+- Run custom SQL queries with syntax highlighting and autocomplete
+- Analyze columns — null rates, distinct counts, value distributions
+- Use Resona AI to write queries, generate charts, and build reports from your data
+
+**Team Collaboration**
+- Invite teammates to projects with owner or member roles
+- Share database connections without sharing credentials
+- Track every file edit and migration by author and timestamp
+
+---
+
+## Quick Start
+
+1. Open the **[SQL Editor](https://sql.schemaweaver.vivekmind.com/)** and create a new project
+2. Add a `.sql` file and write your first `CREATE TABLE` statement
+3. Watch the **ER Diagram** and **Schema Compiler** update automatically
+4. Connect a PostgreSQL database via the **Connect** button in the footer
+5. Run `sw pull` in the terminal to import the live schema, or `sw push --apply` to push your changes
+
+---
+
+## Explore the Documentation
+
+- [Database](/database) — add connections, pull, diff, push migrations, detect drift
+- [SQL Editor](/sql-editor) — files, schema compiler, ER diagram, AI assistant
+- [Data Explorer](/data-explorer) — browse tables, run queries, AI-assisted analysis
+- [Resona AI](/resona-ai) — models, credits, and how the AI assistant works
+- [Team Collaboration](/team-collaboration) — invite members, roles, and shared access
+
+---
+
+**[schemaweaver.vivekmind.com](https://schemaweaver.vivekmind.com/)** · **[SQL Editor](https://sql.schemaweaver.vivekmind.com/)** · **[Data Explorer](https://data.schemaweaver.vivekmind.com/)**

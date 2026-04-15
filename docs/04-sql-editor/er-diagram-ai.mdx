@@ -1,0 +1,162 @@
+---
+title: Resona AI in the ER Diagram
+description: Analyze tables, schema groups, and your entire schema with Resona AI directly from the ER Diagram — generate SQL, suggest indexes, check normalization, and apply changes instantly
+tags: [sql-editor, er-diagram, ai, resona, analysis, sql-generation, postgresql]
+order: 4.3
+sidebar_group: "SQL Editor"
+related:
+  - title: ER Diagram Overview
+    path: /sql-editor/er-diagram
+  - title: Resona AI Assistant
+    path: /sql-editor/ai-assistant
+  - title: Path Analysis
+    path: /sql-editor/er-diagram-path-analysis
+---
+
+# Resona AI in the ER Diagram
+
+Resona AI is embedded directly into the ER Diagram at three levels: individual tables, schema groups, and the full schema. Each level opens a chat panel anchored by a dashed blue edge to its subject — you can ask questions, request SQL, and apply generated changes without leaving the diagram.
+
+> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [ER Diagram Overview](/sql-editor/er-diagram) · [Resona AI Assistant](/sql-editor/ai-assistant)
+
+---
+
+## Three AI Entry Points
+
+| Mode | How to open | What it knows |
+|---|---|---|
+| **Table AI** | Click the ✦ Sparkles icon on any table node | The selected table: columns, types, constraints, indexes, triggers, policies |
+| **Group AI** | Click the ✦ AI icon on a schema group header (when grouping is enabled) | All tables, views, and objects in that schema group |
+| **Global AI** | Click **Resona AI** in the toolbar | The entire merged schema — all tables, views, functions, relationships across all files |
+
+Each mode opens a separate floating chat node on the canvas, connected to its subject via a dashed blue edge. You can have multiple AI nodes open simultaneously (one per table, one per group, and one global) and move them freely around the canvas.
+
+![Resona AI global chat node open on the ER Diagram canvas, connected to the diagram with a dashed blue edge](/images/sql-editor/resona-ai-global.png)
+
+---
+
+## Table AI
+
+![Resona AI table chat node anchored to a table node in the ER Diagram with a dashed blue connection edge](/images/sql-editor/resona-ai-table.png)
+
+**Table AI** opens a chat panel anchored to a specific table. The AI has full context of:
+
+- All columns, types, defaults, and nullability
+- Primary key and foreign key definitions
+- All indexes on the table
+- All triggers (timing, events, function)
+- All RLS policies (command, roles, USING, WITH CHECK)
+- All check constraints
+- Inbound and outbound FK relationships (which tables reference this one, and which tables this one references)
+
+### Opening Table AI
+
+**Option A — From the table node:**
+1. Hover over any table node
+2. Click the ✦ (Sparkles) icon that appears in the node header
+3. The AI chat panel spawns to the right of the table node, connected with a dashed blue line
+
+**Option B — Keyboard shortcut:**
+1. Select a table node (click it)
+2. Press `Ctrl+K` / `Cmd+K`
+3. Table AI opens for the selected table
+
+### Suggested Prompts for Table AI
+
+When Table AI opens, it shows quick-start prompts:
+
+- **"Analyze structure"** — reviews the table for common design issues (missing PKs, unbounded text columns, nullable FKs without indexes, etc.)
+- **"Suggest indexes"** — recommends indexes based on the FK columns, common query patterns, and current index coverage
+- **"Check normalization"** — evaluates whether the table is in 3NF, flags denormalization, and suggests improvements
+- **"Generate seed data"** — generates realistic `INSERT` statements for development/testing
+- **"Write a migration"** — generates the `ALTER TABLE` DDL to implement a described change safely
+
+### Closing Table AI
+
+Click the × button on the AI chat node, or click the ✦ Sparkles icon on the same table again to toggle it off.
+
+---
+
+## Group AI
+
+![Resona AI group chat node anchored to a schema group container in the ER Diagram](/images/sql-editor/resona-ai-gropu-table.png)
+
+**Group AI** opens when schema grouping is enabled and you click the AI icon on a group container header. The AI has context of every object inside that schema group — tables, views, functions, and their relationships.
+
+Group AI is useful for:
+
+- **Schema-level review** — "Are there any design issues across the billing schema?"
+- **Cross-table analysis** — "How do orders, order_items, and products relate? Is this normalized correctly?"
+- **Domain documentation** — "Write a markdown summary of what the auth schema contains and how it works"
+- **Refactoring suggestions** — "Which tables in this schema are candidates for partitioning?"
+
+---
+
+## Global AI
+
+**Global AI** opens by clicking **Resona AI** in the toolbar. It is anchored in the top-left of the canvas and has context of the entire merged schema — every table, view, function, relationship, and constraint across all files in the project.
+
+Global AI is best for:
+
+- **Full-schema review** — "What are the most critical issues in this schema?"
+- **Cross-domain questions** — "How does the auth schema connect to the billing schema?"
+- **Schema generation** — "Add a notifications table that can target both users and organizations"
+- **Documentation** — "Generate a README explaining this database schema"
+- **Migration planning** — "Plan a safe migration to add multi-tenancy to this schema"
+
+---
+
+## Applying AI-Generated SQL
+
+When Resona suggests SQL changes (new tables, `ALTER TABLE`, new indexes, etc.), you can review and apply them directly from the chat panel:
+
+1. The AI generates a SQL block with a **Preview** button
+2. Click **Preview** to see a diff of how the change would affect your current SQL files
+3. Click **Apply** to insert the generated SQL into your active file
+4. The ER Diagram updates immediately — new nodes and edges appear as soon as the SQL is parsed
+
+AI-generated SQL is appended to your current file with a `-- AI Generated:` comment marker so you can find and review it easily.
+
+---
+
+## AI Chat Context
+
+Each AI node maintains its own conversation history. You can:
+
+- **Continue the conversation** — ask follow-up questions that build on the previous exchange
+- **Start a new chat** — click **New Chat** in the panel to reset the conversation while keeping the panel open
+- **View history** — scroll up in the panel to see earlier messages in the session
+
+The AI automatically receives the latest version of your schema each time you send a message — if you edit SQL between messages, the AI sees the updated schema.
+
+---
+
+## Working with Multiple AI Nodes
+
+You can have multiple AI nodes open simultaneously:
+
+- One Global AI node
+- One AI node per table (open as many tables as you want)
+- One AI node per schema group
+
+Each node is independent — conversations don't cross-contaminate. This lets you, for example, ask Global AI about the overall architecture while simultaneously asking Table AI on `orders` about a specific index strategy.
+
+Move any AI node by dragging it. Nodes stay connected to their subject via the dashed blue edge regardless of where you drag them.
+
+---
+
+## Keyboard Shortcuts
+
+| Shortcut | Action |
+|---|---|
+| `Ctrl+K` / `Cmd+K` | Open Table AI for the currently selected table node |
+| `Escape` | Close the most recently opened AI node |
+
+---
+
+## Next Steps
+
+- [ER Diagram Overview](/sql-editor/er-diagram) — full feature overview including navigation, export, and layout
+- [Resona AI Assistant](/sql-editor/ai-assistant) — the full SQL Editor AI assistant (same AI, different surface)
+- [Path Analysis](/sql-editor/er-diagram-path-analysis) — find the shortest FK join path, then ask AI to generate the JOIN SQL
+- [Grouping & Schema Clusters](/sql-editor/er-diagram-grouping) — enable schema groups to unlock Group AI

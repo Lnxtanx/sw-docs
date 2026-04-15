@@ -1,0 +1,130 @@
+---
+title: History & Rollback
+description: View the full audit trail of schema migrations for each connection, and roll back applied migrations with automatically generated reverse SQL
+tags: [database, history, rollback, migrations, audit, down-sql]
+order: 6
+sidebar_group: "Database"
+related:
+  - title: Migrations
+    path: /database/migrations
+  - title: Drift Detection
+    path: /database/drift-detection
+  - title: Terminal & sw Commands
+    path: /database/terminal
+---
+
+# History & Rollback
+
+Every migration applied through Schema Weaver is recorded in a persistent history log — who ran it, when, and what the outcome was. If a migration causes a problem, you can roll it back with a single command. The reverse SQL is generated automatically at apply time, so rollback is always available.
+
+> Quick links: [Migrations](/database/migrations) · [Terminal & sw Commands](/database/terminal)
+
+---
+
+## Migration History
+
+`sw history` lists all migrations applied through Schema Weaver for the active connection, in reverse chronological order.
+
+```
+cloop sw > sw history
+Migration History — cloop
+────────────────────────────────────────────────
+  #12   2026-04-01   success        alice@company.com
+  #11   2026-03-20   success        you@company.com
+  #10   2026-03-15   success        you@company.com
+  #9    2026-03-01   rolled_back
+  #8    2026-02-15   success        you@company.com
+  ...
+```
+
+Each entry records:
+
+| Field | Description |
+|---|---|
+| **Migration number** | A sequence number, incremented per connection |
+| **Date** | When the migration was applied |
+| **Status** | `success`, `rolled_back`, or `failed` |
+| **Applied by** | The user who triggered the migration — email address for team accountability |
+
+The same history is visible in the **Connection Dashboard** under the Migrations section, where you can also see timestamps and status at a glance.
+
+---
+
+## Hash Chain Integrity
+
+Each migration record includes a `parent_hash` — a cryptographic link to the previous migration. This forms a tamper-evident chain: if any record is modified or deleted, the chain breaks and Schema Weaver can detect it.
+
+This audit trail is useful for:
+- Compliance reviews and change audits
+- Debugging unexpected schema state
+- Identifying which migration introduced a particular change
+
+---
+
+## Rollback
+
+`sw rollback` reverses the last applied migration. It executes the **reverse SQL** that was computed and stored when the migration was originally applied.
+
+```
+cloop sw > sw rollback
+Rolling back migration #12...
+  Executing reverse SQL...
+  ✓ DROP TABLE notifications
+  ✓ ALTER TABLE users DROP COLUMN last_login
+  ✓ DROP INDEX idx_users_last_login
+Rollback complete. Schema restored to migration #11.
+```
+
+### How Reverse SQL Is Generated
+
+When `sw push --apply` succeeds, Schema Weaver immediately runs the diff in reverse — comparing the post-migration state against the pre-migration state — and stores the resulting SQL as the migration's `down_sql`. This happens at apply time, while Schema Weaver has full context of both states.
+
+This means rollback does not require a separate command to generate the reverse SQL — it is always ready.
+
+### Rolling Back Multiple Migrations
+
+To roll back more than one migration, pass the number of steps:
+
+```
+sw rollback 3
+```
+
+This rolls back migrations #12, #11, and #10, in that order. Each migration is reversed individually so that partial progress is recorded if a rollback fails mid-sequence.
+
+---
+
+## What Rollback Can and Cannot Undo
+
+Rollback restores the schema structure as it was before the migration. However, it cannot restore data that was deleted.
+
+| Situation | What rollback does |
+|---|---|
+| A table was created | ✅ Drops the table |
+| A column was added | ✅ Drops the column |
+| An index was created | ✅ Drops the index |
+| A column was dropped (destructive migration) | ⚠️ Recreates the column definition — but the data rows are gone |
+| A table was dropped (destructive migration) | ⚠️ Recreates the table structure — but all rows are gone |
+| An enum value was added | ✅ Can remove the enum value if no rows use it |
+| An enum value was removed | ❌ PostgreSQL cannot remove enum values that have been in use |
+
+> For destructive migrations, the best protection is reviewing `sw push --force` output carefully before confirming. Once a column or table is dropped and the migration commits, the data cannot be recovered through rollback.
+
+---
+
+## Viewing History in the Dashboard
+
+The Connection Dashboard shows the full migration history in the **Migrations** section. Each entry shows:
+
+- Migration number and timestamp
+- Status badge (success / rolled_back / failed)
+- Who applied it (for team connections)
+
+You can view the history without opening the terminal by clicking **Dashboard** on the connection in the connections list.
+
+---
+
+## Next Steps
+
+- [Migrations](/database/migrations) — the full apply pipeline and how reverse SQL is generated
+- [Drift Detection](/database/drift-detection) — preventing the need for rollback by catching external changes early
+- [Terminal & sw Commands](/database/terminal) — complete `sw history` and `sw rollback` command reference

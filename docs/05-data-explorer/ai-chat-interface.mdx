@@ -1,0 +1,113 @@
+---
+title: AI Chat Interface
+description: Use Resona AI inside the Data Explorer to query, analyze, and visualize your data using natural language
+tags: [data-explorer, resona-ai, chat, mentions, voice, context]
+order: 4
+sidebar_group: "Data Explorer"
+related:
+  - title: Resona AI
+    path: /data-explorer/ai-overview
+  - title: How Resona AI Works
+    path: /data-explorer/agentic-workflows
+  - title: Workspace & Projects
+    path: /data-explorer/ai-workspace
+---
+
+# AI Chat Interface
+
+Resona AI is the agentic assistant built directly into the Data Explorer. You interact with it through a chat panel — type a question in plain English, and Resona queries your database, runs analysis tools, and returns results as interactive charts, tables, and reports.
+
+> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.com/data-explorer/) · [How Resona AI Works](/data-explorer/agentic-workflows)
+
+![Resona AI chat panel showing a table mention with table overview context](/images/data-explorer/resona-ai-@mention-table-overview.png)
+
+## Opening the AI Panel
+
+Click the **Resona AI** button in the Data Explorer sidebar to open the chat panel. The panel slides in as a right-side drawer alongside the data grid. You can keep the grid and AI panel visible at the same time.
+
+The panel has three sections accessible from the sidebar icons:
+
+| Icon | Panel | Purpose |
+|---|---|---|
+| Chat bubble | **Chat** | Active conversation with Resona |
+| Clock | **History** | All previous chats and their artifacts |
+| Folder | **Projects** | Organize chats into analysis projects |
+| Library | **Library** | Saved charts and connection health |
+
+---
+
+## Table Mentions (`@`)
+
+The fastest way to give Resona accurate context is to **mention a table** in your message.
+
+Type `@` and a search dropdown appears showing all tables in your connected database. Select a table to attach it to your message. Resona receives the table's full schema, foreign key relationships, and a sample of its data before it starts planning.
+
+```
+@orders show me total revenue by month for the last year
+@users @orders what is the 30-day retention rate for users who signed up in Q1?
+```
+
+**Why this matters:** Without a mention, Resona has to first call `list_tables` and `get_schema` to discover your data. With a mention it skips discovery and starts analysis immediately — faster and more accurate SQL on the first attempt.
+
+You can mention multiple tables in one message. Resona will use all of them as context.
+
+![The @mention picker dropdown showing searchable tables with row counts](/images/data-explorer/resona-ai-@mention.png)
+
+---
+
+## Context Window
+
+Every model has a finite memory (context window). Resona tracks how much of it is currently in use via the **Context Window Bar** — a thin progress indicator at the top of the chat input.
+
+- **Green / low usage:** Plenty of room. Resona can handle long multi-step analysis.
+- **Yellow / mid usage:** Getting full. Resona may start compacting older tool results.
+- **Red / near limit:** Resona will auto-compact the conversation before the next request.
+
+### Auto-Compaction
+
+When the conversation grows long, Resona automatically summarizes previous turns into a compact memory block. Your message history stays visible in the UI, but Resona's internal context is trimmed. Analysis continuity is preserved — it remembers what tables you were working on and what findings it already made.
+
+You can also manually **Reset** the context at any time. This wipes Resona's working memory and starts a fresh session. Use this when switching to a completely unrelated analysis topic.
+
+---
+
+## Voice Input
+
+If your browser has microphone access, the **microphone icon** in the chat input lets you dictate your question. Speech is transcribed in real time and inserted into the text field. You can edit the transcription before sending.
+
+This is useful for long, conversational questions where typing is slower than speaking.
+
+---
+
+## Projects
+
+Projects let you group related chat sessions together. A project has its own:
+
+- Dedicated workspace (files and reports generated in that project stay together)
+- Artifact history scoped to that project
+- Visual label (color + icon) you assign when creating it
+
+Create a project for each ongoing analysis topic — for example "Monthly Sales Review", "User Churn Investigation", "Infrastructure Audit". Switch between projects from the sidebar without losing any conversation history.
+
+![The Projects panel showing analysis projects organized with color labels](/images/data-explorer/project-resona-ai.png)
+
+---
+
+## Chat History
+
+Every conversation is saved automatically. The **History** panel lists all previous chats, newest first, with a preview of the first message. Click any past chat to reopen it and continue where you left off, or to revisit artifacts that were generated.
+
+Deleting a chat removes its message history from the list, but its generated artifacts remain available in the Artifact History panel.
+
+---
+
+## Keyboard Shortcuts
+
+| Shortcut | Action |
+|---|---|
+| `Enter` | Send message |
+| `Shift + Enter` | New line in message |
+| `@` | Open table mention picker |
+| `Esc` | Close mention picker |
+| `D` | Open Dashboard (pinned artifacts) |
+| `W` | Open Workspace (generated files) |

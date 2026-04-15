@@ -80,7 +80,6 @@ export function Sidebar() {
       </nav>
 
       <div className="sidebar-footer">
-        <p>v1.0.0-beta</p>
       </div>
     </aside>
   );

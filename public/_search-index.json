@@ -3,10 +3,12 @@
     {
       "slug": "00-introduction/index",
       "title": "Introduction",
-      "description": "Welcome to Schema Weaver documentation. Learn about the platform and its core capabilities.",
+      "description": "Welcome to Schema Weaver — a PostgreSQL schema management platform with a visual SQL Editor, ER diagram, migration engine, Data Explorer, and AI assistant",
       "tags": [
         "getting-started",
-        "overview"
+        "overview",
+        "schema-weaver",
+        "postgresql"
       ],
       "headings": [
         {
@@ -14,304 +16,167 @@
           "title": "What is Schema Weaver?"
         },
         {
-          "level": 3,
-          "title": "Key Features"
+          "level": 2,
+          "title": "The Two Product Surfaces"
         },
         {
           "level": 2,
-          "title": "Getting Started"
+          "title": "What You Can Do"
         },
         {
           "level": 2,
-          "title": "Quick Navigation"
-        },
-        {
-          "level": 3,
-          "title": "Popular Topics"
+          "title": "Quick Start"
         },
         {
           "level": 2,
-          "title": "Why Schema Weaver?"
-        },
-        {
-          "level": 3,
-          "title": "Problem: Manual Schema Management"
-        },
-        {
-          "level": 3,
-          "title": "Solution: Schema as Code"
-        },
-        {
-          "level": 2,
-          "title": "For Different Roles"
-        },
-        {
-          "level": 2,
-          "title": "Community & Support"
+          "title": "Explore the Documentation"
         }
       ],
-      "content": "Schema Weaver Documentation\r\n\r\nWelcome to the official documentation for Schema Weaver. This guide will help you understand the architecture, core concepts, and how to start building amazing schemas and workflows.\r\n\r\nWhat is Schema Weaver?\r\n\r\nSchema Weaver is a modern, high-performance toolset designed to help you weave complex database schemas, manage data integrity, and visualize connections seamlessly.\r\n\r\nKey Features\r\n\r\n- Schema Visualization — Beautiful ER diagrams that auto-update as you e",
-      "snippet": ""
+      "content": "[Schema Weaver](https://schemaweaver.vivekmind.com/) Documentation\n\nWelcome to the official documentation for Schema Weaver. This guide covers everything from connecting your first PostgreSQL database to running migrations, exploring your data, and collaborating with your team.\n\n---\n\nWhat is Schema Weaver?\n\nSchema Weaver is a PostgreSQL schema management platform. It gives you a visual SQL Editor for writing and organizing your schema, an auto-generated ER diagram that updates as you type, a mig",
+      "snippet": "Welcome to the official documentation for Schema Weaver. This guide covers everything from connecting your first PostgreSQL database to running migrations, exploring your data, and collaborating with "
     },
     {
-      "slug": "01-getting-started/configuration",
-      "title": "Configuration",
-      "description": "Complete reference for schema-config.json options and environment variables",
+      "slug": "03-database/adding-a-connection",
+      "title": "Adding a Connection",
+      "description": "Add a PostgreSQL connection to Schema Weaver — fill in credentials, choose an SSL mode, test the connection, and understand how credentials are stored securely",
       "tags": [
-        "configuration",
-        "setup",
-        "environment"
+        "database",
+        "connection",
+        "postgresql",
+        "ssl",
+        "credentials",
+        "security"
       ],
       "headings": [
         {
           "level": 2,
-          "title": "Configuration File Location"
+          "title": "How to Add a Connection"
         },
         {
           "level": 2,
-          "title": "Full Configuration Reference"
+          "title": "Connection Fields"
         },
         {
           "level": 2,
-          "title": "`connections`"
+          "title": "SSL Mode"
+        },
+        {
+          "level": 2,
+          "title": "Testing the Connection"
+        },
+        {
+          "level": 2,
+          "title": "Required PostgreSQL Permissions"
+        },
+        {
+          "level": 2,
+          "title": "Connection Security"
+        },
+        {
+          "level": 2,
+          "title": "Supported PostgreSQL Versions"
+        },
+        {
+          "level": 2,
+          "title": "Common Connection Setups"
         },
         {
           "level": 3,
-          "title": "Connection Options"
+          "title": "Supabase"
         },
         {
           "level": 3,
-          "title": "Connection URL Formats"
-        },
-        {
-          "level": 2,
-          "title": "`migrationsDir`"
-        },
-        {
-          "level": 2,
-          "title": "`snapshotsDir`"
-        },
-        {
-          "level": 2,
-          "title": "`driftDetection`"
-        },
-        {
-          "level": 2,
-          "title": "`migrations`"
+          "title": "AWS RDS / Aurora"
         },
         {
           "level": 3,
-          "title": "Dangerous Operations"
-        },
-        {
-          "level": 2,
-          "title": "`logging`"
-        },
-        {
-          "level": 2,
-          "title": "`resona`"
-        },
-        {
-          "level": 2,
-          "title": "Environment Variables"
+          "title": "Neon"
         },
         {
           "level": 3,
-          "title": "Using `.env` Files"
-        },
-        {
-          "level": 2,
-          "title": "Multiple Environments"
-        },
-        {
-          "level": 2,
-          "title": "Validating Your Config"
-        }
-      ],
-      "content": "Configuration\r\n\r\nSchema Weaver is configured through a `schema-config.json` file in your project root, along with optional environment variables. This page is a complete reference for every available option.\r\n\r\nConfiguration File Location\r\n\r\nSchema Weaver looks for config in the following order:\r\n\r\n1. Path specified via `--config` flag\r\n2. `./schema-config.json` in the current working directory\r\n3. `~/.schema-weaver/config.json` (global user config)\r\n\r\n\r\n\r\n---\r\n\r\nFull Configuration Reference\r\n\r\n",
-      "snippet": ""
-    },
-    {
-      "slug": "01-getting-started/index",
-      "title": "Getting Started",
-      "description": "Get Schema Weaver up and running in 5 minutes",
-      "tags": [
-        "setup",
-        "installation",
-        "quickstart"
-      ],
-      "headings": [
-        {
-          "level": 2,
-          "title": "Installation"
+          "title": "Railway"
         },
         {
           "level": 3,
-          "title": "Option 1: NPM (Recommended)"
-        },
-        {
-          "level": 3,
-          "title": "Option 2: Docker"
-        },
-        {
-          "level": 3,
-          "title": "Option 3: Cloud Platform"
-        },
-        {
-          "level": 2,
-          "title": "Basic Setup"
-        },
-        {
-          "level": 2,
-          "title": "Connect Your Database"
-        },
-        {
-          "level": 3,
-          "title": "PostgreSQL"
-        },
-        {
-          "level": 3,
-          "title": "MySQL"
-        },
-        {
-          "level": 3,
-          "title": "SQLite"
-        },
-        {
-          "level": 2,
-          "title": "Your First Migration"
-        },
-        {
-          "level": 2,
-          "title": "Verify Installation"
+          "title": "Local / Docker"
         },
         {
           "level": 2,
           "title": "Next Steps"
-        },
-        {
-          "level": 2,
-          "title": "Troubleshooting"
-        },
-        {
-          "level": 3,
-          "title": "\"Connection refused\""
-        },
-        {
-          "level": 3,
-          "title": "\"Permission denied\""
-        },
-        {
-          "level": 3,
-          "title": "Still having issues?"
         }
       ],
-      "content": "Getting Started\r\n\r\nGet Schema Weaver up and running in your local environment with this quick start guide.\r\n\r\nInstallation\r\n\r\nOption 1: NPM (Recommended)\r\n\r\nInstall Schema Weaver as an npm package:\r\n\r\n\r\n\r\nOption 2: Docker\r\n\r\nRun Schema Weaver in a Docker container:\r\n\r\n\r\n\r\nOption 3: Cloud Platform\r\n\r\nUse our hosted platform at [schema-weaver.io](https://schema-weaver.io) (no installation needed).\r\n\r\nBasic Setup\r\n\r\nAfter installing, initialize the setup in your project root:\r\n\r\n\r\n\r\nThis command ge",
-      "snippet": ""
+      "content": "Adding a Connection\n\nAll database connections in Schema Weaver are added from the SQL Editor. Once saved, a connection is available across both the SQL Editor (for schema migrations) and the Data Explorer (for browsing and querying your data).\n\n> Quick links: [Database Overview](/database) · [Connection Dashboard](/database/connection-dashboard)\n\n---\n\nHow to Add a Connection\n\n1. Open the [SQL Editor](https://sql.schemaweaver.vivekmind.com/)\n2. Click Connect in the footer status bar at the bottom",
+      "snippet": "All database connections in Schema Weaver are added from the SQL Editor. Once saved, a connection is available across both the SQL Editor (for schema migrations) and the Data Explorer (for browsing an"
     },
     {
-      "slug": "01-getting-started/quickstart",
-      "title": "5-Minute Quickstart",
-      "description": "Get Schema Weaver running and apply your first migration in under 5 minutes",
+      "slug": "03-database/connection-dashboard",
+      "title": "Connection Dashboard",
+      "description": "Manage your saved connections, link them to projects, monitor live activity, and use the connection panel in the SQL Editor sidebar",
       "tags": [
-        "quickstart",
-        "setup",
-        "tutorial"
+        "database",
+        "connection",
+        "dashboard",
+        "project",
+        "linking",
+        "activity"
       ],
       "headings": [
         {
           "level": 2,
-          "title": "Prerequisites"
+          "title": "Connections List"
         },
         {
           "level": 2,
-          "title": "Step 1 — Install Schema Weaver"
+          "title": "Connection Sidebar Panel"
         },
         {
           "level": 2,
-          "title": "Step 2 — Initialize Your Project"
+          "title": "Full Connection Dashboard"
         },
         {
           "level": 2,
-          "title": "Step 3 — Connect Your Database"
+          "title": "Linking a Connection to a Project"
         },
         {
           "level": 2,
-          "title": "Step 4 — Create Your First Migration"
+          "title": "One Connection, Both Tools"
         },
         {
           "level": 2,
-          "title": "Step 5 — Preview the Migration"
-        },
-        {
-          "level": 2,
-          "title": "Step 6 — Apply the Migration"
-        },
-        {
-          "level": 2,
-          "title": "Step 7 — Verify the Schema"
-        },
-        {
-          "level": 2,
-          "title": "Using SQLite for Local Testing"
-        },
-        {
-          "level": 2,
-          "title": "What's Next?"
+          "title": "Next Steps"
         }
       ],
-      "content": "5-Minute Quickstart\r\n\r\nThis guide takes you from zero to a working Schema Weaver setup with your first migration applied. You'll need a running PostgreSQL instance (or see [SQLite alternative](#using-sqlite-for-local-testing) below).\r\n\r\nPrerequisites\r\n\r\n- Node.js 18+ installed\r\n- A PostgreSQL, MySQL, or SQLite database\r\n- npm or yarn\r\n\r\n---\r\n\r\nStep 1 — Install Schema Weaver\r\n\r\nInstall the CLI globally or as a dev dependency in your project:\r\n\r\n\r\n\r\nVerify the installation:\r\n\r\n\r\n\r\n---\r\n\r\nStep 2 — ",
-      "snippet": ""
+      "content": "Connection Dashboard\n\nOnce you've added one or more connections, Schema Weaver gives you several views for managing and using them — a connections list, a sidebar panel while you're working in the SQL Editor, and a full connection dashboard for each connection.\n\n> Quick links: [Adding a Connection](/database/adding-a-connection) · [Pull, Diff & Push](/database/pull-diff-push)\n\n---\n\nConnections List\n\nAfter adding connections they appear in the connection panel. Open the panel from the SQL Editor ",
+      "snippet": "Once you've added one or more connections, Schema Weaver gives you several views for managing and using them — a connections list, a sidebar panel while you're working in the SQL Editor, and a full co"
     },
     {
-      "slug": "02-core-concepts/drift-detection",
+      "slug": "03-database/drift-detection",
       "title": "Drift Detection",
-      "description": "Understand and manage schema drift in your databases",
+      "description": "Detect when your live PostgreSQL database has drifted from your project SQL — understand what causes drift, how Schema Weaver detects it, and how to resolve it",
       "tags": [
+        "database",
         "drift",
-        "monitoring",
-        "validation"
+        "detection",
+        "schema",
+        "sync",
+        "migration"
       ],
       "headings": [
         {
           "level": 2,
-          "title": "What is Schema Drift?"
+          "title": "What Causes Drift"
         },
         {
           "level": 2,
-          "title": "Common Causes"
-        },
-        {
-          "level": 3,
-          "title": "1. Hotfixes"
-        },
-        {
-          "level": 3,
-          "title": "2. Manual Changes"
-        },
-        {
-          "level": 3,
-          "title": "3. Incomplete Migrations"
-        },
-        {
-          "level": 3,
-          "title": "4. Failed Rollbacks"
-        },
-        {
-          "level": 3,
-          "title": "5. Third-party Tools"
+          "title": "How Drift Detection Works"
         },
         {
           "level": 2,
-          "title": "Detecting Drift"
+          "title": "Checking for Drift Manually"
         },
         {
-          "level": 3,
-          "title": "Manual Check"
-        },
-        {
-          "level": 3,
-          "title": "Automatic Monitoring"
+          "level": 2,
+          "title": "Drift vs Your Project SQL"
         },
         {
           "level": 2,
@@ -319,532 +184,1424 @@
         },
         {
           "level": 3,
-          "title": "1. Document Unexpected Changes"
+          "title": "Keep the external changes (they are intentional)"
         },
         {
           "level": 3,
-          "title": "2. Create Missing Migrations"
+          "title": "Discard the external changes (they should not have been made)"
         },
         {
           "level": 3,
-          "title": "3. Clean Up Production"
-        },
-        {
-          "level": 3,
-          "title": "4. Investigate Root Cause"
-        }
-      ],
-      "content": "Drift Detection\r\n\r\nDrift detection helps you identify when your actual database schema differs from your version-controlled schema.\r\n\r\nWhat is Schema Drift?\r\n\r\nSchema drift occurs when your production database schema doesn't match what's defined in your migrations:\r\n\r\n\r\n\r\nCommon Causes\r\n\r\n1. Hotfixes\r\n\r\nEmergency SQL run directly in production without committing to version control:\r\n\r\n\r\n\r\n2. Manual Changes\r\n\r\nTeam member modifies schema manually via GUI tools like pgAdmin.\r\n\r\n3. Incomplete Migra",
-      "snippet": ""
-    },
-    {
-      "slug": "02-core-concepts/index",
-      "title": "Core Concepts",
-      "description": "Understand the fundamental concepts that power Schema Weaver",
-      "tags": [
-        "concepts",
-        "architecture",
-        "fundamentals"
-      ],
-      "headings": [
-        {
-          "level": 2,
-          "title": "What is a Schema?"
+          "title": "When you are unsure"
         },
         {
           "level": 2,
-          "title": "Schema Evolution"
-        },
-        {
-          "level": 2,
-          "title": "Key Concepts"
-        },
-        {
-          "level": 3,
-          "title": "1. Migrations"
-        },
-        {
-          "level": 3,
-          "title": "2. Schema Drift"
-        },
-        {
-          "level": 3,
-          "title": "3. Schema Snapshots"
-        },
-        {
-          "level": 3,
-          "title": "4. Safe Migrations"
-        },
-        {
-          "level": 3,
-          "title": "5. Version Control"
+          "title": "Automatic Drift Check During Push"
         },
         {
           "level": 2,
           "title": "Next Steps"
         }
       ],
-      "content": "Core Concepts\r\n\r\nLearn the fundamental concepts that power Schema Weaver and enable safe, version-controlled database schema management.\r\n\r\nWhat is a Schema?\r\n\r\nA database schema is the structure that defines:\r\n\r\n- Tables — Collections of related data organized in rows and columns\r\n- Columns — Individual fields with specific data types and constraints\r\n- Constraints — Rules that enforce data integrity (PRIMARY KEY, FOREIGN KEY, UNIQUE, CHECK)\r\n- Indexes — Performance optimizations for faster que",
-      "snippet": ""
+      "content": "Drift Detection\n\nDrift happens when someone (or something) changes your live database's schema outside of Schema Weaver. Your project SQL says one thing, but the actual database looks different. Schema Weaver detects this automatically and prevents you from overwriting those changes unknowingly.\n\n> Quick links: [Pull, Diff & Push](/database/pull-diff-push) · [Migrations](/database/migrations)\n\n---\n\nWhat Causes Drift\n\nDrift can be introduced by:\n\n- A developer running `ALTER TABLE` or `CREATE IND",
+      "snippet": "Drift happens when someone (or something) changes your live database's schema outside of Schema Weaver. Your project SQL says one thing, but the actual database looks different. Schema Weaver detects "
     },
     {
-      "slug": "02-core-concepts/migrations",
-      "title": "Migrations",
-      "description": "Master the migration system for safe, version-controlled schema changes",
+      "slug": "03-database/history-rollback",
+      "title": "History & Rollback",
+      "description": "View the full audit trail of schema migrations for each connection, and roll back applied migrations with automatically generated reverse SQL",
       "tags": [
+        "database",
+        "history",
+        "rollback",
         "migrations",
-        "ddl",
-        "atlas"
+        "audit",
+        "down-sql"
       ],
       "headings": [
-        {
-          "level": 2,
-          "title": "What is a Migration?"
-        },
-        {
-          "level": 2,
-          "title": "Creating Migrations"
-        },
-        {
-          "level": 3,
-          "title": "Automatic Generation (Recommended)"
-        },
-        {
-          "level": 3,
-          "title": "Manual Creation"
-        },
-        {
-          "level": 2,
-          "title": "Migration Workflow"
-        },
-        {
-          "level": 3,
-          "title": "1. Preview"
-        },
-        {
-          "level": 3,
-          "title": "2. Review"
-        },
-        {
-          "level": 3,
-          "title": "3. Test in Staging"
-        },
-        {
-          "level": 3,
-          "title": "4. Deploy to Production"
-        },
-        {
-          "level": 2,
-          "title": "Safe Migration Patterns"
-        },
-        {
-          "level": 3,
-          "title": "Adding Columns"
-        },
-        {
-          "level": 3,
-          "title": "Renaming Columns"
-        },
-        {
-          "level": 3,
-          "title": "Changing Column Types"
-        },
-        {
-          "level": 2,
-          "title": "Rollback"
-        },
         {
           "level": 2,
           "title": "Migration History"
         },
         {
           "level": 2,
-          "title": "Best Practices"
+          "title": "Hash Chain Integrity"
+        },
+        {
+          "level": 2,
+          "title": "Rollback"
         },
         {
           "level": 3,
-          "title": "✅ Do"
+          "title": "How Reverse SQL Is Generated"
         },
         {
           "level": 3,
-          "title": "❌ Don't"
+          "title": "Rolling Back Multiple Migrations"
+        },
+        {
+          "level": 2,
+          "title": "What Rollback Can and Cannot Undo"
+        },
+        {
+          "level": 2,
+          "title": "Viewing History in the Dashboard"
+        },
+        {
+          "level": 2,
+          "title": "Next Steps"
         }
       ],
-      "content": "Migrations\r\n\r\nMaster the Schema Weaver migration system for safe, version-controlled database changes.\r\n\r\nWhat is a Migration?\r\n\r\nA migration is a timestamped, version-controlled script that modifies your database schema.\r\n\r\n\r\n\r\nCreating Migrations\r\n\r\nAutomatic Generation (Recommended)\r\n\r\nLet Schema Weaver generate migrations from your schema definitions:\r\n\r\n\r\n\r\nThis inspects your database and generates the migration:\r\n\r\n\r\n\r\nManual Creation\r\n\r\nFor complex changes, write migrations manually:\r\n\r\n\r",
-      "snippet": ""
+      "content": "History & Rollback\n\nEvery migration applied through Schema Weaver is recorded in a persistent history log — who ran it, when, and what the outcome was. If a migration causes a problem, you can roll it back with a single command. The reverse SQL is generated automatically at apply time, so rollback is always available.\n\n> Quick links: [Migrations](/database/migrations) · [Terminal & sw Commands](/database/terminal)\n\n---\n\nMigration History\n\n`sw history` lists all migrations applied through Schema ",
+      "snippet": "Every migration applied through Schema Weaver is recorded in a persistent history log — who ran it, when, and what the outcome was. If a migration causes a problem, you can roll it back with a single "
     },
     {
-      "slug": "02-core-concepts/versioning",
-      "title": "Versioning",
-      "description": "Manage schema versions and handle breaking changes",
+      "slug": "03-database/index",
+      "title": "Database",
+      "description": "Connect Schema Weaver to your live PostgreSQL databases — manage connections, sync schemas, run migrations, detect drift, and explore your data across the SQL Editor and Data Explorer",
       "tags": [
-        "versioning",
-        "compatibility",
-        "releases"
+        "database",
+        "postgresql",
+        "connection",
+        "migration",
+        "pull",
+        "push",
+        "diff"
       ],
       "headings": [
         {
           "level": 2,
-          "title": "Version Your Schema"
-        },
-        {
-          "level": 3,
-          "title": "Semantic Versioning"
-        },
-        {
-          "level": 3,
-          "title": "Examples"
+          "title": "Where Connections Live"
         },
         {
           "level": 2,
-          "title": "Breaking vs Non-Breaking Changes"
+          "title": "What You Can Do With a Connection"
         },
         {
           "level": 3,
-          "title": "Non-Breaking (MINOR version bump)"
+          "title": "In the SQL Editor"
         },
         {
           "level": 3,
-          "title": "Breaking (MAJOR version bump)"
+          "title": "In the Data Explorer"
         },
         {
           "level": 2,
-          "title": "Handling Breaking Changes"
-        },
-        {
-          "level": 3,
-          "title": "1. Deprecation Period"
-        },
-        {
-          "level": 3,
-          "title": "2. Compatibility Layer"
-        },
-        {
-          "level": 3,
-          "title": "3. Multi-step Migrations"
+          "title": "PostgreSQL Versions Supported"
         },
         {
           "level": 2,
-          "title": "Version Management"
-        },
-        {
-          "level": 3,
-          "title": "Tag Versions"
-        },
-        {
-          "level": 3,
-          "title": "Document Changes"
+          "title": "What Schema Weaver Reads From Your Database"
         },
         {
           "level": 2,
-          "title": "[1.2.0] - 2024-03-23"
-        },
-        {
-          "level": 3,
-          "title": "Added"
-        },
-        {
-          "level": 3,
-          "title": "Changed"
+          "title": "Security"
         },
         {
           "level": 2,
-          "title": "[1.1.0] - 2024-03-15"
-        },
-        {
-          "level": 3,
-          "title": "Added"
-        },
-        {
-          "level": 3,
-          "title": "Fixed"
-        },
-        {
-          "level": 3,
-          "title": "Multi-Environment Versioning"
-        },
-        {
-          "level": 2,
-          "title": "Schema Compatibility Matrix"
+          "title": "Next Steps"
         }
       ],
-      "content": "Schema Versioning\r\n\r\nLearn how to manage schema versions and handle breaking changes gracefully.\r\n\r\nVersion Your Schema\r\n\r\nSemantic Versioning\r\n\r\nFollow Semantic Versioning for your schema:\r\n\r\n\r\n\r\nExamples\r\n\r\n\r\n\r\nBreaking vs Non-Breaking Changes\r\n\r\nNon-Breaking (MINOR version bump)\r\n\r\nThese are safe and don't require application changes:\r\n\r\n✅ Add new column (with default or nullable)\r\n✅ Add new table\r\n✅ Add new index\r\n✅ Create new view\r\n✅ Add new constraint (if existing data satisfies it)\r\n\r\n\r\n\r",
-      "snippet": ""
+      "content": "Database\n\nSchema Weaver is built for PostgreSQL. Every live-database feature — schema sync, migration, drift detection, data exploration — works exclusively with PostgreSQL. This focus means every part of the system is purpose-built for PostgreSQL's type system, DDL model, catalog structure, and extension ecosystem.\n\n> Quick links: [SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [Data Explorer](https://data.schemaweaver.vivekmind.com/)\n\n---\n\nWhere Connections Live\n\nAll database connectio",
+      "snippet": "Schema Weaver is built for PostgreSQL. Every live-database feature — schema sync, migration, drift detection, data exploration — works exclusively with PostgreSQL. This focus means every part of the s"
     },
     {
-      "slug": "03-api-reference/authentication",
-      "title": "Authentication",
-      "description": "API key and session token authentication for Schema Weaver REST API",
+      "slug": "03-database/migrations",
+      "title": "Migrations",
+      "description": "Apply schema changes to your live PostgreSQL database — understand the migration pipeline, use safe mode for complex type changes, and control destructive operations",
       "tags": [
-        "api",
-        "authentication",
-        "security",
-        "api-key"
+        "database",
+        "migration",
+        "push",
+        "apply",
+        "safe",
+        "force",
+        "pipeline",
+        "advisory-lock",
+        "transactions"
       ],
       "headings": [
         {
           "level": 2,
-          "title": "API Keys"
+          "title": "The Migration Pipeline"
         },
         {
           "level": 3,
-          "title": "Generating an API Key"
+          "title": "Step 1 — Schema Diff"
         },
         {
           "level": 3,
-          "title": "Using an API Key"
+          "title": "Step 2 — Validation"
         },
         {
           "level": 3,
-          "title": "API Key Format"
+          "title": "Step 3 — Destructive Change Check"
+        },
+        {
+          "level": 3,
+          "title": "Step 4 — Advisory Lock"
+        },
+        {
+          "level": 3,
+          "title": "Step 5 — Drift Check"
+        },
+        {
+          "level": 3,
+          "title": "Step 6 — Structural DDL"
+        },
+        {
+          "level": 3,
+          "title": "Step 7 — Behavioral DDL"
+        },
+        {
+          "level": 3,
+          "title": "Step 8 — Snapshot and Audit"
         },
         {
           "level": 2,
-          "title": "API Key Scopes"
+          "title": "Safe Mode — Complex Type Changes"
         },
         {
           "level": 3,
-          "title": "Scoped Key Example"
+          "title": "The Six Phases"
+        },
+        {
+          "level": 3,
+          "title": "When Safe Mode Is Blocked"
+        },
+        {
+          "level": 3,
+          "title": "Impossible Casts"
         },
         {
           "level": 2,
-          "title": "Session Tokens"
-        },
-        {
-          "level": 3,
-          "title": "Obtaining a Session Token"
-        },
-        {
-          "level": 3,
-          "title": "Using a Session Token"
-        },
-        {
-          "level": 3,
-          "title": "Refreshing a Session Token"
-        },
-        {
-          "level": 3,
-          "title": "Revoking a Session Token"
+          "title": "Force Mode — Destructive Changes"
         },
         {
           "level": 2,
-          "title": "OAuth 2.0 (Enterprise)"
-        },
-        {
-          "level": 3,
-          "title": "Authorization Code Flow"
+          "title": "Destructive Change Protection"
         },
         {
           "level": 2,
-          "title": "Webhook Signatures"
+          "title": "Concurrent Migration Protection"
         },
         {
           "level": 2,
-          "title": "Security Best Practices"
-        },
-        {
-          "level": 3,
-          "title": "Storing API Keys"
-        },
-        {
-          "level": 3,
-          "title": "Key Rotation"
-        },
-        {
-          "level": 3,
-          "title": "Monitoring API Key Usage"
+          "title": "Migration Commands"
         },
         {
           "level": 2,
-          "title": "Authentication Errors"
+          "title": "Next Steps"
         }
       ],
-      "content": "Authentication\r\n\r\nSchema Weaver's REST API supports two authentication methods: API keys (for machine-to-machine access) and session tokens (for user-facing integrations). All API requests must include one of these.\r\n\r\n---\r\n\r\nAPI Keys\r\n\r\nAPI keys are the recommended authentication method for:\r\n- CI/CD pipelines\r\n- Backend integrations\r\n- Scripts and automation\r\n- Third-party tool connections\r\n\r\nGenerating an API Key\r\n\r\n1. Log in to [app.schema-weaver.io](https://app.schema-weaver.io)\r\n2. Navigat",
-      "snippet": ""
+      "content": "Migrations\n\n`sw push --apply` applies your schema changes to the live database. Schema Weaver wraps every migration in a multi-step pipeline designed for correctness and safety — advisory locking to prevent concurrent changes, automatic drift checking before execution, and full transaction wrapping so partial failures roll back cleanly.\n\n> Quick links: [Pull, Diff & Push](/database/pull-diff-push) · [Drift Detection](/database/drift-detection) · [History & Rollback](/database/history-rollback)\n\n",
+      "snippet": "`sw push --apply` applies your schema changes to the live database. Schema Weaver wraps every migration in a multi-step pipeline designed for correctness and safety — advisory locking to prevent concu"
     },
     {
-      "slug": "03-api-reference/index",
-      "title": "API Reference",
-      "description": "Complete API documentation for Schema Weaver",
+      "slug": "03-database/pull-diff-push",
+      "title": "Pull, Diff & Push",
+      "description": "Sync your project SQL with your live PostgreSQL database — import the live schema with pull, compare differences with diff, and preview or apply changes with push",
       "tags": [
-        "api",
-        "endpoints",
-        "reference"
+        "database",
+        "pull",
+        "diff",
+        "push",
+        "migration",
+        "schema",
+        "sync"
       ],
       "headings": [
         {
           "level": 2,
-          "title": "Overview"
+          "title": "The Workflow"
         },
         {
           "level": 2,
-          "title": "Authentication"
+          "title": "Pull — Import the Live Schema"
         },
         {
           "level": 2,
-          "title": "API Endpoints"
-        },
-        {
-          "level": 3,
-          "title": "Migrations"
-        },
-        {
-          "level": 3,
-          "title": "Schema"
-        },
-        {
-          "level": 3,
-          "title": "Connections"
+          "title": "Diff — See What Would Change"
         },
         {
           "level": 2,
-          "title": "Rate Limiting"
+          "title": "Push — Preview the Migration"
+        },
+        {
+          "level": 2,
+          "title": "Push Apply — Execute the Migration"
+        },
+        {
+          "level": 2,
+          "title": "How Diff Works"
+        },
+        {
+          "level": 2,
+          "title": "Quick Reference"
+        },
+        {
+          "level": 2,
+          "title": "Next Steps"
         }
       ],
-      "content": "API Reference\r\n\r\nComplete documentation of Schema Weaver APIs.\r\n\r\nOverview\r\n\r\nSchema Weaver provides REST APIs for:\r\n\r\n- Migrations — Create, preview, apply, and rollback migrations\r\n- Schema — Inspect, diff, and validate schemas\r\n- Connections — Manage database connections\r\n- Snapshots — Access schema snapshots and history\r\n\r\nAll APIs require authentication via API key or session token.\r\n\r\nAuthentication\r\n\r\nInclude your API key in the `Authorization` header:\r\n\r\n\r\n\r\nAPI Endpoints\r\n\r\nMigrations\r\n",
-      "snippet": ""
+      "content": "Pull, Diff & Push\n\nThe core database workflow in Schema Weaver is three steps: pull the live schema into your project files, diff to see what has changed, and push to apply your changes back. These three operations keep your project SQL and your live PostgreSQL database in sync.\n\n> Quick links: [Migrations](/database/migrations) · [Drift Detection](/database/drift-detection) · [Terminal & sw Commands](/database/terminal)\n\n---\n\nThe Workflow\n\n\n\nYou can also start from scratch — write your schema f",
+      "snippet": "The core database workflow in Schema Weaver is three steps: **pull** the live schema into your project files, **diff** to see what has changed, and **push** to apply your changes back. These three ope"
     },
     {
-      "slug": "03-api-reference/rest-api",
-      "title": "REST API Reference",
-      "description": "Complete reference for all Schema Weaver REST API endpoints",
+      "slug": "03-database/terminal",
+      "title": "Terminal & sw Commands",
+      "description": "Run database operations directly from the built-in sw terminal in the SQL Editor — complete reference for all sw commands",
       "tags": [
-        "api",
-        "rest",
-        "endpoints",
-        "reference"
+        "database",
+        "terminal",
+        "sw",
+        "cli",
+        "commands",
+        "pull",
+        "push",
+        "diff",
+        "migration",
+        "health",
+        "drift",
+        "history",
+        "rollback"
       ],
       "headings": [
         {
           "level": 2,
-          "title": "Connections"
-        },
-        {
-          "level": 3,
-          "title": "List Connections"
-        },
-        {
-          "level": 3,
-          "title": "Create Connection"
-        },
-        {
-          "level": 3,
-          "title": "Get Connection"
-        },
-        {
-          "level": 3,
-          "title": "Update Connection"
-        },
-        {
-          "level": 3,
-          "title": "Delete Connection"
-        },
-        {
-          "level": 3,
-          "title": "Test Connection"
+          "title": "Opening the Terminal"
         },
         {
           "level": 2,
-          "title": "Migrations"
+          "title": "Command Reference"
         },
         {
           "level": 3,
-          "title": "List Migrations"
+          "title": "`sw status`"
         },
         {
           "level": 3,
-          "title": "Get Migration"
+          "title": "`sw pull`"
         },
         {
           "level": 3,
-          "title": "Create Migration"
+          "title": "`sw push`"
         },
         {
           "level": 3,
-          "title": "Preview Migration"
+          "title": "`sw push --apply`"
         },
         {
           "level": 3,
-          "title": "Apply Migration"
+          "title": "`sw push --safe`"
         },
         {
           "level": 3,
-          "title": "Rollback Migration"
+          "title": "`sw push --force`"
+        },
+        {
+          "level": 3,
+          "title": "`sw diff`"
+        },
+        {
+          "level": 3,
+          "title": "`sw health`"
+        },
+        {
+          "level": 3,
+          "title": "`sw drift`"
+        },
+        {
+          "level": 3,
+          "title": "`sw history`"
+        },
+        {
+          "level": 3,
+          "title": "`sw rollback`"
         },
         {
           "level": 2,
-          "title": "Schema"
-        },
-        {
-          "level": 3,
-          "title": "Get Schema"
-        },
-        {
-          "level": 3,
-          "title": "Diff Schemas"
-        },
-        {
-          "level": 3,
-          "title": "Inspect Table"
-        },
-        {
-          "level": 2,
-          "title": "Drift Detection"
-        },
-        {
-          "level": 3,
-          "title": "Check Drift"
-        },
-        {
-          "level": 3,
-          "title": "Get Drift History"
-        },
-        {
-          "level": 2,
-          "title": "Snapshots"
-        },
-        {
-          "level": 3,
-          "title": "List Snapshots"
-        },
-        {
-          "level": 3,
-          "title": "Get Snapshot"
-        },
-        {
-          "level": 3,
-          "title": "Create Snapshot"
-        },
-        {
-          "level": 3,
-          "title": "Delete Snapshot"
-        },
-        {
-          "level": 2,
-          "title": "Resona AI"
-        },
-        {
-          "level": 3,
-          "title": "Chat Completion"
-        },
-        {
-          "level": 3,
-          "title": "Get Usage"
-        },
-        {
-          "level": 2,
-          "title": "Error Responses"
-        },
-        {
-          "level": 3,
-          "title": "HTTP Status Codes"
+          "title": "Command Summary"
         }
       ],
-      "content": "REST API Reference\r\n\r\nAll Schema Weaver REST API endpoints are available under:\r\n\r\n\r\n\r\nFor self-hosted deployments, replace the base URL with your instance URL (e.g., `http://localhost:4242/api/v1`).\r\n\r\n> Authentication required: All endpoints require an API key or session token. See [Authentication](/docs/api-reference/authentication).\r\n\r\n---\r\n\r\nConnections\r\n\r\nList Connections\r\n\r\n\r\n\r\nReturns all database connections in the workspace.\r\n\r\nResponse:\r\n\r\n\r\n\r\nCreate Connection\r\n\r\n\r\n\r\nRequest body:\r\n\r",
-      "snippet": ""
+      "content": "Terminal & sw Commands\n\nThe SQL Editor has a built-in terminal for running database operations directly without leaving the editor. Once a connection is active, open the terminal from the connection panel and run `sw` commands — a CLI for interacting with your connected PostgreSQL database.\n\n> Quick links: [Pull, Diff & Push](/database/pull-diff-push) · [Migrations](/database/migrations) · [Drift Detection](/database/drift-detection)\n\n![The built-in terminal showing sw status and sw pull command",
+      "snippet": "The SQL Editor has a built-in terminal for running database operations directly without leaving the editor. Once a connection is active, open the terminal from the connection panel and run `sw` comman"
     },
     {
-      "slug": "04-data-explorer/agentic-workflows",
+      "slug": "04-sql-editor/ai-assistant-tools",
+      "title": "AI Tools Reference",
+      "description": "Complete reference for all 55 tools available to Resona AI in the SQL Editor — schema analysis, file management, database migrations, graph analysis, audits, and more",
+      "tags": [
+        "sql-editor",
+        "ai",
+        "resona",
+        "tools",
+        "reference",
+        "schema",
+        "migration",
+        "compiler",
+        "workspace"
+      ],
+      "headings": [
+        {
+          "level": 2,
+          "title": "How Tools Work"
+        },
+        {
+          "level": 2,
+          "title": "Schema Discovery"
+        },
+        {
+          "level": 2,
+          "title": "Schema Compiler"
+        },
+        {
+          "level": 2,
+          "title": "Graph & Relationship Analysis"
+        },
+        {
+          "level": 2,
+          "title": "Dependency Analysis"
+        },
+        {
+          "level": 2,
+          "title": "File & Workspace Management"
+        },
+        {
+          "level": 2,
+          "title": "Database & Migration"
+        },
+        {
+          "level": 2,
+          "title": "Terminal"
+        },
+        {
+          "level": 2,
+          "title": "Quality Audits"
+        },
+        {
+          "level": 2,
+          "title": "SQL Formatting & Linting"
+        },
+        {
+          "level": 2,
+          "title": "Migration Planning"
+        },
+        {
+          "level": 2,
+          "title": "Tool Summary"
+        },
+        {
+          "level": 2,
+          "title": "Next Steps"
+        }
+      ],
+      "content": "AI Tools Reference\n\nResona AI has access to 55 purpose-built tools it can call autonomously when answering your questions. You never call these tools directly — Resona decides which ones to use based on your intent. This page is a complete reference so you know exactly what Resona is capable of.\n\n> Quick links: [Resona AI Overview](/sql-editor/ai-assistant) · [Workspace Editing](/sql-editor/ai-assistant-workspace)\n\n---\n\nHow Tools Work\n\nWhen you send a message, Resona's agentic loop plans which t",
+      "snippet": "Resona AI has access to **55 purpose-built tools** it can call autonomously when answering your questions. You never call these tools directly — Resona decides which ones to use based on your intent. "
+    },
+    {
+      "slug": "04-sql-editor/ai-assistant-workspace",
+      "title": "Workspace Editing",
+      "description": "Resona AI makes targeted, surgical edits to your SQL project files — single-block patches, multi-change file edits, and cross-file refactoring with full preview and rollback",
+      "tags": [
+        "sql-editor",
+        "ai",
+        "resona",
+        "editing",
+        "patch",
+        "diff",
+        "multi-file",
+        "refactor",
+        "workspace"
+      ],
+      "headings": [
+        {
+          "level": 2,
+          "title": "Three Editing Tools"
+        },
+        {
+          "level": 2,
+          "title": "`workspace_patch_file` — Single Block Edit"
+        },
+        {
+          "level": 3,
+          "title": "Preview before applying"
+        },
+        {
+          "level": 2,
+          "title": "`workspace_apply_diff` — Multiple Changes in One File"
+        },
+        {
+          "level": 2,
+          "title": "`workspace_batch_edit` — Changes Across Multiple Files"
+        },
+        {
+          "level": 3,
+          "title": "Mixed operations"
+        },
+        {
+          "level": 2,
+          "title": "If a Change Fails"
+        },
+        {
+          "level": 2,
+          "title": "Preview Workflow"
+        },
+        {
+          "level": 2,
+          "title": "Version History Integration"
+        },
+        {
+          "level": 2,
+          "title": "Search Before Editing"
+        },
+        {
+          "level": 2,
+          "title": "Tips"
+        },
+        {
+          "level": 2,
+          "title": "Next Steps"
+        }
+      ],
+      "content": "Workspace Editing\n\nWhen Resona AI edits your SQL files it does not regenerate entire files from scratch. It finds the exact block that needs to change and replaces only that — leaving everything else untouched. It can make multiple changes to a single file in one go, or apply edits across several files at once, with full rollback if anything goes wrong.\n\n> Quick links: [Resona AI Overview](/sql-editor/ai-assistant) · [AI Tools Reference](/sql-editor/ai-assistant-tools) · [Version History](/sql-e",
+      "snippet": "When Resona AI edits your SQL files it does not regenerate entire files from scratch. It finds the exact block that needs to change and replaces only that — leaving everything else untouched. It can m"
+    },
+    {
+      "slug": "04-sql-editor/ai-assistant",
+      "title": "Resona AI — SQL Editor",
+      "description": "An agentic AI assistant built into the SQL Editor — generate DDL, analyze schemas, edit files across your project, run migrations, and reason through your entire schema with 50+ purpose-built tools",
+      "tags": [
+        "sql-editor",
+        "ai",
+        "resona",
+        "agentic",
+        "schema",
+        "sql-generation",
+        "tools",
+        "streaming"
+      ],
+      "headings": [
+        {
+          "level": 2,
+          "title": "Opening Resona AI"
+        },
+        {
+          "level": 3,
+          "title": "Left Sidebar Panel"
+        },
+        {
+          "level": 3,
+          "title": "ER Diagram Nodes"
+        },
+        {
+          "level": 2,
+          "title": "How It Works — Agentic Loop"
+        },
+        {
+          "level": 2,
+          "title": "Intent Classification"
+        },
+        {
+          "level": 2,
+          "title": "Context Awareness"
+        },
+        {
+          "level": 3,
+          "title": "@ Mentions"
+        },
+        {
+          "level": 2,
+          "title": "What Resona Can Do"
+        },
+        {
+          "level": 3,
+          "title": "Schema Generation"
+        },
+        {
+          "level": 3,
+          "title": "Schema Analysis"
+        },
+        {
+          "level": 3,
+          "title": "Database Operations"
+        },
+        {
+          "level": 3,
+          "title": "File Operations"
+        },
+        {
+          "level": 2,
+          "title": "Streaming — Watch It Think"
+        },
+        {
+          "level": 2,
+          "title": "Memory — Remembers Across Sessions"
+        },
+        {
+          "level": 2,
+          "title": "Applying AI-Generated SQL"
+        },
+        {
+          "level": 3,
+          "title": "Preview Before Applying"
+        },
+        {
+          "level": 2,
+          "title": "Iterative Refinement"
+        },
+        {
+          "level": 2,
+          "title": "Model Selection"
+        },
+        {
+          "level": 2,
+          "title": "Usage and Credits"
+        },
+        {
+          "level": 2,
+          "title": "Keyboard Shortcuts"
+        },
+        {
+          "level": 2,
+          "title": "Next Steps"
+        }
+      ],
+      "content": "Resona AI — SQL Editor\n\nResona AI is an agentic AI assistant built directly into the SQL Editor. It is not a simple chat interface that generates a code block for you to copy — it is a full agentic system with 55 purpose-built tools that can read your files, reason about your schema graph, run the compiler, analyze security and performance, write surgical multi-file edits, diff your live database, and apply migrations — all from a single conversation.\n\n> Quick links: [Open SQL Editor](https://sq",
+      "snippet": "Resona AI is an agentic AI assistant built directly into the SQL Editor. It is not a simple chat interface that generates a code block for you to copy — it is a full agentic system with 55 purpose-bui"
+    },
+    {
+      "slug": "04-sql-editor/er-diagram-ai",
+      "title": "Resona AI in the ER Diagram",
+      "description": "Analyze tables, schema groups, and your entire schema with Resona AI directly from the ER Diagram — generate SQL, suggest indexes, check normalization, and apply changes instantly",
+      "tags": [
+        "sql-editor",
+        "er-diagram",
+        "ai",
+        "resona",
+        "analysis",
+        "sql-generation",
+        "postgresql"
+      ],
+      "headings": [
+        {
+          "level": 2,
+          "title": "Three AI Entry Points"
+        },
+        {
+          "level": 2,
+          "title": "Table AI"
+        },
+        {
+          "level": 3,
+          "title": "Opening Table AI"
+        },
+        {
+          "level": 3,
+          "title": "Suggested Prompts for Table AI"
+        },
+        {
+          "level": 3,
+          "title": "Closing Table AI"
+        },
+        {
+          "level": 2,
+          "title": "Group AI"
+        },
+        {
+          "level": 2,
+          "title": "Global AI"
+        },
+        {
+          "level": 2,
+          "title": "Applying AI-Generated SQL"
+        },
+        {
+          "level": 2,
+          "title": "AI Chat Context"
+        },
+        {
+          "level": 2,
+          "title": "Working with Multiple AI Nodes"
+        },
+        {
+          "level": 2,
+          "title": "Keyboard Shortcuts"
+        },
+        {
+          "level": 2,
+          "title": "Next Steps"
+        }
+      ],
+      "content": "Resona AI in the ER Diagram\n\nResona AI is embedded directly into the ER Diagram at three levels: individual tables, schema groups, and the full schema. Each level opens a chat panel anchored by a dashed blue edge to its subject — you can ask questions, request SQL, and apply generated changes without leaving the diagram.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [ER Diagram Overview](/sql-editor/er-diagram) · [Resona AI Assistant](/sql-editor/ai-assistant)\n\n---",
+      "snippet": "Resona AI is embedded directly into the ER Diagram at three levels: individual tables, schema groups, and the full schema. Each level opens a chat panel anchored by a dashed blue edge to its subject —"
+    },
+    {
+      "slug": "04-sql-editor/er-diagram-grouping",
+      "title": "Grouping & Schema Clusters",
+      "description": "Cluster your ER diagram nodes by PostgreSQL schema namespace — resizable group containers, schema color coding, per-group stats, and lock mode",
+      "tags": [
+        "sql-editor",
+        "er-diagram",
+        "grouping",
+        "schema",
+        "clusters",
+        "namespace",
+        "layout"
+      ],
+      "headings": [
+        {
+          "level": 2,
+          "title": "Enabling Grouping"
+        },
+        {
+          "level": 2,
+          "title": "Group Containers"
+        },
+        {
+          "level": 3,
+          "title": "Header"
+        },
+        {
+          "level": 3,
+          "title": "Resizing Groups"
+        },
+        {
+          "level": 3,
+          "title": "Moving Groups"
+        },
+        {
+          "level": 2,
+          "title": "Locking Groups"
+        },
+        {
+          "level": 2,
+          "title": "Cross-Schema Relationships"
+        },
+        {
+          "level": 2,
+          "title": "Schema Color Coding"
+        },
+        {
+          "level": 2,
+          "title": "Two-Level ELK Layout"
+        },
+        {
+          "level": 2,
+          "title": "Tips for Working with Groups"
+        },
+        {
+          "level": 2,
+          "title": "Next Steps"
+        }
+      ],
+      "content": "Grouping & Schema Clusters\n\nWhen Cluster by Schema is enabled, the ER Diagram groups all nodes by their PostgreSQL schema namespace into visually distinct containers. Tables, views, functions, and other objects that belong to `auth`, `billing`, `public`, `inventory` — or any other schema in your project — are enclosed in their own labeled group. This makes it immediately clear which domain each object belongs to and eliminates the visual noise of a flat diagram with hundreds of nodes.\n\n> Quick l",
+      "snippet": "When **Cluster by Schema** is enabled, the ER Diagram groups all nodes by their PostgreSQL schema namespace into visually distinct containers. Tables, views, functions, and other objects that belong t"
+    },
+    {
+      "slug": "04-sql-editor/er-diagram-path-analysis",
+      "title": "Path Analysis",
+      "description": "Find the shortest foreign-key join path between any two tables in your schema — with BFS and Dijkstra algorithms, visual highlighting, and confidence filtering",
+      "tags": [
+        "sql-editor",
+        "er-diagram",
+        "path-analysis",
+        "relationships",
+        "joins",
+        "postgresql",
+        "bfs",
+        "dijkstra"
+      ],
+      "headings": [
+        {
+          "level": 2,
+          "title": "When to Use Path Analysis"
+        },
+        {
+          "level": 2,
+          "title": "Activating Path Analysis"
+        },
+        {
+          "level": 2,
+          "title": "Reading the Result"
+        },
+        {
+          "level": 2,
+          "title": "Path Algorithms"
+        },
+        {
+          "level": 3,
+          "title": "BFS — Breadth-First Search"
+        },
+        {
+          "level": 3,
+          "title": "Dijkstra — Weighted Shortest Path"
+        },
+        {
+          "level": 2,
+          "title": "Filter Options"
+        },
+        {
+          "level": 2,
+          "title": "Path Cost"
+        },
+        {
+          "level": 2,
+          "title": "No Path Found"
+        },
+        {
+          "level": 2,
+          "title": "Resetting Path Analysis"
+        },
+        {
+          "level": 2,
+          "title": "Next Steps"
+        }
+      ],
+      "content": "Path Analysis\n\nPath Analysis finds the shortest foreign-key relationship chain between any two tables in your schema. Instead of manually tracing JOIN paths through a dense diagram, you select a start table and an end table — the diagram highlights every intermediate table and edge you would need to traverse to connect them.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [ER Diagram Overview](/sql-editor/er-diagram)\n\n![Path Analysis active in the ER Diagram showing ",
+      "snippet": "Path Analysis finds the **shortest foreign-key relationship chain** between any two tables in your schema. Instead of manually tracing JOIN paths through a dense diagram, you select a start table and "
+    },
+    {
+      "slug": "04-sql-editor/er-diagram-visibility",
+      "title": "Visibility & Node Types",
+      "description": "Control exactly which PostgreSQL object types and which schema namespaces are shown in the ER Diagram — declutter large schemas and focus on what matters",
+      "tags": [
+        "sql-editor",
+        "er-diagram",
+        "visibility",
+        "node-types",
+        "filters",
+        "schemas",
+        "postgresql"
+      ],
+      "headings": [
+        {
+          "level": 2,
+          "title": "Opening Visibility Controls"
+        },
+        {
+          "level": 2,
+          "title": "Node Types"
+        },
+        {
+          "level": 3,
+          "title": "Recommended Visibility Profiles"
+        },
+        {
+          "level": 2,
+          "title": "Schema Groups"
+        },
+        {
+          "level": 3,
+          "title": "Common Use Cases"
+        },
+        {
+          "level": 3,
+          "title": "Active Filter Badge"
+        },
+        {
+          "level": 2,
+          "title": "Column View Mode"
+        },
+        {
+          "level": 2,
+          "title": "Visibility and Layout"
+        },
+        {
+          "level": 2,
+          "title": "Visibility and Path Analysis"
+        },
+        {
+          "level": 2,
+          "title": "Next Steps"
+        }
+      ],
+      "content": "Visibility & Node Types\n\nThe ER Diagram supports every PostgreSQL object type — tables, views, materialized views, functions, enums, domains, roles, sequences, extensions, and RLS policies. On a real production schema this can mean dozens or hundreds of extra nodes beyond your core tables. The Visibility controls let you show only what you need, making large diagrams readable and layout faster.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [ER Diagram Overview](/sq",
+      "snippet": "The ER Diagram supports every PostgreSQL object type — tables, views, materialized views, functions, enums, domains, roles, sequences, extensions, and RLS policies. On a real production schema this ca"
+    },
+    {
+      "slug": "04-sql-editor/er-diagram",
+      "title": "ER Diagram",
+      "description": "Visualize your entire PostgreSQL schema as a live, interactive entity-relationship diagram — all object types supported, updates in real time as you write SQL",
+      "tags": [
+        "sql-editor",
+        "er-diagram",
+        "visualization",
+        "relationships",
+        "tables",
+        "schema",
+        "postgresql",
+        "layout"
+      ],
+      "headings": [
+        {
+          "level": 2,
+          "title": "Opening the Diagram"
+        },
+        {
+          "level": 2,
+          "title": "How the Diagram is Built"
+        },
+        {
+          "level": 2,
+          "title": "Supported PostgreSQL Objects"
+        },
+        {
+          "level": 2,
+          "title": "Table Nodes in Detail"
+        },
+        {
+          "level": 3,
+          "title": "Column Rows"
+        },
+        {
+          "level": 3,
+          "title": "Collapsible Sections"
+        },
+        {
+          "level": 3,
+          "title": "View Modes"
+        },
+        {
+          "level": 3,
+          "title": "Cascade Risk Indicator"
+        },
+        {
+          "level": 2,
+          "title": "Editing Tables from the Diagram"
+        },
+        {
+          "level": 3,
+          "title": "Visual Editor"
+        },
+        {
+          "level": 3,
+          "title": "SQL Editor Mode"
+        },
+        {
+          "level": 2,
+          "title": "Relationship Edges"
+        },
+        {
+          "level": 2,
+          "title": "Navigation"
+        },
+        {
+          "level": 3,
+          "title": "Search"
+        },
+        {
+          "level": 2,
+          "title": "Auto-Layout"
+        },
+        {
+          "level": 3,
+          "title": "Layout Direction"
+        },
+        {
+          "level": 3,
+          "title": "Position Persistence"
+        },
+        {
+          "level": 3,
+          "title": "Performance & Scale"
+        },
+        {
+          "level": 2,
+          "title": "Toolbar Controls"
+        },
+        {
+          "level": 2,
+          "title": "Footer Controls"
+        },
+        {
+          "level": 2,
+          "title": "Export"
+        },
+        {
+          "level": 3,
+          "title": "Image Exports"
+        },
+        {
+          "level": 3,
+          "title": "Schema Code Exports"
+        },
+        {
+          "level": 2,
+          "title": "Focus Mode (Subgraph)"
+        },
+        {
+          "level": 2,
+          "title": "Real-Time Updates"
+        },
+        {
+          "level": 2,
+          "title": "Next Steps"
+        }
+      ],
+      "content": "ER Diagram\n\nThe ER Diagram is a live, interactive visualization of your entire PostgreSQL schema. Every object — tables, views, materialized views, functions, enums, domains, sequences, roles, extensions, and RLS policies — renders as a node on a pannable, zoomable canvas. Foreign-key relationships appear as directed edges. The diagram updates in real time as you type SQL with no manual refresh required, and scales to schemas with thousands of tables.\n\n> Quick links: [Open SQL Editor](https://sq",
+      "snippet": "The ER Diagram is a live, interactive visualization of your entire PostgreSQL schema. Every object — tables, views, materialized views, functions, enums, domains, sequences, roles, extensions, and RLS"
+    },
+    {
+      "slug": "04-sql-editor/file-manager",
+      "title": "File Manager",
+      "description": "Organize your PostgreSQL schemas into cloud projects, folders, and files using the SQL Editor's built-in file manager",
+      "tags": [
+        "sql-editor",
+        "file-manager",
+        "projects",
+        "folders",
+        "files",
+        "cloud",
+        "workspace"
+      ],
+      "headings": [
+        {
+          "level": 2,
+          "title": "Dashboard — Your Project Workspace"
+        },
+        {
+          "level": 3,
+          "title": "Project List"
+        },
+        {
+          "level": 3,
+          "title": "Project Detail Panel"
+        },
+        {
+          "level": 2,
+          "title": "Creating a Project"
+        },
+        {
+          "level": 2,
+          "title": "Explorer Sidebar"
+        },
+        {
+          "level": 3,
+          "title": "Sections"
+        },
+        {
+          "level": 3,
+          "title": "File Tree Actions"
+        },
+        {
+          "level": 2,
+          "title": "Creating Files and Folders"
+        },
+        {
+          "level": 3,
+          "title": "New File Dialog"
+        },
+        {
+          "level": 3,
+          "title": "New Folder Dialog"
+        },
+        {
+          "level": 2,
+          "title": "Fullscreen Split View"
+        },
+        {
+          "level": 2,
+          "title": "Drag and Drop"
+        },
+        {
+          "level": 2,
+          "title": "File Search"
+        },
+        {
+          "level": 2,
+          "title": "Cloud vs Local Projects"
+        },
+        {
+          "level": 3,
+          "title": "Cloud Projects"
+        },
+        {
+          "level": 3,
+          "title": "Local Projects"
+        },
+        {
+          "level": 2,
+          "title": "Recent Files"
+        },
+        {
+          "level": 2,
+          "title": "Bulk Operations"
+        },
+        {
+          "level": 2,
+          "title": "Next Steps"
+        }
+      ],
+      "content": "File Manager\n\nThe SQL Editor's file manager lets you organize your PostgreSQL schema definitions into projects, folders, and files. It works like a lightweight version of VS Code's Explorer sidebar — with drag-and-drop reordering, instant file search, and full cloud sync for team projects.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Collaboration](/team-collaboration)\n\n![The SQL Editor in fullscreen mode showing the active fi",
+      "snippet": "The SQL Editor's file manager lets you organize your PostgreSQL schema definitions into projects, folders, and files. It works like a lightweight version of VS Code's Explorer sidebar — with drag-and-"
+    },
+    {
+      "slug": "04-sql-editor/index",
+      "title": "SQL Editor",
+      "description": "Write, organize, and analyze PostgreSQL schemas in the Schema Weaver SQL Editor — the primary workspace for schema development",
+      "tags": [
+        "sql-editor",
+        "schema",
+        "postgresql",
+        "workspace",
+        "projects"
+      ],
+      "headings": [
+        {
+          "level": 2,
+          "title": "What can you do in the SQL Editor?"
+        },
+        {
+          "level": 2,
+          "title": "Interface Layout"
+        },
+        {
+          "level": 3,
+          "title": "Left Sidebar — Explorer"
+        },
+        {
+          "level": 3,
+          "title": "Center — Editor"
+        },
+        {
+          "level": 3,
+          "title": "Bottom — Status Bar"
+        },
+        {
+          "level": 2,
+          "title": "Core Concepts"
+        },
+        {
+          "level": 3,
+          "title": "Projects"
+        },
+        {
+          "level": 3,
+          "title": "Files and Folders"
+        },
+        {
+          "level": 3,
+          "title": "The Compilation Pipeline"
+        },
+        {
+          "level": 2,
+          "title": "Supported PostgreSQL Objects"
+        },
+        {
+          "level": 2,
+          "title": "Quick Start"
+        },
+        {
+          "level": 2,
+          "title": "Next Steps"
+        }
+      ],
+      "content": "SQL Editor\n\nThe SQL Editor is the primary workspace in Schema Weaver. It's where you write PostgreSQL schema definitions, organize them into projects and files, analyze your schema quality with the built-in compiler, and visualize table relationships as an interactive ER diagram — all in one place.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [Docs Home](https://docs.schemaweaver.vivekmind.com/) · [Data Explorer](https://docs.schemaweaver.vivekmind.com/data-explor",
+      "snippet": "The SQL Editor is the primary workspace in Schema Weaver. It's where you write PostgreSQL schema definitions, organize them into projects and files, analyze your schema quality with the built-in compi"
+    },
+    {
+      "slug": "04-sql-editor/schema-compiler",
+      "title": "Schema Compiler",
+      "description": "Understand the SQL Editor's 20-layer schema compiler — how it grades your PostgreSQL schema, surfaces issues, and helps you write production-ready DDL",
+      "tags": [
+        "sql-editor",
+        "schema-compiler",
+        "analysis",
+        "grade",
+        "issues",
+        "postgresql",
+        "quality"
+      ],
+      "headings": [
+        {
+          "level": 2,
+          "title": "Opening the Compiler Panel"
+        },
+        {
+          "level": 2,
+          "title": "What the Compiler Checks"
+        },
+        {
+          "level": 3,
+          "title": "Layer Overview"
+        },
+        {
+          "level": 2,
+          "title": "Issue Severity Levels"
+        },
+        {
+          "level": 2,
+          "title": "Common Issues Detected"
+        },
+        {
+          "level": 3,
+          "title": "Tables & Columns"
+        },
+        {
+          "level": 3,
+          "title": "Indexes"
+        },
+        {
+          "level": 3,
+          "title": "Foreign Keys & Constraints"
+        },
+        {
+          "level": 3,
+          "title": "Security"
+        },
+        {
+          "level": 3,
+          "title": "Views & Functions"
+        },
+        {
+          "level": 2,
+          "title": "Reading the Compiler Panel"
+        },
+        {
+          "level": 3,
+          "title": "1. Summary Bar"
+        },
+        {
+          "level": 3,
+          "title": "2. Issue List"
+        },
+        {
+          "level": 3,
+          "title": "3. Metrics Summary"
+        },
+        {
+          "level": 2,
+          "title": "How the Grade is Calculated"
+        },
+        {
+          "level": 2,
+          "title": "Compiler in the Workflow"
+        },
+        {
+          "level": 2,
+          "title": "Example: Fixing a Warning"
+        },
+        {
+          "level": 2,
+          "title": "Next Steps"
+        }
+      ],
+      "content": "Schema Compiler\n\nThe Schema Compiler is a static analysis engine built into the SQL Editor. Every time you edit a file, it silently re-compiles the merged project SQL through 20 analysis layers and produces a health grade with a detailed issue report — all in your browser, with no server round-trip.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Writing SQL](/sql-editor/writing-sql)\n\n---\n\nOpening the Compiler Panel\n\nClick Compil",
+      "snippet": "The Schema Compiler is a static analysis engine built into the SQL Editor. Every time you edit a file, it silently re-compiles the merged project SQL through 20 analysis layers and produces a health g"
+    },
+    {
+      "slug": "04-sql-editor/schema-diff",
+      "title": "Schema Diff",
+      "description": "Compare two versions of a PostgreSQL schema side-by-side with the SQL Editor's built-in diff tool — highlight additions, removals, and modifications",
+      "tags": [
+        "sql-editor",
+        "schema-diff",
+        "compare",
+        "diff",
+        "migration",
+        "changes"
+      ],
+      "headings": [
+        {
+          "level": 2,
+          "title": "Opening the Diff Panel"
+        },
+        {
+          "level": 2,
+          "title": "Choosing What to Diff"
+        },
+        {
+          "level": 2,
+          "title": "The Diff View"
+        },
+        {
+          "level": 3,
+          "title": "Unified Diff (default)"
+        },
+        {
+          "level": 3,
+          "title": "Side-by-side Diff"
+        },
+        {
+          "level": 3,
+          "title": "Semantic Diff"
+        },
+        {
+          "level": 2,
+          "title": "Diff Summary Bar"
+        },
+        {
+          "level": 2,
+          "title": "Navigating the Diff"
+        },
+        {
+          "level": 2,
+          "title": "Inline Diff Overlay"
+        },
+        {
+          "level": 2,
+          "title": "Exporting a Diff"
+        },
+        {
+          "level": 2,
+          "title": "Diff and Migrations"
+        },
+        {
+          "level": 2,
+          "title": "Next Steps"
+        }
+      ],
+      "content": "Schema Diff\n\nThe Schema Diff tool lets you compare two PostgreSQL schema states side-by-side. It highlights every added, removed, and modified object — tables, columns, indexes, constraints, and more — so you can review changes before applying a migration or audit what drifted in production.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Version History](/sql-editor/version-history)\n\n---\n\nOpening the Diff Panel\n\nClick Diff in th",
+      "snippet": "The Schema Diff tool lets you compare two PostgreSQL schema states side-by-side. It highlights every added, removed, and modified object — tables, columns, indexes, constraints, and more — so you can "
+    },
+    {
+      "slug": "04-sql-editor/version-history",
+      "title": "Version History",
+      "description": "Browse and restore every saved snapshot of your SQL files in the Schema Weaver SQL Editor — never lose a working schema state",
+      "tags": [
+        "sql-editor",
+        "version-history",
+        "snapshots",
+        "restore",
+        "history"
+      ],
+      "headings": [
+        {
+          "level": 2,
+          "title": "Opening Version History"
+        },
+        {
+          "level": 2,
+          "title": "The Version Timeline"
+        },
+        {
+          "level": 2,
+          "title": "Viewing a Past Version"
+        },
+        {
+          "level": 2,
+          "title": "Restoring a Version"
+        },
+        {
+          "level": 2,
+          "title": "Labeling a Version"
+        },
+        {
+          "level": 2,
+          "title": "Comparing Two Historical Versions"
+        },
+        {
+          "level": 2,
+          "title": "Version Retention"
+        },
+        {
+          "level": 2,
+          "title": "How Versions Are Created"
+        },
+        {
+          "level": 2,
+          "title": "Version History and Migrations"
+        },
+        {
+          "level": 2,
+          "title": "Next Steps"
+        }
+      ],
+      "content": "Version History\n\nThe SQL Editor keeps a complete snapshot history of every file in your cloud projects. Every save creates an immutable version entry — you can browse the timeline, compare any two snapshots, or restore a previous state with a single click.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Schema Diff](/sql-editor/schema-diff)\n\n---\n\nOpening Version History\n\nThere are two ways to open the version history panel:\n\n1. R",
+      "snippet": "The SQL Editor keeps a complete snapshot history of every file in your cloud projects. Every save creates an immutable version entry — you can browse the timeline, compare any two snapshots, or restor"
+    },
+    {
+      "slug": "04-sql-editor/writing-sql",
+      "title": "Writing SQL",
+      "description": "Use the SQL Editor's tabs, syntax highlighting, autosave, split view, and fullscreen mode to write PostgreSQL schema definitions efficiently",
+      "tags": [
+        "sql-editor",
+        "writing",
+        "syntax-highlighting",
+        "tabs",
+        "autosave",
+        "editor"
+      ],
+      "headings": [
+        {
+          "level": 2,
+          "title": "The Editor"
+        },
+        {
+          "level": 3,
+          "title": "Syntax Highlighting"
+        },
+        {
+          "level": 3,
+          "title": "Auto-Indentation"
+        },
+        {
+          "level": 3,
+          "title": "Line Numbers"
+        },
+        {
+          "level": 2,
+          "title": "Tabs — Working with Multiple Files"
+        },
+        {
+          "level": 3,
+          "title": "Tab Behavior"
+        },
+        {
+          "level": 3,
+          "title": "Tab Context Menu"
+        },
+        {
+          "level": 2,
+          "title": "Autosave"
+        },
+        {
+          "level": 3,
+          "title": "Toggle Autosave"
+        },
+        {
+          "level": 2,
+          "title": "Fullscreen Mode"
+        },
+        {
+          "level": 2,
+          "title": "Split View"
+        },
+        {
+          "level": 2,
+          "title": "Keyboard Shortcuts"
+        },
+        {
+          "level": 2,
+          "title": "The Merge Model"
+        },
+        {
+          "level": 2,
+          "title": "Format Button"
+        },
+        {
+          "level": 2,
+          "title": "Generate Button"
+        },
+        {
+          "level": 2,
+          "title": "Downloading Files"
+        },
+        {
+          "level": 2,
+          "title": "File Extensions"
+        },
+        {
+          "level": 2,
+          "title": "Next Steps"
+        }
+      ],
+      "content": "Writing SQL\n\nThe SQL Editor gives you a PostgreSQL-aware code editor with multi-file tabs, syntax highlighting, autosave, and a fullscreen mode. This page covers everything about the editing experience itself.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Schema Compiler](/sql-editor/schema-compiler)\n\n![The Schema Weaver SQL Editor showing the file tabs, PostgreSQL syntax highlighting, Explorer sidebar, and status bar](/images/",
+      "snippet": "The SQL Editor gives you a PostgreSQL-aware code editor with multi-file tabs, syntax highlighting, autosave, and a fullscreen mode. This page covers everything about the editing experience itself."
+    },
+    {
+      "slug": "05-data-explorer/agentic-workflows",
       "title": "How Resona AI Works",
       "description": "Understand the agentic loop, tool execution pipeline, and the full set of analysis tools Resona uses to answer your data questions",
       "tags": [
@@ -933,11 +1690,11 @@
           "title": "Iteration Limit"
         }
       ],
-      "content": "How Resona AI Works\r\n\r\nResona AI is not a simple chatbot. It is an agentic system — when you ask a question, it breaks the problem down into steps, calls specialized tools to gather and analyze data, and synthesizes the results into a complete answer. You can watch every step happen in real time.\r\n\r\n![Resona AI agentic interface showing the planning and execution phases](/images/data-explorer/resona-ai.png)\r\n\r\n---\r\n\r\nThe Three Phases\r\n\r\nEvery Resona response goes through three phases, visible in",
-      "snippet": ""
+      "content": "How Resona AI Works\n\nResona AI is not a simple chatbot. It is an agentic system — when you ask a question, it breaks the problem down into steps, calls specialized tools to gather and analyze data, and synthesizes the results into a complete answer. You can watch every step happen in real time.\n\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [AI Chat Interface](/data-explorer/ai-chat-interface) · [Charts & Analysis Results](/data-explorer/ai-artifacts)\n\r\n![Resona",
+      "snippet": "Resona AI is not a simple chatbot. It is an **agentic system** — when you ask a question, it breaks the problem down into steps, calls specialized tools to gather and analyze data, and synthesizes the"
     },
     {
-      "slug": "04-data-explorer/ai-artifacts",
+      "slug": "05-data-explorer/ai-artifacts",
       "title": "Charts & Analysis Results",
       "description": "Understand the artifact types Resona AI generates — charts, stat blocks, and data tables — and how to interact with them",
       "tags": [
@@ -1070,11 +1827,11 @@
           "title": "Artifact Placeholder (Streaming)"
         }
       ],
-      "content": "Charts & Analysis Results\r\n\r\nWhen Resona AI finishes an analysis, it outputs artifacts — rich interactive components embedded directly in the chat. These are not static images. You can expand them, sort them, pin them to a dashboard, and export their underlying SQL.\r\n\r\n![Resona AI chat response with an expanded interactive data table artifact](/images/data-explorer/resoan-ai-chat-expand-table.png)\r\n\r\n---\r\n\r\nData Tables\r\n\r\nWhen Resona runs a SQL query or returns row-level results, it renders them",
-      "snippet": ""
+      "content": "Charts & Analysis Results\n\nWhen Resona AI finishes an analysis, it outputs artifacts — rich interactive components embedded directly in the chat. These are not static images. You can expand them, sort them, pin them to a dashboard, and export their underlying SQL.\n\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [AI Chat Interface](/data-explorer/ai-chat-interface) · [Workspace & Projects](/data-explorer/ai-workspace)\n\r\n![Resona AI chat response with an expanded i",
+      "snippet": "When Resona AI finishes an analysis, it outputs **artifacts** — rich interactive components embedded directly in the chat. These are not static images. You can expand them, sort them, pin them to a da"
     },
     {
-      "slug": "04-data-explorer/ai-chat-interface",
+      "slug": "05-data-explorer/ai-chat-interface",
       "title": "AI Chat Interface",
       "description": "Use Resona AI inside the Data Explorer to query, analyze, and visualize your data using natural language",
       "tags": [
@@ -1119,11 +1876,11 @@
           "title": "Keyboard Shortcuts"
         }
       ],
-      "content": "AI Chat Interface\r\n\r\nResona AI is the agentic assistant built directly into the Data Explorer. You interact with it through a chat panel — type a question in plain English, and Resona queries your database, runs analysis tools, and returns results as interactive charts, tables, and reports.\r\n\r\n![Resona AI chat panel showing a table mention with table overview context](/images/data-explorer/resona-ai-@mention-table-overview.png)\r\n\r\nOpening the AI Panel\r\n\r\nClick the Resona AI button in the Data Ex",
-      "snippet": ""
+      "content": "AI Chat Interface\n\nResona AI is the agentic assistant built directly into the Data Explorer. You interact with it through a chat panel — type a question in plain English, and Resona queries your database, runs analysis tools, and returns results as interactive charts, tables, and reports.\n\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.com/data-explorer/) · [How Resona AI Works](/data-explorer/agentic-w",
+      "snippet": "Resona AI is the agentic assistant built directly into the Data Explorer. You interact with it through a chat panel — type a question in plain English, and Resona queries your database, runs analysis "
     },
     {
-      "slug": "04-data-explorer/ai-overview",
+      "slug": "05-data-explorer/ai-overview",
       "title": "Resona AI",
       "description": "Overview of Resona AI inside the Data Explorer — what it can do, how to access it, and where to go next",
       "tags": [
@@ -1136,7 +1893,7 @@
       "headings": [
         {
           "level": 2,
-          "title": "What Resona Can Do"
+          "title": "What can Resona do inside Data Explorer?"
         },
         {
           "level": 3,
@@ -1156,18 +1913,18 @@
         },
         {
           "level": 2,
-          "title": "Accessing Resona AI"
+          "title": "How do you access Resona AI?"
         },
         {
           "level": 2,
-          "title": "What's in This Section"
+          "title": "Which pages should you read next?"
         }
       ],
-      "content": "Resona AI\r\n\r\nResona AI is the agentic data assistant built into the Data Explorer. You describe what you want to know in plain English — Resona figures out which tables to query, runs the analysis, and returns the results as interactive charts, tables, and reports.\r\n\r\n![Resona AI panel open inside the Data Explorer with an active conversation and chart artifact](/images/data-explorer/resona-ai.png)\r\n\r\n---\r\n\r\nWhat Resona Can Do\r\n\r\nExplore and query your data\r\n\r\nAsk questions without writing SQL. ",
-      "snippet": ""
+      "content": "Resona AI\n\nResona AI is the agentic data assistant built into the Data Explorer. You describe what you want to know in plain English — Resona figures out which tables to query, runs the analysis, and returns the results as interactive charts, tables, and reports.\n\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.com/data-explorer/) · [SQL Editor](https://sql.schemaweaver.vivekmind.com/)\n\r\n![Resona AI pane",
+      "snippet": "Resona AI is the agentic data assistant built into the Data Explorer. You describe what you want to know in plain English — Resona figures out which tables to query, runs the analysis, and returns the"
     },
     {
-      "slug": "04-data-explorer/ai-workspace",
+      "slug": "05-data-explorer/ai-workspace",
       "title": "Workspace & Projects",
       "description": "Manage generated reports, organize analysis into projects, and browse your full artifact history in the Data Explorer",
       "tags": [
@@ -1230,11 +1987,11 @@
           "title": "Connection Health"
         }
       ],
-      "content": "Workspace & Projects\r\n\r\nResona AI stores everything it generates. The Workspace holds exported files, Projects organize your analysis sessions, and Artifact History gives you a searchable archive of every chart and result ever produced.\r\n\r\n![Resona AI interface showing the workspace and project organization panel](/images/data-explorer/resona-ai.png)\r\n\r\n---\r\n\r\nWorkspace\r\n\r\nThe Workspace is a persistent file store for reports and exports generated by Resona. It is accessible from the `W` shortcut",
-      "snippet": ""
+      "content": "Workspace & Projects\n\nResona AI stores everything it generates. The Workspace holds exported files, Projects organize your analysis sessions, and Artifact History gives you a searchable archive of every chart and result ever produced.\n\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [AI Chat Interface](/data-explorer/ai-chat-interface) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.com/data-explorer/)\n\r\n![Resona AI interface showing the workspace a",
+      "snippet": "Resona AI stores everything it generates. The **Workspace** holds exported files, **Projects** organize your analysis sessions, and **Artifact History** gives you a searchable archive of every chart a"
     },
     {
-      "slug": "04-data-explorer/exploring-data",
+      "slug": "05-data-explorer/exploring-data",
       "title": "Exploring Your Data",
       "description": "Browse tables, inspect columns, filter rows, and analyze column statistics in the Data Explorer grid",
       "tags": [
@@ -1362,11 +2119,11 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Exploring Your Data\r\n\r\nOnce you've [connected a database](/docs/data-explorer/connecting-database), the Data Explorer gives you a two-panel interface for browsing live data — a sidebar of tables on the left and a high-performance data grid on the right.\r\n\r\n---\r\n\r\nInterface Layout\r\n\r\n![The Data Explorer showing the two-column layout with left sidebar and main data grid](/images/data-explorer/data-explorer.png)\r\n\r\n| Region | Purpose |\r\n|--------|---------|\r\n| Left sidebar | Schema selector, table ",
+      "content": "Exploring Your Data\r\n\r\nOnce you've selected a PostgreSQL connection, the interface gives you a two-panel layout for browsing live data — a sidebar of tables on the left and a high-performance data grid on the right. Connections are created in the [SQL Editor](/database/adding-a-connection) and are available here automatically — no separate setup needed.\r\n\r\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.",
       "snippet": ""
     },
     {
-      "slug": "04-data-explorer/exporting-data",
+      "slug": "05-data-explorer/exporting-data",
       "title": "Exporting Data",
       "description": "Export individual tables or entire database schemas to CSV, JSON, NDJSON, Excel, and SQL formats",
       "tags": [
@@ -1472,31 +2229,32 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Exporting Data\r\n\r\nThe Data Explorer lets you export data in multiple formats — either a single table or your entire database schema as a ZIP archive. Exports are triggered directly from the browser and download instantly.\r\n\r\n---\r\n\r\nExport Button\r\n\r\n![The Export button and format selection dropdown in the Data Explorer action bar](/images/data-explorer/export.png)\r\n\r\nThe Export button appears in the top-right action bar when you have a connection selected. Click it to open a dropdown with two sec",
-      "snippet": ""
+      "content": "Exporting Data\n\nThe Data Explorer lets you export data in multiple formats — either a single table or your entire database schema as a ZIP archive. Exports are triggered directly from the browser and download instantly.\n\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.com/data-explorer/) · [SQL Editor](https://sql.schemaweaver.vivekmind.com/)\n\r\n---\r\n\r\nExport Button\r\n\r\n![The Export button and format selec",
+      "snippet": "The Data Explorer lets you export data in multiple formats — either a single table or your entire database schema as a ZIP archive. Exports are triggered directly from the browser and download instant"
     },
     {
-      "slug": "04-data-explorer/index",
+      "slug": "05-data-explorer/index",
       "title": "Data Explorer",
-      "description": "Query your databases interactively with the Schema Weaver Data Explorer",
+      "description": "Query your PostgreSQL databases interactively with the Schema Weaver Data Explorer",
       "tags": [
         "data-explorer",
         "queries",
         "sql",
+        "postgresql",
         "databases"
       ],
       "headings": [
         {
           "level": 2,
-          "title": "What You Can Do"
+          "title": "What can you do in Data Explorer?"
         },
         {
           "level": 2,
-          "title": "Supported Databases"
+          "title": "Which databases does Data Explorer support today?"
         },
         {
           "level": 2,
-          "title": "Accessing the Data Explorer"
+          "title": "How do you access Data Explorer?"
         },
         {
           "level": 3,
@@ -1537,93 +2295,113 @@
         {
           "level": 2,
           "title": "Next Steps"
+        },
+        {
+          "level": 2,
+          "title": "Related Schema Weaver Links"
         }
       ],
-      "content": "Data Explorer\r\n\r\nThe Data Explorer is a built-in SQL workbench that lets you connect to your databases, run queries, and explore your data — all inside Schema Weaver. It integrates with Resona AI so you can ask questions in plain English and get runnable SQL back instantly.\r\n\r\nWhat You Can Do\r\n\r\n- Browse live data — Two-panel layout with a table sidebar and a high-performance data grid\r\n- Smart column sizing — Canvas-measured, 95th-percentile column widths that auto-fit your data\r\n- Filter & sor",
+      "content": "Data Explorer\r\n\r\nThe Data Explorer is a built-in SQL workbench that lets you connect to your databases, run queries, and explore your data — all inside Schema Weaver. It integrates with Resona AI so you can ask questions in plain English and get runnable SQL back instantly.\r\n\r\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [Docs Home](https://docs.schemaweaver.vivekmind.com/) · [Schema Weaver Landing](https://schemaweaver.vivekmind.com/) · [SQL Editor](https://sq",
       "snippet": ""
     },
     {
-      "slug": "05-resona-ai/ai-chat",
-      "title": "AI Chat",
-      "description": "Use Resona AI Chat to query your database with natural language",
+      "slug": "06-resona-ai/ai-chat",
+      "title": "AI Chat Guide",
+      "description": "How to write effective prompts, use @mentions, iterate on results, and get the best answers from Resona AI in both the SQL Editor and Data Explorer",
       "tags": [
         "resona",
         "ai-chat",
+        "prompts",
         "natural-language",
-        "sql"
+        "sql",
+        "tips",
+        "mentions",
+        "context"
       ],
       "headings": [
         {
           "level": 2,
-          "title": "Opening AI Chat"
+          "title": "Opening the Chat"
         },
         {
           "level": 3,
-          "title": "From the Data Explorer"
+          "title": "SQL Editor"
         },
         {
           "level": 3,
-          "title": "Standalone Chat Panel"
-        },
-        {
-          "level": 3,
-          "title": "Keyboard Shortcut"
+          "title": "Data Explorer"
         },
         {
           "level": 2,
-          "title": "Your First Conversation"
+          "title": "How Context Works"
+        },
+        {
+          "level": 3,
+          "title": "@ Mentions"
         },
         {
           "level": 2,
-          "title": "Example Queries"
+          "title": "Writing Effective Prompts"
         },
         {
           "level": 3,
-          "title": "Business Metrics"
+          "title": "Be Specific About Scope"
         },
         {
           "level": 3,
-          "title": "Data Quality"
+          "title": "Give Business Context"
         },
         {
           "level": 3,
-          "title": "Performance Analysis"
-        },
-        {
-          "level": 3,
-          "title": "Schema Understanding"
+          "title": "Reference Exact Names"
         },
         {
           "level": 2,
           "title": "Iterative Refinement"
         },
         {
-          "level": 2,
-          "title": "Understanding Resona's Responses"
+          "level": 3,
+          "title": "SQL Editor Example"
         },
         {
           "level": 3,
-          "title": "Asking for Explanations"
+          "title": "Data Explorer Example"
         },
         {
           "level": 2,
-          "title": "Choosing a Model"
+          "title": "Choosing the Right Model"
+        },
+        {
+          "level": 2,
+          "title": "Streaming — Watching Resona Work"
         },
         {
           "level": 2,
           "title": "When Resona Gets It Wrong"
         },
         {
+          "level": 2,
+          "title": "Conversation History and Memory"
+        },
+        {
           "level": 3,
-          "title": "Reporting a Bad Query"
+          "title": "Within a Conversation"
+        },
+        {
+          "level": 3,
+          "title": "Across Sessions (SQL Editor)"
+        },
+        {
+          "level": 3,
+          "title": "Data Explorer"
         },
         {
           "level": 2,
-          "title": "Saving AI-Generated Queries"
+          "title": "Saving Useful Queries"
         },
         {
           "level": 2,
-          "title": "Conversation History"
+          "title": "Tips for Large Schemas"
         },
         {
           "level": 2,
@@ -1631,107 +2409,117 @@
         },
         {
           "level": 2,
-          "title": "Tips for Better Results"
+          "title": "Next Steps"
         }
       ],
-      "content": "AI Chat\r\n\r\nResona AI Chat lets you have a back-and-forth conversation with your database. Ask questions in plain English, refine your results, and build up complex analyses step by step — without writing a single line of SQL.\r\n\r\n---\r\n\r\nOpening AI Chat\r\n\r\nFrom the Data Explorer\r\n\r\nClick the AI Assist button in the top-right of the query editor, or press `Ctrl+Shift+A`.\r\n\r\nStandalone Chat Panel\r\n\r\nClick Resona AI in the main navigation sidebar to open the full-width chat interface.\r\n\r\nKeyboard Sho",
-      "snippet": ""
+      "content": "AI Chat Guide\n\nResona AI is available in two surfaces — the SQL Editor and the Data Explorer. Both share the same chat mechanics: a streaming conversation with tool execution, model selection, and full context of your schema. This page covers how to use the chat interface effectively in both places.\n\n---\n\nOpening the Chat\n\nSQL Editor\n\nClick Resona AI in the left sidebar panel of the SQL Editor. The panel stays open as you navigate files and maintains your full conversation history. You can also ",
+      "snippet": "Resona AI is available in two surfaces — the SQL Editor and the Data Explorer. Both share the same chat mechanics: a streaming conversation with tool execution, model selection, and full context of yo"
     },
     {
-      "slug": "05-resona-ai/index",
+      "slug": "06-resona-ai/index",
       "title": "Resona AI",
-      "description": "Meet Resona, the AI-powered data assistant built into Schema Weaver",
+      "description": "Resona is Schema Weaver's AI assistant — available in both the SQL Editor and the Data Explorer with purpose-built architectures for schema design and live data analysis",
       "tags": [
         "resona",
         "ai",
         "overview",
+        "sql-editor",
+        "data-explorer",
+        "models",
+        "credits",
         "natural-language"
       ],
       "headings": [
         {
           "level": 2,
-          "title": "What Resona Can Do"
+          "title": "Two Products, One AI"
         },
         {
           "level": 3,
-          "title": "Natural Language to SQL"
+          "title": "Resona in the SQL Editor"
         },
         {
           "level": 3,
-          "title": "Automatic Chart Generation"
+          "title": "Resona in the Data Explorer"
+        },
+        {
+          "level": 2,
+          "title": "Comparing the Two"
+        },
+        {
+          "level": 2,
+          "title": "How Resona Works"
         },
         {
           "level": 3,
-          "title": "Schema Explanation"
+          "title": "Privacy"
+        },
+        {
+          "level": 2,
+          "title": "Shared Credits"
+        },
+        {
+          "level": 2,
+          "title": "Getting Started"
         },
         {
           "level": 3,
-          "title": "Query Optimization"
+          "title": "In the SQL Editor"
         },
         {
           "level": 3,
-          "title": "Data Exploration"
-        },
-        {
-          "level": 2,
-          "title": "How It Works"
-        },
-        {
-          "level": 2,
-          "title": "Privacy and Security"
-        },
-        {
-          "level": 2,
-          "title": "Models"
-        },
-        {
-          "level": 2,
-          "title": "Getting Started with Resona"
-        },
-        {
-          "level": 2,
-          "title": "Plans and Access"
+          "title": "In the Data Explorer"
         },
         {
           "level": 2,
           "title": "Next Steps"
         }
       ],
-      "content": "Resona AI\r\n\r\nResona is Schema Weaver's built-in AI data assistant. It understands your database schema and lets you explore, query, and analyze your data using natural language — no SQL expertise required.\r\n\r\nWhat Resona Can Do\r\n\r\nNatural Language to SQL\r\n\r\nAsk questions about your data in plain English. Resona generates optimized SQL, explains it step by step, and runs it for you:\r\n\r\n> \"How many new users signed up each week over the last 3 months?\"\r\n\r\n\r\n\r\nAutomatic Chart Generation\r\n\r\nWhen res",
-      "snippet": ""
+      "content": "Resona AI\n\nResona is Schema Weaver's AI assistant. It is embedded in two products — the SQL Editor and the Data Explorer — each with a purpose-built architecture for its context. Both surfaces use the same model selection, the same credit system, and the same account.\n\n---\n\nTwo Products, One AI\n\nResona in the SQL Editor\n\nThe SQL Editor's Resona AI is an agentic schema assistant. It has access to your project files, your compiled schema graph, your ER diagram, and 55 purpose-built tools for writi",
+      "snippet": "Resona is Schema Weaver's AI assistant. It is embedded in two products — the **SQL Editor** and the **Data Explorer** — each with a purpose-built architecture for its context. Both surfaces use the sa"
     },
     {
-      "slug": "05-resona-ai/models",
+      "slug": "06-resona-ai/models",
       "title": "Models and Credits",
-      "description": "Available AI models in Resona, credit costs, and plan limits",
+      "description": "All AI models available in Resona — four tiers (FAST, SMART, ADVANCED, POWERFUL), credit costs per model, plan limits, and how to choose the right model",
       "tags": [
         "resona",
         "models",
         "credits",
         "pricing",
-        "gpt-4o",
-        "claude"
+        "tiers",
+        "fast",
+        "smart",
+        "advanced",
+        "powerful",
+        "claude",
+        "gpt",
+        "gemini"
       ],
       "headings": [
         {
           "level": 2,
-          "title": "Available Models"
+          "title": "Model Tiers"
         },
         {
           "level": 3,
-          "title": "Free Model"
+          "title": "FAST"
         },
         {
           "level": 3,
-          "title": "GPT-4o mini"
+          "title": "SMART"
         },
         {
           "level": 3,
-          "title": "GPT-4o"
+          "title": "ADVANCED"
         },
         {
           "level": 3,
-          "title": "Claude Sonnet"
+          "title": "POWERFUL"
+        },
+        {
+          "level": 2,
+          "title": "Switching Models"
         },
         {
           "level": 2,
@@ -1739,322 +2527,105 @@
         },
         {
           "level": 3,
-          "title": "How Credits Are Calculated"
+          "title": "What Costs Credits"
         },
         {
           "level": 3,
-          "title": "What Counts as a Query"
-        },
-        {
-          "level": 3,
-          "title": "Credits Do Not Roll Over"
+          "title": "Credit Multipliers"
         },
         {
           "level": 2,
-          "title": "Plan Credit Limits"
+          "title": "Plans"
         },
         {
           "level": 3,
-          "title": "Free Plan"
-        },
-        {
-          "level": 3,
-          "title": "Pro Plan"
-        },
-        {
-          "level": 3,
-          "title": "Enterprise Plan"
+          "title": "What You Can Do With Each Plan"
         },
         {
           "level": 2,
-          "title": "Checking Your Credit Usage"
-        },
-        {
-          "level": 3,
-          "title": "In the App"
-        },
-        {
-          "level": 3,
-          "title": "Via API"
+          "title": "Checking Usage"
         },
         {
           "level": 2,
-          "title": "Setting Default Model"
-        },
-        {
-          "level": 3,
-          "title": "Model Override per Conversation"
-        },
-        {
-          "level": 2,
-          "title": "Model Selection Guide"
-        },
-        {
-          "level": 3,
-          "title": "Rule of Thumb"
-        },
-        {
-          "level": 2,
-          "title": "Bringing Your Own API Key (BYOK)"
+          "title": "Credit Top-ups"
         },
         {
           "level": 2,
           "title": "FAQ"
-        }
-      ],
-      "content": "Models and Credits\r\n\r\nResona AI supports multiple large language models so you can balance speed, quality, and cost. Each query consumes credits from your monthly allowance based on which model you use.\r\n\r\n---\r\n\r\nAvailable Models\r\n\r\n| Model | Provider | Credits | Context Window | Best For |\r\n|-------|----------|---------|----------------|----------|\r\n| Free model | Schema Weaver | 0 | 8k tokens | Basic lookups, simple queries |\r\n| GPT-4o mini | OpenAI | 1x | 128k tokens | Everyday queries, fast ",
-      "snippet": ""
-    },
-    {
-      "slug": "06-schema-visualization/index",
-      "title": "Schema Visualization",
-      "description": "Explore and understand your database structure with interactive ER diagrams",
-      "tags": [
-        "visualization",
-        "er-diagram",
-        "schema",
-        "relationships"
-      ],
-      "headings": [
-        {
-          "level": 2,
-          "title": "Opening the ER Diagram"
-        },
-        {
-          "level": 3,
-          "title": "Cloud Platform"
-        },
-        {
-          "level": 3,
-          "title": "CLI (Local Web UI)"
-        },
-        {
-          "level": 2,
-          "title": "What's Shown in the Diagram"
-        },
-        {
-          "level": 2,
-          "title": "Navigating the Diagram"
-        },
-        {
-          "level": 3,
-          "title": "Zoom and Pan"
-        },
-        {
-          "level": 3,
-          "title": "Keyboard Shortcuts"
-        },
-        {
-          "level": 3,
-          "title": "Finding a Table"
-        },
-        {
-          "level": 2,
-          "title": "Focusing on Relationships"
-        },
-        {
-          "level": 3,
-          "title": "Expanding Relationship Depth"
-        },
-        {
-          "level": 2,
-          "title": "Table Details Panel"
-        },
-        {
-          "level": 3,
-          "title": "Columns Tab"
-        },
-        {
-          "level": 3,
-          "title": "Indexes Tab"
-        },
-        {
-          "level": 3,
-          "title": "Foreign Keys Tab"
-        },
-        {
-          "level": 3,
-          "title": "SQL Tab"
-        },
-        {
-          "level": 2,
-          "title": "Layout Options"
-        },
-        {
-          "level": 2,
-          "title": "Filtering the Diagram"
-        },
-        {
-          "level": 3,
-          "title": "By Schema (PostgreSQL)"
-        },
-        {
-          "level": 3,
-          "title": "By Tag"
-        },
-        {
-          "level": 3,
-          "title": "By Table Name"
-        },
-        {
-          "level": 3,
-          "title": "Hiding Tables"
-        },
-        {
-          "level": 2,
-          "title": "Snapshots and Diff View"
-        },
-        {
-          "level": 3,
-          "title": "Viewing a Past Schema"
-        },
-        {
-          "level": 3,
-          "title": "Comparing Two Snapshots"
-        },
-        {
-          "level": 2,
-          "title": "Exporting the Diagram"
-        },
-        {
-          "level": 2,
-          "title": "Embedding the Diagram"
         },
         {
           "level": 2,
           "title": "Next Steps"
         }
       ],
-      "content": "Schema Visualization\r\n\r\nSchema Weaver automatically generates interactive Entity-Relationship (ER) diagrams from your live database. Explore tables, relationships, and constraints visually — no manual diagramming required.\r\n\r\n---\r\n\r\nOpening the ER Diagram\r\n\r\nCloud Platform\r\n\r\nNavigate to your project and click Schema in the top navigation. The ER diagram loads automatically from your connected database.\r\n\r\nCLI (Local Web UI)\r\n\r\n\r\n\r\nThe diagram renders in seconds for most schemas. For very large ",
-      "snippet": ""
+      "content": "Models and Credits\n\nResona AI supports a large range of models from multiple providers, organized into four capability tiers. You choose the model per message — use a FAST model for quick questions and a POWERFUL model for complex multi-table design or deep analysis. Credits are shared across the SQL Editor and Data Explorer.\n\n---\n\nModel Tiers\n\nModels are grouped into four tiers based on capability and cost. The credit multiplier shown in the UI (e.g. `1.0×`) is relative to the base rate of the ",
+      "snippet": "Resona AI supports a large range of models from multiple providers, organized into four capability tiers. You choose the model per message — use a FAST model for quick questions and a POWERFUL model f"
     },
     {
-      "slug": "07-migrations/index",
-      "title": "Migrations",
-      "description": "Deep dive into Schema Weaver's Atlas-powered migration engine — CI/CD, rollbacks, and advanced patterns",
+      "slug": "07-team-collaboration/index",
+      "title": "Team Collaboration",
+      "description": "Create teams, invite members, connect projects, and share database access — all managed from Settings → Collaboration in Schema Weaver",
       "tags": [
-        "migrations",
-        "atlas",
-        "cicd",
-        "rollback",
-        "ddl"
+        "collaboration",
+        "team",
+        "members",
+        "roles",
+        "projects",
+        "invite",
+        "access"
       ],
       "headings": [
         {
           "level": 2,
-          "title": "How Schema Weaver's Migration Engine Works"
-        },
-        {
-          "level": 3,
-          "title": "The Migration Lifecycle"
+          "title": "Where to Find Team Settings"
         },
         {
           "level": 2,
-          "title": "Migration File Format"
-        },
-        {
-          "level": 3,
-          "title": "Timestamped Format (Default)"
-        },
-        {
-          "level": 3,
-          "title": "Sequential Format"
-        },
-        {
-          "level": 3,
-          "title": "HCL Format (Atlas Native)"
+          "title": "Creating a Team"
         },
         {
           "level": 2,
-          "title": "Automatic Migration Generation"
+          "title": "Your Access Level"
         },
         {
           "level": 2,
-          "title": "CI/CD Integration"
-        },
-        {
-          "level": 3,
-          "title": "GitHub Actions"
-        },
-        {
-          "level": 3,
-          "title": "GitLab CI"
+          "title": "Adding Team Members"
         },
         {
           "level": 2,
-          "title": "Multi-Environment Management"
-        },
-        {
-          "level": 3,
-          "title": "Environment Configuration"
-        },
-        {
-          "level": 3,
-          "title": "Environment-Specific Migrations"
-        },
-        {
-          "level": 3,
-          "title": "Status Across Environments"
+          "title": "Team Members List"
         },
         {
           "level": 2,
-          "title": "Zero-Downtime Migration Patterns"
-        },
-        {
-          "level": 3,
-          "title": "Adding a Column (Zero Downtime)"
-        },
-        {
-          "level": 3,
-          "title": "Renaming a Column (Expand-Contract Pattern)"
-        },
-        {
-          "level": 3,
-          "title": "Adding a Not-Null Column with a Default"
-        },
-        {
-          "level": 3,
-          "title": "Creating an Index Without Locking"
+          "title": "Connected Projects"
         },
         {
           "level": 2,
-          "title": "Rollback Strategies"
-        },
-        {
-          "level": 3,
-          "title": "Automatic Rollback on Error"
-        },
-        {
-          "level": 3,
-          "title": "Manual Rollback"
-        },
-        {
-          "level": 3,
-          "title": "Writing Good DOWN Scripts"
+          "title": "Shared Database Connections"
         },
         {
           "level": 2,
-          "title": "Migration Linting"
-        },
-        {
-          "level": 3,
-          "title": "Built-in Lint Rules"
+          "title": "What Team Members See"
         },
         {
           "level": 2,
-          "title": "Conflict Resolution"
+          "title": "Audit Trail"
         },
         {
           "level": 2,
-          "title": "Migration History and Audit"
+          "title": "Security"
+        },
+        {
+          "level": 2,
+          "title": "Version"
         },
         {
           "level": 2,
           "title": "Next Steps"
         }
       ],
-      "content": "Migrations Deep Dive\r\n\r\nThis guide goes beyond the basics to cover production-grade migration workflows: CI/CD integration, zero-downtime patterns, multi-environment management, conflict resolution, and the Atlas engine that powers Schema Weaver's DDL safety checks.\r\n\r\n> New to migrations? Start with [Core Concepts: Migrations](/docs/core-concepts/migrations) for the fundamentals, then come back here.\r\n\r\n---\r\n\r\nHow Schema Weaver's Migration Engine Works\r\n\r\nSchema Weaver uses [Atlas](https://atla",
-      "snippet": ""
+      "content": "Team Collaboration\n\nSchema Weaver's collaboration model is built around Teams. You create a team, invite members by email, and connect your projects to that team. Everyone on the team gets access to the connected projects — and the database connections linked to those projects — without any credential sharing.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [Open Data Explorer](https://data.schemaweaver.vivekmind.com/)\n\n---\n\nWhere to Find Team Settings\n\nAll team mana",
+      "snippet": "Schema Weaver's collaboration model is built around **Teams**. You create a team, invite members by email, and connect your projects to that team. Everyone on the team gets access to the connected pro"
     }
   ]
 }

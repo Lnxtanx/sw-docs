@@ -1,0 +1,273 @@
+---
+title: Terminal & sw Commands
+description: Run database operations directly from the built-in sw terminal in the SQL Editor — complete reference for all sw commands
+tags: [database, terminal, sw, cli, commands, pull, push, diff, migration, health, drift, history, rollback]
+order: 7
+sidebar_group: "Database"
+related:
+  - title: Pull, Diff & Push
+    path: /database/pull-diff-push
+  - title: Migrations
+    path: /database/migrations
+  - title: Drift Detection
+    path: /database/drift-detection
+  - title: History & Rollback
+    path: /database/history-rollback
+---
+
+# Terminal & sw Commands
+
+The SQL Editor has a built-in terminal for running database operations directly without leaving the editor. Once a connection is active, open the terminal from the connection panel and run `sw` commands — a CLI for interacting with your connected PostgreSQL database.
+
+> Quick links: [Pull, Diff & Push](/database/pull-diff-push) · [Migrations](/database/migrations) · [Drift Detection](/database/drift-detection)
+
+![The built-in terminal showing sw status and sw pull commands with their output](/images/sql-editor/terminal-dashbaord.png)
+
+---
+
+## Opening the Terminal
+
+1. Make sure a database connection is linked to the current project
+2. Click the **terminal icon** in the connection sidebar panel, or click the terminal button in the connection dashboard
+3. The terminal opens with your connection name and current file as context
+
+The prompt format is:
+
+```
+<connection-name> sw >
+```
+
+Everything you type runs against that connection.
+
+---
+
+## Command Reference
+
+### `sw status`
+
+Checks whether the connection is reachable and reports latency.
+
+```
+cloop sw > sw status
+Checking connection health...
+Connected • Latency: 2698ms
+```
+
+**Use it when:** You want a quick sanity check before running a migration.
+
+---
+
+### `sw pull`
+
+Introspects the live database and writes the current schema to the linked SQL file. Saves a snapshot for future drift detection.
+
+```
+cloop sw > sw pull
+Connecting to database (pull mode: single)...
+✓ Introspected schema: 20 tables
+  Snapshot saved (0f33295b…)
+Schema pulled and written to file.
+```
+
+**Use it when:** You want to import the live schema into your project, or sync after external changes were made to the database.
+
+See [Pull, Diff & Push](/database/pull-diff-push) for full details.
+
+---
+
+### `sw push`
+
+Previews the migration — shows what would change without applying anything.
+
+```
+cloop sw > sw push
+Diffing project SQL against live schema...
+  2 tables to create
+  1 column to add
+  1 index to create
+
+  Preview:
+  CREATE TABLE notifications (...);
+  ALTER TABLE users ADD COLUMN last_login timestamptz;
+  CREATE INDEX idx_users_last_login ON users (last_login);
+
+Run `sw push --apply` to execute, or `sw diff` for the raw DDL.
+```
+
+**Use it when:** You want to review the migration summary before committing.
+
+---
+
+### `sw push --apply`
+
+Applies the migration to the live database. Runs inside a transaction with an advisory lock. If any statement fails, the entire migration rolls back.
+
+```
+cloop sw > sw push --apply
+Applying migration...
+  ✓ CREATE TABLE notifications
+  ✓ ALTER TABLE users ADD COLUMN last_login
+  ✓ CREATE INDEX idx_users_last_login
+Migration applied. Snapshot saved (a1b2c3d4…)
+```
+
+**Use it when:** You have reviewed the preview and are ready to push your changes.
+
+See [Migrations](/database/migrations) for the full 8-step pipeline.
+
+---
+
+### `sw push --safe`
+
+Applies the migration using smart migration mode — a multi-phase strategy for type changes that cannot be done with a single `ALTER TABLE`.
+
+```
+cloop sw > sw push --safe
+Analyzing migration for unsafe operations...
+  ⚠ Column type change detected: orders.amount (numeric → bigint)
+  Smart migration plan:
+    Phase 1: Add shadow column
+    Phase 2: Install sync trigger
+    Phase 3: Backfill existing data (5,000 rows/batch)
+    Phase 4: Validate constraints
+    Phase 5: Atomic swap
+    Phase 6: Recreate FK constraints
+  Proceed? [y/n]
+```
+
+**Use it when:** Your diff includes column type changes that require data to be preserved during a structural change.
+
+See [Migrations — Safe Mode](/database/migrations#safe-mode--complex-type-changes) for details on when this mode is blocked.
+
+---
+
+### `sw push --force`
+
+Bypasses destructive change protection and applies the migration including `DROP TABLE`, `DROP COLUMN`, or unsafe type cast operations.
+
+```
+cloop sw > sw push --force
+⚠ WARNING: Destructive changes detected:
+  DROP TABLE public.old_payments
+  DROP COLUMN users.legacy_field
+Type "confirm" to proceed:
+```
+
+Requires typing `confirm` explicitly. Use only after verifying the data can be safely removed.
+
+---
+
+### `sw diff`
+
+Shows the raw DDL difference between your project SQL and the live database — the exact SQL statements that would be executed by `sw push --apply`.
+
+```
+cloop sw > sw diff
+--- Live database
++++ Project SQL
+
++ CREATE TABLE notifications (
++   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
++   user_id uuid NOT NULL REFERENCES users(id),
++   message text NOT NULL,
++   read_at timestamptz
++ );
++ ALTER TABLE users ADD COLUMN last_login timestamptz;
+```
+
+**Use it when:** You want to see the exact DDL that will run, rather than the summary from `sw push`.
+
+---
+
+### `sw health`
+
+Runs a full connection health check — verifies credentials, checks permissions, and reports the PostgreSQL version and latency.
+
+```
+cloop sw > sw health
+Connection:   ✓ reachable
+Credentials:  ✓ valid
+Permissions:  ✓ CREATE, ALTER, DROP granted
+PostgreSQL:   16.3 (Ubuntu 16.3-1.pgdg22.04+1)
+Latency:      175ms
+```
+
+If permissions are insufficient, the output lists exactly what is missing.
+
+---
+
+### `sw drift`
+
+Detects changes made directly to the live database since the last pull or push.
+
+```
+cloop sw > sw drift
+Checking for external schema changes...
+  ⚠ Drift detected (2 changes):
+    + Column: users.temp_migration_flag (added directly)
+    ~ Index: idx_orders_status (modified outside Schema Weaver)
+```
+
+**Use it when:** You suspect someone ran DDL directly on the database, or after a restore or import.
+
+See [Drift Detection](/database/drift-detection) for how to resolve drift.
+
+---
+
+### `sw history`
+
+Lists all migrations applied through Schema Weaver for this connection.
+
+```
+cloop sw > sw history
+Migration History — cloop
+────────────────────────────────────────────────
+  #12   2026-04-01   success   alice@company.com
+  #11   2026-03-20   success   you@company.com
+  #10   2026-03-15   success   you@company.com
+  #9    2026-03-01   rolled_back
+  ...
+```
+
+Each entry shows the migration number, date, status, and who applied it.
+
+---
+
+### `sw rollback`
+
+Rolls back the last applied migration using the stored reverse SQL.
+
+```
+cloop sw > sw rollback
+Rolling back migration #12...
+  Executing reverse SQL...
+  ✓ DROP TABLE notifications
+  ✓ ALTER TABLE users DROP COLUMN last_login
+  ✓ DROP INDEX idx_users_last_login
+Rollback complete. Schema restored to migration #11.
+```
+
+To roll back multiple migrations: `sw rollback 3` rolls back migrations #12, #11, and #10 in sequence.
+
+**Use it when:** A migration caused a problem and you need to restore the previous schema state.
+
+See [History & Rollback](/database/history-rollback) for what rollback can and cannot undo.
+
+---
+
+## Command Summary
+
+| Command | What it does |
+|---|---|
+| `sw status` | Quick connection check — reachable and latency |
+| `sw pull` | Import live schema → write to SQL file + save snapshot |
+| `sw push` | Preview the migration (no changes applied) |
+| `sw push --apply` | Apply the migration to the live database |
+| `sw push --safe` | Apply using smart migration for complex type changes |
+| `sw push --force` | Apply despite destructive changes (confirm required) |
+| `sw diff` | Show raw DDL diff between project SQL and live database |
+| `sw health` | Full health check — connectivity, credentials, permissions, version |
+| `sw drift` | Detect schema changes made outside Schema Weaver |
+| `sw history` | List all applied migrations with status and author |
+| `sw rollback` | Roll back the last migration |
+| `sw rollback N` | Roll back the last N migrations in sequence |

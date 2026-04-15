@@ -1,0 +1,314 @@
+---
+title: ER Diagram
+description: Visualize your entire PostgreSQL schema as a live, interactive entity-relationship diagram — all object types supported, updates in real time as you write SQL
+tags: [sql-editor, er-diagram, visualization, relationships, tables, schema, postgresql, layout]
+order: 4
+sidebar_group: "SQL Editor"
+related:
+  - title: Path Analysis
+    path: /sql-editor/er-diagram-path-analysis
+  - title: Grouping & Schema Clusters
+    path: /sql-editor/er-diagram-grouping
+  - title: Resona AI in the ER Diagram
+    path: /sql-editor/er-diagram-ai
+  - title: Visibility & Node Types
+    path: /sql-editor/er-diagram-visibility
+---
+
+# ER Diagram
+
+The ER Diagram is a live, interactive visualization of your entire PostgreSQL schema. Every object — tables, views, materialized views, functions, enums, domains, sequences, roles, extensions, and RLS policies — renders as a node on a pannable, zoomable canvas. Foreign-key relationships appear as directed edges. The diagram updates in real time as you type SQL with no manual refresh required, and scales to schemas with thousands of tables.
+
+> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [Path Analysis](/sql-editor/er-diagram-path-analysis) · [Grouping](/sql-editor/er-diagram-grouping) · [AI Features](/sql-editor/er-diagram-ai)
+
+![The ER Diagram showing tables, foreign-key edges, schema groups, and the toolbar controls](/images/sql-editor/er-digram.png)
+
+---
+
+## Opening the Diagram
+
+The ER Diagram is built into the SQL Editor — there is no separate page to navigate to.
+
+- **In standard mode**: Click **Graph** in the footer status bar — the diagram opens as a full-screen overlay
+- **In fullscreen / split mode**: The diagram opens as a resizable panel alongside the editor, updating as you type
+- **Keyboard shortcut**: `Ctrl+G` / `Cmd+G` toggles the diagram panel
+
+---
+
+## How the Diagram is Built
+
+The diagram is generated entirely in the browser from the same compiled schema that feeds the Schema Compiler. No server round-trip is needed.
+
+```
+All project SQL files
+        ↓
+  Schema Weaver Custom SQL Parser
+  (runs entirely in your browser — no server round-trip)
+        ↓
+  Schema Compiler (20 layers)
+        ↓
+  Relationship Graph
+  (foreign keys, view deps, trigger targets, inferred)
+        ↓
+  ELK Auto-Layout Engine
+        ↓
+  React Flow Canvas
+  (re-renders on every SQL change)
+```
+
+> **Custom parser:** Schema Weaver uses its own purpose-built PostgreSQL SQL parser that runs entirely in the browser. This is not a thin wrapper around a generic parser — it is a custom multi-phase parser designed specifically for DDL (schema definitions), handling PostgreSQL-specific syntax for partitions, RLS, identity columns, generated columns, domain types, and more. Because everything runs client-side, there is zero latency between typing SQL and seeing the diagram update.
+
+Because the pipeline is entirely client-side, the diagram is always in sync with your code — add a `CREATE TABLE`, a new node appears immediately; add a `REFERENCES` clause, a new edge appears immediately.
+
+---
+
+## Supported PostgreSQL Objects
+
+The ER Diagram renders every major PostgreSQL object type as a distinct node:
+
+| Node Type | Visual | What it shows |
+|---|---|---|
+| **Table** | White/gray card | All columns with types, constraints, PKs, FKs, indexes, triggers, policies, check constraints |
+| **View** | Dashed border card | Column count, source query context, Eye icon |
+| **Materialized View** | Dashed border with refresh icon | Column count, REFRESH CONCURRENTLY command tooltip |
+| **Function / Procedure** | Code card | Return type, PROC/FUNC badge, argument types |
+| **Enum** | Type card | All enum values displayed as colored badges |
+| **Domain** | Type card | Base type, NOT NULL constraint, CHECK expression |
+| **Sequence** | Sequence card | Start value, increment, min/max bounds |
+| **Role** | Role card | Attributes as badges: SUPERUSER, LOGIN, CREATEDB, CREATEROLE, BYPASSRLS, NOINHERIT |
+| **Extension** | Extension card | Version, schema, Blocks icon |
+| **Policy (RLS)** | Policy card | Command, roles, USING clause, WITH CHECK expression |
+| **Schema Group** | Colored container | Groups all objects belonging to a PostgreSQL schema namespace |
+
+Every object type can be shown or hidden independently — see [Visibility Controls](/sql-editor/er-diagram-visibility).
+
+---
+
+## Table Nodes in Detail
+
+Tables are the most information-dense nodes in the diagram. Each table card shows:
+
+### Column Rows
+
+Every column row displays the column name, data type, and a set of constraint icons:
+
+| Icon | Color | Meaning |
+|---|---|---|
+| 🔑 Key | Gold/yellow | Primary key column |
+| 🔗 Link | Indigo | Foreign key column (with edge drawn to referenced table) |
+| ✦ Sparkles | Emerald | Unique constraint |
+| ≡ List | Amber | Indexed column |
+| ⚡ Zap | Indigo | Generated column (`GENERATED ALWAYS`) |
+
+Column rows also show nullability (`NOT NULL` marked with red asterisk) and whether the type is an enum (ENUM badge).
+
+### Collapsible Sections
+
+Expand any table node to reveal:
+
+- **Indexes** — index name, type (B-tree, GiST, GIN, etc.), uniqueness, and column coverage
+- **Triggers** — trigger name, timing (BEFORE/AFTER), events (INSERT/UPDATE/DELETE/TRUNCATE), and function name
+- **Policies** — RLS policy name, command, applicable roles, USING and WITH CHECK expressions
+- **Check Constraints** — constraint name and the CHECK expression
+
+### View Modes
+
+You can switch between three column display modes from the footer:
+
+| Mode | What's shown |
+|---|---|
+| **ALL** | Every column with full metadata, all collapsible sections |
+| **KEYS** | Only primary key and foreign key columns — compact overview |
+| **TITLE** | Table name only — maximum density for very large schemas |
+
+### Cascade Risk Indicator
+
+If a table has a chain of `ON DELETE CASCADE` foreign keys that could affect many rows, the table node shows an amber/red glow border with a ⚡ badge and the count of tables in the cascade chain.
+
+---
+
+## Editing Tables from the Diagram
+
+You can edit any table's structure directly from the ER Diagram without switching to the SQL editor. Click the **edit icon** (pencil) on any table node header to open the **Table Edit Panel**. It supports two modes, switchable with a toggle:
+
+### Visual Editor
+
+The visual mode lets you add, remove, or modify columns using a form interface — no SQL required. Each column row has fields for name, type, nullability, default value, and constraint toggles (PRIMARY KEY, UNIQUE, NOT NULL, FOREIGN KEY).
+
+![The ER Diagram table editor in visual mode showing column fields, type selectors, and constraint toggles for a selected table](/images/sql-editor/er-diagram-edittable-visual.png)
+
+| Control | What it does |
+|---|---|
+| **Add column** | Appends a new empty column row to the form |
+| **Delete column** | Removes the column (shows a confirmation for columns with FK dependencies) |
+| **Type selector** | Dropdown of all PostgreSQL types including your project's custom enums and domains |
+| **Constraint toggles** | Toggle PRIMARY KEY, NOT NULL, UNIQUE per column |
+| **FK target** | Drop-down of all tables and columns in the project |
+
+When you click **Save**, the edited table definition is serialized back to SQL and written into the active file. The ER Diagram re-renders immediately from the updated SQL.
+
+### SQL Editor Mode
+
+Switch to the SQL tab in the edit panel to view and edit the raw `CREATE TABLE` DDL directly. This mode gives you full control — useful for complex constraints, partial indexes on the table, or multi-column primary keys.
+
+![The ER Diagram table editor in SQL mode showing the raw CREATE TABLE DDL with syntax highlighting](/images/sql-editor/er-digram-edit-sql.png)
+
+Changes you make in SQL mode are validated before saving. If the SQL is invalid, the panel shows the parse error and prevents saving until it is fixed.
+
+> **Bidirectional sync:** Visual mode and SQL mode show the same table. Switching between modes converts the representation in real time — edits made in visual mode are immediately visible in SQL mode and vice versa.
+
+---
+
+## Relationship Edges
+
+Each foreign key is drawn as a directed edge from the referencing column to the referenced table:
+
+| Edge style | Meaning |
+|---|---|
+| **Solid arrow** | Standard foreign key |
+| **Dashed arrow** | Nullable FK (optional relationship) |
+| **Orange edge** | View dependency (view references another object) |
+| **Red edge** | Trigger target relationship |
+| **Low opacity** | Low-confidence inferred relationship (confidence < 0.8) |
+
+Click any edge to see a side panel with the FK column names, `ON DELETE` rule (CASCADE, SET NULL, RESTRICT, NO ACTION), and deferrability.
+
+---
+
+## Navigation
+
+| Action | How |
+|---|---|
+| **Pan** | Click and drag the canvas background |
+| **Zoom in / out** | Scroll wheel, or use `+` / `−` buttons in the toolbar |
+| **Fit all nodes** | Click **Fit** in the toolbar — centers and scales to show every node |
+| **Select a table** | Click any node — highlights it and dims unrelated nodes |
+| **Move a node** | Drag a node to reposition — positions are saved per session |
+| **Reset layout** | Click **Layout → Re-run auto-layout** to restore ELK positions |
+| **Search** | Type in the search box in the toolbar to filter visible nodes by name |
+
+### Search
+
+The toolbar search box filters the diagram in real time (300 ms debounce). Nodes whose names match the query stay visible; all others are dimmed. Matching is case-insensitive and partial.
+
+---
+
+## Auto-Layout
+
+The diagram uses **ELK** (Eclipse Layout Kernel) to position nodes automatically. ELK respects FK relationships and arranges parent tables above (or to the left of) their dependent tables.
+
+### Layout Direction
+
+Switch layout direction from the toolbar dropdown:
+
+| Direction | Description |
+|---|---|
+| **Left → Right (LR)** | Parent tables on the left, child tables flow rightward — good for wide schemas |
+| **Top → Bottom (TB)** | Parent tables at the top, dependencies flow downward — good for deep hierarchies |
+| **Right → Left (RL)** | Mirrored LR |
+| **Bottom → Top (BT)** | Mirrored TB |
+
+### Position Persistence
+
+After ELK places nodes, you can drag any node to fine-tune its position. Positions are stored per schema (via Zustand) and restored when you return to the diagram. Click **Reset layout** to discard manual positions and re-run ELK from scratch.
+
+### Performance & Scale
+
+The ELK engine has a built-in timeout system:
+- **Hierarchical layout** (with schema groups): 8-second timeout, then falls back to flat layout
+- **Flat layout**: 15-second timeout
+
+For schemas with thousands of tables, use **KEYS** or **TITLE** view mode and **Visibility Controls** to hide object types you don't need — this significantly reduces node count and speeds up layout.
+
+---
+
+## Toolbar Controls
+
+| Control | Description |
+|---|---|
+| **Search box** | Filter visible nodes by name (real-time, debounced) |
+| **Layout ▾** | Switch layout direction (LR / TB / RL / BT) |
+| **Connect DB** | Open the database connection panel |
+| **Export ▾** | Export diagram or schema (see below) |
+| **Path** | Toggle path analysis mode — find shortest FK path between two tables |
+| **Resona AI** | Open the global AI chat panel anchored to the diagram |
+| **Fullscreen** | Toggle fullscreen mode |
+
+---
+
+## Footer Controls
+
+| Control | Description |
+|---|---|
+| **Table / view / relationship counts** | Live stats of what's currently visible |
+| **Schema filter badge** | Shown in amber when any schemas are hidden — click to clear |
+| **View mode** | Switch between ALL / KEYS / TITLE column display |
+| **Group ▾** | Toggle "Cluster by Schema" and "Lock Groups" |
+| **Visibility ▾** | Toggle individual node types and schema groups |
+| **Terminal** | Open the SQL terminal panel (linked to a live database connection) |
+
+---
+
+## Export
+
+Click **Export** in the toolbar to save the diagram or schema in multiple formats:
+
+### Image Exports
+
+| Format | Description |
+|---|---|
+| **PNG** | High-resolution raster image (2× pixel ratio) — good for Notion, docs, Slack |
+| **SVG** | Scalable vector image — good for presentations and print |
+
+### Schema Code Exports
+
+The diagram can also generate framework-ready code from your schema:
+
+| Format | Output file | Use case |
+|---|---|---|
+| **Prisma Schema** | `schema.prisma` | Drop into a Prisma project |
+| **Drizzle ORM** | `schema.ts` | Drop into a Drizzle project |
+| **DBML** | `schema.dbml` | Import into dbdiagram.io |
+| **TypeScript Types** | `types.ts` | Type-safe interfaces matching your schema |
+| **Markdown Docs** | `SCHEMA.md` | Human-readable schema documentation |
+
+All exports download as files with auto-generated names based on your project.
+
+---
+
+## Focus Mode (Subgraph)
+
+Click the **Network icon** on any table node to enter focus mode. The diagram zooms in on that table and its direct relationships, hiding the rest. You can control:
+
+- **Depth** — how many FK hops to follow from the root (1 = direct neighbors, 2 = two hops, up to 5)
+- **Direction** — outbound (tables this table references), inbound (tables that reference this table), or both
+- **Confidence threshold** — exclude low-confidence inferred relationships
+
+A banner at the top of the diagram shows which table is focused. Click × to restore the full diagram.
+
+---
+
+## Real-Time Updates
+
+The diagram re-renders automatically every time the SQL parser produces a new result:
+
+| SQL change | Diagram change |
+|---|---|
+| `CREATE TABLE` | New node appears |
+| `DROP TABLE` | Node and all its edges disappear |
+| Add `REFERENCES` | New directed edge appears |
+| Rename a column | Column row updates in place |
+| Add an index | Index row appears in the table's Indexes section |
+| Add a policy | Policy row appears in the table's Policies section |
+| Add an enum | New enum node appears with all values as badges |
+
+---
+
+## Next Steps
+
+- [Path Analysis](/sql-editor/er-diagram-path-analysis) — find the shortest FK join path between any two tables
+- [Grouping & Schema Clusters](/sql-editor/er-diagram-grouping) — cluster tables by PostgreSQL schema with resizable group containers
+- [Resona AI in the ER Diagram](/sql-editor/er-diagram-ai) — AI analysis anchored to individual tables, schema groups, or the whole schema
+- [Visibility & Node Types](/sql-editor/er-diagram-visibility) — control which object types and schemas are shown
+- [Schema Compiler](/sql-editor/schema-compiler) — static analysis that grades your schema and surfaces issues
+- [Schema Diff](/sql-editor/schema-diff) — compare two schema versions side-by-side

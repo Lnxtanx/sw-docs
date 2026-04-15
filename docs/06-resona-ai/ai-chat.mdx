@@ -1,0 +1,241 @@
+---
+title: AI Chat Guide
+description: How to write effective prompts, use @mentions, iterate on results, and get the best answers from Resona AI in both the SQL Editor and Data Explorer
+tags: [resona, ai-chat, prompts, natural-language, sql, tips, mentions, context]
+order: 2
+sidebar_group: "Resona AI"
+related:
+  - title: Resona AI Overview
+    path: /resona-ai
+  - title: Models and Credits
+    path: /resona-ai/models
+  - title: SQL Editor AI
+    path: /sql-editor/ai-assistant
+  - title: Data Explorer AI
+    path: /data-explorer/ai-overview
+---
+
+# AI Chat Guide
+
+Resona AI is available in two surfaces — the SQL Editor and the Data Explorer. Both share the same chat mechanics: a streaming conversation with tool execution, model selection, and full context of your schema. This page covers how to use the chat interface effectively in both places.
+
+---
+
+## Opening the Chat
+
+### SQL Editor
+
+Click **Resona AI** in the left sidebar panel of the SQL Editor. The panel stays open as you navigate files and maintains your full conversation history. You can also open it with `Ctrl+K` / `Cmd+K` when a file or table is selected.
+
+### Data Explorer
+
+Click the **Resona AI** tab in the Data Explorer, or press `Ctrl+Shift+A`. The chat panel opens alongside the data grid and query results.
+
+---
+
+## How Context Works
+
+Resona automatically reads your schema before every response. You do not need to paste table definitions or describe your schema in the prompt.
+
+**SQL Editor AI context includes:**
+- Every file in your active project (all merged SQL)
+- The compiled schema graph (tables, views, relationships)
+- The compiler's grade and issue list
+- Your conversation history
+
+**Data Explorer AI context includes:**
+- Your connected database's schema (tables, columns, types, constraints, FKs)
+- The currently selected table or query
+- Column statistics from recent scans
+- Your conversation history
+
+### @ Mentions
+
+In both surfaces, type `@` followed by a name to reference a specific object. An autocomplete dropdown filters as you type:
+
+```
+What indexes are missing on @orders?
+Add a soft-delete column to @users
+Explain the relationship between @invoices and @subscriptions
+Show me the top 10 rows of @products ordered by price
+```
+
+`@` mentions work with table names, file names (SQL Editor), columns, and schema groups. Using them makes Resona focus on exactly the object you mean rather than guessing from context.
+
+---
+
+## Writing Effective Prompts
+
+### Be Specific About Scope
+
+Vague prompts get vague responses. Narrow the scope to get precise, actionable output:
+
+| Instead of | Try |
+|---|---|
+| "Fix my schema" | "What constraints are missing from the @orders table?" |
+| "Make this faster" | "What indexes would improve queries on @events filtered by user_id and created_at?" |
+| "Analyze my data" | "Show me the 5 customers with the highest total spend this month from @invoices" |
+| "Add auth" | "Create a sessions table linked to @users with expiry, device info, and IP address" |
+
+### Give Business Context
+
+Resona understands naming conventions, but business context makes the output much better:
+
+```
+✓ "Add a status column to @orders — values are: pending, paid, shipped, refunded, cancelled"
+✗ "Add a status column to orders"
+
+✓ "The `amount_cents` column stores values in cents (divide by 100 for dollars)"
+✗ "Show revenue" (Resona may not know the unit)
+```
+
+### Reference Exact Names
+
+When your column or table names are abbreviated or non-obvious, mention them directly:
+
+```
+"The usr_sub_stat column on @users tracks subscription status — what values does it have?"
+"Add an index to @evts.ts — that's the timestamp column for the events table"
+```
+
+---
+
+## Iterative Refinement
+
+The most productive way to use Resona is to start simple and refine. Each message builds on the previous one — you don't need to repeat context.
+
+### SQL Editor Example
+
+```
+You:   Create a multi-tenant organizations table with name, slug, and plan
+
+AI:    [generates CREATE TABLE organizations ...]
+
+You:   Add RLS so users can only see their own org — there's a user_org junction table
+
+AI:    [adds RLS + policy referencing user_org]
+
+You:   Run the compiler and show me what's still failing
+
+AI:    [calls compile tool → reports 1 warning: missing index on user_org.user_id]
+
+You:   Fix it
+
+AI:    [patches the file with the missing index]
+```
+
+### Data Explorer Example
+
+```
+You:   How many orders were placed each day this week?
+
+AI:    [runs query, shows result table with daily counts]
+
+You:   Turn that into a line chart
+
+AI:    [regenerates as chart]
+
+You:   Only show days where order count exceeded 100
+
+AI:    [adds HAVING or WHERE clause, updates chart]
+```
+
+---
+
+## Choosing the Right Model
+
+Use the model selector in the chat footer to switch models. The footer shows the active model and its credit multiplier.
+
+| Situation | Recommended tier |
+|---|---|
+| Quick question, simple table | **FAST** — low cost, fast response |
+| Multi-table analysis, 3–5 tables | **SMART** — better reasoning, still efficient |
+| Complex schema design, 50+ tables | **ADVANCED** — GPT-4o or Claude Sonnet |
+| Very large schema, deep refactoring | **POWERFUL** — Claude Opus, Kimi K2 |
+| You're iterating quickly on many messages | **FAST** — save ADVANCED credits for harder questions |
+
+Start with a FAST or SMART model. If the answer is wrong or incomplete, switch to ADVANCED for that specific question.
+
+See [Models and Credits](/resona-ai/models) for full tier details and credit costs.
+
+---
+
+## Streaming — Watching Resona Work
+
+Resona streams its output in real time. As it processes your message, you see:
+
+- **Tool calls**: the name of each tool and a one-line result summary
+- **Reasoning**: the model's chain of thought between tool calls (where available)
+- **Answer**: the final response streamed word by word
+
+This transparency helps you catch cases where Resona is heading in the wrong direction — you can interrupt mid-stream and redirect.
+
+---
+
+## When Resona Gets It Wrong
+
+AI is not perfect. If a response is incorrect or incomplete:
+
+1. **Tell it directly** — *"That index is wrong — it should be on user_id, not on email"*
+2. **Be more specific** — mention the exact column or table name
+3. **Switch models** — some questions are better suited to ADVANCED or POWERFUL tiers
+4. **Copy and edit** — in the Data Explorer, click **Copy to editor** to take the query and fix it yourself; in the SQL Editor, you can edit the generated SQL before applying
+
+---
+
+## Conversation History and Memory
+
+### Within a Conversation
+
+Resona keeps the full context of your conversation — you never need to re-explain what table you're working on or what you're trying to do.
+
+### Across Sessions (SQL Editor)
+
+The SQL Editor AI has **persistent memory** across sessions. It stores summaries of past conversations (tied to your project and user ID). When you return the next day, Resona remembers the schema work you were doing. This is a four-layer compression model — recent messages verbatim, older messages as summaries, long-term facts extracted from your full history.
+
+### Data Explorer
+
+The Data Explorer AI maintains conversation history within a session. Start a new conversation with the **New Conversation** button to clear context. Previous conversations are saved in your history panel for 30 days.
+
+---
+
+## Saving Useful Queries
+
+In the **Data Explorer**, save any AI-generated query to your query library:
+1. Click **Save** on any query in the chat
+2. Give it a name
+3. Access it from **Saved Queries** in the Explorer sidebar
+
+Saved queries run directly — they do not consume AI credits when re-run.
+
+In the **SQL Editor**, AI-applied SQL changes are saved to your project files automatically and tracked in [Version History](/sql-editor/version-history).
+
+---
+
+## Tips for Large Schemas
+
+- **Use @ mentions** — with 100+ tables, explicit references keep Resona focused
+- **Use Visibility filters** — in the SQL Editor, hide node types you're not working with to reduce context size
+- **Use ADVANCED or POWERFUL models** — larger schemas need models with larger context windows
+- **Scope your question** — instead of "analyze my schema," try "analyze the billing schema for missing indexes"
+- **Use subgraph focus** — click the Network icon on any table in the ER Diagram to scope to just that table and its neighborhood, then ask AI about it
+
+---
+
+## Limitations
+
+| Limitation | Detail |
+|---|---|
+| Row data access | SQL Editor AI never sees your row data — only schema. Data Explorer AI runs SELECT queries only. |
+| Write access | Data Explorer AI is read-only — it cannot INSERT, UPDATE, or DELETE rows. |
+| Cross-database | Both surfaces work with one database connection at a time |
+| Schema size | Very large schemas (1,000+ tables) may require scoping questions to a specific schema or table group |
+| Real-time streaming data | Data Explorer queries run at request time; no continuous streaming |
+
+---
+
+## Next Steps
+
+- [Models and Credits](/resona-ai/models) — tiers, credit costs, and plan limits
+- [Resona AI in the SQL Editor](/sql-editor/ai-assistant) — the full agentic schema assistant
+- [Resona AI in the Data Explorer](/data-explorer/ai-overview) — live data analysis and reporting

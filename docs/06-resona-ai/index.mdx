@@ -1,0 +1,133 @@
+---
+title: Resona AI
+description: Resona is Schema Weaver's AI assistant — available in both the SQL Editor and the Data Explorer with purpose-built architectures for schema design and live data analysis
+tags: [resona, ai, overview, sql-editor, data-explorer, models, credits, natural-language]
+order: 1
+sidebar_group: "Resona AI"
+related:
+  - title: AI Chat Guide
+    path: /resona-ai/ai-chat
+  - title: Models and Credits
+    path: /resona-ai/models
+  - title: Resona AI in the SQL Editor
+    path: /sql-editor/ai-assistant
+  - title: Resona AI in the Data Explorer
+    path: /data-explorer/ai-overview
+---
+
+# Resona AI
+
+Resona is Schema Weaver's AI assistant. It is embedded in two products — the **SQL Editor** and the **Data Explorer** — each with a purpose-built architecture for its context. Both surfaces use the same model selection, the same credit system, and the same account.
+
+---
+
+## Two Products, One AI
+
+### Resona in the SQL Editor
+
+The SQL Editor's Resona AI is an **agentic schema assistant**. It has access to your project files, your compiled schema graph, your ER diagram, and 55 purpose-built tools for writing DDL, analyzing schema quality, editing files surgically across multiple files, diffing and applying database migrations, auditing security and performance, and more.
+
+![Resona AI open in the SQL Editor showing the agentic chat interface with tool execution and schema context](/images/sql-editor/resona-ai.png)
+
+It behaves like an AI pair-programmer for your database schema — it can read your files, reason about your schema graph, make targeted multi-file edits, and apply migrations to a live database. All from a conversation.
+
+→ [Full documentation: Resona AI in the SQL Editor](/sql-editor/ai-assistant)
+
+---
+
+### Resona in the Data Explorer
+
+The Data Explorer's Resona AI is a **live data analysis assistant**. It connects to your running PostgreSQL database and answers questions about your actual data — generating and executing SQL queries, producing charts and visualizations, running statistical analysis, building reports, and exporting results.
+
+![Resona AI open in the Data Explorer showing the natural-language chat interface with query results and chart output](/images/data-explorer/resona-ai.png)
+
+It understands your schema but works with live rows — you ask business questions and get answers, not DDL.
+
+→ [Full documentation: Resona AI in the Data Explorer](/data-explorer/ai-overview)
+
+---
+
+## Comparing the Two
+
+| | SQL Editor AI | Data Explorer AI |
+|---|---|---|
+| **What it works with** | Schema definitions (DDL), project files | Live database rows, query results |
+| **Primary output** | SQL DDL, file edits, migration scripts | Query results, charts, reports, exports |
+| **Architecture** | Agentic loop with 55 schema tools | Agentic loop with data analysis tools |
+| **Database required** | Optional (needed only for migrations/drift) | Required (queries run against live data) |
+| **Applies changes** | Yes — writes to your SQL files, applies migrations | Read-only — only SELECT queries |
+| **Charts** | No | Yes — bar, line, scatter, pie, time-series |
+| **Exports** | SQL files, Prisma, Drizzle, DBML, TypeScript | CSV, Excel, PDF reports, PPTX decks |
+
+Use the **SQL Editor AI** when designing or evolving your schema. Use the **Data Explorer AI** when you need to query and analyze live data.
+
+---
+
+## How Resona Works
+
+Both surfaces use a **ReAct agentic loop** — Resona does not just generate a single response. It plans, calls tools, observes results, and iterates until it has a complete answer:
+
+```
+Your message
+     ↓
+Intent classification
+     ↓
+Context assembly (schema / live data / history)
+     ↓
+  ┌── THINK → CALL TOOLS → OBSERVE ──┐
+  └──────────── (iterate) ────────────┘
+     ↓
+Stream final answer + tool trace
+```
+
+You can watch this process in real time — every tool call is shown in the chat with its name and result, so you always know what Resona is doing.
+
+### Privacy
+
+Resona's architecture is schema-first, not data-first:
+
+| What is sent to the AI model | What stays on your infrastructure |
+|---|---|
+| Table names, column names, types | Actual row data |
+| Constraints, foreign keys, indexes | Credentials and secrets |
+| Your natural-language question | Query results |
+| Schema structure and relationships | Backups and snapshots |
+
+**Your row-level data never leaves your infrastructure.** The AI model receives only schema metadata and your question. Queries are executed locally against your database connection.
+
+---
+
+## Shared Credits
+
+Credits are shared across both surfaces — a conversation in the SQL Editor and a query in the Data Explorer both draw from the same monthly pool. This means you have full flexibility: use Resona wherever it's most useful without managing separate budgets.
+
+See [Models and Credits](/resona-ai/models) for plan details and credit costs.
+
+---
+
+## Getting Started
+
+### In the SQL Editor
+
+1. Open [sql.schemaweaver.vivekmind.com](https://sql.schemaweaver.vivekmind.com/)
+2. Open a project and click **Resona AI** in the left sidebar
+3. Ask anything about your schema: *"What indexes am I missing?"* or *"Create a users table with auth fields"*
+
+→ [SQL Editor AI full guide](/sql-editor/ai-assistant)
+
+### In the Data Explorer
+
+1. Open [data.schemaweaver.vivekmind.com](https://data.schemaweaver.vivekmind.com/)
+2. Select a database connection
+3. Click the **Resona AI** tab and start asking questions about your data
+
+→ [Data Explorer AI full guide](/data-explorer/ai-overview)
+
+---
+
+## Next Steps
+
+- [AI Chat Guide](/resona-ai/ai-chat) — tips for writing effective prompts and getting the best results from both surfaces
+- [Models and Credits](/resona-ai/models) — model tiers (FAST → POWERFUL), credit costs, and plan limits
+- [SQL Editor AI](/sql-editor/ai-assistant) — agentic schema assistant with 55 tools
+- [Data Explorer AI](/data-explorer/ai-overview) — live data analysis, charts, and reports

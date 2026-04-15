@@ -1,0 +1,175 @@
+---
+title: Schema Diff
+description: Compare two versions of a PostgreSQL schema side-by-side with the SQL Editor's built-in diff tool — highlight additions, removals, and modifications
+tags: [sql-editor, schema-diff, compare, diff, migration, changes]
+order: 5
+sidebar_group: "SQL Editor"
+related:
+  - title: Version History
+    path: /sql-editor/version-history
+  - title: Schema Compiler
+    path: /sql-editor/schema-compiler
+  - title: Database
+    path: /database
+---
+
+# Schema Diff
+
+The Schema Diff tool lets you compare two PostgreSQL schema states side-by-side. It highlights every added, removed, and modified object — tables, columns, indexes, constraints, and more — so you can review changes before applying a migration or audit what drifted in production.
+
+> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Version History](/sql-editor/version-history)
+
+---
+
+## Opening the Diff Panel
+
+Click **Diff** in the footer status bar to open the diff panel. You can also access it from the **Schema Diff** option in the top toolbar.
+
+---
+
+## Choosing What to Diff
+
+The diff panel has two selectors — **Left (Base)** and **Right (Head)** — which define what you are comparing.
+
+| Source | Description |
+|---|---|
+| **Current file** | The SQL currently in the editor for the selected file |
+| **Version snapshot** | A saved historical snapshot of a file (from version history) |
+| **Live database** | The current schema pulled from a connected PostgreSQL database |
+| **Clipboard** | Paste any SQL directly into the diff input |
+
+Common diff scenarios:
+
+| Scenario | Left | Right |
+|---|---|---|
+| Review uncommitted edits | Saved snapshot | Current file |
+| Preview a migration | Current project | Live database |
+| Audit production drift | Live database | Last deployed snapshot |
+| Review a teammate's PR | Main branch snapshot | PR branch snapshot |
+
+---
+
+## The Diff View
+
+Once both sides are selected, the diff renders in three ways depending on your preference:
+
+### Unified Diff (default)
+
+A single-column view with additions and removals interleaved:
+
+```diff
+  CREATE TABLE users (
+    id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    email       text NOT NULL UNIQUE,
++   username    text,
+-   full_name   text NOT NULL,
++   display_name text,
+    created_at  timestamptz NOT NULL DEFAULT now()
+  );
+
++ CREATE INDEX idx_users_username ON users (username);
+```
+
+| Color | Meaning |
+|---|---|
+| 🟢 Green line (prefix `+`) | Added — present in Right but not Left |
+| 🔴 Red line (prefix `-`) | Removed — present in Left but not Right |
+| ⚪ White line | Unchanged context |
+
+### Side-by-side Diff
+
+A two-column view with Left on the left and Right on the right. Changed lines are highlighted in their respective columns. Useful when reviewing large blocks of SQL where you want to read both versions simultaneously.
+
+### Semantic Diff
+
+Rather than raw line-by-line comparison, the semantic diff understands SQL structure and reports changes at the **object level**:
+
+```
+MODIFIED  TABLE users
+  ADD COLUMN    username text
+  DROP COLUMN   full_name
+  ADD COLUMN    display_name text
+
+ADDED  INDEX idx_users_username
+  ON users (username)
+```
+
+Semantic diff is noise-free — reformatting, reindentation, and comment changes are ignored. Only structural DDL changes appear.
+
+---
+
+## Diff Summary Bar
+
+At the top of the diff panel:
+
+```
+Changes:  + 3 added   ~ 2 modified   - 1 removed
+Objects:    tables: 0   columns: 4   indexes: 1   constraints: 0
+```
+
+| Counter | Description |
+|---|---|
+| **Added** | Objects present in Right but not Left |
+| **Modified** | Objects present in both but changed |
+| **Removed** | Objects present in Left but not Right |
+
+---
+
+## Navigating the Diff
+
+| Action | How |
+|---|---|
+| Jump to next change | Click `↓` in the diff toolbar or press `Alt+↓` |
+| Jump to previous change | Click `↑` or press `Alt+↑` |
+| Filter by change type | Use the **+** / **~** / **-** toggle buttons to show only adds, modifications, or removals |
+| Filter by object type | Use the **Tables / Columns / Indexes / Constraints** chips to focus |
+| Expand context | Click `…` between hunks to show more surrounding lines |
+
+---
+
+## Inline Diff Overlay
+
+When you have a database connection active, an **inline diff overlay** can be shown directly inside the SQL editor (not just in the diff panel). Changed lines are highlighted with a colored gutter marker:
+
+| Gutter color | Meaning |
+|---|---|
+| 🟢 Green bar | Line added vs the live database version |
+| 🔴 Red bar | Line present in the database but removed in your editor |
+| 🟡 Yellow bar | Line modified relative to the database version |
+
+This overlay makes it easy to see exactly what your current edits would change in production without switching away from the editor.
+
+Toggle the overlay with **Diff → Show inline diff** in the footer.
+
+---
+
+## Exporting a Diff
+
+Click **Export** in the diff panel header to download the diff:
+
+| Format | Use case |
+|---|---|
+| **Unified patch (.diff)** | Standard diff format — can be attached to a PR or stored in git |
+| **Migration SQL** | The additions and modifications expressed as executable DDL statements |
+| **Markdown report** | Human-readable summary with a change table — useful for PR descriptions |
+
+---
+
+## Diff and Migrations
+
+The diff between your current schema file and the live database is the foundation for Schema Weaver's migration engine. When you click **Apply Migration** from the connections panel, Schema Weaver:
+
+1. Runs a semantic diff between your project SQL and the live database schema
+2. Generates a safe migration plan (handling type casts, FK order, enum additions)
+3. Shows you the migration SQL for review before applying
+
+See [Database](/database) for details on connecting to a live database and running migrations.
+
+---
+
+## Next Steps
+
+- [Version History](/sql-editor/version-history) — browse past snapshots to use as diff sources
+- [Database](/database) — diff your SQL against a live database
+- [Schema Compiler](/sql-editor/schema-compiler) — analyze your schema for issues before diffing
+- [ER Diagram](/sql-editor/er-diagram) — visualize the structural changes alongside the diff

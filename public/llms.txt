@@ -4,17 +4,29 @@
 
 ## Pages
 
-- [Introduction](/introduction): Welcome to Schema Weaver documentation. Learn about the platform and its core capabilities.
-- [Configuration](/getting-started/configuration): Complete reference for schema-config.json options and environment variables
-- [Getting Started](/getting-started): Get Schema Weaver up and running in 5 minutes
-- [5-Minute Quickstart](/getting-started/quickstart): Get Schema Weaver running and apply your first migration in under 5 minutes
-- [Drift Detection](/core-concepts/drift-detection): Understand and manage schema drift in your databases
-- [Core Concepts](/core-concepts): Understand the fundamental concepts that power Schema Weaver
-- [Migrations](/core-concepts/migrations): Master the migration system for safe, version-controlled schema changes
-- [Versioning](/core-concepts/versioning): Manage schema versions and handle breaking changes
-- [Authentication](/api-reference/authentication): API key and session token authentication for Schema Weaver REST API
-- [API Reference](/api-reference): Complete API documentation for Schema Weaver
-- [REST API Reference](/api-reference/rest-api): Complete reference for all Schema Weaver REST API endpoints
+- [Introduction](/introduction): Welcome to Schema Weaver — a PostgreSQL schema management platform with a visual SQL Editor, ER diagram, migration engine, Data Explorer, and AI assistant
+- [Adding a Connection](/database/adding-a-connection): Add a PostgreSQL connection to Schema Weaver — fill in credentials, choose an SSL mode, test the connection, and understand how credentials are stored securely
+- [Connection Dashboard](/database/connection-dashboard): Manage your saved connections, link them to projects, monitor live activity, and use the connection panel in the SQL Editor sidebar
+- [Drift Detection](/database/drift-detection): Detect when your live PostgreSQL database has drifted from your project SQL — understand what causes drift, how Schema Weaver detects it, and how to resolve it
+- [History & Rollback](/database/history-rollback): View the full audit trail of schema migrations for each connection, and roll back applied migrations with automatically generated reverse SQL
+- [Database](/database): Connect Schema Weaver to your live PostgreSQL databases — manage connections, sync schemas, run migrations, detect drift, and explore your data across the SQL Editor and Data Explorer
+- [Migrations](/database/migrations): Apply schema changes to your live PostgreSQL database — understand the migration pipeline, use safe mode for complex type changes, and control destructive operations
+- [Pull, Diff & Push](/database/pull-diff-push): Sync your project SQL with your live PostgreSQL database — import the live schema with pull, compare differences with diff, and preview or apply changes with push
+- [Terminal & sw Commands](/database/terminal): Run database operations directly from the built-in sw terminal in the SQL Editor — complete reference for all sw commands
+- [AI Tools Reference](/sql-editor/ai-assistant-tools): Complete reference for all 55 tools available to Resona AI in the SQL Editor — schema analysis, file management, database migrations, graph analysis, audits, and more
+- [Workspace Editing](/sql-editor/ai-assistant-workspace): Resona AI makes targeted, surgical edits to your SQL project files — single-block patches, multi-change file edits, and cross-file refactoring with full preview and rollback
+- [Resona AI — SQL Editor](/sql-editor/ai-assistant): An agentic AI assistant built into the SQL Editor — generate DDL, analyze schemas, edit files across your project, run migrations, and reason through your entire schema with 50+ purpose-built tools
+- [Resona AI in the ER Diagram](/sql-editor/er-diagram-ai): Analyze tables, schema groups, and your entire schema with Resona AI directly from the ER Diagram — generate SQL, suggest indexes, check normalization, and apply changes instantly
+- [Grouping & Schema Clusters](/sql-editor/er-diagram-grouping): Cluster your ER diagram nodes by PostgreSQL schema namespace — resizable group containers, schema color coding, per-group stats, and lock mode
+- [Path Analysis](/sql-editor/er-diagram-path-analysis): Find the shortest foreign-key join path between any two tables in your schema — with BFS and Dijkstra algorithms, visual highlighting, and confidence filtering
+- [Visibility & Node Types](/sql-editor/er-diagram-visibility): Control exactly which PostgreSQL object types and which schema namespaces are shown in the ER Diagram — declutter large schemas and focus on what matters
+- [ER Diagram](/sql-editor/er-diagram): Visualize your entire PostgreSQL schema as a live, interactive entity-relationship diagram — all object types supported, updates in real time as you write SQL
+- [File Manager](/sql-editor/file-manager): Organize your PostgreSQL schemas into cloud projects, folders, and files using the SQL Editor's built-in file manager
+- [SQL Editor](/sql-editor): Write, organize, and analyze PostgreSQL schemas in the Schema Weaver SQL Editor — the primary workspace for schema development
+- [Schema Compiler](/sql-editor/schema-compiler): Understand the SQL Editor's 20-layer schema compiler — how it grades your PostgreSQL schema, surfaces issues, and helps you write production-ready DDL
+- [Schema Diff](/sql-editor/schema-diff): Compare two versions of a PostgreSQL schema side-by-side with the SQL Editor's built-in diff tool — highlight additions, removals, and modifications
+- [Version History](/sql-editor/version-history): Browse and restore every saved snapshot of your SQL files in the Schema Weaver SQL Editor — never lose a working schema state
+- [Writing SQL](/sql-editor/writing-sql): Use the SQL Editor's tabs, syntax highlighting, autosave, split view, and fullscreen mode to write PostgreSQL schema definitions efficiently
 - [How Resona AI Works](/data-explorer/agentic-workflows): Understand the agentic loop, tool execution pipeline, and the full set of analysis tools Resona uses to answer your data questions
 - [Charts & Analysis Results](/data-explorer/ai-artifacts): Understand the artifact types Resona AI generates — charts, stat blocks, and data tables — and how to interact with them
 - [AI Chat Interface](/data-explorer/ai-chat-interface): Use Resona AI inside the Data Explorer to query, analyze, and visualize your data using natural language
@@ -22,9 +34,8 @@
 - [Workspace & Projects](/data-explorer/ai-workspace): Manage generated reports, organize analysis into projects, and browse your full artifact history in the Data Explorer
 - [Exploring Your Data](/data-explorer/exploring-data): Browse tables, inspect columns, filter rows, and analyze column statistics in the Data Explorer grid
 - [Exporting Data](/data-explorer/exporting-data): Export individual tables or entire database schemas to CSV, JSON, NDJSON, Excel, and SQL formats
-- [Data Explorer](/data-explorer): Query your databases interactively with the Schema Weaver Data Explorer
-- [AI Chat](/resona-ai/ai-chat): Use Resona AI Chat to query your database with natural language
-- [Resona AI](/resona-ai): Meet Resona, the AI-powered data assistant built into Schema Weaver
-- [Models and Credits](/resona-ai/models): Available AI models in Resona, credit costs, and plan limits
-- [Schema Visualization](/schema-visualization): Explore and understand your database structure with interactive ER diagrams
-- [Migrations](/migrations): Deep dive into Schema Weaver's Atlas-powered migration engine — CI/CD, rollbacks, and advanced patterns
+- [Data Explorer](/data-explorer): Query your PostgreSQL databases interactively with the Schema Weaver Data Explorer
+- [AI Chat Guide](/resona-ai/ai-chat): How to write effective prompts, use @mentions, iterate on results, and get the best answers from Resona AI in both the SQL Editor and Data Explorer
+- [Resona AI](/resona-ai): Resona is Schema Weaver's AI assistant — available in both the SQL Editor and the Data Explorer with purpose-built architectures for schema design and live data analysis
+- [Models and Credits](/resona-ai/models): All AI models available in Resona — four tiers (FAST, SMART, ADVANCED, POWERFUL), credit costs per model, plan limits, and how to choose the right model
+- [Team Collaboration](/team-collaboration): Create teams, invite members, connect projects, and share database access — all managed from Settings → Collaboration in Schema Weaver

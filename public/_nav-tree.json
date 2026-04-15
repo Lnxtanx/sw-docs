@@ -1,51 +1,111 @@
 [
   {
     "title": "Introduction",
-    "href": "/introduction"
-  },
-  {
-    "title": "Getting Started",
-    "href": "/getting-started",
+    "href": "/introduction",
     "children": [
       {
-        "title": "5-Minute Quickstart",
-        "href": "/getting-started/quickstart"
-      },
-      {
-        "title": "Configuration",
-        "href": "/getting-started/configuration"
+        "title": "Overview",
+        "href": "/introduction"
       }
     ]
   },
   {
-    "title": "Core Concepts",
-    "href": "/core-concepts",
+    "title": "Database",
+    "href": "/database",
     "children": [
       {
+        "title": "Overview",
+        "href": "/database"
+      },
+      {
+        "title": "Adding a Connection",
+        "href": "/database/adding-a-connection"
+      },
+      {
+        "title": "Connection Dashboard",
+        "href": "/database/connection-dashboard"
+      },
+      {
+        "title": "Pull, Diff & Push",
+        "href": "/database/pull-diff-push"
+      },
+      {
         "title": "Migrations",
-        "href": "/core-concepts/migrations"
+        "href": "/database/migrations"
       },
       {
         "title": "Drift Detection",
-        "href": "/core-concepts/drift-detection"
+        "href": "/database/drift-detection"
       },
       {
-        "title": "Versioning",
-        "href": "/core-concepts/versioning"
+        "title": "History & Rollback",
+        "href": "/database/history-rollback"
+      },
+      {
+        "title": "Terminal & sw Commands",
+        "href": "/database/terminal"
       }
     ]
   },
   {
-    "title": "API Reference",
-    "href": "/api-reference",
+    "title": "SQL Editor",
+    "href": "/sql-editor",
     "children": [
       {
-        "title": "REST API Reference",
-        "href": "/api-reference/rest-api"
+        "title": "Overview",
+        "href": "/sql-editor"
       },
       {
-        "title": "Authentication",
-        "href": "/api-reference/authentication"
+        "title": "File Manager",
+        "href": "/sql-editor/file-manager"
+      },
+      {
+        "title": "Writing SQL",
+        "href": "/sql-editor/writing-sql"
+      },
+      {
+        "title": "Schema Compiler",
+        "href": "/sql-editor/schema-compiler"
+      },
+      {
+        "title": "ER Diagram",
+        "href": "/sql-editor/er-diagram"
+      },
+      {
+        "title": "Path Analysis",
+        "href": "/sql-editor/er-diagram-path-analysis"
+      },
+      {
+        "title": "Grouping & Schema Clusters",
+        "href": "/sql-editor/er-diagram-grouping"
+      },
+      {
+        "title": "Resona AI in the ER Diagram",
+        "href": "/sql-editor/er-diagram-ai"
+      },
+      {
+        "title": "Visibility & Node Types",
+        "href": "/sql-editor/er-diagram-visibility"
+      },
+      {
+        "title": "Schema Diff",
+        "href": "/sql-editor/schema-diff"
+      },
+      {
+        "title": "Version History",
+        "href": "/sql-editor/version-history"
+      },
+      {
+        "title": "Resona AI — SQL Editor",
+        "href": "/sql-editor/ai-assistant"
+      },
+      {
+        "title": "AI Tools Reference",
+        "href": "/sql-editor/ai-assistant-tools"
+      },
+      {
+        "title": "Workspace Editing",
+        "href": "/sql-editor/ai-assistant-workspace"
       }
     ]
   },
@@ -53,6 +113,10 @@
     "title": "Data Explorer",
     "href": "/data-explorer",
     "children": [
+      {
+        "title": "Overview",
+        "href": "/data-explorer"
+      },
       {
         "title": "Exploring Your Data",
         "href": "/data-explorer/exploring-data"
@@ -88,7 +152,11 @@
     "href": "/resona-ai",
     "children": [
       {
-        "title": "AI Chat",
+        "title": "Overview",
+        "href": "/resona-ai"
+      },
+      {
+        "title": "AI Chat Guide",
         "href": "/resona-ai/ai-chat"
       },
       {
@@ -98,11 +166,13 @@
     ]
   },
   {
-    "title": "Schema Visualization",
-    "href": "/schema-visualization"
-  },
-  {
-    "title": "Migrations",
-    "href": "/migrations"
+    "title": "Team Collaboration",
+    "href": "/team-collaboration",
+    "children": [
+      {
+        "title": "Overview",
+        "href": "/team-collaboration"
+      }
+    ]
   }
 ]

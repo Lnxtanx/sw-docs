@@ -1,0 +1,127 @@
+---
+title: Drift Detection
+description: Detect when your live PostgreSQL database has drifted from your project SQL — understand what causes drift, how Schema Weaver detects it, and how to resolve it
+tags: [database, drift, detection, schema, sync, migration]
+order: 5
+sidebar_group: "Database"
+related:
+  - title: Pull, Diff & Push
+    path: /database/pull-diff-push
+  - title: Migrations
+    path: /database/migrations
+  - title: History & Rollback
+    path: /database/history-rollback
+---
+
+# Drift Detection
+
+Drift happens when someone (or something) changes your live database's schema outside of Schema Weaver. Your project SQL says one thing, but the actual database looks different. Schema Weaver detects this automatically and prevents you from overwriting those changes unknowingly.
+
+> Quick links: [Pull, Diff & Push](/database/pull-diff-push) · [Migrations](/database/migrations)
+
+---
+
+## What Causes Drift
+
+Drift can be introduced by:
+
+- A developer running `ALTER TABLE` or `CREATE INDEX` directly on the database
+- An ORM or framework auto-migrating the database on startup (e.g. Django `makemigrations`, Prisma `db push`)
+- A database restore that overwrote part of the schema with an older state
+- A PostgreSQL extension upgrade that modified catalog entries
+- Emergency hotfixes applied manually during an incident
+
+Drift is not a sign that something went wrong — it is a normal part of working with shared databases. Schema Weaver's job is to make sure you know about it before you accidentally overwrite it.
+
+---
+
+## How Drift Detection Works
+
+Every time you run `sw pull` or `sw push --apply`, Schema Weaver saves a **snapshot** of the live schema. The snapshot includes a **fingerprint** — a hash derived from the database's structural identity (including PostgreSQL's internal `pg_control_system` metadata and the database OID).
+
+When you later run `sw push --apply`, Schema Weaver checks the current live schema fingerprint against the stored snapshot **before executing any DDL**. If the fingerprints do not match, it means the live schema has changed since your last operation.
+
+```
+⚠ Drift detected since last snapshot. Run `sw pull` to sync before pushing.
+```
+
+The migration is aborted. The database is not touched.
+
+---
+
+## Checking for Drift Manually
+
+You can check for drift at any time without starting a migration:
+
+```
+cloop sw > sw drift
+Checking for external schema changes...
+  ⚠ Drift detected (2 changes):
+    + Column: users.temp_migration_flag (added directly)
+    ~ Index: idx_orders_status (modified outside Schema Weaver)
+```
+
+`sw drift` tells you:
+- How many changes were detected
+- Which objects were added, modified, or removed
+- Whether those changes are in conflict with your project SQL
+
+If no drift is detected:
+
+```
+cloop sw > sw drift
+✓ No drift detected. Live schema matches last snapshot.
+```
+
+---
+
+## Drift vs Your Project SQL
+
+There are two distinct comparisons you can make:
+
+| Comparison | Command | What it tells you |
+|---|---|---|
+| Live DB vs last snapshot | `sw drift` | Changes made to the database since your last pull or push |
+| Live DB vs project SQL | `sw diff` | Difference between what you've written and what's deployed |
+
+Use `sw drift` to detect external changes. Use `sw diff` to plan your next migration.
+
+---
+
+## Resolving Drift
+
+When drift is detected before a push, the recommended resolution depends on what you want to keep:
+
+### Keep the external changes (they are intentional)
+
+```
+sw pull
+```
+
+Pull imports the current live schema — including the externally made changes — into your project SQL. Your SQL file is now up to date with the live state. From here, make any additional changes you want and push normally.
+
+### Discard the external changes (they should not have been made)
+
+Use `sw diff` to see exactly what the external changes are. If you push your project SQL with `sw push --apply`, the diff engine will generate the statements needed to undo those changes and restore your intended state.
+
+> Before discarding external changes, make sure you understand what they were and whether any data depends on them. Dropping a column that was added externally will drop the data in that column.
+
+### When you are unsure
+
+Use `sw drift` to list the changes, then `sw diff` to see how your project SQL compares to the current live state. You can also view the live schema directly by running `sw pull` to a temporary copy and reviewing it before deciding.
+
+---
+
+## Automatic Drift Check During Push
+
+You do not need to run `sw drift` manually before every push. The drift check runs **automatically as part of `sw push --apply`** (Step 5 of the migration pipeline). If drift is detected at that point, the migration is aborted before any statements execute.
+
+This means the database is always protected against accidental overwrites, even if you forget to check for drift manually.
+
+---
+
+## Next Steps
+
+- [Pull, Diff & Push](/database/pull-diff-push) — resolving drift with pull, and planning your next migration with diff
+- [Migrations](/database/migrations) — the full migration pipeline including drift check timing
+- [History & Rollback](/database/history-rollback) — if a migration applied changes you want to reverse

@@ -1,0 +1,227 @@
+---
+title: File Manager
+description: Organize your PostgreSQL schemas into cloud projects, folders, and files using the SQL Editor's built-in file manager
+tags: [sql-editor, file-manager, projects, folders, files, cloud, workspace]
+order: 1
+sidebar_group: "SQL Editor"
+related:
+  - title: SQL Editor Overview
+    path: /sql-editor
+  - title: Writing SQL
+    path: /sql-editor/writing-sql
+  - title: Collaboration
+    path: /team-collaboration
+---
+
+# File Manager
+
+The SQL Editor's file manager lets you organize your PostgreSQL schema definitions into projects, folders, and files. It works like a lightweight version of VS Code's Explorer sidebar — with drag-and-drop reordering, instant file search, and full cloud sync for team projects.
+
+> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Collaboration](/team-collaboration)
+
+![The SQL Editor in fullscreen mode showing the active file open for editing alongside the ER diagram](/images/sql-editor/full-screen-sql-editing.png)
+
+---
+
+## Dashboard — Your Project Workspace
+
+When you first open the SQL Editor, you land on the **Dashboard**. This is the home screen for all your projects.
+
+> The Dashboard and the full file manager are both available in **fullscreen mode** — click the expand icon in the editor header to fill your entire browser window with the workspace.
+
+![The SQL Editor Dashboard showing the project list with CLOUD and LOCAL badges and the project detail panel on the right](/images/sql-editor/workspace.png)
+
+### Project List
+
+Every project appears as a card showing its name, storage type, and team status. Click a project to see its details on the right panel. The currently **opened** project is marked with a green `OPENED` badge.
+
+| Badge | Meaning |
+|---|---|
+| `CLOUD` | Project stored in Schema Weaver's backend — synced across devices |
+| `LOCAL` | Project stored in your browser only — single device, no sharing |
+| `TEAM` | Project belongs to a team workspace |
+| `OPENED` | This project is the active project in the editor |
+
+### Project Detail Panel
+
+Selecting a project on the left reveals its details:
+
+| Field | Description |
+|---|---|
+| **FILES** | Total number of SQL files in the project |
+| **FOLDERS** | Number of folders (excluding the root) |
+| **MEMBERS** | Number of team members with access |
+| **DATABASE** | Name of the linked PostgreSQL connection, if any |
+| **STRUCTURE** | Auto-generated tree preview of folders and files |
+
+Click **Open in Editor →** to load the project into the editor and begin working.
+
+---
+
+## Creating a Project
+
+Click **New** in the dashboard header to open the project creation dialog.
+
+| Field | Required | Description |
+|---|---|---|
+| **Name** | Yes | Display name for the project (e.g. `payments-service`) |
+| **Description** | No | Short summary shown in the dashboard |
+| **Team** | No | Assign to a team workspace for shared access |
+| **Database** | No | Link a PostgreSQL connection at creation time |
+
+After creating the project you land directly in the editor with an empty project ready for files.
+
+---
+
+## Explorer Sidebar
+
+Once a project is open, the **left sidebar** switches from the dashboard to the Explorer view. This is your file tree for the active project. The sidebar is fully visible in **fullscreen mode**, giving you the complete project file tree alongside the editor and diagram without any distractions.
+
+![The Explorer sidebar in fullscreen mode showing the project name, filter box, open editors list, and the full project file tree](/images/sql-editor/full-screen-file-tree.png)
+
+### Sections
+
+| Section | Description |
+|---|---|
+| **Back arrow** | Returns to the dashboard, closing the active project |
+| **Filter files** | Search box — type to instantly filter file and folder names |
+| **OPEN EDITORS** | Files currently open in tabs, in order of last access |
+| **PROJECT FILES** | Full file tree of the active project |
+
+### File Tree Actions
+
+Hover over any file or folder to reveal context actions:
+
+| Action | How to trigger |
+|---|---|
+| **New file** | Click `+` in the PROJECT FILES header, or right-click a folder |
+| **New folder** | Click the folder-plus icon in the PROJECT FILES header |
+| **Rename** | Right-click a file/folder → Rename, or press `F2` after selecting |
+| **Delete** | Right-click → Delete (shows a confirmation dialog) |
+| **Move** | Drag a file or folder to a new parent location |
+| **Collapse all** | Click the collapse icon in the section header |
+
+---
+
+## Creating Files and Folders
+
+### New File Dialog
+
+When you create a new file you'll be prompted for:
+
+| Field | Description |
+|---|---|
+| **Name** | The file name (e.g. `users`) — the `.sql` extension is added automatically |
+| **Extension** | File type: `sql` (default), `pgsql`, or `txt` |
+| **Location** | The folder this file belongs to (defaults to the project root) |
+
+The file opens immediately in a tab after creation and is auto-named inline so you can start typing right away.
+
+### New Folder Dialog
+
+Folder names follow the same pattern — enter a name, pick the parent location, and the folder appears expanded in the tree.
+
+#### Folder Templates
+
+For common patterns, use **New Folder from Template** to create a pre-structured folder hierarchy in one step:
+
+| Template | Creates |
+|---|---|
+| **Migration project** | `migrations/`, `seeds/`, `schema/` |
+| **Service schema** | `tables/`, `views/`, `functions/`, `triggers/` |
+| **Custom** | Enter your own subfolder names |
+
+---
+
+## Fullscreen Split View
+
+In fullscreen mode you can open a **split panel** to view two panes side by side — for example, your SQL file on the left and the live ER diagram on the right. This is the recommended way to work on large or complex schemas.
+
+Click the **split icon** in the editor toolbar to activate split view:
+
+![The split view option in the SQL Editor toolbar showing how to open a second panel alongside the editor](/images/sql-editor/full-screen-split-option.png)
+
+Once open, the split panel shows the ER diagram updating in real time as you type — every table and relationship renders instantly without leaving the editor:
+
+![The SQL Editor in fullscreen split view with the SQL file on the left and the live ER diagram on the right](/images/sql-editor/full-screen-split-view-with-graph.png)
+
+---
+
+## Drag and Drop
+
+Files and folders can be dragged to reorganize the project:
+
+- **Drag a file** into any folder to move it there
+- **Drag a file** to the root area (below all folders) to move it to the top level
+- **Drag a folder** to nest it inside another folder
+- The tree updates immediately with an optimistic move; the server is updated in the background
+
+---
+
+## File Search
+
+The **Filter files** search box at the top of the Explorer filters the tree as you type. Matching files and their parent folders remain visible; non-matching items are hidden.
+
+- Searches file and folder names (case-insensitive)
+- Matching parent folders expand automatically to show matched children
+- Press `Escape` to clear the search and restore the full tree
+
+---
+
+## Cloud vs Local Projects
+
+### Cloud Projects
+
+Cloud projects are stored in Schema Weaver's backend (Supabase) and have these properties:
+
+- Synced across all your devices
+- Shareable with team members
+- Support version history and snapshots
+- Show a `CLOUD` badge in the dashboard
+- Require a Schema Weaver account
+
+### Local Projects
+
+Local projects live entirely in your browser's storage:
+
+- No account required
+- Not synced between devices
+- Limited to 10 files (guest/local limit)
+- Show a `LOCAL` badge in the dashboard
+- Can be migrated to a cloud project at any time
+
+#### Migrating Local to Cloud
+
+When you sign in with an existing local project, Schema Weaver offers to migrate it:
+
+1. Click **Migrate to Cloud** when prompted
+2. Review the files that will be uploaded
+3. Confirm — files are uploaded and a new cloud project is created
+4. The local copy is cleaned up automatically
+
+---
+
+## Recent Files
+
+The dashboard shows your **8 most recently accessed files** across all projects. Click any recent file to jump directly to it, reopening the parent project if needed.
+
+---
+
+## Bulk Operations
+
+Select multiple files by enabling **Selection Mode** (checkbox icon in the PROJECT FILES header):
+
+| Operation | Description |
+|---|---|
+| **Bulk delete** | Delete all selected files at once (confirmation required) |
+| **Bulk move** | Drag all selected files to a new folder simultaneously |
+| Click + `Shift` | Select a range of consecutive files |
+
+---
+
+## Next Steps
+
+- [Writing SQL](/sql-editor/writing-sql) — editor tabs, syntax highlighting, autosave, split view
+- [Collaboration](/team-collaboration) — invite team members, manage roles, share projects
+- [Database](/database) — link a project to a live PostgreSQL database
+- [Version History](/sql-editor/version-history) — browse and restore past snapshots of any file

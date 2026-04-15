@@ -1,21 +1,263 @@
 /**
- * Dynamic Document Page
- * Loads content from ContentLoader based on URL slug.
- * Threads page context (title, content, slug) up to DocsLayout for the AI panel.
- * Renders page action bar (Copy + Share) and compiled MDX HTML.
+ * Dynamic document page.
+ * Loads MDX content based on the current slug, pushes page context to the layout,
+ * and updates page-level SEO tags once content has resolved.
  */
 
-import { useEffect, useState, useCallback, useRef } from 'react';
-import { useParams, useOutletContext } from 'react-router-dom';
-import { Copy, Check, Share2 } from 'lucide-react';
-import { useDocContent } from '../hooks/useDocContent.js';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Link, useOutletContext, useParams } from 'react-router-dom';
+import { Check, ChevronLeft, ChevronRight, Copy, Share2 } from 'lucide-react';
 import { ImageLightbox } from '../components/docs/ImageLightbox.js';
-import type { Heading } from '../lib/mdx/types.js';
 import type { PageContext } from '../components/layout/DocsLayout.js';
+import { useDocContent } from '../hooks/useDocContent.js';
+import type { Heading, NavTreeItem } from '../lib/mdx/types.js';
+
+const DOCS_BASE_URL = 'https://docs.schemaweaver.vivekmind.com';
+const APP_BASE_URL = 'https://schemaweaver.vivekmind.com';
+const DEFAULT_TITLE = 'Schema Weaver Docs';
+const DEFAULT_DESCRIPTION = 'Official Schema Weaver documentation for product guides, Data Explorer workflows, SQL Editor usage, APIs, and schema management.';
+const DEFAULT_OG_IMAGE = `${DOCS_BASE_URL}/og-image.svg`;
+const DEFAULT_ROBOTS = 'index,follow,max-image-preview:large';
+const NOT_FOUND_ROBOTS = 'noindex,follow';
+
+interface NavLink {
+  title: string;
+  href: string;
+}
 
 interface OutletContext {
   setHeadings: (headings: Heading[]) => void;
   setPageContext: (ctx: PageContext | null) => void;
+}
+
+function flattenNavTree(items: NavTreeItem[]): NavLink[] {
+  const result: NavLink[] = [];
+  for (const item of items) {
+    result.push({ title: item.title, href: item.href });
+    if (item.children) {
+      result.push(...flattenNavTree(item.children));
+    }
+  }
+  return result;
+}
+
+function upsertJsonLd(id: string, data: object) {
+  let tag = document.querySelector<HTMLScriptElement>(`script[data-ld="${id}"]`);
+  if (!tag) {
+    tag = document.createElement('script');
+    tag.type = 'application/ld+json';
+    tag.setAttribute('data-ld', id);
+    document.head.appendChild(tag);
+  }
+  tag.textContent = JSON.stringify(data);
+}
+
+function removeJsonLd(id: string) {
+  document.querySelector(`script[data-ld="${id}"]`)?.remove();
+}
+
+function setMetaByName(name: string, content: string) {
+  let tag = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
+  if (!tag) {
+    tag = document.createElement('meta');
+    tag.name = name;
+    document.head.appendChild(tag);
+  }
+  tag.content = content;
+}
+
+function removeMetaByName(name: string) {
+  document.querySelector(`meta[name="${name}"]`)?.remove();
+}
+
+function setMetaByProperty(property: string, content: string) {
+  let tag = document.querySelector<HTMLMetaElement>(`meta[property="${property}"]`);
+  if (!tag) {
+    tag = document.createElement('meta');
+    tag.setAttribute('property', property);
+    document.head.appendChild(tag);
+  }
+  tag.content = content;
+}
+
+function setCanonical(href: string) {
+  let tag = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+  if (!tag) {
+    tag = document.createElement('link');
+    tag.rel = 'canonical';
+    document.head.appendChild(tag);
+  }
+  tag.href = href;
+}
+
+function humanizeSegment(segment: string) {
+  return segment
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+function buildBreadcrumbSchema(pathname: string, pageTitle?: string) {
+  const parts = pathname.replace(/^\//, '').split('/').filter(Boolean);
+  const items = [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Docs',
+      item: DOCS_BASE_URL,
+    },
+    ...parts.map((part, index) => ({
+      '@type': 'ListItem',
+      position: index + 2,
+      name: humanizeSegment(part),
+      item: `${DOCS_BASE_URL}/${parts.slice(0, index + 1).join('/')}`,
+    })),
+  ];
+
+  if (pageTitle && items.length > 1) {
+    items[items.length - 1].name = pageTitle;
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items,
+  };
+}
+
+function applyDefaultHead() {
+  document.title = DEFAULT_TITLE;
+  setMetaByName('author', 'Schema Weaver');
+  setMetaByName('description', DEFAULT_DESCRIPTION);
+  setMetaByName('robots', DEFAULT_ROBOTS);
+  removeMetaByName('keywords');
+  setCanonical(`${DOCS_BASE_URL}/`);
+
+  setMetaByProperty('og:type', 'website');
+  setMetaByProperty('og:site_name', DEFAULT_TITLE);
+  setMetaByProperty('og:title', DEFAULT_TITLE);
+  setMetaByProperty('og:description', DEFAULT_DESCRIPTION);
+  setMetaByProperty('og:url', `${DOCS_BASE_URL}/`);
+  setMetaByProperty('og:image', DEFAULT_OG_IMAGE);
+  setMetaByProperty('og:image:alt', 'Schema Weaver Docs social preview');
+  setMetaByProperty('og:image:width', '1200');
+  setMetaByProperty('og:image:height', '630');
+
+  setMetaByName('twitter:card', 'summary_large_image');
+  setMetaByName('twitter:title', DEFAULT_TITLE);
+  setMetaByName('twitter:description', DEFAULT_DESCRIPTION);
+  setMetaByName('twitter:image', DEFAULT_OG_IMAGE);
+  setMetaByName('twitter:image:alt', 'Schema Weaver Docs social preview');
+
+  removeJsonLd('tech-article-ld');
+  removeJsonLd('breadcrumb-ld');
+}
+
+function applyNotFoundHead(pathname: string) {
+  const canonical = `${DOCS_BASE_URL}${pathname}`;
+  const title = `Page Not Found | ${DEFAULT_TITLE}`;
+  const description = 'The requested documentation page could not be found.';
+
+  document.title = title;
+  setMetaByName('author', 'Schema Weaver');
+  setMetaByName('description', description);
+  setMetaByName('robots', NOT_FOUND_ROBOTS);
+  removeMetaByName('keywords');
+  setCanonical(canonical);
+
+  setMetaByProperty('og:type', 'website');
+  setMetaByProperty('og:site_name', DEFAULT_TITLE);
+  setMetaByProperty('og:title', title);
+  setMetaByProperty('og:description', description);
+  setMetaByProperty('og:url', canonical);
+  setMetaByProperty('og:image', DEFAULT_OG_IMAGE);
+  setMetaByProperty('og:image:alt', 'Schema Weaver Docs social preview');
+  setMetaByProperty('og:image:width', '1200');
+  setMetaByProperty('og:image:height', '630');
+
+  setMetaByName('twitter:card', 'summary_large_image');
+  setMetaByName('twitter:title', title);
+  setMetaByName('twitter:description', description);
+  setMetaByName('twitter:image', DEFAULT_OG_IMAGE);
+  setMetaByName('twitter:image:alt', 'Schema Weaver Docs social preview');
+
+  removeJsonLd('tech-article-ld');
+  removeJsonLd('breadcrumb-ld');
+}
+
+function applyContentHead(
+  title: string,
+  description: string,
+  pathname: string,
+  tags: string[] | undefined,
+  section: string | undefined,
+) {
+  const fullTitle = `${title} | ${DEFAULT_TITLE}`;
+  const canonical = `${DOCS_BASE_URL}${pathname}`;
+
+  document.title = fullTitle;
+  setMetaByName('author', 'Schema Weaver');
+  setMetaByName('description', description);
+  setMetaByName('robots', DEFAULT_ROBOTS);
+  if (tags?.length) {
+    setMetaByName('keywords', tags.join(', '));
+  } else {
+    removeMetaByName('keywords');
+  }
+  setCanonical(canonical);
+
+  setMetaByProperty('og:type', 'article');
+  setMetaByProperty('og:site_name', DEFAULT_TITLE);
+  setMetaByProperty('og:title', fullTitle);
+  setMetaByProperty('og:description', description);
+  setMetaByProperty('og:url', canonical);
+  setMetaByProperty('og:image', DEFAULT_OG_IMAGE);
+  setMetaByProperty('og:image:alt', 'Schema Weaver Docs social preview');
+  setMetaByProperty('og:image:width', '1200');
+  setMetaByProperty('og:image:height', '630');
+
+  setMetaByName('twitter:card', 'summary_large_image');
+  setMetaByName('twitter:title', fullTitle);
+  setMetaByName('twitter:description', description);
+  setMetaByName('twitter:image', DEFAULT_OG_IMAGE);
+  setMetaByName('twitter:image:alt', 'Schema Weaver Docs social preview');
+
+  upsertJsonLd('tech-article-ld', {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: title,
+    description,
+    url: canonical,
+    mainEntityOfPage: canonical,
+    author: {
+      '@type': 'Organization',
+      name: 'Schema Weaver',
+      url: APP_BASE_URL,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Schema Weaver',
+      url: APP_BASE_URL,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${DOCS_BASE_URL}/favicon.ico`,
+      },
+    },
+    inLanguage: 'en',
+    articleSection: section,
+    keywords: tags?.join(', '),
+    isPartOf: {
+      '@type': 'WebSite',
+      name: DEFAULT_TITLE,
+      url: DOCS_BASE_URL,
+    },
+  });
+
+  upsertJsonLd('breadcrumb-ld', buildBreadcrumbSchema(pathname, title));
+}
+
+function isExternalLink(href: string) {
+  return /^https?:\/\//.test(href);
 }
 
 export function DocPage() {
@@ -26,136 +268,117 @@ export function DocPage() {
 
   const [copied, setCopied] = useState(false);
   const [shared, setShared] = useState(false);
-
-  // ── Lightbox state ────────────────────────────────────────────────────────
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
+  const [prevPage, setPrevPage] = useState<NavLink | null>(null);
+  const [nextPage, setNextPage] = useState<NavLink | null>(null);
   const mdxRef = useRef<HTMLDivElement>(null);
 
-  // ── Push headings to layout (TOC) ─────────────────────────────────────────
+  useEffect(() => {
+    fetch('/_nav-tree.json')
+      .then((response) => (response.ok ? response.json() : []))
+      .then((tree: NavTreeItem[]) => {
+        const flat = flattenNavTree(tree);
+        const currentHref = `/${slug}`;
+        const currentIndex = flat.findIndex((page) => page.href === currentHref);
+        setPrevPage(currentIndex > 0 ? flat[currentIndex - 1] : null);
+        setNextPage(currentIndex >= 0 && currentIndex < flat.length - 1 ? flat[currentIndex + 1] : null);
+      })
+      .catch(() => {});
+  }, [slug]);
+
   useEffect(() => {
     if (content?.headings) {
       setHeadings(content.headings);
-    } else {
-      setHeadings([]);
+      return;
     }
+    setHeadings([]);
   }, [content?.headings, setHeadings]);
 
-  // ── Push page context to layout (AI panel) ────────────────────────────────
   useEffect(() => {
     if (content) {
       setPageContext({
-        title:   content.frontmatter?.title || slug,
+        title: content.frontmatter?.title || slug,
         content: content.content || '',
         slug,
       });
     }
-    // On unmount, clear context (handles navigating away from a doc page)
-    return () => { setPageContext(null); };
-  }, [content, slug, setPageContext]);
 
-  // ── Dynamic SEO meta tags ─────────────────────────────────────────────────
-  useEffect(() => {
-    if (!content) return;
-
-    const pageTitle = content.frontmatter?.title;
-    const pageDesc  = content.frontmatter?.description;
-    const canonical = `https://docs.schemaweaver.com${window.location.pathname}`;
-
-    // <title>
-    document.title = pageTitle
-      ? `${pageTitle} — Schema Weaver Docs`
-      : 'Schema Weaver Docs';
-
-    // <meta name="description">
-    let descTag = document.querySelector<HTMLMetaElement>('meta[name="description"]');
-    if (!descTag) {
-      descTag = document.createElement('meta');
-      descTag.name = 'description';
-      document.head.appendChild(descTag);
-    }
-    if (pageDesc) descTag.content = pageDesc;
-
-    // <link rel="canonical">
-    let canonTag = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-    if (!canonTag) {
-      canonTag = document.createElement('link');
-      canonTag.rel = 'canonical';
-      document.head.appendChild(canonTag);
-    }
-    canonTag.href = canonical;
-
-    // Open Graph
-    const setMeta = (prop: string, val: string) => {
-      let tag = document.querySelector<HTMLMetaElement>(`meta[property="${prop}"]`);
-      if (!tag) {
-        tag = document.createElement('meta');
-        tag.setAttribute('property', prop);
-        document.head.appendChild(tag);
-      }
-      tag.content = val;
-    };
-    if (pageTitle) setMeta('og:title', `${pageTitle} — Schema Weaver Docs`);
-    if (pageDesc)  setMeta('og:description', pageDesc);
-    setMeta('og:url', canonical);
-
-    // Restore defaults on unmount
     return () => {
-      document.title = 'Schema Weaver Docs';
+      setPageContext(null);
     };
-  }, [content]);
+  }, [content, setPageContext, slug]);
 
-  // ── Attach lightbox click handlers to MDX images ─────────────────────────
   useEffect(() => {
-    const container = mdxRef.current;
-    if (!container) return;
+    if (loading) {
+      return;
+    }
 
-    const imgs = container.querySelectorAll<HTMLImageElement>('img');
-    const handlers: Array<() => void> = [];
+    const pathname = window.location.pathname;
 
-    imgs.forEach(img => {
-      const handler = () => setLightbox({ src: img.src, alt: img.alt || '' });
-      img.addEventListener('click', handler);
-      img.style.cursor = 'zoom-in';
-      handlers.push(() => img.removeEventListener('click', handler));
-    });
+    if (error || !content) {
+      applyNotFoundHead(pathname);
+      return () => {
+        applyDefaultHead();
+      };
+    }
 
-    return () => handlers.forEach(off => off());
-  }, [content]); // re-run whenever content changes (page navigation)
+    const pageTitle = content.frontmatter?.title || 'Documentation';
+    const pageDescription = content.frontmatter?.description?.trim() || DEFAULT_DESCRIPTION;
+    const pageSection = slug.split('/')[0] ? humanizeSegment(slug.split('/')[0]) : undefined;
 
-  // ── Copy page as plain text ───────────────────────────────────────────────
+    applyContentHead(
+      pageTitle,
+      pageDescription,
+      pathname,
+      content.frontmatter?.tags,
+      pageSection,
+    );
+
+    return () => {
+      applyDefaultHead();
+    };
+  }, [content, error, loading, slug]);
+
+
   const handleCopy = useCallback(async () => {
-    const plain = (content?.content ?? '')
+    const plainText = (content?.content ?? '')
       .replace(/<[^>]+>/g, ' ')
       .replace(/\s+/g, ' ')
       .trim();
+
     try {
-      await navigator.clipboard.writeText(plain);
+      await navigator.clipboard.writeText(plainText);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch { /* clipboard permission denied */ }
+    } catch {
+      // Ignore clipboard permission failures.
+    }
   }, [content]);
 
-  // ── Share / copy URL ──────────────────────────────────────────────────────
   const handleShare = useCallback(async () => {
     const url = window.location.href;
+
     if (typeof navigator.share === 'function') {
       try {
         await navigator.share({
-          title: content?.frontmatter?.title || 'Schema Weaver Docs',
+          title: content?.frontmatter?.title || DEFAULT_TITLE,
           url,
         });
         return;
-      } catch { /* user cancelled or unsupported */ }
+      } catch {
+        // Fall back to copying the URL when share is cancelled or unavailable.
+      }
     }
-    // Fallback: copy link to clipboard
+
     try {
       await navigator.clipboard.writeText(url);
       setShared(true);
       setTimeout(() => setShared(false), 2000);
-    } catch { /* silent */ }
+    } catch {
+      // Ignore clipboard permission failures.
+    }
   }, [content]);
 
-  // ── Loading ───────────────────────────────────────────────────────────────
   if (loading) {
     return (
       <div className="page-content">
@@ -166,28 +389,25 @@ export function DocPage() {
     );
   }
 
-  // ── 404 ───────────────────────────────────────────────────────────────────
   if (error || !content) {
     return (
       <div className="page-content">
-        <h1>404 — Page Not Found</h1>
-        <p>The page you're looking for doesn't exist.</p>
+        <h1>404 - Page Not Found</h1>
+        <p>The page you are looking for does not exist.</p>
         {slug && (
           <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
             Slug: <code>{slug}</code>
           </p>
         )}
-        <a href="/" style={{ color: 'var(--accent-color)' }}>
-          ← Back to home
-        </a>
+        <Link to="/introduction" style={{ color: 'var(--accent-color)' }}>
+          {'<- Back to docs home'}
+        </Link>
       </div>
     );
   }
 
-  // ── Page ──────────────────────────────────────────────────────────────────
   return (
     <div className="page-content">
-      {/* Page action bar */}
       <div className="page-action-bar">
         <button
           className="page-action-btn"
@@ -207,14 +427,19 @@ export function DocPage() {
         </button>
       </div>
 
-      {/* Rendered MDX content */}
       <div
         ref={mdxRef}
         className="mdx-content"
         dangerouslySetInnerHTML={{ __html: content.content }}
+        onClick={(e) => {
+          const target = e.target as HTMLElement;
+          if (target.tagName === 'IMG') {
+            const img = target as HTMLImageElement;
+            setLightbox({ src: img.src, alt: img.alt || '' });
+          }
+        }}
       />
 
-      {/* Image lightbox */}
       {lightbox && (
         <ImageLightbox
           src={lightbox.src}
@@ -223,20 +448,48 @@ export function DocPage() {
         />
       )}
 
-      {/* Related links */}
       {content.frontmatter.related && content.frontmatter.related.length > 0 && (
         <div className="related-section">
           <h3>Related</h3>
           <ul className="related-list">
-            {content.frontmatter.related.map(link => (
+            {content.frontmatter.related.map((link) => (
               <li key={link.path}>
-                <a href={link.path} className="related-link">
-                  {link.title}
-                </a>
+                {isExternalLink(link.path) ? (
+                  <a href={link.path} className="related-link" rel="noopener noreferrer" target="_blank">
+                    {link.title}
+                  </a>
+                ) : (
+                  <Link to={link.path} className="related-link">
+                    {link.title}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
         </div>
+      )}
+
+      {(prevPage || nextPage) && (
+        <nav className="doc-pagination" aria-label="Page navigation">
+          <div className="doc-pagination-inner">
+            {prevPage ? (
+              <Link to={prevPage.href} className="doc-pagination-btn doc-pagination-prev">
+                <ChevronLeft size={16} />
+                <span className="doc-pagination-label">Previous</span>
+                <span className="doc-pagination-title">{prevPage.title}</span>
+              </Link>
+            ) : (
+              <div />
+            )}
+            {nextPage && (
+              <Link to={nextPage.href} className="doc-pagination-btn doc-pagination-next">
+                <span className="doc-pagination-label">Next</span>
+                <span className="doc-pagination-title">{nextPage.title}</span>
+                <ChevronRight size={16} />
+              </Link>
+            )}
+          </div>
+        </nav>
       )}
     </div>
   );

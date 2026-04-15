@@ -1,0 +1,231 @@
+---
+title: Writing SQL
+description: Use the SQL Editor's tabs, syntax highlighting, autosave, split view, and fullscreen mode to write PostgreSQL schema definitions efficiently
+tags: [sql-editor, writing, syntax-highlighting, tabs, autosave, editor]
+order: 2
+sidebar_group: "SQL Editor"
+related:
+  - title: SQL Editor Overview
+    path: /sql-editor
+  - title: File Manager
+    path: /sql-editor/file-manager
+  - title: Schema Compiler
+    path: /sql-editor/schema-compiler
+---
+
+# Writing SQL
+
+The SQL Editor gives you a PostgreSQL-aware code editor with multi-file tabs, syntax highlighting, autosave, and a fullscreen mode. This page covers everything about the editing experience itself.
+
+> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Schema Compiler](/sql-editor/schema-compiler)
+
+![The Schema Weaver SQL Editor showing the file tabs, PostgreSQL syntax highlighting, Explorer sidebar, and status bar](/images/sql-editor/sql-editor.png)
+
+---
+
+## The Editor
+
+The center panel is a fully featured code editor optimized for PostgreSQL schema definitions. It handles large files gracefully and keeps the interface responsive even with hundreds of tables.
+
+The **left sidebar** is your file manager — project name, folder tree, open editors list, and file search all live here. Use it to navigate between files, create new ones, and organize your schema across folders.
+
+![The SQL Editor left sidebar showing the project name, Explorer file tree, open editors section, and filter search box](/images/sql-editor/sql-editor-leftside-bar.png)
+
+### Syntax Highlighting
+
+The editor colors your SQL to make it immediately readable:
+
+| Color | Element |
+|---|---|
+| **Keyword** | `CREATE`, `TABLE`, `PRIMARY KEY`, `REFERENCES`, `NOT NULL`, etc. |
+| **Type** | `text`, `uuid`, `timestamptz`, `integer`, `jsonb`, `boolean`, etc. |
+| **String** | String literals and quoted identifiers |
+| **Comment** | `-- single line` and `/* block */` comments |
+| **Number** | Numeric literals and constants |
+| **Operator** | `=`, `::`, `->`, `->>`, `@>`, etc. |
+
+### Auto-Indentation
+
+The editor automatically indents new lines inside `CREATE TABLE`, `BEGIN ... END`, and function bodies. Pressing `Enter` after an opening `(` indents the next line by one level.
+
+### Line Numbers
+
+Line numbers are displayed in the left gutter. Clicking a line number selects the entire line.
+
+---
+
+## Tabs — Working with Multiple Files
+
+Each file you open gets its own **tab** in the header bar at the top of the editor.
+
+```
+│  auth.sql  ×  │  billing.sql  ×  │  schema.sql  ●  │  +  │
+```
+
+| Element | Meaning |
+|---|---|
+| **File name** | The name of the open file |
+| **×** | Close this tab |
+| **●** (dot) | This tab has unsaved changes |
+| **Italic name** | Preview tab — not yet pinned (single-click opens in preview, double-click pins) |
+| **+** | Open a new file or create a file |
+
+### Tab Behavior
+
+| Action | Result |
+|---|---|
+| Single-click a file in the Explorer | Opens in a preview tab (italic) — replaces any existing preview |
+| Double-click a file in the Explorer | Opens in a permanent tab |
+| Double-click a preview tab | Pins the tab permanently |
+| Close all tabs | Returns to the welcome/dashboard view |
+| Middle-click a tab | Closes the tab |
+
+### Tab Context Menu
+
+Right-click any tab to access:
+
+| Option | Description |
+|---|---|
+| **Close** | Close this tab |
+| **Close Others** | Close all tabs except the current one |
+| **Close All** | Close every open tab |
+| **Reveal in Explorer** | Scrolls and highlights the file in the left sidebar tree |
+
+---
+
+## Autosave
+
+The editor autosaves your changes automatically. The footer status bar shows:
+
+| Status | Meaning |
+|---|---|
+| `Autosave ✓` | Autosave is on — changes are saved a few seconds after you stop typing |
+| `Saving...` | A save is in progress |
+| `Saved` + timestamp | The last successful save time |
+| `Unsaved changes` | Autosave is off and there are pending changes |
+
+### Toggle Autosave
+
+Click the autosave indicator in the footer to toggle it on or off. When autosave is off, use `Ctrl+S` / `Cmd+S` to save manually.
+
+> **Tip:** Autosave uses optimistic conflict detection. If the server copy was updated by a team member since your last load, a conflict toast appears and lets you choose to overwrite or reload.
+
+---
+
+## Fullscreen Mode
+
+Click the **fullscreen icon** (↗) in the top-right of the editor header to expand the editor to fill the entire browser window.
+
+In fullscreen mode:
+
+- The **left Explorer sidebar** appears, giving you the full file tree
+- The **bottom status bar** remains accessible
+- The ER diagram, compiler, and diff panels open as overlays
+- Press `Escape` or click the collapse icon to exit fullscreen
+
+> **Tip:** Fullscreen mode is the recommended way to work on large schemas. The sidebar and status bar give you everything you need without context-switching to other pages.
+
+---
+
+## Split View
+
+Click the **split view icon** in the header to open a second panel alongside the editor. The right panel shows the **live ER diagram** — every table and relationship updates instantly as you type SQL, giving you a real-time visual of your schema without switching views.
+
+![The SQL Editor right panel showing the ER diagram updating in real time as SQL is written in the left editor panel](/images/sql-editor/sql-edtior-rightside-bar.png)
+
+Split view is also used for:
+
+- Comparing two files side by side
+- Keeping the Resona AI chat panel open while you edit
+- Viewing the diff panel while reviewing changes
+
+Drag the divider between panels to adjust the relative widths.
+
+---
+
+## Keyboard Shortcuts
+
+| Shortcut | Action |
+|---|---|
+| `Ctrl+S` / `Cmd+S` | Save current file |
+| `Ctrl+Z` / `Cmd+Z` | Undo |
+| `Ctrl+Shift+Z` / `Cmd+Shift+Z` | Redo |
+| `Ctrl+/` / `Cmd+/` | Toggle line comment (`--`) |
+| `Ctrl+D` / `Cmd+D` | Select next occurrence of current word |
+| `Ctrl+F` / `Cmd+F` | Find in current file |
+| `Ctrl+H` / `Cmd+H` | Find and replace |
+| `Alt+↑` / `Alt+↓` | Move current line up or down |
+| `Ctrl+Shift+K` / `Cmd+Shift+K` | Delete current line |
+| `Ctrl+Enter` | Insert line below without breaking the current line |
+| `Tab` | Indent selected lines |
+| `Shift+Tab` | Unindent selected lines |
+
+---
+
+## The Merge Model
+
+The SQL Editor maintains a **merged view** of all files in the active project. This merged SQL is what feeds the parser, schema compiler, and ER diagram.
+
+```
+auth.sql     + billing.sql   + schema.sql
+     ↓               ↓               ↓
+           Merged SQL (in memory)
+                    ↓
+     SQL Parser → Schema Compiler → ER Diagram
+```
+
+This means:
+
+- You can split your schema across as many files as you like — the analysis always sees the full picture
+- A `REFERENCES` in `billing.sql` pointing to a table defined in `auth.sql` will resolve correctly
+- The order files are merged follows the folder structure (folders first, then files, alphabetically within each group)
+- Circular or missing references are caught and reported in the Compiler
+
+---
+
+## Format Button
+
+The **Format** button in the footer toolbar reformats the SQL in the current file:
+
+- Normalizes indentation and spacing
+- Uppercases SQL keywords
+- Wraps long lines at 100 characters
+- Preserves comments
+
+Formatting is non-destructive — it only affects whitespace and casing, never the schema logic.
+
+---
+
+## Generate Button
+
+The **Generate** button opens the **Resona AI SQL generation** dialog. See [Resona AI](/sql-editor/ai-assistant) for full details.
+
+---
+
+## Downloading Files
+
+Right-click any file in the Explorer → **Download** to save it as a `.sql` file to your local machine. The download contains the raw SQL content of that file only (not the merged project SQL).
+
+To export the full merged schema, use the **Copy** button in the footer toolbar — this copies the entire merged SQL to your clipboard.
+
+---
+
+## File Extensions
+
+The editor supports three file extensions:
+
+| Extension | Use |
+|---|---|
+| `.sql` | Standard SQL — the default for all schema files |
+| `.pgsql` | PostgreSQL-specific — same parsing and highlighting as `.sql` |
+| `.txt` | Plain text — useful for notes, changelogs, or documentation inside a project |
+
+---
+
+## Next Steps
+
+- [Schema Compiler](/sql-editor/schema-compiler) — analyze your SQL for issues, grades, and best practices
+- [ER Diagram](/sql-editor/er-diagram) — visualize tables and relationships from your SQL
+- [Schema Diff](/sql-editor/schema-diff) — compare two versions of your schema side-by-side
+- [Version History](/sql-editor/version-history) — browse and restore past snapshots of any file
+- [Resona AI](/sql-editor/ai-assistant) — generate SQL from natural language descriptions

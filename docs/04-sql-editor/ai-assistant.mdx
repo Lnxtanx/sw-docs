@@ -1,0 +1,296 @@
+---
+title: Resona AI — SQL Editor
+description: An agentic AI assistant built into the SQL Editor — generate DDL, analyze schemas, edit files across your project, run migrations, and reason through your entire schema with 50+ purpose-built tools
+tags: [sql-editor, ai, resona, agentic, schema, sql-generation, tools, streaming]
+order: 7
+sidebar_group: "SQL Editor"
+related:
+  - title: AI Tools Reference
+    path: /sql-editor/ai-assistant-tools
+  - title: Workspace Editing
+    path: /sql-editor/ai-assistant-workspace
+  - title: Resona AI in the ER Diagram
+    path: /sql-editor/er-diagram-ai
+  - title: Schema Compiler
+    path: /sql-editor/schema-compiler
+---
+
+# Resona AI — SQL Editor
+
+Resona AI is an agentic AI assistant built directly into the SQL Editor. It is not a simple chat interface that generates a code block for you to copy — it is a full agentic system with 55 purpose-built tools that can read your files, reason about your schema graph, run the compiler, analyze security and performance, write surgical multi-file edits, diff your live database, and apply migrations — all from a single conversation.
+
+> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [Tools Reference](/sql-editor/ai-assistant-tools) · [Workspace Editing](/sql-editor/ai-assistant-workspace)
+
+![Resona AI panel open in the SQL Editor showing the agentic chat interface with tool execution and streaming response](/images/sql-editor/resona-ai.png)
+
+---
+
+## Opening Resona AI
+
+Resona AI is available in two places:
+
+### Left Sidebar Panel
+
+Click **Resona AI** in the left sidebar of the SQL Editor to open the full-height chat panel. This is the primary AI interface — it stays open as you navigate files and shows the full conversation history.
+
+![Resona AI open in the SQL Editor left sidebar panel showing the chat input and conversation history](/images/sql-editor/resona-ai-leftside-bar.png)
+
+### ER Diagram Nodes
+
+Resona AI is also embedded directly in the ER Diagram as floating chat nodes anchored to individual tables, schema groups, or the full canvas. See [Resona AI in the ER Diagram](/sql-editor/er-diagram-ai) for details.
+
+---
+
+## How It Works — Agentic Loop
+
+Unlike a simple prompt → response system, Resona AI uses a **ReAct (Reasoning + Acting) agentic loop**:
+
+```
+Your message
+     ↓
+Intent classification
+(write SQL / debug / analyze / file action / migrate / …)
+     ↓
+Context assembly
+(schema graph + compiler result + @ mentions + history)
+     ↓
+  ┌─────────────────────────────────────────────────┐
+  │  THINK: Stream LLM response                     │
+  │      ↓                                          │
+  │  DETECT tool calls in response                  │
+  │      ↓                                          │
+  │  EXECUTE tools (up to 10 in parallel)           │
+  │      ↓                                          │
+  │  OBSERVE results → feed back to LLM             │
+  │      ↓                                          │
+  │  LOOP (up to 10 iterations)                     │
+  └─────────────────────────────────────────────────┘
+     ↓
+Validate final SQL (if generated)
+     ↓
+Stream final answer + usage stats
+```
+
+You see this loop play out in real time: as Resona works, each tool call is shown with its name and a one-line result summary. You can follow along as it reads files, runs the compiler, checks indexes, and builds its answer — step by step.
+
+---
+
+## Intent Classification
+
+Before executing any tools, Resona classifies your message into one of ten intent categories:
+
+| Intent | What triggers it | Tools made available |
+|---|---|---|
+| **write_query** | "Create a table…", "Add a column…" | Schema tools, file tools, compiler |
+| **debug_query** | "Why is this FK failing?", "Fix this syntax" | Compiler, dependency tools, debug tools |
+| **optimize_query** | "Improve performance", "Missing indexes?" | Performance audit, graph tools, compiler |
+| **explain_query** | "What does this trigger do?", "Explain…" | Schema tools, compiler, graph tools |
+| **refactor_query** | "Rename this column across files", "Clean up…" | Workspace tools, batch edit, compiler |
+| **schema_question** | "How are users and orders connected?" | Graph tools, dependency tools |
+| **plan_query** | "How should I model a…", "What's the best approach…" | Compiler, graph tools, analysis tools |
+| **workspace_action** | "Create a file", "Show me the file tree" | Workspace file tools |
+| **database_action** | "Pull live schema", "Apply migration", "Diff" | Migration tools, terminal |
+| **conversational** | General questions, small talk | Minimal toolset |
+
+Each intent activates a curated subset of tools — Resona doesn't get all 55 tools for every message, only the ones relevant to what you asked. This keeps responses focused and fast.
+
+---
+
+## Context Awareness
+
+Resona automatically receives rich context before every response:
+
+| Context | What it includes |
+|---|---|
+| **Full schema graph** | Every table, view, function, relationship — from the ER Diagram's compiled output |
+| **Compiler result** | The 20-layer compilation: grades, every issue with severity and suggested fix |
+| **Project file tree** | All files and folders in the active project |
+| **Conversation history** | Compressed and summarized history across sessions |
+| **@ mentions** | Specific tables, files, or folders you reference explicitly |
+| **Active file** | The currently open file and cursor context |
+
+You do not need to paste your schema into the prompt. Resona already knows it.
+
+### @ Mentions
+
+Type `@` to reference a specific table, file, or folder by name. An autocomplete dropdown filters your project's objects as you type:
+
+```
+What indexes are missing on @orders?
+Add a foreign key on @order_items.product_id referencing @products.id
+Read @migrations/001_init.sql and explain the changes
+```
+
+---
+
+## What Resona Can Do
+
+### Schema Generation
+
+| Task | Example prompt |
+|---|---|
+| Create a table | "Create a users table with email, hashed password, and created/updated timestamps" |
+| Add columns | "Add soft delete support to @orders with deleted_at and deleted_by" |
+| Create an enum | "Create an enum for payment methods: card, bank_transfer, crypto, invoice" |
+| Generate RLS | "Write RLS policies so users can only see their own rows in @documents" |
+| Create functions | "Write a trigger function that updates updated_at on every row change" |
+| Write migrations | "Write a migration to rename full_name to display_name across @users and @profiles" |
+| Multi-table design | "Design a RBAC system with roles, permissions, and a junction table" |
+
+### Schema Analysis
+
+| Task | Example prompt |
+|---|---|
+| Security audit | "Run a security audit on my schema — show RLS coverage and privilege risks" |
+| Performance audit | "Find missing indexes and table bloat estimates" |
+| Normalization check | "Is my schema in 3NF? Flag any denormalization" |
+| Naming audit | "Check naming consistency across all tables and columns" |
+| Dependency analysis | "What breaks if I drop the @products.category_id column?" |
+| Cascade impact | "Show the cascade chain from @orders — what gets deleted when an order is deleted?" |
+| Centrality analysis | "Which tables are the most critical hubs in the schema?" |
+
+### Database Operations
+
+| Task | Example prompt |
+|---|---|
+| Pull live schema | "Pull the current schema from the connected database" |
+| Diff | "Show me the diff between my project SQL and the live database" |
+| Preview migration | "Preview what SQL would be applied if I push now" |
+| Apply migration | "Apply the pending changes to the database" |
+| Rollback | "Roll back the last migration" |
+| Migration history | "Show me the last 10 migrations" |
+
+> **Safety gates:** `Apply migration` and `Rollback` require your explicit confirmation before executing. Resona will always describe what it is about to do and ask "confirm?" before touching your live database.
+
+### File Operations
+
+| Task | Example prompt |
+|---|---|
+| Read a file | "Read @auth.sql and summarize what's in it" |
+| Create a file | "Create a new file called triggers.sql with the audit trigger we just discussed" |
+| Edit a file (surgical) | "Add the missing index to @orders.sql — just the index, nothing else" |
+| Multi-file edit | "Rename user_id to owner_id in @orders.sql, @order_items.sql, and @views.sql" |
+| Revert a file | "Revert @billing.sql to the version from two saves ago" |
+| Search across files | "Find all tables that reference the users table across all files" |
+
+---
+
+## Streaming — Watch It Think
+
+Resona streams its reasoning in real time. As it works through your request, you see:
+
+- **Tool calls**: the name of each tool being executed and a one-line result summary
+- **Thinking**: the LLM's reasoning between tool calls
+- **Final answer**: the response streamed word by word
+
+This transparency means you always know what Resona is doing — you can see it read a file, run the compiler, check a dependency, and then form its answer. If it takes an unexpected path, you can interrupt and redirect.
+
+---
+
+## Memory — Remembers Across Sessions
+
+Resona maintains a persistent memory of your schema conversations. This is a **four-layer compression model**:
+
+| Layer | What it stores | When it's used |
+|---|---|---|
+| **Recent messages** | Last 20 messages verbatim | Always in context |
+| **Schema changes** | DDL operations and migrations applied | Recent history |
+| **Conversation summaries** | LLM-generated summaries of older message clusters | Older sessions |
+| **Global facts** | Key facts extracted from the full conversation history | Long-term memory |
+
+When your conversation history grows long, Resona automatically compresses older messages into summaries — so it never loses the thread of what you've been working on, even across sessions or days. The next time you open the SQL Editor, Resona remembers what you were building.
+
+---
+
+## Applying AI-Generated SQL
+
+When Resona generates SQL, you have three options:
+
+| Button | Action |
+|---|---|
+| **Apply to file** | Inserts (or replaces) the generated SQL into the currently active file |
+| **Apply to new file** | Creates a new file in the project and writes the SQL there |
+| **Copy** | Copies the SQL to clipboard |
+
+### Preview Before Applying
+
+Before any change is written to a file, a **diff overlay** shows exactly what will be added or removed — green lines are additions, red are removals. Click **Accept** to apply or **Reject** to discard.
+
+Resona can also make **surgical edits** that target only the specific section of a file that needs changing, rather than replacing the whole file. See [Workspace Editing](/sql-editor/ai-assistant-workspace) for how this works.
+
+---
+
+## Iterative Refinement
+
+Resona maintains full conversation context across turns. You can refine your schema iteratively:
+
+```
+You:   Create a products table with name, price, and stock_qty
+
+AI:    [generates CREATE TABLE products ...]
+
+You:   Add a category_id FK referencing @categories
+
+AI:    [adds column + FK constraint, updates the table]
+
+You:   Now add a partial index for products where stock_qty = 0
+
+AI:    [adds CREATE INDEX ... WHERE stock_qty = 0]
+
+You:   Run the compiler and tell me what issues are left
+
+AI:    [calls sql_compile_schema tool, reports 2 warnings]
+
+You:   Fix both warnings
+
+AI:    [patches the file to resolve both issues]
+```
+
+Each step builds on the last. Resona keeps the full schema state and conversation in context throughout.
+
+---
+
+## Model Selection
+
+Click the model selector in the AI panel header:
+
+| Model | Best for |
+|---|---|
+| **Claude Sonnet** | Default — fast, accurate schema generation, most tasks |
+| **Claude Opus** | Complex multi-table design, deep analysis, very large schemas |
+
+---
+
+## Usage and Credits
+
+Each AI response consumes credits from your Schema Weaver plan. The footer of the AI panel shows current session usage.
+
+| Plan | Daily AI credits |
+|---|---|
+| Free | 50 |
+| Pro | 500 |
+| Team | 2,000 per seat |
+
+Credits reset at midnight UTC.
+
+---
+
+## Keyboard Shortcuts
+
+| Shortcut | Action |
+|---|---|
+| `Ctrl+K` / `Cmd+K` | Open AI panel (with selected SQL as context if text is highlighted) |
+| `Enter` | Send message |
+| `Shift+Enter` | New line in the input |
+| `↑` | Navigate to previous message in input history |
+| `Escape` | Close the AI panel |
+
+---
+
+## Next Steps
+
+- [AI Tools Reference](/sql-editor/ai-assistant-tools) — complete catalog of all 55 AI tools with parameters and capabilities
+- [Workspace Editing](/sql-editor/ai-assistant-workspace) — surgical file edits, multi-file diffs, atomic batch operations
+- [Resona AI in the ER Diagram](/sql-editor/er-diagram-ai) — AI anchored to specific table nodes and schema groups
+- [Schema Compiler](/sql-editor/schema-compiler) — the 20-layer analysis engine Resona uses to assess your schema
+- [Database](/database) — connect a live database so Resona can pull, diff, and migrate

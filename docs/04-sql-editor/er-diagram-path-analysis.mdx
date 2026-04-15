@@ -1,0 +1,138 @@
+---
+title: Path Analysis
+description: Find the shortest foreign-key join path between any two tables in your schema — with BFS and Dijkstra algorithms, visual highlighting, and confidence filtering
+tags: [sql-editor, er-diagram, path-analysis, relationships, joins, postgresql, bfs, dijkstra]
+order: 4.1
+sidebar_group: "SQL Editor"
+related:
+  - title: ER Diagram Overview
+    path: /sql-editor/er-diagram
+  - title: Grouping & Schema Clusters
+    path: /sql-editor/er-diagram-grouping
+  - title: Visibility & Node Types
+    path: /sql-editor/er-diagram-visibility
+---
+
+# Path Analysis
+
+Path Analysis finds the **shortest foreign-key relationship chain** between any two tables in your schema. Instead of manually tracing JOIN paths through a dense diagram, you select a start table and an end table — the diagram highlights every intermediate table and edge you would need to traverse to connect them.
+
+> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [ER Diagram Overview](/sql-editor/er-diagram)
+
+![Path Analysis active in the ER Diagram showing the highlighted shortest path between two selected tables](/images/sql-editor/path-analysis.png)
+
+---
+
+## When to Use Path Analysis
+
+- **Writing multi-table JOINs** — when you know the start and end tables but need to figure out which intermediate tables to join through
+- **Understanding a legacy schema** — quickly visualize how two distant parts of a schema are connected
+- **Reviewing migrations** — check whether a new table is connected to the rest of the graph as expected
+- **Onboarding** — help new team members understand how the data model hangs together
+
+---
+
+## Activating Path Analysis
+
+1. Click the **Path** button in the diagram toolbar (footprints icon)
+   - The toolbar button turns highlighted to indicate path mode is active
+   - A draggable **Path Analysis overlay** appears on the canvas
+2. Click any table node to set it as the **start table**
+3. Click a second table node to set it as the **end table**
+4. The path is calculated and highlighted immediately
+
+![The Path Analysis overlay showing the algorithm selector, start and end table fields, and filter options](/images/sql-editor/path-analysis-algorithm-selecting.png)
+
+---
+
+## Reading the Result
+
+When a path is found, the diagram:
+
+- **Highlights** every node in the path with a distinct color
+- **Highlights** every edge in the path
+- **Dims** all nodes and edges that are not part of the path
+- Shows the full **step-by-step path** in the overlay panel
+
+Each step in the overlay shows:
+
+| Field | Description |
+|---|---|
+| **Source** | The table at the start of this hop |
+| **Target** | The table at the end of this hop |
+| **Relationship** | The foreign key or relationship connecting them |
+| **Direction** | Whether the FK points from source → target or target → source |
+
+![The ER Diagram with the path highlighted — tables and edges along the shortest path are emphasized, everything else is dimmed](/images/sql-editor/path-analysis-selecting-path.png)
+
+---
+
+## Path Algorithms
+
+The overlay lets you choose between two algorithms:
+
+### BFS — Breadth-First Search
+
+**Best for most cases.** BFS finds the path with the **fewest hops** — it treats all FK relationships as equal regardless of confidence, and returns the shortest chain by number of intermediate tables.
+
+Use BFS when:
+- You want the simplest possible JOIN path
+- All relationships in your schema are explicit FKs (not inferred)
+- You need a fast result on a large schema
+
+### Dijkstra — Weighted Shortest Path
+
+**Best for inferred or mixed-confidence schemas.** Dijkstra treats each relationship edge as having a **weight based on confidence**. Higher-confidence relationships (explicit FKs) are preferred over lower-confidence inferred relationships.
+
+Use Dijkstra when:
+- Your schema contains inferred relationships (e.g. matching column names without explicit FKs)
+- You want the most reliable path, not just the shortest by hop count
+- You're working with a schema that was imported or reverse-engineered
+
+---
+
+## Filter Options
+
+Click the settings gear icon in the Path Analysis overlay to open filter controls:
+
+| Filter | Description |
+|---|---|
+| **Exclude inferred relationships** | Skips edges of type VIEW_DEPENDENCY, TRIGGER_TARGET, and INFERRED — only uses explicit FK edges |
+| **Exclude low-confidence edges** | Skips any relationship with confidence below 0.8 |
+
+These filters affect both the path calculation and the diagram highlighting. Using both filters together gives you a path built entirely from explicit, high-confidence FK relationships.
+
+---
+
+## Path Cost
+
+When using the Dijkstra algorithm, the overlay shows a **path cost** — the cumulative weight of all edges in the path. Lower cost means higher overall confidence. This is useful for comparing alternative paths between the same two tables.
+
+---
+
+## No Path Found
+
+If no FK chain connects the two selected tables, the overlay shows "No path found." This can mean:
+
+- The tables are in completely separate parts of the schema (no FK chain at all)
+- The path exists only through inferred/low-confidence relationships, and those are currently filtered out — try disabling the filters
+- One or both tables are views or non-table objects that don't participate in FK relationships
+
+---
+
+## Resetting Path Analysis
+
+| Action | How |
+|---|---|
+| **Clear selection** | Click **Reset** in the overlay, or click the same table again |
+| **Exit path mode** | Click the **Path** button in the toolbar again — the overlay closes and the diagram returns to normal |
+| **Change start or end** | Click a different table while in path mode — the selection updates automatically |
+
+---
+
+## Next Steps
+
+- [ER Diagram Overview](/sql-editor/er-diagram) — full feature overview including navigation, layout, and export
+- [Grouping & Schema Clusters](/sql-editor/er-diagram-grouping) — cluster your schema by PostgreSQL namespace
+- [Resona AI in the ER Diagram](/sql-editor/er-diagram-ai) — ask AI to explain the join path or generate the JOIN SQL
+- [Visibility & Node Types](/sql-editor/er-diagram-visibility) — hide irrelevant object types before running path analysis on a large schema

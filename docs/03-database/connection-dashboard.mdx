@@ -1,0 +1,111 @@
+---
+title: Connection Dashboard
+description: Manage your saved connections, link them to projects, monitor live activity, and use the connection panel in the SQL Editor sidebar
+tags: [database, connection, dashboard, project, linking, activity]
+order: 2
+sidebar_group: "Database"
+related:
+  - title: Adding a Connection
+    path: /database/adding-a-connection
+  - title: Pull, Diff & Push
+    path: /database/pull-diff-push
+  - title: Terminal & sw Commands
+    path: /database/terminal
+---
+
+# Connection Dashboard
+
+Once you've added one or more connections, Schema Weaver gives you several views for managing and using them — a connections list, a sidebar panel while you're working in the SQL Editor, and a full connection dashboard for each connection.
+
+> Quick links: [Adding a Connection](/database/adding-a-connection) · [Pull, Diff & Push](/database/pull-diff-push)
+
+---
+
+## Connections List
+
+After adding connections they appear in the connection panel. Open the panel from the SQL Editor by clicking **Connect** in the footer status bar.
+
+![The connections list showing multiple connections with their ping times, linked files, and Link/Dashboard action buttons](/images/sql-editor/after-connection.png)
+
+Each row in the list shows:
+
+| Element | Description |
+|---|---|
+| **Connection name** | The label you gave when creating the connection |
+| **Green dot** | Connection is healthy — last test passed |
+| **Gray dot** | Connection is offline or has not been tested recently |
+| **Ping time** | Latency from the last successful health check (e.g. `241ms`) |
+| **Database name** | The PostgreSQL database this connection points to |
+| **Linked file** | The SQL file currently associated with this connection |
+| **LINKED badge** | This connection is currently linked to the open project |
+| **Link button** | Link this connection to the current project |
+| **Dashboard button** | Open the full connection dashboard |
+
+---
+
+## Connection Sidebar Panel
+
+When a connection is linked to your current project, a panel appears in the left sidebar of the SQL Editor showing the live connection state.
+
+![The connection panel in the SQL Editor left sidebar showing connection name, ping, database info, linked project, and Pull/Push/Diff/Health action buttons](/images/sql-editor/connection-panle-leftsidebar.png)
+
+The sidebar panel shows:
+
+- **Connection name and live ping** — latency is measured and displayed in real time
+- **Database name and PostgreSQL version** — read directly from the server
+- **SSL mode** in use
+- **Linked project** — which project this connection is attached to, with an Unlink button
+- **Pull / Push / Diff / Health** — the four primary migration actions (see [Pull, Diff & Push](/database/pull-diff-push))
+- **Recent Events** — a timestamped log of recent operations: pulls, pushes, diffs, links, and connects
+
+---
+
+## Full Connection Dashboard
+
+Click **Dashboard** on any connection in the list to open its full-width view.
+
+![The connection dashboard showing Project Connection, Linked Files, Migration History, and a Live Activity panel](/images/sql-editor/connection-dashbaord.png)
+
+The dashboard has four sections:
+
+| Section | What it shows |
+|---|---|
+| **Project Connection** | Which project is currently linked to this connection, with an Unlink button |
+| **Linked Files** | The SQL file(s) linked to this connection — the CURRENT badge marks the active file, and a timestamp shows when it was last updated |
+| **Migrations** | The full migration history — every push applied through Schema Weaver with its status, timestamp, and who ran it |
+| **Live Activity** | A real-time event log on the right — PULL, PUSH, DIFF, LINK, CONNECT events with success/failure and metadata |
+
+---
+
+## Linking a Connection to a Project
+
+Each project can have one active connection. The linked connection is used for all migration and schema sync operations — drift detection, pull, diff, push, and rollback all run against it.
+
+**To link from the connections list:**
+1. Open the connection panel (**Connect** in the footer)
+2. Find the connection you want to use
+3. Click **Link** — it is now attached to the currently open project
+4. The **LINKED** badge appears on that connection
+
+**To link from the dashboard:**
+1. Open the Dashboard for the connection
+2. Under **Project Connection**, select the project from the dropdown
+3. Click **Link**
+
+Once linked, every team member with access to the project can use the connection to run operations — no one needs to re-enter credentials.
+
+---
+
+## One Connection, Both Tools
+
+Connections you add in the SQL Editor are visible in the **Data Explorer** automatically. There is no separate connection setup for the Data Explorer — it reads from the same connection list.
+
+When you open the Data Explorer and select a connection, you are using the same saved credentials and the same connection pool. Changes to a connection (e.g. updating the password) take effect immediately across both tools.
+
+---
+
+## Next Steps
+
+- [Pull, Diff & Push](/database/pull-diff-push) — start syncing your schema
+- [Migrations](/database/migrations) — apply and track schema changes
+- [Terminal & sw Commands](/database/terminal) — run operations from the built-in terminal

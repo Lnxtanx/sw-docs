@@ -22,6 +22,10 @@ export function DocsLayout() {
 
   React.useEffect(() => {
     setSidebarOpen(false);
+    // Scroll to top on every page navigation
+    window.scrollTo(0, 0);
+    document.querySelector('.main-content')?.scrollTo(0, 0);
+    document.querySelector('.content-wrapper')?.scrollTo(0, 0);
   }, [location.pathname]);
 
   const toggleAiPanel = useCallback(() => setAiPanelOpen(o => !o), []);

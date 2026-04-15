@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node scripts/build-all-docs.js && vite --host",
-    "build": "node scripts/build-all-docs.js && tsc -b && vite build",
+    "build": "node scripts/build-all-docs.js && tsc -b && vite build && node scripts/generate-static-pages.js",
     "build:docs": "node scripts/build-all-docs.js",
     "build:nav": "node scripts/generate-nav-tree.js",
     "postinstall": "node scripts/generate-nav-tree.js",

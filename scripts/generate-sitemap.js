@@ -13,7 +13,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const docsDir   = path.join(__dirname, '..', 'docs');
 const publicDir = path.join(__dirname, '..', 'public');
 
-const BASE_URL = 'https://docs.schemaweaver.com';
+const BASE_URL = 'https://docs.schemaweaver.vivekmind.com';
 
 // Priority weights by depth
 const PRIORITY = { 0: '1.0', 1: '0.8', 2: '0.6' };
@@ -43,10 +43,12 @@ function walkDocs(dir, prefix = '', depth = 0) {
       const raw = fs.readFileSync(fullPath, 'utf-8');
       const { data: fm } = matter(raw);
 
+      const stat = fs.statSync(fullPath);
+
       results.push({
         slug: fileSlug,
         depth,
-        lastmod: new Date().toISOString().split('T')[0],
+        lastmod: stat.mtime.toISOString().split('T')[0],
         noindex: fm.noindex === true,
       });
     }

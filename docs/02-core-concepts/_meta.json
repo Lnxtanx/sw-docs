@@ -1,8 +1,0 @@
-{
-  "order": [
-    "index",
-    "migrations",
-    "drift-detection",
-    "versioning"
-  ]
-}

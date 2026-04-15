@@ -1,0 +1,196 @@
+---
+title: AI Tools Reference
+description: Complete reference for all 55 tools available to Resona AI in the SQL Editor — schema analysis, file management, database migrations, graph analysis, audits, and more
+tags: [sql-editor, ai, resona, tools, reference, schema, migration, compiler, workspace]
+order: 7.1
+sidebar_group: "SQL Editor"
+related:
+  - title: Resona AI — SQL Editor
+    path: /sql-editor/ai-assistant
+  - title: Workspace Editing
+    path: /sql-editor/ai-assistant-workspace
+  - title: Database
+    path: /database
+---
+
+# AI Tools Reference
+
+Resona AI has access to **55 purpose-built tools** it can call autonomously when answering your questions. You never call these tools directly — Resona decides which ones to use based on your intent. This page is a complete reference so you know exactly what Resona is capable of.
+
+> Quick links: [Resona AI Overview](/sql-editor/ai-assistant) · [Workspace Editing](/sql-editor/ai-assistant-workspace)
+
+---
+
+## How Tools Work
+
+When you send a message, Resona's agentic loop plans which tools to call, executes them (up to 10 in parallel per iteration), reads the results, and uses them to form its answer. You see each tool call and its one-line summary in the chat stream.
+
+**Context injection** — some values are automatically provided to tools without Resona needing to ask. These include your `user_id`, the active `project_id`, and the linked `connection_id`. You never have to re-specify your project or connection in every message.
+
+**Safety gates** — two tools require your explicit "yes" before executing: `db_apply_migration` and `db_rollback`. Resona will always describe the operation and ask for confirmation first.
+
+**Preview mode** — all file-editing tools support a `preview_only` flag. Resona will often preview changes and show you a diff before committing anything to your files.
+
+---
+
+## Schema Discovery
+
+These tools let Resona read and understand the live structure of a connected database.
+
+| Tool | What it does |
+|---|---|
+| `sql_list_tables` | Lists all tables in a connected database with row estimates, column counts, and index counts. Can be scoped to a specific schema. |
+| `sql_get_schema` | Returns the full schema definition for a specific table — columns, types, nullability, defaults, primary key, foreign keys, and indexes. |
+| `sql_get_column_info` | Returns statistics for a column — distinct count, null count, and sample values from the live database. |
+
+---
+
+## Schema Compiler
+
+These tools give Resona access to the full output of the [Schema Compiler](/sql-editor/schema-compiler) — the same 20-layer analysis that grades your schema A–F. Results are cached for 5 minutes per session.
+
+| Tool | What it does |
+|---|---|
+| `sql_compile_schema` | Runs a full 20-layer compilation of your project SQL. Returns the overall grade, per-layer grades, every issue with severity and suggested SQL fix, and object counts (tables, views, functions, policies, etc.). |
+| `sql_get_issues` | Queries the compilation result for issues. Can be filtered by layer (e.g., `"security"`, `"normalization"`) or severity (`"error"`, `"warning"`, `"info"`). |
+| `sql_get_table_report` | Returns a structural report for all tables — constraints, column stats, and quality flags. |
+| `sql_get_layer_report` | Returns the detailed report for a single compiler layer — layer grade, issues list, and score. Accepts any of the 20 layer names. |
+
+---
+
+## Graph & Relationship Analysis
+
+These tools operate on the ER Diagram's compiled relationship graph — the same data that drives node and edge rendering on the canvas.
+
+| Tool | What it does |
+|---|---|
+| `sql_get_graph_summary` | Returns a topology summary — node count, edge count, connectivity stats, and isolated table count. |
+| `sql_get_connections` | Returns all relationship edges. Can be filtered by type: `"foreign_key"`, `"view_dependency"`, `"trigger_target"`, `"inferred"`. |
+| `sql_get_path` | Finds the shortest path between two tables. Returns the chain of tables and edges (same as [Path Analysis](/sql-editor/er-diagram-path-analysis) in the diagram). |
+| `sql_get_domain_subgraph` | Extracts the subgraph for a specific schema namespace — all nodes and edges that belong to that schema. |
+| `sql_get_cascade_impact` | Impact analysis for dropping a table or column — returns all objects that would be affected by cascading deletes or drops. |
+| `sql_get_centrality` | Centrality scores (betweenness and degree) for all tables — identifies the most critical "hub" tables in your schema. |
+
+---
+
+## Dependency Analysis
+
+| Tool | What it does |
+|---|---|
+| `sql_analyze_dependencies` | Builds a dependency graph from your SQL files — shows which views depend on tables, which triggers reference columns, and which functions are used by other objects. Can be scoped to a specific table or column. |
+| `sql_check_column_impact` | Answers "what breaks if I change this column?" — returns all views, functions, triggers, and constraints that reference the specified column. |
+
+---
+
+## File & Workspace Management
+
+These tools let Resona read, create, modify, move, and delete files in your project. All writes create a new immutable version — nothing is ever truly overwritten.
+
+| Tool | What it does |
+|---|---|
+| `workspace_list_files` | Lists the full project file tree with human-readable paths, node IDs, and types. |
+| `workspace_read_file` | Reads a file by node ID or filename (e.g., `"schema.sql"` or `"migrations/001_init.sql"`). Returns the content and version number. |
+| `workspace_search_files` | Grep-style search across all SQL files. Accepts a regex pattern and returns matching lines with file name, line number, and context. |
+| `workspace_create_file` | Creates a new file in the project. Accepts a path-style name (e.g., `"migrations/002_add_index.sql"`) and content. |
+| `workspace_update_file` | Replaces the entire content of a file. Creates a new version in history. |
+| `workspace_create_folder` | Creates a new folder at any level of the project tree. |
+| `workspace_delete_node` | Soft-deletes a file or folder (moves to trash — recoverable). |
+| `workspace_move_node` | Moves a file or folder to a different parent location. |
+| `workspace_get_versions` | Lists up to 20 recent versions of a file — version number, timestamp, content preview, and size. |
+| `workspace_revert_to_version` | Reverts a file to a previous version. Creates a new version (the history is always preserved, nothing is destroyed). |
+| `workspace_patch_file` | **Surgical edit** — finds an exact text block in a file and replaces it. Supports `preview_only` mode. See [Workspace Editing](/sql-editor/ai-assistant-workspace). |
+| `workspace_apply_diff` | Applies an ordered list of changes to a single file in one operation — each change specifies the exact text to find and what to replace it with. See [Workspace Editing](/sql-editor/ai-assistant-workspace). |
+| `workspace_batch_edit` | Applies changes across multiple files in a single call — if any change fails, all previous changes in the same call are rolled back. See [Workspace Editing](/sql-editor/ai-assistant-workspace). |
+
+---
+
+## Database & Migration
+
+These tools connect Resona to your live PostgreSQL database for schema pull, diff, drift detection, and migration apply/rollback.
+
+| Tool | What it does | Safety gate |
+|---|---|---|
+| `db_list_connections` | Lists all saved database connections — name, host, database, SSL mode, last used. | — |
+| `db_test_connection` | Tests credentials without saving — returns success and PostgreSQL version. | — |
+| `db_save_connection` | Saves a new connection (credentials stored encrypted at rest). | — |
+| `db_get_project_connection` | Returns the connection currently linked to this project. | — |
+| `db_link_project` | Links a saved connection to the active project. | — |
+| `db_pull_schema` | Introspects the live database and returns full DDL — tables, indexes, constraints, enums, views, functions, triggers, policies. | — |
+| `db_diff_schema` | Diffs the project SQL against the live database. Returns `migration_sql`, an isEmpty flag, a plain-English summary, and any destructive change warnings. | — |
+| `db_detect_drift` | Detects whether the live database has changed externally since the last pull (compares fingerprints). | — |
+| `db_preview_migration` | Dry-run of a migration — shows exactly what SQL would be applied without touching the database. | — |
+| `db_apply_migration` | **Applies migration to live database.** Requires `confirmed: true`. Resona must ask you before setting this flag. | ✅ **Confirm required** |
+| `db_rollback` | **Rolls back N migrations.** Requires `confirmed: true`. | ✅ **Confirm required** |
+| `db_migration_history` | Lists past migrations — timestamp, SQL snippet, applied_by, status. | — |
+| `db_migration_status` | Shows the current sync state — pending changes count, last applied migration. | — |
+| `db_analyze_destructive` | Analyzes a migration SQL block for destructive operations (DROP TABLE, DROP COLUMN, ALTER TYPE, etc.) before applying. | — |
+
+---
+
+## Terminal
+
+| Tool | What it does |
+|---|---|
+| `terminal_run_sw` | Mirrors the `sw` CLI commands: `pull`, `push`, `diff`, `status`, `history`, `drift`, `health`, `rollback`. `push` and `rollback` are preview-only through this tool — they do not auto-confirm. |
+
+---
+
+## Quality Audits
+
+These tools run deep analysis passes on your schema beyond the standard compiler layers.
+
+| Tool | What it does |
+|---|---|
+| `sql_security_audit` | Full security audit — RLS coverage, over-privileged roles, `SECURITY DEFINER` functions, public schema exposure, extension risks, and an overall exposure score. |
+| `sql_performance_audit` | Performance audit — missing indexes on FK columns, table bloat estimates, inefficient query patterns, query plan analysis hints. |
+| `sql_naming_audit` | Naming convention audit — checks table names, column names, constraint names, and index names for consistency. Returns violations with suggested corrections. |
+| `sql_get_constraint_report` | Complete constraint report — PKs, FKs, CHECK constraints, and UNIQUE constraints with validation status. |
+| `sql_get_view_report` | Report on all views — dependencies, materialization status, potential circular references. |
+| `sql_get_function_report` | Report on all functions and procedures — parameter signatures, return types, security context (`SECURITY DEFINER` vs `INVOKER`). |
+| `sql_get_trigger_report` | Report on all triggers — timing (BEFORE/AFTER/INSTEAD OF), events (INSERT/UPDATE/DELETE/TRUNCATE), and referenced function. |
+| `sql_get_partition_report` | Report on partitioned tables — partition strategy (RANGE/LIST/HASH), partition statistics, and orphaned partition detection. |
+
+---
+
+## SQL Formatting & Linting
+
+| Tool | What it does |
+|---|---|
+| `sql_format` | Formats SQL for consistent style — uppercases keywords, normalizes indentation, aligns column definitions. |
+| `sql_lint` | Lints SQL for style violations and best-practice deviations — returns findings with line numbers and severity. |
+| `sql_detect_antipatterns` | Detects SQL anti-patterns: `SELECT *`, missing `LIMIT`, N+1 patterns, functions used on indexed columns, correlated subqueries, implicit casts, `DISTINCT` misuse. Returns findings with severity and recommended alternatives. |
+
+---
+
+## Migration Planning
+
+| Tool | What it does |
+|---|---|
+| `sql_plan_migration` | Generates a full migration plan from the current project schema to a provided target schema. Handles the diff, ordering, and destructive change detection. |
+| `sql_compare_schemas` | Side-by-side comparison of the project schema against an externally provided schema SQL. Returns the diff summary and detailed changes. |
+
+---
+
+## Tool Summary
+
+| Category | Tool count |
+|---|---|
+| Schema Discovery | 3 |
+| Schema Compiler | 4 |
+| Graph & Relationship Analysis | 6 |
+| Dependency Analysis | 2 |
+| File & Workspace Management | 13 |
+| Database & Migration | 9 |
+| Terminal | 1 |
+| Quality Audits | 8 |
+| SQL Formatting & Linting | 3 |
+| Migration Planning | 2 |
+| **Total** | **55** |
+
+---
+
+## Next Steps
+
+- [Resona AI Overview](/sql-editor/ai-assistant) — how the agentic loop works, intent classification, memory, and streaming
+- [Workspace Editing](/sql-editor/ai-assistant-workspace) — deep dive into surgical file editing with `workspace_patch_file`, `workspace_apply_diff`, and `workspace_batch_edit`
+- [Database](/database) — link a live database to unlock the migration and drift detection tools

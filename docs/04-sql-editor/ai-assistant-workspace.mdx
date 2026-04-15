@@ -1,0 +1,193 @@
+---
+title: Workspace Editing
+description: Resona AI makes targeted, surgical edits to your SQL project files — single-block patches, multi-change file edits, and cross-file refactoring with full preview and rollback
+tags: [sql-editor, ai, resona, editing, patch, diff, multi-file, refactor, workspace]
+order: 7.2
+sidebar_group: "SQL Editor"
+related:
+  - title: Resona AI — SQL Editor
+    path: /sql-editor/ai-assistant
+  - title: AI Tools Reference
+    path: /sql-editor/ai-assistant-tools
+  - title: Version History
+    path: /sql-editor/version-history
+---
+
+# Workspace Editing
+
+When Resona AI edits your SQL files it does not regenerate entire files from scratch. It finds the exact block that needs to change and replaces only that — leaving everything else untouched. It can make multiple changes to a single file in one go, or apply edits across several files at once, with full rollback if anything goes wrong.
+
+> Quick links: [Resona AI Overview](/sql-editor/ai-assistant) · [AI Tools Reference](/sql-editor/ai-assistant-tools) · [Version History](/sql-editor/version-history)
+
+---
+
+## Three Editing Tools
+
+Resona has three editing tools, each suited to a different scope:
+
+| Tool | Scope | When Resona uses it |
+|---|---|---|
+| `workspace_patch_file` | One change in one file | Add a column, fix a constraint, insert an index |
+| `workspace_apply_diff` | Multiple changes in one file | Add several indexes and update a view in the same file |
+| `workspace_batch_edit` | Changes across multiple files | Rename a column that appears across 4 files |
+
+All three support **preview mode** — Resona can show you a diff before committing anything to your files.
+
+---
+
+## `workspace_patch_file` — Single Block Edit
+
+The most precise tool. Resona finds an exact text block in a file and replaces it. The rest of the file is untouched.
+
+**Example:** You ask *"Add a `deleted_at` timestamp to the users table."*
+
+Resona locates this block in `auth.sql`:
+
+```sql
+CREATE TABLE users (
+  id         uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  email      text NOT NULL UNIQUE,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+```
+
+And replaces it with:
+
+```sql
+CREATE TABLE users (
+  id         uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
+  email      text        NOT NULL UNIQUE,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  deleted_at timestamptz
+);
+```
+
+Only those five lines change. Everything else in `auth.sql` stays exactly as it was.
+
+After applying, Resona reports the new version number and how many lines changed.
+
+### Preview before applying
+
+Resona often runs a preview first — showing you the diff in the chat and asking for confirmation before writing. Only after you confirm (or Resona determines the change is safe) does the file update.
+
+---
+
+## `workspace_apply_diff` — Multiple Changes in One File
+
+When several changes need to happen in the same file, this tool applies all of them together. Resona provides an ordered list of find-and-replace pairs.
+
+**Example:** You ask *"Add indexes for all FK columns in billing.sql."*
+
+Resona identifies three missing indexes and applies all three to `billing.sql` in one write:
+
+```
+Change 1: Add index after the orders table definition
+Change 2: Add FK index after order_items
+Change 3: Add index for invoices.customer_id
+```
+
+All changes are **validated before any are written**. If one find-and-replace fails to match (e.g. the file was edited since the preview), none of the changes are applied — the file stays clean.
+
+After applying: a single new file version is created containing all three changes.
+
+---
+
+## `workspace_batch_edit` — Changes Across Multiple Files
+
+The broadest editing tool — changes across several files in one call. Each entry in the batch specifies which file to update and what to change (either a full file replacement or a targeted find-and-replace).
+
+**Example:** You ask *"Rename `user_id` to `owner_id` across all files."*
+
+Resona searches all project files, finds four occurrences, and applies them together:
+
+```
+orders.sql       — column definition
+order_items.sql  — view referencing the column
+auth.sql         — FK definition in another table
+policies.sql     — RLS USING clause
+```
+
+If any change fails, all previous changes in the same batch are rolled back — you never end up with a half-renamed schema.
+
+### Mixed operations
+
+A batch can combine different operation types:
+- Some files get a targeted find-and-replace (e.g. schema files where one column changes)
+- Other files get a full replacement (e.g. a generated migration file being rebuilt)
+
+---
+
+## If a Change Fails
+
+| Scenario | What happens |
+|---|---|
+| `workspace_patch_file` — text not found | Error reported, no changes made |
+| `workspace_apply_diff` — one pair fails | No changes applied to the file |
+| `workspace_batch_edit` — one file fails | All successfully-applied changes from that batch are rolled back |
+
+In all cases, your files are left in a consistent state — either fully updated or unchanged.
+
+---
+
+## Preview Workflow
+
+You can ask Resona to preview before applying anything:
+
+```
+You: Rename full_name to display_name across all files — show me first
+
+Resona: Here are the proposed changes across 3 files:
+
+  auth.sql (1 change):
+  - full_name text,
+  + display_name text,
+
+  views.sql (2 changes):
+  - users.full_name AS author_name
+  + users.display_name AS author_name
+  ...
+
+  Apply these changes?
+
+You: Yes
+
+Resona: ✓ Applied. New versions created for 2 files.
+```
+
+---
+
+## Version History Integration
+
+Every edit creates a new immutable version in [Version History](/sql-editor/version-history). This means:
+
+- Every AI-applied change is tracked with a timestamp
+- You can always revert to the state before any AI edit
+- The full audit trail is available for any file
+
+If an edit isn't what you wanted, ask Resona to revert:
+
+```
+Revert auth.sql to the version before you renamed the column
+```
+
+---
+
+## Search Before Editing
+
+Before any multi-file edit, Resona searches across your project files using `workspace_search_files` — a regex-capable search. This tells Resona exactly which files are affected before building its edit plan, so it doesn't guess.
+
+---
+
+## Tips
+
+- **Be specific about scope:** *"Add a deleted_at column to @orders only"* gives a tighter result than *"add soft delete"*
+- **Ask for preview on risky changes:** *"Rename this column — show me the diff first"*
+- **Use version history as your safety net:** every pre-edit state is preserved
+
+---
+
+## Next Steps
+
+- [Resona AI Overview](/sql-editor/ai-assistant) — the full agentic loop, intent classification, streaming, and memory
+- [AI Tools Reference](/sql-editor/ai-assistant-tools) — complete catalog of all 55 tools
+- [Version History](/sql-editor/version-history) — browse and restore every version created by AI edits

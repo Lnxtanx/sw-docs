@@ -1,0 +1,152 @@
+---
+title: Adding a Connection
+description: Add a PostgreSQL connection to Schema Weaver — fill in credentials, choose an SSL mode, test the connection, and understand how credentials are stored securely
+tags: [database, connection, postgresql, ssl, credentials, security]
+order: 1
+sidebar_group: "Database"
+related:
+  - title: Database Overview
+    path: /database
+  - title: Connection Dashboard
+    path: /database/connection-dashboard
+  - title: Pull, Diff & Push
+    path: /database/pull-diff-push
+---
+
+# Adding a Connection
+
+All database connections in Schema Weaver are added from the SQL Editor. Once saved, a connection is available across both the SQL Editor (for schema migrations) and the Data Explorer (for browsing and querying your data).
+
+> Quick links: [Database Overview](/database) · [Connection Dashboard](/database/connection-dashboard)
+
+---
+
+## How to Add a Connection
+
+1. Open the [SQL Editor](https://sql.schemaweaver.vivekmind.com/)
+2. Click **Connect** in the footer status bar at the bottom of the editor
+3. The connection panel opens — click **+ Add Connection**
+4. Fill in your PostgreSQL credentials and click **Test Connection**
+5. Click **Save** once the test passes
+
+![The Add Connection form showing Host, Port, Database, Username, Password, and SSL Mode fields](/images/sql-editor/connect-live-database.png)
+
+---
+
+## Connection Fields
+
+| Field | Default | Description |
+|---|---|---|
+| **Name** | — | A label for this connection (e.g. `production`, `staging`, `local`) |
+| **Host** | — | Hostname or IP address of your PostgreSQL server (e.g. `db.example.com`) |
+| **Port** | `5432` | PostgreSQL port — almost always 5432 |
+| **Database** | — | The database name (e.g. `postgres`, `myapp_production`) |
+| **Username** | — | PostgreSQL role to connect as |
+| **Password** | — | Password for that role |
+| **SSL Mode** | Require | Encryption and certificate verification level (see below) |
+
+---
+
+## SSL Mode
+
+SSL mode controls how Schema Weaver encrypts the connection to your database.
+
+![The SSL Mode dropdown showing Disable, Require, and Verify Full options with descriptions](/images/sql-editor/connect-databse-with-ssl-mode.png)
+
+| Option | When to use |
+|---|---|
+| **Disable** | Local databases only (`localhost`, Docker containers). No encryption. Do not use for cloud or remote databases. |
+| **Require** | Cloud-hosted databases — Supabase, AWS RDS, Railway, Render, Neon, Google Cloud SQL, and similar. Encrypts the connection but does not verify the server certificate. This is the right choice for most databases. |
+| **Verify Full** | High-security production environments where certificate validation is strictly required. Verifies the server certificate and hostname against a configured CA. Only works if your database server has a valid CA certificate configured. |
+
+> **Recommendation:** Use **Require** for any cloud-hosted database. Use **Disable** only for local development. Use **Verify Full** only when your database server is configured with a valid CA and you need strict certificate validation.
+
+---
+
+## Testing the Connection
+
+Click **Test Connection** before saving. The test:
+
+- Confirms the host is reachable from Schema Weaver's servers
+- Verifies the credentials are valid
+- Checks that the user has sufficient permissions to introspect the database
+- Reports the PostgreSQL version and current latency
+
+If the test fails, the error message will tell you whether the issue is connectivity (host/port wrong, firewall block), credentials (username/password wrong), or permissions (role lacks required access).
+
+---
+
+## Required PostgreSQL Permissions
+
+The PostgreSQL role you connect as needs the following permissions for full functionality:
+
+| Permission | Required for |
+|---|---|
+| `CONNECT` on the database | Any operation at all |
+| `USAGE` on schemas | Reading schema structure and running queries |
+| `SELECT` on tables | Pull, diff, drift detection, Data Explorer browsing |
+| `CREATE` | Creating new tables, indexes, functions, views |
+| `ALTER` | Modifying existing columns, constraints, and types |
+| `DROP` | Destructive migrations (`sw push --force` only) |
+
+For read-only use in the Data Explorer, `CONNECT + USAGE + SELECT` is sufficient. For schema migrations in the SQL Editor, the role needs `CREATE` and `ALTER` at minimum.
+
+---
+
+## Connection Security
+
+Credentials are stored encrypted in Schema Weaver's backend:
+
+- **Encryption:** AES-256 at rest
+- **Never in the browser:** Credentials are sent to the server at save time and never returned to the client again
+- **Team access:** Team members with access to your project can use the connection to run operations, but they cannot see or export the password
+- **Server-side only:** Credentials are only used when a backend operation (pull, diff, migration, query) is triggered — they are never returned by any API endpoint
+
+---
+
+## Supported PostgreSQL Versions
+
+| Version | Status |
+|---|---|
+| PostgreSQL 12 | ✅ Full support |
+| PostgreSQL 13 | ✅ Full support |
+| PostgreSQL 14 | ✅ Full support — `ALTER TYPE … ADD VALUE` works inside transactions |
+| PostgreSQL 15 | ✅ Full support |
+| PostgreSQL 16 | ✅ Full support |
+| PostgreSQL 17 | ✅ Full support |
+
+---
+
+## Common Connection Setups
+
+### Supabase
+- **Host:** Your Supabase project's pooler host (e.g. `aws-0-us-east-1.pooler.supabase.com`)
+- **Port:** `6543` (transaction mode) or `5432` (session mode)
+- **Database:** `postgres`
+- **Username:** `postgres.[project-ref]`
+- **SSL Mode:** Require
+
+### AWS RDS / Aurora
+- **Host:** Your RDS endpoint (e.g. `mydb.cluster-xyz.us-east-1.rds.amazonaws.com`)
+- **Port:** `5432`
+- **SSL Mode:** Require
+
+### Neon
+- **Host:** Your Neon host (e.g. `ep-xyz.us-east-2.aws.neon.tech`)
+- **SSL Mode:** Require
+
+### Railway
+- **Host:** Your Railway PostgreSQL host
+- **SSL Mode:** Require
+
+### Local / Docker
+- **Host:** `localhost` or `127.0.0.1`
+- **Port:** `5432` (or whichever port you've mapped)
+- **SSL Mode:** Disable
+
+---
+
+## Next Steps
+
+- [Connection Dashboard](/database/connection-dashboard) — managing your connections list and linking to projects
+- [Pull, Diff & Push](/database/pull-diff-push) — start syncing your schema once a connection is active

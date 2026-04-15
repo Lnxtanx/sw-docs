@@ -111,7 +111,14 @@ function parseMdxFile(filePath) {
     headings.push({ id, level, title });
   }
 
-  const html = compileToHtml(body);
+  const rawHtml = compileToHtml(body);
+
+  // Inject loading="lazy" on all images except the first (above-the-fold)
+  let imgCount = 0;
+  const html = rawHtml.replace(/<img\s/g, () => {
+    imgCount++;
+    return imgCount === 1 ? '<img ' : '<img loading="lazy" ';
+  });
 
   return {
     frontmatter: {
@@ -120,6 +127,7 @@ function parseMdxFile(filePath) {
       tags: frontmatter.tags,
       order: frontmatter.order,
       sidebar_group: frontmatter.sidebar_group,
+      related: frontmatter.related,
     },
     headings,
     body,

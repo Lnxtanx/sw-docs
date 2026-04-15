@@ -1,0 +1,218 @@
+---
+title: Models and Credits
+description: All AI models available in Resona — four tiers (FAST, SMART, ADVANCED, POWERFUL), credit costs per model, plan limits, and how to choose the right model
+tags: [resona, models, credits, pricing, tiers, fast, smart, advanced, powerful, claude, gpt, gemini]
+order: 3
+sidebar_group: "Resona AI"
+related:
+  - title: Resona AI Overview
+    path: /resona-ai
+  - title: AI Chat Guide
+    path: /resona-ai/ai-chat
+---
+
+# Models and Credits
+
+Resona AI supports a large range of models from multiple providers, organized into four capability tiers. You choose the model per message — use a FAST model for quick questions and a POWERFUL model for complex multi-table design or deep analysis. Credits are shared across the SQL Editor and Data Explorer.
+
+---
+
+## Model Tiers
+
+Models are grouped into four tiers based on capability and cost. The credit multiplier shown in the UI (e.g. `1.0×`) is relative to the base rate of the most commonly used FAST model.
+
+![The Resona AI model selector showing POWERFUL, ADVANCED, SMART, and FAST tier groups with models listed in each](/images/resona-ai/model.png)
+
+---
+
+### FAST
+
+The fastest and most cost-effective models. Best for everyday tasks — simple questions, quick lookups, iterative refinement, and high-volume workflows.
+
+| Model | Provider | Relative cost |
+|---|---|---|
+| GPT-4o Mini | OpenAI | 1.0× (base) |
+| Claude Haiku | Anthropic | ~0.75× |
+| Gemini 2.5 Flash Lite | Google | ~0.75× |
+| Amazon Nova Lite | AWS Bedrock | ~0.75× |
+| Qwen 3 | AWS Bedrock | ~0.75× |
+
+**When to use FAST:**
+- Simple schema questions or quick SQL generation
+- Iterating on a schema design across many messages
+- Any task where speed matters more than depth
+
+---
+
+### SMART
+
+A step up in reasoning ability, still very cost-efficient. Good for multi-table analysis and moderately complex questions.
+
+| Model | Provider | Relative cost |
+|---|---|---|
+| Gemini 2.5 Flash | Google | ~3× |
+| DeepSeek V3 | AWS Bedrock | ~3.5× |
+| Amazon Nova Pro | AWS Bedrock | ~3× |
+| Qwen 3 Coder | AWS Bedrock | ~3× |
+| Mistral Magistral | AWS Bedrock | ~3.5× |
+
+**When to use SMART:**
+- Multi-table JOIN queries with 3–5 tables
+- Schema analysis with moderate complexity
+- Coding-heavy tasks (Qwen Coder is specialized for code)
+
+---
+
+### ADVANCED
+
+High-capability models from the leading providers. Handles complex multi-table schemas, deep reasoning, and large context windows.
+
+| Model | Provider | Relative cost |
+|---|---|---|
+| GPT-4o | OpenAI | ~10× |
+| GPT-4.1 | OpenAI | ~10× |
+| Claude Sonnet | Anthropic | ~10× |
+| Gemini 2.5 Pro | Google | ~12× |
+| Mistral Large | AWS Bedrock | ~10× |
+
+**When to use ADVANCED:**
+- Complex multi-table schema design
+- Security audits and performance analysis
+- Large schemas (50–200 tables)
+- When SMART models give incorrect or incomplete results
+- Deep reasoning about schema architecture
+
+---
+
+### POWERFUL
+
+The most capable models available. Reserved for the most demanding tasks — very large schemas, complex agentic workflows, or when only the best reasoning will do.
+
+| Model | Provider | Relative cost |
+|---|---|---|
+| Claude Opus | Anthropic | ~56× |
+| Kimi K2 Thinking | AWS Bedrock | ~28× |
+
+**When to use POWERFUL:**
+- Extremely large schemas (200+ tables)
+- Full-schema refactoring across many files
+- Complex multi-step migration planning
+- When ADVANCED models are not getting it right
+- Deep security or performance audits on production schemas
+
+> POWERFUL models are significantly more expensive. Use them selectively — most tasks are handled well by ADVANCED or even SMART.
+
+---
+
+## Switching Models
+
+The model selector is in the chat footer of both the SQL Editor and Data Explorer AI panels. You can switch models at any point — the change takes effect on the next message you send. Switching mid-conversation is fully supported.
+
+![The Resona AI model selector footer showing the active model name and credit multiplier with a dropdown to switch](/images/resona-ai/model2.png)
+
+The footer shows the active model name and its credit multiplier (e.g. `Claude Sonnet 10×`). This tells you how many credits the next message will consume relative to the base rate.
+
+---
+
+## Credit System
+
+Credits are the unit of AI usage in Schema Weaver. Every message you send to Resona consumes credits based on the model you selected and the amount of text processed (input + output tokens).
+
+### What Costs Credits
+
+| Action | Credit cost |
+|---|---|
+| Sending a message to Resona | Yes — based on model × tokens |
+| Follow-up messages in the same conversation | Yes |
+| Re-running a saved query (no AI) | No |
+| Viewing query history | No |
+| Starting a new conversation | No |
+| Schema indexing | No |
+
+### Credit Multipliers
+
+Credits are calculated per token processed, scaled by the model's tier multiplier. The exact cost per message depends on the length of your question, the schema context included, and the length of the response — but relative costs between models follow the tier multipliers shown above.
+
+A longer schema context means more input tokens and therefore more credits per message, regardless of model.
+
+---
+
+## Plans
+
+Credits are shared between the SQL Editor AI and the Data Explorer AI. Usage in either surface draws from the same monthly pool.
+
+| Plan | Monthly credits | Daily limit | Models available |
+|---|---|---|---|
+| **Free** | 5,000 | 500 | FAST only |
+| **Starter** | 100,000 | 10,000 | FAST + SMART |
+| **Pro** | 200,000 | 20,000 | FAST + SMART + ADVANCED |
+| **Power** | 433,000 | 43,300 | All tiers (FAST → POWERFUL) |
+
+Credits reset on the 1st of every calendar month. Unused credits do not roll over to the next month.
+
+The **daily limit** is 10% of the monthly allowance — this prevents the full monthly budget from being consumed in a single day.
+
+### What You Can Do With Each Plan
+
+**Free (5,000 credits/month):**
+- ~5,000 messages at FAST model rates
+- Good for occasional schema questions and exploration
+- Only FAST tier models available
+
+**Starter (100,000 credits/month):**
+- ~100,000 messages at FAST rates or ~28,000 at SMART rates
+- Suitable for regular daily use with SMART models
+- Access to FAST and SMART tier models
+
+**Pro (200,000 credits/month):**
+- ~200,000 messages at FAST rates or ~20,000 at ADVANCED rates
+- Full access to ADVANCED models including GPT-4o and Claude Sonnet
+- Recommended for professional schema work and data analysis
+
+**Power (433,000 credits/month):**
+- Access to all models including POWERFUL tier (Claude Opus, Kimi K2 Thinking)
+- For teams or individuals doing large-scale schema work or intensive data analysis
+
+---
+
+## Checking Usage
+
+Go to **Settings → Usage** to see a breakdown of credits used this month, remaining credits, per-model usage, and daily consumption.
+
+![The Resona AI usage dashboard showing monthly credits used, remaining, per-model breakdown, and daily consumption chart](/images/resona-ai/usage.png)
+
+On team plans, admins can view per-member usage breakdowns and optionally set per-member credit limits.
+
+---
+
+## Credit Top-ups
+
+If you reach your monthly limit before the cycle resets, you can purchase additional credits from **Settings → Billing → Add Credits**. Top-up credits are consumed first (before your monthly allocation) and do not expire at month-end.
+
+---
+
+## FAQ
+
+**Are credits shared between SQL Editor and Data Explorer?**
+Yes. Both surfaces draw from the same monthly credit pool on your account.
+
+**What happens when I run out of credits?**
+A warning appears at 80% usage. At 100%, Resona falls back to FAST-tier models only (or stops, depending on your plan setting). You can purchase top-up credits or wait for the monthly reset.
+
+**Can multiple team members share a credit pool?**
+Yes. On Pro and Power plans, credits are pooled across the workspace. Team admins can set per-user limits in **Settings → Team → Credit Limits**.
+
+**Can I use my own API keys?**
+Yes. On Pro and Power plans you can provide your own OpenAI or Anthropic API keys (**Settings → Resona AI → API Keys**). BYOK queries are billed directly to your provider account and do not consume Schema Weaver credits.
+
+**What is the context window?**
+Each model has its own context window — the amount of text (schema context + conversation history + your question) it can process at once. For large schemas, models with larger windows handle more tables in a single message. Claude models support 200K tokens; GPT-4o supports 128K; Gemini 2.5 Pro supports 1M tokens.
+
+---
+
+## Next Steps
+
+- [Resona AI Overview](/resona-ai) — what Resona is and how the two surfaces differ
+- [AI Chat Guide](/resona-ai/ai-chat) — writing effective prompts for both surfaces
+- [SQL Editor AI](/sql-editor/ai-assistant) — the full 55-tool agentic assistant for schema design
+- [Data Explorer AI](/data-explorer/ai-overview) — live data analysis, charts, and automated reports
