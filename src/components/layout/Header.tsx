@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Search, Github, Menu, Sun, Moon, Monitor } from 'lucide-react';
+import { Search, Menu, Sun, Moon, Monitor, Database, BarChart3 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useTheme } from '../../hooks/useTheme.js';
 import type { Theme } from '../../hooks/useTheme.js';
 
@@ -50,11 +51,23 @@ export function Header({ toggleSidebar, toggleAiPanel, aiPanelOpen }: HeaderProp
           <button className="menu-button" onClick={toggleSidebar} aria-label="Toggle Menu">
             <Menu size={20} />
           </button>
-          
-          <div className="header-logo-container" style={{ display: 'flex', alignItems: 'center', gap: '12px', marginRight: '1.5rem', userSelect: 'none' }}>
+
+          <Link to="/introduction" className="header-logo-container" style={{ display: 'flex', alignItems: 'center', gap: '12px', marginRight: '1.5rem', userSelect: 'none', textDecoration: 'none' }}>
              <img src="/resona.png" alt="Schema Weaver Logo" style={{ height: '28px', width: '28px', objectFit: 'contain' }} />
              <span className="header-title">Schema Weaver</span>
-          </div>
+          </Link>
+
+          {/* Desktop-only product nav links */}
+          <nav className="header-product-nav">
+            <Link to="/sql-editor" className="header-product-link">
+              <Database size={15} />
+              <span>SQL Editor</span>
+            </Link>
+            <Link to="/data-explorer" className="header-product-link">
+              <BarChart3 size={15} />
+              <span>Data Explorer</span>
+            </Link>
+          </nav>
 
           <div className="search-bar" onClick={() => setSearchOpen(true)}>
             <Search size={16} className="search-icon" />
@@ -89,16 +102,6 @@ export function Header({ toggleSidebar, toggleAiPanel, aiPanelOpen }: HeaderProp
             </div>
             <span className="header-ai-label">Resona AI</span>
           </button>
-
-          <a
-            href="https://github.com/Lnxtanx/schema-weaver"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="header-icon-link"
-            aria-label="GitHub Repository"
-          >
-            <Github size={20} />
-          </a>
         </div>
       </header>
 

@@ -214,6 +214,39 @@
   background: var(--bg-hover);
 }
 
+/* ── Desktop product nav links ────────────────────────────────────────────── */
+.header-product-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: 0.5rem;
+  padding-left: 1rem;
+  border-left: 1px solid var(--border-color);
+}
+
+.header-product-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.header-product-link:hover {
+  background: var(--bg-hover);
+  color: var(--text-main);
+}
+
+.header-product-link.active {
+  color: var(--accent-color);
+  background: var(--bg-active);
+}
+
 .header-ai-btn {
   color: var(--accent-color);
 }
@@ -750,6 +783,9 @@
   /* Hide header title text to save space, but keep logo image */
   .header-title { display: none; }
   .header-logo-container { margin-right: 0.5rem; gap: 8px; }
+
+  /* Hide product nav links on mobile */
+  .header-product-nav { display: none; }
 
   /* Shrink search bar */
   .search-bar { width: 160px; padding: 0.4rem 0.6rem; }

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Sidebar } from './Sidebar.js';
 import { Header } from './Header.js';
 import { TableOfContents } from './TableOfContents.js';
@@ -13,10 +13,15 @@ export interface PageContext {
   slug: string;
 }
 
+function isMobileViewport(): boolean {
+  return typeof window !== 'undefined' && window.innerWidth <= 768;
+}
+
 export function DocsLayout() {
   const [sidebarOpen, setSidebarOpen]   = useState(false);
   const [headings, setHeadings]         = useState<Heading[]>([]);
-  const [aiPanelOpen, setAiPanelOpen]   = useState(true);
+  // On desktop AI panel starts open; on mobile it starts closed
+  const [aiPanelOpen, setAiPanelOpen]   = useState(() => !isMobileViewport());
   const [pageContext, setPageContext]    = useState<PageContext | null>(null);
   const location = useLocation();
 
@@ -27,6 +32,17 @@ export function DocsLayout() {
     document.querySelector('.main-content')?.scrollTo(0, 0);
     document.querySelector('.content-wrapper')?.scrollTo(0, 0);
   }, [location.pathname]);
+
+  // If the viewport crosses the mobile threshold, auto-close the AI panel
+  useEffect(() => {
+    const handleResize = () => {
+      if (isMobileViewport()) {
+        setAiPanelOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const toggleAiPanel = useCallback(() => setAiPanelOpen(o => !o), []);
 

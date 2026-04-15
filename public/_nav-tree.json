@@ -10,44 +10,6 @@
     ]
   },
   {
-    "title": "Database",
-    "href": "/database",
-    "children": [
-      {
-        "title": "Overview",
-        "href": "/database"
-      },
-      {
-        "title": "Adding a Connection",
-        "href": "/database/adding-a-connection"
-      },
-      {
-        "title": "Connection Dashboard",
-        "href": "/database/connection-dashboard"
-      },
-      {
-        "title": "Pull, Diff & Push",
-        "href": "/database/pull-diff-push"
-      },
-      {
-        "title": "Migrations",
-        "href": "/database/migrations"
-      },
-      {
-        "title": "Drift Detection",
-        "href": "/database/drift-detection"
-      },
-      {
-        "title": "History & Rollback",
-        "href": "/database/history-rollback"
-      },
-      {
-        "title": "Terminal & sw Commands",
-        "href": "/database/terminal"
-      }
-    ]
-  },
-  {
     "title": "SQL Editor",
     "href": "/sql-editor",
     "children": [
@@ -144,6 +106,44 @@
       {
         "title": "Workspace & Projects",
         "href": "/data-explorer/ai-workspace"
+      }
+    ]
+  },
+  {
+    "title": "Database",
+    "href": "/database",
+    "children": [
+      {
+        "title": "Overview",
+        "href": "/database"
+      },
+      {
+        "title": "Adding a Connection",
+        "href": "/database/adding-a-connection"
+      },
+      {
+        "title": "Connection Dashboard",
+        "href": "/database/connection-dashboard"
+      },
+      {
+        "title": "Pull, Diff & Push",
+        "href": "/database/pull-diff-push"
+      },
+      {
+        "title": "Migrations",
+        "href": "/database/migrations"
+      },
+      {
+        "title": "Drift Detection",
+        "href": "/database/drift-detection"
+      },
+      {
+        "title": "History & Rollback",
+        "href": "/database/history-rollback"
+      },
+      {
+        "title": "Terminal & sw Commands",
+        "href": "/database/terminal"
       }
     ]
   },

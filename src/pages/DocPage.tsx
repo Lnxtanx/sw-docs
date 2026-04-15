@@ -263,7 +263,9 @@ function isExternalLink(href: string) {
 export function DocPage() {
   const { '*': catchAll } = useParams<{ '*': string }>();
   const { setHeadings, setPageContext } = useOutletContext<OutletContext>();
-  const slug = catchAll || '';
+  // Normalize slug: remove trailing slashes to prevent 404s for URLs like /introduction/
+  const rawSlug = catchAll || '';
+  const slug = rawSlug.replace(/\/+$/, '');
   const { content, loading, error } = useDocContent(slug);
 
   const [copied, setCopied] = useState(false);
@@ -313,7 +315,9 @@ export function DocPage() {
       return;
     }
 
-    const pathname = window.location.pathname;
+    // Normalize pathname: remove trailing slashes for canonical URLs
+    const rawPathname = window.location.pathname;
+    const pathname = rawPathname.replace(/\/+$/, '') || '/';
 
     if (error || !content) {
       applyNotFoundHead(pathname);
