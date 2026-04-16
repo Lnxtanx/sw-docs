@@ -1690,8 +1690,8 @@
           "title": "Iteration Limit"
         }
       ],
-      "content": "How Resona AI Works\n\nResona AI is not a simple chatbot. It is an agentic system — when you ask a question, it breaks the problem down into steps, calls specialized tools to gather and analyze data, and synthesizes the results into a complete answer. You can watch every step happen in real time.\n\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [AI Chat Interface](/data-explorer/ai-chat-interface) · [Charts & Analysis Results](/data-explorer/ai-artifacts)\n\r\n![Resona",
-      "snippet": "Resona AI is not a simple chatbot. It is an **agentic system** — when you ask a question, it breaks the problem down into steps, calls specialized tools to gather and analyze data, and synthesizes the"
+      "content": "How Resona AI Works\r\n\r\nResona AI is not a simple chatbot. It is an agentic system — when you ask a question, it breaks the problem down into steps, calls specialized tools to gather and analyze data, and synthesizes the results into a complete answer. You can watch every step happen in real time.\r\n\r\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [AI Chat Interface](/data-explorer/ai-chat-interface) · [Charts & Analysis Results](/data-explorer/ai-artifacts)\r\n\r\n![R",
+      "snippet": ""
     },
     {
       "slug": "05-data-explorer/ai-artifacts",
@@ -1827,8 +1827,8 @@
           "title": "Artifact Placeholder (Streaming)"
         }
       ],
-      "content": "Charts & Analysis Results\n\nWhen Resona AI finishes an analysis, it outputs artifacts — rich interactive components embedded directly in the chat. These are not static images. You can expand them, sort them, pin them to a dashboard, and export their underlying SQL.\n\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [AI Chat Interface](/data-explorer/ai-chat-interface) · [Workspace & Projects](/data-explorer/ai-workspace)\n\r\n![Resona AI chat response with an expanded i",
-      "snippet": "When Resona AI finishes an analysis, it outputs **artifacts** — rich interactive components embedded directly in the chat. These are not static images. You can expand them, sort them, pin them to a da"
+      "content": "Charts & Analysis Results\r\n\r\nWhen Resona AI finishes an analysis, it outputs artifacts — rich interactive components embedded directly in the chat. These are not static images. You can expand them, sort them, pin them to a dashboard, and export their underlying SQL.\r\n\r\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [AI Chat Interface](/data-explorer/ai-chat-interface) · [Workspace & Projects](/data-explorer/ai-workspace)\r\n\r\n![Resona AI chat response with an expan",
+      "snippet": ""
     },
     {
       "slug": "05-data-explorer/ai-chat-interface",
@@ -1920,8 +1920,8 @@
           "title": "Which pages should you read next?"
         }
       ],
-      "content": "Resona AI\n\nResona AI is the agentic data assistant built into the Data Explorer. You describe what you want to know in plain English — Resona figures out which tables to query, runs the analysis, and returns the results as interactive charts, tables, and reports.\n\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.com/data-explorer/) · [SQL Editor](https://sql.schemaweaver.vivekmind.com/)\n\r\n![Resona AI pane",
-      "snippet": "Resona AI is the agentic data assistant built into the Data Explorer. You describe what you want to know in plain English — Resona figures out which tables to query, runs the analysis, and returns the"
+      "content": "Resona AI\r\n\r\nResona AI is the agentic data assistant built into the Data Explorer. You describe what you want to know in plain English — Resona figures out which tables to query, runs the analysis, and returns the results as interactive charts, tables, and reports.\r\n\r\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.com/data-explorer/) · [SQL Editor](https://sql.schemaweaver.vivekmind.com/)\r\n\r\n![Resona AI",
+      "snippet": ""
     },
     {
       "slug": "05-data-explorer/ai-workspace",
