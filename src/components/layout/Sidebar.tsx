@@ -80,6 +80,36 @@ export function Sidebar() {
       </nav>
 
       <div className="sidebar-footer">
+        <a
+          href="https://vivekmind.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '8px 10px',
+            borderRadius: '8px',
+            textDecoration: 'none',
+            transition: 'background 0.15s ease',
+            color: 'var(--text-muted)',
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLAnchorElement).style.background = 'var(--bg-hover)';
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLAnchorElement).style.background = 'transparent';
+          }}
+        >
+          <img
+            src="/vivekmind-logo.png"
+            alt="VivekMind"
+            style={{ height: '18px', width: 'auto', opacity: 0.7 }}
+          />
+          <span style={{ fontSize: '0.78rem', fontWeight: 500, letterSpacing: '0.01em' }}>
+            VivekMind
+          </span>
+        </a>
       </div>
     </aside>
   );
