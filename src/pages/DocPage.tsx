@@ -32,12 +32,21 @@ interface OutletContext {
 
 function flattenNavTree(items: NavTreeItem[]): NavLink[] {
   const result: NavLink[] = [];
-  for (const item of items) {
-    result.push({ title: item.title, href: item.href });
-    if (item.children) {
-      result.push(...flattenNavTree(item.children));
+  const seenHrefs = new Set<string>();
+
+  function walk(items: NavTreeItem[]) {
+    for (const item of items) {
+      if (!seenHrefs.has(item.href)) {
+        result.push({ title: item.title, href: item.href });
+        seenHrefs.add(item.href);
+      }
+      if (item.children) {
+        walk(item.children);
+      }
     }
   }
+
+  walk(items);
   return result;
 }
 

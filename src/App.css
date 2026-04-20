@@ -38,7 +38,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 1.5rem 1rem;
+  padding: 1.5rem 1rem 0 1rem; /* Removed bottom padding from container */
 }
 
 .header-title {
@@ -57,6 +57,7 @@
   min-height: 0;
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-thumb) var(--bg-sidebar);
+  padding-bottom: 1.5rem; /* Re-added padding for navigation scroll end */
 }
 
 .sidebar-nav ul {
@@ -103,9 +104,35 @@
 
 .sidebar-footer {
   margin-top: auto;
-  padding: 1rem 0.5rem;
-  font-size: 0.85rem;
+  padding: 0.75rem 1rem 1rem 1rem;
+  border-top: none;
+}
+
+.sidebar-footer-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
   color: var(--text-muted);
+  transition: color 0.2s ease;
+  opacity: 0.8;
+}
+
+.sidebar-footer-link:hover {
+  color: var(--text-main);
+  opacity: 1;
+}
+
+.sidebar-footer-logo {
+  height: 18px;
+  width: 18px;
+  object-fit: contain;
+}
+
+.sidebar-footer-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
 }
 
 /* Center + right wrapper */

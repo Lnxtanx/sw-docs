@@ -17,7 +17,7 @@ related:
 
 The Data Explorer lets you export data in multiple formats — either a single table or your entire database schema as a ZIP archive. Exports are triggered directly from the browser and download instantly.
 
-> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.com/data-explorer/) · [SQL Editor](https://sql.schemaweaver.vivekmind.com/)
+> Quick links: [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.com/data-explorer/) · [SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/)
 
 ---
 
@@ -224,7 +224,7 @@ Use the full database export to create periodic data snapshots:
 ```bash
 # Automate with curl
 curl -o backup.zip \
-  "https://data.schemaweaver.vivekmind.com/api/data/{connId}/export-all?schemaName=public&format=csv"
+  "https://data-explorer.schemaweaver.vivekmind.com/api/data/{connId}/export-all?schemaName=public&format=csv"
 ```
 
 ### Data Processing Pipelines
@@ -253,4 +253,5 @@ cat users.ndjson | jq 'select(.role == "admin")' > admins.ndjson
 
 - [Exploring Your Data](/data-explorer/exploring-data) — filtering, sorting, and column statistics
 - [AI Chat Interface](/data-explorer/ai-chat-interface) — use natural language to analyze and export data
-- [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) — launch the live app
+- [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/) — launch the live app
+

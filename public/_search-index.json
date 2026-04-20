@@ -32,8 +32,8 @@
           "title": "Explore the Documentation"
         }
       ],
-      "content": "[Schema Weaver](https://schemaweaver.vivekmind.com/) Documentation\n\nWelcome to the official documentation for Schema Weaver. This guide covers everything from connecting your first PostgreSQL database to running migrations, exploring your data, and collaborating with your team.\n\n---\n\nWhat is Schema Weaver?\n\nSchema Weaver is a PostgreSQL schema management platform. It gives you a visual SQL Editor for writing and organizing your schema, an auto-generated ER diagram that updates as you type, a mig",
-      "snippet": "Welcome to the official documentation for Schema Weaver. This guide covers everything from connecting your first PostgreSQL database to running migrations, exploring your data, and collaborating with "
+      "content": "[Schema Weaver](https://schemaweaver.vivekmind.com/) Documentation\r\n\r\nWelcome to the official documentation for Schema Weaver. This guide covers everything from connecting your first PostgreSQL database to running migrations, exploring your data, and collaborating with your team.\r\n\r\n---\r\n\r\nWhat is Schema Weaver?\r\n\r\nSchema Weaver is a PostgreSQL schema management platform. It gives you a visual SQL Editor for writing and organizing your schema, an auto-generated ER diagram that updates as you typ",
+      "snippet": ""
     },
     {
       "slug": "03-database/adding-a-connection",
@@ -105,8 +105,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Adding a Connection\n\nAll database connections in Schema Weaver are added from the SQL Editor. Once saved, a connection is available across both the SQL Editor (for schema migrations) and the Data Explorer (for browsing and querying your data).\n\n> Quick links: [Database Overview](/database) · [Connection Dashboard](/database/connection-dashboard)\n\n---\n\nHow to Add a Connection\n\n1. Open the [SQL Editor](https://sql.schemaweaver.vivekmind.com/)\n2. Click Connect in the footer status bar at the bottom",
-      "snippet": "All database connections in Schema Weaver are added from the SQL Editor. Once saved, a connection is available across both the SQL Editor (for schema migrations) and the Data Explorer (for browsing an"
+      "content": "Adding a Connection\r\n\r\nAll database connections in Schema Weaver are added from the SQL Editor. Once saved, a connection is available across both the SQL Editor (for schema migrations) and the Data Explorer (for browsing and querying your data).\r\n\r\n> Quick links: [Database Overview](/database) · [Connection Dashboard](/database/connection-dashboard)\r\n\r\n---\r\n\r\nHow to Add a Connection\r\n\r\n1. Open the [SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/)\r\n2. Click Connect in the footer status",
+      "snippet": ""
     },
     {
       "slug": "03-database/connection-dashboard",
@@ -146,8 +146,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Connection Dashboard\n\nOnce you've added one or more connections, Schema Weaver gives you several views for managing and using them — a connections list, a sidebar panel while you're working in the SQL Editor, and a full connection dashboard for each connection.\n\n> Quick links: [Adding a Connection](/database/adding-a-connection) · [Pull, Diff & Push](/database/pull-diff-push)\n\n---\n\nConnections List\n\nAfter adding connections they appear in the connection panel. Open the panel from the SQL Editor ",
-      "snippet": "Once you've added one or more connections, Schema Weaver gives you several views for managing and using them — a connections list, a sidebar panel while you're working in the SQL Editor, and a full co"
+      "content": "Connection Dashboard\r\n\r\nOnce you've added one or more connections, Schema Weaver gives you several views for managing and using them — a connections list, a sidebar panel while you're working in the SQL Editor, and a full connection dashboard for each connection.\r\n\r\n> Quick links: [Adding a Connection](/database/adding-a-connection) · [Pull, Diff & Push](/database/pull-diff-push)\r\n\r\n---\r\n\r\nConnections List\r\n\r\nAfter adding connections they appear in the connection panel. Open the panel from the S",
+      "snippet": ""
     },
     {
       "slug": "03-database/drift-detection",
@@ -203,8 +203,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Drift Detection\n\nDrift happens when someone (or something) changes your live database's schema outside of Schema Weaver. Your project SQL says one thing, but the actual database looks different. Schema Weaver detects this automatically and prevents you from overwriting those changes unknowingly.\n\n> Quick links: [Pull, Diff & Push](/database/pull-diff-push) · [Migrations](/database/migrations)\n\n---\n\nWhat Causes Drift\n\nDrift can be introduced by:\n\n- A developer running `ALTER TABLE` or `CREATE IND",
-      "snippet": "Drift happens when someone (or something) changes your live database's schema outside of Schema Weaver. Your project SQL says one thing, but the actual database looks different. Schema Weaver detects "
+      "content": "Drift Detection\r\n\r\nDrift happens when someone (or something) changes your live database's schema outside of Schema Weaver. Your project SQL says one thing, but the actual database looks different. Schema Weaver detects this automatically and prevents you from overwriting those changes unknowingly.\r\n\r\n> Quick links: [Pull, Diff & Push](/database/pull-diff-push) · [Migrations](/database/migrations)\r\n\r\n---\r\n\r\nWhat Causes Drift\r\n\r\nDrift can be introduced by:\r\n\r\n- A developer running `ALTER TABLE` or",
+      "snippet": ""
     },
     {
       "slug": "03-database/history-rollback",
@@ -252,8 +252,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "History & Rollback\n\nEvery migration applied through Schema Weaver is recorded in a persistent history log — who ran it, when, and what the outcome was. If a migration causes a problem, you can roll it back with a single command. The reverse SQL is generated automatically at apply time, so rollback is always available.\n\n> Quick links: [Migrations](/database/migrations) · [Terminal & sw Commands](/database/terminal)\n\n---\n\nMigration History\n\n`sw history` lists all migrations applied through Schema ",
-      "snippet": "Every migration applied through Schema Weaver is recorded in a persistent history log — who ran it, when, and what the outcome was. If a migration causes a problem, you can roll it back with a single "
+      "content": "History & Rollback\r\n\r\nEvery migration applied through Schema Weaver is recorded in a persistent history log — who ran it, when, and what the outcome was. If a migration causes a problem, you can roll it back with a single command. The reverse SQL is generated automatically at apply time, so rollback is always available.\r\n\r\n> Quick links: [Migrations](/database/migrations) · [Terminal & sw Commands](/database/terminal)\r\n\r\n---\r\n\r\nMigration History\r\n\r\n`sw history` lists all migrations applied throu",
+      "snippet": ""
     },
     {
       "slug": "03-database/index",
@@ -302,8 +302,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Database\n\nSchema Weaver is built for PostgreSQL. Every live-database feature — schema sync, migration, drift detection, data exploration — works exclusively with PostgreSQL. This focus means every part of the system is purpose-built for PostgreSQL's type system, DDL model, catalog structure, and extension ecosystem.\n\n> Quick links: [SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [Data Explorer](https://data.schemaweaver.vivekmind.com/)\n\n---\n\nWhere Connections Live\n\nAll database connectio",
-      "snippet": "Schema Weaver is built for PostgreSQL. Every live-database feature — schema sync, migration, drift detection, data exploration — works exclusively with PostgreSQL. This focus means every part of the s"
+      "content": "Database\r\n\r\nSchema Weaver is built for PostgreSQL. Every live-database feature — schema sync, migration, drift detection, data exploration — works exclusively with PostgreSQL. This focus means every part of the system is purpose-built for PostgreSQL's type system, DDL model, catalog structure, and extension ecosystem.\r\n\r\n> Quick links: [SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/) · [Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/)\r\n\r\n---\r\n\r\nWhere Connections Live",
+      "snippet": ""
     },
     {
       "slug": "03-database/migrations",
@@ -394,8 +394,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Migrations\n\n`sw push --apply` applies your schema changes to the live database. Schema Weaver wraps every migration in a multi-step pipeline designed for correctness and safety — advisory locking to prevent concurrent changes, automatic drift checking before execution, and full transaction wrapping so partial failures roll back cleanly.\n\n> Quick links: [Pull, Diff & Push](/database/pull-diff-push) · [Drift Detection](/database/drift-detection) · [History & Rollback](/database/history-rollback)\n\n",
-      "snippet": "`sw push --apply` applies your schema changes to the live database. Schema Weaver wraps every migration in a multi-step pipeline designed for correctness and safety — advisory locking to prevent concu"
+      "content": "Migrations\r\n\r\n`sw push --apply` applies your schema changes to the live database. Schema Weaver wraps every migration in a multi-step pipeline designed for correctness and safety — advisory locking to prevent concurrent changes, automatic drift checking before execution, and full transaction wrapping so partial failures roll back cleanly.\r\n\r\n> Quick links: [Pull, Diff & Push](/database/pull-diff-push) · [Drift Detection](/database/drift-detection) · [History & Rollback](/database/history-rollbac",
+      "snippet": ""
     },
     {
       "slug": "03-database/pull-diff-push",
@@ -444,8 +444,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Pull, Diff & Push\n\nThe core database workflow in Schema Weaver is three steps: pull the live schema into your project files, diff to see what has changed, and push to apply your changes back. These three operations keep your project SQL and your live PostgreSQL database in sync.\n\n> Quick links: [Migrations](/database/migrations) · [Drift Detection](/database/drift-detection) · [Terminal & sw Commands](/database/terminal)\n\n---\n\nThe Workflow\n\n\n\nYou can also start from scratch — write your schema f",
-      "snippet": "The core database workflow in Schema Weaver is three steps: **pull** the live schema into your project files, **diff** to see what has changed, and **push** to apply your changes back. These three ope"
+      "content": "Pull, Diff & Push\r\n\r\nThe core database workflow in Schema Weaver is three steps: pull the live schema into your project files, diff to see what has changed, and push to apply your changes back. These three operations keep your project SQL and your live PostgreSQL database in sync.\r\n\r\n> Quick links: [Migrations](/database/migrations) · [Drift Detection](/database/drift-detection) · [Terminal & sw Commands](/database/terminal)\r\n\r\n---\r\n\r\nThe Workflow\r\n\r\n\r\n\r\nYou can also start from scratch — write y",
+      "snippet": ""
     },
     {
       "slug": "03-database/terminal",
@@ -524,8 +524,8 @@
           "title": "Command Summary"
         }
       ],
-      "content": "Terminal & sw Commands\n\nThe SQL Editor has a built-in terminal for running database operations directly without leaving the editor. Once a connection is active, open the terminal from the connection panel and run `sw` commands — a CLI for interacting with your connected PostgreSQL database.\n\n> Quick links: [Pull, Diff & Push](/database/pull-diff-push) · [Migrations](/database/migrations) · [Drift Detection](/database/drift-detection)\n\n![The built-in terminal showing sw status and sw pull command",
-      "snippet": "The SQL Editor has a built-in terminal for running database operations directly without leaving the editor. Once a connection is active, open the terminal from the connection panel and run `sw` comman"
+      "content": "Terminal & sw Commands\r\n\r\nThe SQL Editor has a built-in terminal for running database operations directly without leaving the editor. Once a connection is active, open the terminal from the connection panel and run `sw` commands — a CLI for interacting with your connected PostgreSQL database.\r\n\r\n> Quick links: [Pull, Diff & Push](/database/pull-diff-push) · [Migrations](/database/migrations) · [Drift Detection](/database/drift-detection)\r\n\r\n![The built-in terminal showing sw status and sw pull c",
+      "snippet": ""
     },
     {
       "slug": "04-sql-editor/ai-assistant-tools",
@@ -596,8 +596,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "AI Tools Reference\n\nResona AI has access to 55 purpose-built tools it can call autonomously when answering your questions. You never call these tools directly — Resona decides which ones to use based on your intent. This page is a complete reference so you know exactly what Resona is capable of.\n\n> Quick links: [Resona AI Overview](/sql-editor/ai-assistant) · [Workspace Editing](/sql-editor/ai-assistant-workspace)\n\n---\n\nHow Tools Work\n\nWhen you send a message, Resona's agentic loop plans which t",
-      "snippet": "Resona AI has access to **55 purpose-built tools** it can call autonomously when answering your questions. You never call these tools directly — Resona decides which ones to use based on your intent. "
+      "content": "AI Tools Reference\r\n\r\nResona AI has access to 55 purpose-built tools it can call autonomously when answering your questions. You never call these tools directly — Resona decides which ones to use based on your intent. This page is a complete reference so you know exactly what Resona is capable of.\r\n\r\n> Quick links: [Resona AI Overview](/sql-editor/ai-assistant) · [Workspace Editing](/sql-editor/ai-assistant-workspace)\r\n\r\n---\r\n\r\nHow Tools Work\r\n\r\nWhen you send a message, Resona's agentic loop pla",
+      "snippet": ""
     },
     {
       "slug": "04-sql-editor/ai-assistant-workspace",
@@ -664,8 +664,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Workspace Editing\n\nWhen Resona AI edits your SQL files it does not regenerate entire files from scratch. It finds the exact block that needs to change and replaces only that — leaving everything else untouched. It can make multiple changes to a single file in one go, or apply edits across several files at once, with full rollback if anything goes wrong.\n\n> Quick links: [Resona AI Overview](/sql-editor/ai-assistant) · [AI Tools Reference](/sql-editor/ai-assistant-tools) · [Version History](/sql-e",
-      "snippet": "When Resona AI edits your SQL files it does not regenerate entire files from scratch. It finds the exact block that needs to change and replaces only that — leaving everything else untouched. It can m"
+      "content": "Workspace Editing\r\n\r\nWhen Resona AI edits your SQL files it does not regenerate entire files from scratch. It finds the exact block that needs to change and replaces only that — leaving everything else untouched. It can make multiple changes to a single file in one go, or apply edits across several files at once, with full rollback if anything goes wrong.\r\n\r\n> Quick links: [Resona AI Overview](/sql-editor/ai-assistant) · [AI Tools Reference](/sql-editor/ai-assistant-tools) · [Version History](/s",
+      "snippet": ""
     },
     {
       "slug": "04-sql-editor/ai-assistant",
@@ -767,8 +767,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Resona AI — SQL Editor\n\nResona AI is an agentic AI assistant built directly into the SQL Editor. It is not a simple chat interface that generates a code block for you to copy — it is a full agentic system with 55 purpose-built tools that can read your files, reason about your schema graph, run the compiler, analyze security and performance, write surgical multi-file edits, diff your live database, and apply migrations — all from a single conversation.\n\n> Quick links: [Open SQL Editor](https://sq",
-      "snippet": "Resona AI is an agentic AI assistant built directly into the SQL Editor. It is not a simple chat interface that generates a code block for you to copy — it is a full agentic system with 55 purpose-bui"
+      "content": "Resona AI — SQL Editor\r\n\r\nResona AI is an agentic AI assistant built directly into the SQL Editor. It is not a simple chat interface that generates a code block for you to copy — it is a full agentic system with 55 purpose-built tools that can read your files, reason about your schema graph, run the compiler, analyze security and performance, write surgical multi-file edits, diff your live database, and apply migrations — all from a single conversation.\r\n\r\n> Quick links: [Open SQL Editor](https:",
+      "snippet": ""
     },
     {
       "slug": "04-sql-editor/er-diagram-ai",
@@ -833,8 +833,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Resona AI in the ER Diagram\n\nResona AI is embedded directly into the ER Diagram at three levels: individual tables, schema groups, and the full schema. Each level opens a chat panel anchored by a dashed blue edge to its subject — you can ask questions, request SQL, and apply generated changes without leaving the diagram.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [ER Diagram Overview](/sql-editor/er-diagram) · [Resona AI Assistant](/sql-editor/ai-assistant)\n\n---",
-      "snippet": "Resona AI is embedded directly into the ER Diagram at three levels: individual tables, schema groups, and the full schema. Each level opens a chat panel anchored by a dashed blue edge to its subject —"
+      "content": "Resona AI in the ER Diagram\r\n\r\nResona AI is embedded directly into the ER Diagram at three levels: individual tables, schema groups, and the full schema. Each level opens a chat panel anchored by a dashed blue edge to its subject — you can ask questions, request SQL, and apply generated changes without leaving the diagram.\r\n\r\n> Quick links: [Open SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/) · [ER Diagram Overview](/sql-editor/er-diagram) · [Resona AI Assistant](/sql-editor/ai-assi",
+      "snippet": ""
     },
     {
       "slug": "04-sql-editor/er-diagram-grouping",
@@ -895,8 +895,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Grouping & Schema Clusters\n\nWhen Cluster by Schema is enabled, the ER Diagram groups all nodes by their PostgreSQL schema namespace into visually distinct containers. Tables, views, functions, and other objects that belong to `auth`, `billing`, `public`, `inventory` — or any other schema in your project — are enclosed in their own labeled group. This makes it immediately clear which domain each object belongs to and eliminates the visual noise of a flat diagram with hundreds of nodes.\n\n> Quick l",
-      "snippet": "When **Cluster by Schema** is enabled, the ER Diagram groups all nodes by their PostgreSQL schema namespace into visually distinct containers. Tables, views, functions, and other objects that belong t"
+      "content": "Grouping & Schema Clusters\r\n\r\nWhen Cluster by Schema is enabled, the ER Diagram groups all nodes by their PostgreSQL schema namespace into visually distinct containers. Tables, views, functions, and other objects that belong to `auth`, `billing`, `public`, `inventory` — or any other schema in your project — are enclosed in their own labeled group. This makes it immediately clear which domain each object belongs to and eliminates the visual noise of a flat diagram with hundreds of nodes.\r\n\r\n> Qui",
+      "snippet": ""
     },
     {
       "slug": "04-sql-editor/er-diagram-path-analysis",
@@ -958,8 +958,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Path Analysis\n\nPath Analysis finds the shortest foreign-key relationship chain between any two tables in your schema. Instead of manually tracing JOIN paths through a dense diagram, you select a start table and an end table — the diagram highlights every intermediate table and edge you would need to traverse to connect them.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [ER Diagram Overview](/sql-editor/er-diagram)\n\n![Path Analysis active in the ER Diagram showing ",
-      "snippet": "Path Analysis finds the **shortest foreign-key relationship chain** between any two tables in your schema. Instead of manually tracing JOIN paths through a dense diagram, you select a start table and "
+      "content": "Path Analysis\r\n\r\nPath Analysis finds the shortest foreign-key relationship chain between any two tables in your schema. Instead of manually tracing JOIN paths through a dense diagram, you select a start table and an end table — the diagram highlights every intermediate table and edge you would need to traverse to connect them.\r\n\r\n> Quick links: [Open SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/) · [ER Diagram Overview](/sql-editor/er-diagram)\r\n\r\n![Path Analysis active in the ER Dia",
+      "snippet": ""
     },
     {
       "slug": "04-sql-editor/er-diagram-visibility",
@@ -1016,8 +1016,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Visibility & Node Types\n\nThe ER Diagram supports every PostgreSQL object type — tables, views, materialized views, functions, enums, domains, roles, sequences, extensions, and RLS policies. On a real production schema this can mean dozens or hundreds of extra nodes beyond your core tables. The Visibility controls let you show only what you need, making large diagrams readable and layout faster.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [ER Diagram Overview](/sq",
-      "snippet": "The ER Diagram supports every PostgreSQL object type — tables, views, materialized views, functions, enums, domains, roles, sequences, extensions, and RLS policies. On a real production schema this ca"
+      "content": "Visibility & Node Types\r\n\r\nThe ER Diagram supports every PostgreSQL object type — tables, views, materialized views, functions, enums, domains, roles, sequences, extensions, and RLS policies. On a real production schema this can mean dozens or hundreds of extra nodes beyond your core tables. The Visibility controls let you show only what you need, making large diagrams readable and layout faster.\r\n\r\n> Quick links: [Open SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/) · [ER Diagram Ov",
+      "snippet": ""
     },
     {
       "slug": "04-sql-editor/er-diagram",
@@ -1139,8 +1139,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "ER Diagram\n\nThe ER Diagram is a live, interactive visualization of your entire PostgreSQL schema. Every object — tables, views, materialized views, functions, enums, domains, sequences, roles, extensions, and RLS policies — renders as a node on a pannable, zoomable canvas. Foreign-key relationships appear as directed edges. The diagram updates in real time as you type SQL with no manual refresh required, and scales to schemas with thousands of tables.\n\n> Quick links: [Open SQL Editor](https://sq",
-      "snippet": "The ER Diagram is a live, interactive visualization of your entire PostgreSQL schema. Every object — tables, views, materialized views, functions, enums, domains, sequences, roles, extensions, and RLS"
+      "content": "ER Diagram\r\n\r\nThe ER Diagram is a live, interactive visualization of your entire PostgreSQL schema. Every object — tables, views, materialized views, functions, enums, domains, sequences, roles, extensions, and RLS policies — renders as a node on a pannable, zoomable canvas. Foreign-key relationships appear as directed edges. The diagram updates in real time as you type SQL with no manual refresh required, and scales to schemas with thousands of tables.\r\n\r\n> Quick links: [Open SQL Editor](https:",
+      "snippet": ""
     },
     {
       "slug": "04-sql-editor/file-manager",
@@ -1233,8 +1233,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "File Manager\n\nThe SQL Editor's file manager lets you organize your PostgreSQL schema definitions into projects, folders, and files. It works like a lightweight version of VS Code's Explorer sidebar — with drag-and-drop reordering, instant file search, and full cloud sync for team projects.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Collaboration](/team-collaboration)\n\n![The SQL Editor in fullscreen mode showing the active fi",
-      "snippet": "The SQL Editor's file manager lets you organize your PostgreSQL schema definitions into projects, folders, and files. It works like a lightweight version of VS Code's Explorer sidebar — with drag-and-"
+      "content": "File Manager\r\n\r\nThe SQL Editor's file manager lets you organize your PostgreSQL schema definitions into projects, folders, and files. It works like a lightweight version of VS Code's Explorer sidebar — with drag-and-drop reordering, instant file search, and full cloud sync for team projects.\r\n\r\n> Quick links: [Open SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Collaboration](/team-collaboration)\r\n\r\n![The SQL Editor in fullscreen mode showing ",
+      "snippet": ""
     },
     {
       "slug": "04-sql-editor/index",
@@ -1297,8 +1297,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "SQL Editor\n\nThe SQL Editor is the primary workspace in Schema Weaver. It's where you write PostgreSQL schema definitions, organize them into projects and files, analyze your schema quality with the built-in compiler, and visualize table relationships as an interactive ER diagram — all in one place.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [Docs Home](https://docs.schemaweaver.vivekmind.com/) · [Data Explorer](https://docs.schemaweaver.vivekmind.com/data-explor",
-      "snippet": "The SQL Editor is the primary workspace in Schema Weaver. It's where you write PostgreSQL schema definitions, organize them into projects and files, analyze your schema quality with the built-in compi"
+      "content": "SQL Editor\r\n\r\nThe SQL Editor is the primary workspace in Schema Weaver. It's where you write PostgreSQL schema definitions, organize them into projects and files, analyze your schema quality with the built-in compiler, and visualize table relationships as an interactive ER diagram — all in one place.\r\n\r\n> Quick links: [Open SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/) · [Docs Home](https://docs.schemaweaver.vivekmind.com/) · [Data Explorer](https://docs.schemaweaver.vivekmind.com/",
+      "snippet": ""
     },
     {
       "slug": "04-sql-editor/schema-compiler",
@@ -1387,8 +1387,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Schema Compiler\n\nThe Schema Compiler is a static analysis engine built into the SQL Editor. Every time you edit a file, it silently re-compiles the merged project SQL through 20 analysis layers and produces a health grade with a detailed issue report — all in your browser, with no server round-trip.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Writing SQL](/sql-editor/writing-sql)\n\n---\n\nOpening the Compiler Panel\n\nClick Compil",
-      "snippet": "The Schema Compiler is a static analysis engine built into the SQL Editor. Every time you edit a file, it silently re-compiles the merged project SQL through 20 analysis layers and produces a health g"
+      "content": "Schema Compiler\r\n\r\nThe Schema Compiler is a static analysis engine built into the SQL Editor. Every time you edit a file, it silently re-compiles the merged project SQL through 20 analysis layers and produces a health grade with a detailed issue report — all in your browser, with no server round-trip.\r\n\r\n> Quick links: [Open SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Writing SQL](/sql-editor/writing-sql)\r\n\r\n---\r\n\r\nOpening the Compiler Pane",
+      "snippet": ""
     },
     {
       "slug": "04-sql-editor/schema-diff",
@@ -1452,8 +1452,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Schema Diff\n\nThe Schema Diff tool lets you compare two PostgreSQL schema states side-by-side. It highlights every added, removed, and modified object — tables, columns, indexes, constraints, and more — so you can review changes before applying a migration or audit what drifted in production.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Version History](/sql-editor/version-history)\n\n---\n\nOpening the Diff Panel\n\nClick Diff in th",
-      "snippet": "The Schema Diff tool lets you compare two PostgreSQL schema states side-by-side. It highlights every added, removed, and modified object — tables, columns, indexes, constraints, and more — so you can "
+      "content": "Schema Diff\r\n\r\nThe Schema Diff tool lets you compare two PostgreSQL schema states side-by-side. It highlights every added, removed, and modified object — tables, columns, indexes, constraints, and more — so you can review changes before applying a migration or audit what drifted in production.\r\n\r\n> Quick links: [Open SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Version History](/sql-editor/version-history)\r\n\r\n---\r\n\r\nOpening the Diff Panel\r\n\r",
+      "snippet": ""
     },
     {
       "slug": "04-sql-editor/version-history",
@@ -1508,8 +1508,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Version History\n\nThe SQL Editor keeps a complete snapshot history of every file in your cloud projects. Every save creates an immutable version entry — you can browse the timeline, compare any two snapshots, or restore a previous state with a single click.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Schema Diff](/sql-editor/schema-diff)\n\n---\n\nOpening Version History\n\nThere are two ways to open the version history panel:\n\n1. R",
-      "snippet": "The SQL Editor keeps a complete snapshot history of every file in your cloud projects. Every save creates an immutable version entry — you can browse the timeline, compare any two snapshots, or restor"
+      "content": "Version History\r\n\r\nThe SQL Editor keeps a complete snapshot history of every file in your cloud projects. Every save creates an immutable version entry — you can browse the timeline, compare any two snapshots, or restore a previous state with a single click.\r\n\r\n> Quick links: [Open SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Schema Diff](/sql-editor/schema-diff)\r\n\r\n---\r\n\r\nOpening Version History\r\n\r\nThere are two ways to open the version his",
+      "snippet": ""
     },
     {
       "slug": "04-sql-editor/writing-sql",
@@ -1597,8 +1597,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Writing SQL\n\nThe SQL Editor gives you a PostgreSQL-aware code editor with multi-file tabs, syntax highlighting, autosave, and a fullscreen mode. This page covers everything about the editing experience itself.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Schema Compiler](/sql-editor/schema-compiler)\n\n![The Schema Weaver SQL Editor showing the file tabs, PostgreSQL syntax highlighting, Explorer sidebar, and status bar](/images/",
-      "snippet": "The SQL Editor gives you a PostgreSQL-aware code editor with multi-file tabs, syntax highlighting, autosave, and a fullscreen mode. This page covers everything about the editing experience itself."
+      "content": "Writing SQL\r\n\r\nThe SQL Editor gives you a PostgreSQL-aware code editor with multi-file tabs, syntax highlighting, autosave, and a fullscreen mode. This page covers everything about the editing experience itself.\r\n\r\n> Quick links: [Open SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Schema Compiler](/sql-editor/schema-compiler)\r\n\r\n![The Schema Weaver SQL Editor showing the file tabs, PostgreSQL syntax highlighting, Explorer sidebar, and status ",
+      "snippet": ""
     },
     {
       "slug": "05-data-explorer/agentic-workflows",
@@ -1690,7 +1690,7 @@
           "title": "Iteration Limit"
         }
       ],
-      "content": "How Resona AI Works\r\n\r\nResona AI is not a simple chatbot. It is an agentic system — when you ask a question, it breaks the problem down into steps, calls specialized tools to gather and analyze data, and synthesizes the results into a complete answer. You can watch every step happen in real time.\r\n\r\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [AI Chat Interface](/data-explorer/ai-chat-interface) · [Charts & Analysis Results](/data-explorer/ai-artifacts)\r\n\r\n![R",
+      "content": "How Resona AI Works\r\n\r\nResona AI is not a simple chatbot. It is an agentic system — when you ask a question, it breaks the problem down into steps, calls specialized tools to gather and analyze data, and synthesizes the results into a complete answer. You can watch every step happen in real time.\r\n\r\n> Quick links: [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/) · [AI Chat Interface](/data-explorer/ai-chat-interface) · [Charts & Analysis Results](/data-explorer/ai-artifact",
       "snippet": ""
     },
     {
@@ -1827,7 +1827,7 @@
           "title": "Artifact Placeholder (Streaming)"
         }
       ],
-      "content": "Charts & Analysis Results\r\n\r\nWhen Resona AI finishes an analysis, it outputs artifacts — rich interactive components embedded directly in the chat. These are not static images. You can expand them, sort them, pin them to a dashboard, and export their underlying SQL.\r\n\r\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [AI Chat Interface](/data-explorer/ai-chat-interface) · [Workspace & Projects](/data-explorer/ai-workspace)\r\n\r\n![Resona AI chat response with an expan",
+      "content": "Charts & Analysis Results\r\n\r\nWhen Resona AI finishes an analysis, it outputs artifacts — rich interactive components embedded directly in the chat. These are not static images. You can expand them, sort them, pin them to a dashboard, and export their underlying SQL.\r\n\r\n> Quick links: [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/) · [AI Chat Interface](/data-explorer/ai-chat-interface) · [Workspace & Projects](/data-explorer/ai-workspace)\r\n\r\n![Resona AI chat response with",
       "snippet": ""
     },
     {
@@ -1876,8 +1876,8 @@
           "title": "Keyboard Shortcuts"
         }
       ],
-      "content": "AI Chat Interface\n\nResona AI is the agentic assistant built directly into the Data Explorer. You interact with it through a chat panel — type a question in plain English, and Resona queries your database, runs analysis tools, and returns results as interactive charts, tables, and reports.\n\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.com/data-explorer/) · [How Resona AI Works](/data-explorer/agentic-w",
-      "snippet": "Resona AI is the agentic assistant built directly into the Data Explorer. You interact with it through a chat panel — type a question in plain English, and Resona queries your database, runs analysis "
+      "content": "AI Chat Interface\r\n\r\nResona AI is the agentic assistant built directly into the Data Explorer. You interact with it through a chat panel — type a question in plain English, and Resona queries your database, runs analysis tools, and returns results as interactive charts, tables, and reports.\r\n\r\n> Quick links: [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.com/data-explorer/) · [How Resona AI Works](/data-explo",
+      "snippet": ""
     },
     {
       "slug": "05-data-explorer/ai-overview",
@@ -1920,7 +1920,7 @@
           "title": "Which pages should you read next?"
         }
       ],
-      "content": "Resona AI\r\n\r\nResona AI is the agentic data assistant built into the Data Explorer. You describe what you want to know in plain English — Resona figures out which tables to query, runs the analysis, and returns the results as interactive charts, tables, and reports.\r\n\r\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.com/data-explorer/) · [SQL Editor](https://sql.schemaweaver.vivekmind.com/)\r\n\r\n![Resona AI",
+      "content": "Resona AI\r\n\r\nResona AI is the agentic data assistant built into the Data Explorer. You describe what you want to know in plain English — Resona figures out which tables to query, runs the analysis, and returns the results as interactive charts, tables, and reports.\r\n\r\n> Quick links: [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.com/data-explorer/) · [SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/",
       "snippet": ""
     },
     {
@@ -1987,8 +1987,8 @@
           "title": "Connection Health"
         }
       ],
-      "content": "Workspace & Projects\n\nResona AI stores everything it generates. The Workspace holds exported files, Projects organize your analysis sessions, and Artifact History gives you a searchable archive of every chart and result ever produced.\n\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [AI Chat Interface](/data-explorer/ai-chat-interface) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.com/data-explorer/)\n\r\n![Resona AI interface showing the workspace a",
-      "snippet": "Resona AI stores everything it generates. The **Workspace** holds exported files, **Projects** organize your analysis sessions, and **Artifact History** gives you a searchable archive of every chart a"
+      "content": "Workspace & Projects\r\n\r\nResona AI stores everything it generates. The Workspace holds exported files, Projects organize your analysis sessions, and Artifact History gives you a searchable archive of every chart and result ever produced.\r\n\r\n> Quick links: [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/) · [AI Chat Interface](/data-explorer/ai-chat-interface) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.com/data-explorer/)\r\n\r\n![Resona AI interface showing t",
+      "snippet": ""
     },
     {
       "slug": "05-data-explorer/exploring-data",
@@ -2119,7 +2119,7 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Exploring Your Data\r\n\r\nOnce you've selected a PostgreSQL connection, the interface gives you a two-panel layout for browsing live data — a sidebar of tables on the left and a high-performance data grid on the right. Connections are created in the [SQL Editor](/database/adding-a-connection) and are available here automatically — no separate setup needed.\r\n\r\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.",
+      "content": "Exploring Your Data\r\n\r\nOnce you've selected a PostgreSQL connection, the interface gives you a two-panel layout for browsing live data — a sidebar of tables on the left and a high-performance data grid on the right. Connections are created in the [SQL Editor](/database/adding-a-connection) and are available here automatically — no separate setup needed.\r\n\r\n> Quick links: [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.v",
       "snippet": ""
     },
     {
@@ -2229,8 +2229,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Exporting Data\n\nThe Data Explorer lets you export data in multiple formats — either a single table or your entire database schema as a ZIP archive. Exports are triggered directly from the browser and download instantly.\n\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.com/data-explorer/) · [SQL Editor](https://sql.schemaweaver.vivekmind.com/)\n\r\n---\r\n\r\nExport Button\r\n\r\n![The Export button and format selec",
-      "snippet": "The Data Explorer lets you export data in multiple formats — either a single table or your entire database schema as a ZIP archive. Exports are triggered directly from the browser and download instant"
+      "content": "Exporting Data\r\n\r\nThe Data Explorer lets you export data in multiple formats — either a single table or your entire database schema as a ZIP archive. Exports are triggered directly from the browser and download instantly.\r\n\r\n> Quick links: [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.com/data-explorer/) · [SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/)\r\n\r\n---\r\n\r\nExport Button\r\n\r\n![The Export bu",
+      "snippet": ""
     },
     {
       "slug": "05-data-explorer/index",
@@ -2259,10 +2259,6 @@
         {
           "level": 3,
           "title": "Cloud Platform"
-        },
-        {
-          "level": 3,
-          "title": "Self-hosted / CLI"
         },
         {
           "level": 2,
@@ -2301,7 +2297,7 @@
           "title": "Related Schema Weaver Links"
         }
       ],
-      "content": "Data Explorer\r\n\r\nThe Data Explorer is a built-in SQL workbench that lets you connect to your databases, run queries, and explore your data — all inside Schema Weaver. It integrates with Resona AI so you can ask questions in plain English and get runnable SQL back instantly.\r\n\r\n> Quick links: [Open Data Explorer](https://data.schemaweaver.vivekmind.com/) · [Docs Home](https://docs.schemaweaver.vivekmind.com/) · [Schema Weaver Landing](https://schemaweaver.vivekmind.com/) · [SQL Editor](https://sq",
+      "content": "Data Explorer\r\n\r\nThe Data Explorer is a built-in SQL workbench that lets you connect to your databases, run queries, and explore your data — all inside Schema Weaver. It integrates with Resona AI so you can ask questions in plain English and get runnable SQL back instantly.\r\n\r\n![The Data Explorer showing the two-column layout with left sidebar and main data grid](/images/data-explorer/data-explorer.png)\r\n\r\n> Quick links: [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/) · [",
       "snippet": ""
     },
     {
@@ -2412,8 +2408,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "AI Chat Guide\n\nResona AI is available in two surfaces — the SQL Editor and the Data Explorer. Both share the same chat mechanics: a streaming conversation with tool execution, model selection, and full context of your schema. This page covers how to use the chat interface effectively in both places.\n\n---\n\nOpening the Chat\n\nSQL Editor\n\nClick Resona AI in the left sidebar panel of the SQL Editor. The panel stays open as you navigate files and maintains your full conversation history. You can also ",
-      "snippet": "Resona AI is available in two surfaces — the SQL Editor and the Data Explorer. Both share the same chat mechanics: a streaming conversation with tool execution, model selection, and full context of yo"
+      "content": "AI Chat Guide\r\n\r\nResona AI is available in two surfaces — the SQL Editor and the Data Explorer. Both share the same chat mechanics: a streaming conversation with tool execution, model selection, and full context of your schema. This page covers how to use the chat interface effectively in both places.\r\n\r\n---\r\n\r\nOpening the Chat\r\n\r\nSQL Editor\r\n\r\nClick Resona AI in the left sidebar panel of the SQL Editor. The panel stays open as you navigate files and maintains your full conversation history. You",
+      "snippet": ""
     },
     {
       "slug": "06-resona-ai/index",
@@ -2475,8 +2471,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Resona AI\n\nResona is Schema Weaver's AI assistant. It is embedded in two products — the SQL Editor and the Data Explorer — each with a purpose-built architecture for its context. Both surfaces use the same model selection, the same credit system, and the same account.\n\n---\n\nTwo Products, One AI\n\nResona in the SQL Editor\n\nThe SQL Editor's Resona AI is an agentic schema assistant. It has access to your project files, your compiled schema graph, your ER diagram, and 55 purpose-built tools for writi",
-      "snippet": "Resona is Schema Weaver's AI assistant. It is embedded in two products — the **SQL Editor** and the **Data Explorer** — each with a purpose-built architecture for its context. Both surfaces use the sa"
+      "content": "Resona AI\r\n\r\nResona is Schema Weaver's AI assistant. It is embedded in two products — the SQL Editor and the Data Explorer — each with a purpose-built architecture for its context. Both surfaces use the same model selection, the same credit system, and the same account.\r\n\r\n---\r\n\r\nTwo Products, One AI\r\n\r\nResona in the SQL Editor\r\n\r\nThe SQL Editor's Resona AI is an agentic schema assistant. It has access to your project files, your compiled schema graph, your ER diagram, and 55 purpose-built tools",
+      "snippet": ""
     },
     {
       "slug": "06-resona-ai/models",
@@ -2558,8 +2554,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Models and Credits\n\nResona AI supports a large range of models from multiple providers, organized into four capability tiers. You choose the model per message — use a FAST model for quick questions and a POWERFUL model for complex multi-table design or deep analysis. Credits are shared across the SQL Editor and Data Explorer.\n\n---\n\nModel Tiers\n\nModels are grouped into four tiers based on capability and cost. The credit multiplier shown in the UI (e.g. `1.0×`) is relative to the base rate of the ",
-      "snippet": "Resona AI supports a large range of models from multiple providers, organized into four capability tiers. You choose the model per message — use a FAST model for quick questions and a POWERFUL model f"
+      "content": "Models and Credits\r\n\r\nResona AI supports a large range of models from multiple providers, organized into four capability tiers. You choose the model per message — use a FAST model for quick questions and a POWERFUL model for complex multi-table design or deep analysis. Credits are shared across the SQL Editor and Data Explorer.\r\n\r\n---\r\n\r\nModel Tiers\r\n\r\nModels are grouped into four tiers based on capability and cost. The credit multiplier shown in the UI (e.g. `1.0×`) is relative to the base rate",
+      "snippet": ""
     },
     {
       "slug": "07-team-collaboration/index",
@@ -2624,8 +2620,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Team Collaboration\n\nSchema Weaver's collaboration model is built around Teams. You create a team, invite members by email, and connect your projects to that team. Everyone on the team gets access to the connected projects — and the database connections linked to those projects — without any credential sharing.\n\n> Quick links: [Open SQL Editor](https://sql.schemaweaver.vivekmind.com/) · [Open Data Explorer](https://data.schemaweaver.vivekmind.com/)\n\n---\n\nWhere to Find Team Settings\n\nAll team mana",
-      "snippet": "Schema Weaver's collaboration model is built around **Teams**. You create a team, invite members by email, and connect your projects to that team. Everyone on the team gets access to the connected pro"
+      "content": "Team Collaboration\r\n\r\nSchema Weaver's collaboration model is built around Teams. You create a team, invite members by email, and connect your projects to that team. Everyone on the team gets access to the connected projects — and the database connections linked to those projects — without any credential sharing.\r\n\r\n> Quick links: [Open SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/) · [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/)\r\n\r\n---\r\n\r\nWhere to Find Team",
+      "snippet": ""
     }
   ]
 }
