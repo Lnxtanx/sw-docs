@@ -8,7 +8,7 @@ const publicDir = path.join(docsRoot, 'public');
 const distDir = path.join(docsRoot, 'dist');
 const docsBaseUrl = 'https://docs.schemaweaver.vivekmind.com';
 const appBaseUrl = 'https://schemaweaver.vivekmind.com';
-const defaultOgImage = `${docsBaseUrl}/og-image.svg`;
+const defaultOgImage = `${docsBaseUrl}/resona.png`;
 const defaultDescription = 'Official Schema Weaver documentation for product guides, Data Explorer workflows, SQL Editor usage, APIs, and schema management.';
 
 function ensureDir(dirPath) {
@@ -172,15 +172,15 @@ function buildStaticShell({ title, description, canonicalUrl, htmlContent, relat
     <meta property="og:description" content="${escapeHtml(description)}" />
     <meta property="og:url" content="${canonicalUrl}" />
     <meta property="og:image" content="${defaultOgImage}" />
-    <meta property="og:image:alt" content="Schema Weaver Docs social preview" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Schema Weaver Logo" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
 
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="${escapeHtml(fullTitle)}" />
     <meta name="twitter:description" content="${escapeHtml(description)}" />
     <meta name="twitter:image" content="${defaultOgImage}" />
-    <meta name="twitter:image:alt" content="Schema Weaver Docs social preview" />
+    <meta name="twitter:image:alt" content="Schema Weaver Logo" />
 
     <script type="application/ld+json">${JSON.stringify(techArticleLd)}</script>
     <script type="application/ld+json">${JSON.stringify(breadcrumbLd)}</script>

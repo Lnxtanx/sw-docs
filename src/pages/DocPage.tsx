@@ -14,9 +14,9 @@ import type { Heading, NavTreeItem } from '../lib/mdx/types.js';
 
 const DOCS_BASE_URL = 'https://docs.schemaweaver.vivekmind.com';
 const APP_BASE_URL = 'https://schemaweaver.vivekmind.com';
-const DEFAULT_TITLE = 'Schema Weaver Docs';
-const DEFAULT_DESCRIPTION = 'Official Schema Weaver documentation for product guides, Data Explorer workflows, SQL Editor usage, APIs, and schema management.';
-const DEFAULT_OG_IMAGE = `${DOCS_BASE_URL}/og-image.svg`;
+const DEFAULT_TITLE = 'SW Docs | Schema Weaver PostgreSQL Management';
+const DEFAULT_DESCRIPTION = 'Official SW Docs for Schema Weaver. Master PostgreSQL schema management, Dijkstra-powered ER diagrams, and Resona agentic AI workflows.';
+const DEFAULT_OG_IMAGE = `${DOCS_BASE_URL}/resona.png`;
 const DEFAULT_ROBOTS = 'index,follow,max-image-preview:large';
 const NOT_FOUND_ROBOTS = 'noindex,follow';
 
@@ -143,20 +143,17 @@ function applyDefaultHead() {
   setCanonical(`${DOCS_BASE_URL}/`);
 
   setMetaByProperty('og:type', 'website');
-  setMetaByProperty('og:site_name', DEFAULT_TITLE);
+  setMetaByProperty('og:site_name', 'SW Docs');
   setMetaByProperty('og:title', DEFAULT_TITLE);
   setMetaByProperty('og:description', DEFAULT_DESCRIPTION);
   setMetaByProperty('og:url', `${DOCS_BASE_URL}/`);
   setMetaByProperty('og:image', DEFAULT_OG_IMAGE);
-  setMetaByProperty('og:image:alt', 'Schema Weaver Docs social preview');
-  setMetaByProperty('og:image:width', '1200');
-  setMetaByProperty('og:image:height', '630');
+  setMetaByProperty('og:image:alt', 'SW Docs social preview');
 
   setMetaByName('twitter:card', 'summary_large_image');
   setMetaByName('twitter:title', DEFAULT_TITLE);
   setMetaByName('twitter:description', DEFAULT_DESCRIPTION);
   setMetaByName('twitter:image', DEFAULT_OG_IMAGE);
-  setMetaByName('twitter:image:alt', 'Schema Weaver Docs social preview');
 
   removeJsonLd('tech-article-ld');
   removeJsonLd('breadcrumb-ld');
@@ -164,7 +161,7 @@ function applyDefaultHead() {
 
 function applyNotFoundHead(pathname: string) {
   const canonical = `${DOCS_BASE_URL}${pathname}`;
-  const title = `Page Not Found | ${DEFAULT_TITLE}`;
+  const title = `Page Not Found | SW Docs`;
   const description = 'The requested documentation page could not be found.';
 
   document.title = title;
@@ -175,20 +172,17 @@ function applyNotFoundHead(pathname: string) {
   setCanonical(canonical);
 
   setMetaByProperty('og:type', 'website');
-  setMetaByProperty('og:site_name', DEFAULT_TITLE);
+  setMetaByProperty('og:site_name', 'SW Docs');
   setMetaByProperty('og:title', title);
   setMetaByProperty('og:description', description);
   setMetaByProperty('og:url', canonical);
   setMetaByProperty('og:image', DEFAULT_OG_IMAGE);
-  setMetaByProperty('og:image:alt', 'Schema Weaver Docs social preview');
-  setMetaByProperty('og:image:width', '1200');
-  setMetaByProperty('og:image:height', '630');
+  setMetaByProperty('og:image:alt', 'SW Docs social preview');
 
   setMetaByName('twitter:card', 'summary_large_image');
   setMetaByName('twitter:title', title);
   setMetaByName('twitter:description', description);
   setMetaByName('twitter:image', DEFAULT_OG_IMAGE);
-  setMetaByName('twitter:image:alt', 'Schema Weaver Docs social preview');
 
   removeJsonLd('tech-article-ld');
   removeJsonLd('breadcrumb-ld');
@@ -201,7 +195,8 @@ function applyContentHead(
   tags: string[] | undefined,
   section: string | undefined,
 ) {
-  const fullTitle = `${title} | ${DEFAULT_TITLE}`;
+  const categorySuffix = section ? ` - ${section}` : '';
+  const fullTitle = `${title} | SW Docs${categorySuffix}`;
   const canonical = `${DOCS_BASE_URL}${pathname}`;
 
   document.title = fullTitle;
@@ -216,20 +211,17 @@ function applyContentHead(
   setCanonical(canonical);
 
   setMetaByProperty('og:type', 'article');
-  setMetaByProperty('og:site_name', DEFAULT_TITLE);
+  setMetaByProperty('og:site_name', 'SW Docs');
   setMetaByProperty('og:title', fullTitle);
   setMetaByProperty('og:description', description);
   setMetaByProperty('og:url', canonical);
   setMetaByProperty('og:image', DEFAULT_OG_IMAGE);
-  setMetaByProperty('og:image:alt', 'Schema Weaver Docs social preview');
-  setMetaByProperty('og:image:width', '1200');
-  setMetaByProperty('og:image:height', '630');
+  setMetaByProperty('og:image:alt', 'SW Docs social preview');
 
   setMetaByName('twitter:card', 'summary_large_image');
   setMetaByName('twitter:title', fullTitle);
   setMetaByName('twitter:description', description);
   setMetaByName('twitter:image', DEFAULT_OG_IMAGE);
-  setMetaByName('twitter:image:alt', 'Schema Weaver Docs social preview');
 
   upsertJsonLd('tech-article-ld', {
     '@context': 'https://schema.org',
@@ -240,7 +232,7 @@ function applyContentHead(
     mainEntityOfPage: canonical,
     author: {
       '@type': 'Organization',
-      name: 'Schema Weaver',
+      name: 'Schema Weaver (SW)',
       url: APP_BASE_URL,
     },
     publisher: {
@@ -257,7 +249,7 @@ function applyContentHead(
     keywords: tags?.join(', '),
     isPartOf: {
       '@type': 'WebSite',
-      name: DEFAULT_TITLE,
+      name: 'SW Docs',
       url: DOCS_BASE_URL,
     },
   });
