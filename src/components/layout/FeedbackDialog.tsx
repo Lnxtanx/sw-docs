@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { MessageSquare, Bug, Send, Sparkles, X, Upload, AlertCircle, Loader2 } from 'lucide-react';
+import { Bug, Send, X, Upload, Loader2 } from 'lucide-react';
 
 interface FeedbackDialogProps {
   trigger?: React.ReactNode;
