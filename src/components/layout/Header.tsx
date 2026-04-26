@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Search, Menu, Sun, Moon, Monitor, Database, BarChart3 } from 'lucide-react';
+import { Search, Menu, Sun, Moon, Monitor, Database, BarChart3, MessageSquare } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme.js';
+import { FeedbackDialog } from './FeedbackDialog.js';
 import type { Theme } from '../../hooks/useTheme.js';
 
 interface HeaderProps {
@@ -79,6 +80,14 @@ export function Header({ toggleSidebar, toggleAiPanel, aiPanelOpen }: HeaderProp
         </div>
 
         <div className="header-right">
+          <FeedbackDialog
+            trigger={
+              <button className="header-icon-link" title="Send Feedback">
+                <MessageSquare size={17} />
+              </button>
+            }
+          />
+
           {/* Theme toggle — cycles light → dark → system */}
           <button
             className="header-icon-link"

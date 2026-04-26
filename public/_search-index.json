@@ -901,7 +901,7 @@
     {
       "slug": "04-sql-editor/er-diagram-path-analysis",
       "title": "Path Analysis",
-      "description": "Find the shortest foreign-key join path between any two tables in your schema — with BFS and Dijkstra algorithms, visual highlighting, and confidence filtering",
+      "description": "Instantly find the shortest JOIN path between PostgreSQL tables using BFS and Dijkstra algorithms. Visualize relationship chains in the SW ER Diagram.",
       "tags": [
         "sql-editor",
         "er-diagram",
@@ -910,7 +910,8 @@
         "joins",
         "postgresql",
         "bfs",
-        "dijkstra"
+        "dijkstra",
+        "sw-diagram"
       ],
       "headings": [
         {
@@ -1239,13 +1240,15 @@
     {
       "slug": "04-sql-editor/index",
       "title": "SQL Editor",
-      "description": "Write, organize, and analyze PostgreSQL schemas in the Schema Weaver SQL Editor — the primary workspace for schema development",
+      "description": "Design and manage PostgreSQL schemas with the SW SQL Editor. Features modular DDL projects, integrated ER diagrams, and real-time schema compilation.",
       "tags": [
         "sql-editor",
         "schema",
         "postgresql",
         "workspace",
-        "projects"
+        "projects",
+        "ddl-editor",
+        "sw-editor"
       ],
       "headings": [
         {
@@ -1295,6 +1298,10 @@
         {
           "level": 2,
           "title": "Next Steps"
+        },
+        {
+          "level": 3,
+          "title": "Analyze Live Data"
         }
       ],
       "content": "SQL Editor\r\n\r\nThe SQL Editor is the primary workspace in Schema Weaver. It's where you write PostgreSQL schema definitions, organize them into projects and files, analyze your schema quality with the built-in compiler, and visualize table relationships as an interactive ER diagram — all in one place.\r\n\r\n> Quick links: [Open SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/) · [Docs Home](https://docs.schemaweaver.vivekmind.com/) · [Data Explorer](https://docs.schemaweaver.vivekmind.com/",
@@ -1303,7 +1310,7 @@
     {
       "slug": "04-sql-editor/schema-compiler",
       "title": "Schema Compiler",
-      "description": "Understand the SQL Editor's 20-layer schema compiler — how it grades your PostgreSQL schema, surfaces issues, and helps you write production-ready DDL",
+      "description": "Audit your database quality with the SW Schema Compiler. 20-layer static analysis for PostgreSQL DDL with A-F health grading and auto-repair fixes.",
       "tags": [
         "sql-editor",
         "schema-compiler",
@@ -1311,7 +1318,9 @@
         "grade",
         "issues",
         "postgresql",
-        "quality"
+        "quality",
+        "static-analysis",
+        "sw-compiler"
       ],
       "headings": [
         {
@@ -1385,6 +1394,10 @@
         {
           "level": 2,
           "title": "Next Steps"
+        },
+        {
+          "level": 3,
+          "title": "Verify Data Health"
         }
       ],
       "content": "Schema Compiler\r\n\r\nThe Schema Compiler is a static analysis engine built into the SQL Editor. Every time you edit a file, it silently re-compiles the merged project SQL through 20 analysis layers and produces a health grade with a detailed issue report — all in your browser, with no server round-trip.\r\n\r\n> Quick links: [Open SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Writing SQL](/sql-editor/writing-sql)\r\n\r\n---\r\n\r\nOpening the Compiler Pane",
@@ -1993,13 +2006,15 @@
     {
       "slug": "05-data-explorer/exploring-data",
       "title": "Exploring Your Data",
-      "description": "Browse tables, inspect columns, filter rows, and analyze column statistics in the Data Explorer grid",
+      "description": "Master the SW Data Explorer grid. Learn about canvas-based smart column sizing, server-side filtering, and real-time column distributions for PostgreSQL.",
       "tags": [
         "data-explorer",
         "grid",
         "columns",
         "filters",
-        "statistics"
+        "statistics",
+        "postgres-browser",
+        "sw-grid"
       ],
       "headings": [
         {
@@ -2117,6 +2132,10 @@
         {
           "level": 2,
           "title": "Next Steps"
+        },
+        {
+          "level": 3,
+          "title": "Evolve Your Schema"
         }
       ],
       "content": "Exploring Your Data\r\n\r\nOnce you've selected a PostgreSQL connection, the interface gives you a two-panel layout for browsing live data — a sidebar of tables on the left and a high-performance data grid on the right. Connections are created in the [SQL Editor](/database/adding-a-connection) and are available here automatically — no separate setup needed.\r\n\r\n> Quick links: [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.v",
@@ -2235,13 +2254,15 @@
     {
       "slug": "05-data-explorer/index",
       "title": "Data Explorer",
-      "description": "Query your PostgreSQL databases interactively with the Schema Weaver Data Explorer",
+      "description": "Explore live database rows with the SW Data Explorer. A high-performance PostgreSQL workbench with virtualized grids, smart sizing, and Resona AI analysis.",
       "tags": [
         "data-explorer",
         "queries",
         "sql",
         "postgresql",
-        "databases"
+        "databases",
+        "data-workbench",
+        "sw-explorer"
       ],
       "headings": [
         {
@@ -2295,6 +2316,10 @@
         {
           "level": 2,
           "title": "Related Schema Weaver Links"
+        },
+        {
+          "level": 3,
+          "title": "Design Your Schema"
         }
       ],
       "content": "Data Explorer\r\n\r\nThe Data Explorer is a built-in SQL workbench that lets you connect to your databases, run queries, and explore your data — all inside Schema Weaver. It integrates with Resona AI so you can ask questions in plain English and get runnable SQL back instantly.\r\n\r\n![The Data Explorer showing the two-column layout with left sidebar and main data grid](/images/data-explorer/data-explorer.png)\r\n\r\n> Quick links: [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/) · [",
@@ -2414,7 +2439,7 @@
     {
       "slug": "06-resona-ai/index",
       "title": "Resona AI",
-      "description": "Resona is Schema Weaver's AI assistant — available in both the SQL Editor and the Data Explorer with purpose-built architectures for schema design and live data analysis",
+      "description": "Meet Resona AI, the world's first Spatial AI Database Architect. Agentic ReAct loops for surgical DDL editing and natural language data analysis.",
       "tags": [
         "resona",
         "ai",
@@ -2423,7 +2448,9 @@
         "data-explorer",
         "models",
         "credits",
-        "natural-language"
+        "natural-language",
+        "agentic-sql",
+        "spatial-ai"
       ],
       "headings": [
         {
@@ -2621,6 +2648,82 @@
         }
       ],
       "content": "Team Collaboration\r\n\r\nSchema Weaver's collaboration model is built around Teams. You create a team, invite members by email, and connect your projects to that team. Everyone on the team gets access to the connected projects — and the database connections linked to those projects — without any credential sharing.\r\n\r\n> Quick links: [Open SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/) · [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/)\r\n\r\n---\r\n\r\nWhere to Find Team",
+      "snippet": ""
+    },
+    {
+      "slug": "08-pricing/comparison",
+      "title": "Feature Comparison",
+      "description": "Compare Schema Weaver features across Free, Starter, Pro, and Power plans",
+      "tags": [
+        "comparison",
+        "features",
+        "plans",
+        "matrix"
+      ],
+      "headings": [
+        {
+          "level": 3,
+          "title": "Ready to upgrade?"
+        }
+      ],
+      "content": "Feature Comparison\r\n\r\nCompare the capabilities of Schema Weaver across different plan tiers.\r\n\r\n| Feature | Free | Starter | Pro | Power |\r\n| :--- | :---: | :---: | :---: | :---: |\r\n| Resona AI | | | | |\r\n| Monthly AI Credits | 3,000 | 100,000 | 200,000 | 500,000 |\r\n| Concurrent Agents | 1 | 2 | 5 | 5 |\r\n| Fast Models (GPT-4o mini, etc.) | ✅ | ✅ | ✅ | ✅ |\r\n| Smart Models (Claude Haiku, etc.) | ❌ | ✅ | ✅ | ✅ |\r\n| Advanced Models (GPT-4o, Sonnet) | ❌ | ❌ | ✅ | ✅ |\r\n| Powerful Models (Claude Opus) ",
+      "snippet": ""
+    },
+    {
+      "slug": "08-pricing/index",
+      "title": "Plans and Credits",
+      "description": "Understand Schema Weaver pricing tiers, AI credit system, and Indian regional pricing",
+      "tags": [
+        "pricing",
+        "plans",
+        "credits",
+        "billing",
+        "students",
+        "open-source"
+      ],
+      "headings": [
+        {
+          "level": 2,
+          "title": "Pricing Tiers"
+        },
+        {
+          "level": 2,
+          "title": "What are AI Credits?"
+        },
+        {
+          "level": 3,
+          "title": "Credit Limits by Plan"
+        },
+        {
+          "level": 2,
+          "title": "Regional Pricing (India)"
+        },
+        {
+          "level": 2,
+          "title": "Special Discounts"
+        },
+        {
+          "level": 2,
+          "title": "FAQ"
+        },
+        {
+          "level": 3,
+          "title": "Is there a free trial?"
+        },
+        {
+          "level": 3,
+          "title": "Can I cancel anytime?"
+        },
+        {
+          "level": 3,
+          "title": "Does Resona AI see my row-level data?"
+        },
+        {
+          "level": 3,
+          "title": "Next Steps"
+        }
+      ],
+      "content": "Plans and Credits\r\n\r\nSchema Weaver offers transparent, AI-powered pricing designed to scale with your team. Whether you're a solo developer exploring PostgreSQL or a large team shipping production schemas, there's a plan that fits your craft.\r\n\r\n> Quick links: [Pricing Page](https://schemaweaver.vivekmind.com/pricing) · [SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/) · [Contact Sales](mailto:vivek@vivekmind.com)\r\n\r\n---\r\n\r\nPricing Tiers\r\n\r\n| Plan | Price (USD) | Price (INR) | Best Fo",
       "snippet": ""
     }
   ]

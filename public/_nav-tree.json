@@ -174,5 +174,19 @@
         "href": "/team-collaboration"
       }
     ]
+  },
+  {
+    "title": "Plans and Credits",
+    "href": "/pricing",
+    "children": [
+      {
+        "title": "Overview",
+        "href": "/pricing"
+      },
+      {
+        "title": "Feature Comparison",
+        "href": "/pricing/comparison"
+      }
+    ]
   }
 ]

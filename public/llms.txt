@@ -18,12 +18,12 @@
 - [Resona AI — SQL Editor](/sql-editor/ai-assistant): An agentic AI assistant built into the SQL Editor — generate DDL, analyze schemas, edit files across your project, run migrations, and reason through your entire schema with 50+ purpose-built tools
 - [Resona AI in the ER Diagram](/sql-editor/er-diagram-ai): Analyze tables, schema groups, and your entire schema with Resona AI directly from the ER Diagram — generate SQL, suggest indexes, check normalization, and apply changes instantly
 - [Grouping & Schema Clusters](/sql-editor/er-diagram-grouping): Cluster your ER diagram nodes by PostgreSQL schema namespace — resizable group containers, schema color coding, per-group stats, and lock mode
-- [Path Analysis](/sql-editor/er-diagram-path-analysis): Find the shortest foreign-key join path between any two tables in your schema — with BFS and Dijkstra algorithms, visual highlighting, and confidence filtering
+- [Path Analysis](/sql-editor/er-diagram-path-analysis): Instantly find the shortest JOIN path between PostgreSQL tables using BFS and Dijkstra algorithms. Visualize relationship chains in the SW ER Diagram.
 - [Visibility & Node Types](/sql-editor/er-diagram-visibility): Control exactly which PostgreSQL object types and which schema namespaces are shown in the ER Diagram — declutter large schemas and focus on what matters
 - [ER Diagram](/sql-editor/er-diagram): Visualize your entire PostgreSQL schema as a live, interactive entity-relationship diagram — all object types supported, updates in real time as you write SQL
 - [File Manager](/sql-editor/file-manager): Organize your PostgreSQL schemas into cloud projects, folders, and files using the SQL Editor's built-in file manager
-- [SQL Editor](/sql-editor): Write, organize, and analyze PostgreSQL schemas in the Schema Weaver SQL Editor — the primary workspace for schema development
-- [Schema Compiler](/sql-editor/schema-compiler): Understand the SQL Editor's 20-layer schema compiler — how it grades your PostgreSQL schema, surfaces issues, and helps you write production-ready DDL
+- [SQL Editor](/sql-editor): Design and manage PostgreSQL schemas with the SW SQL Editor. Features modular DDL projects, integrated ER diagrams, and real-time schema compilation.
+- [Schema Compiler](/sql-editor/schema-compiler): Audit your database quality with the SW Schema Compiler. 20-layer static analysis for PostgreSQL DDL with A-F health grading and auto-repair fixes.
 - [Schema Diff](/sql-editor/schema-diff): Compare two versions of a PostgreSQL schema side-by-side with the SQL Editor's built-in diff tool — highlight additions, removals, and modifications
 - [Version History](/sql-editor/version-history): Browse and restore every saved snapshot of your SQL files in the Schema Weaver SQL Editor — never lose a working schema state
 - [Writing SQL](/sql-editor/writing-sql): Use the SQL Editor's tabs, syntax highlighting, autosave, split view, and fullscreen mode to write PostgreSQL schema definitions efficiently
@@ -32,10 +32,12 @@
 - [AI Chat Interface](/data-explorer/ai-chat-interface): Use Resona AI inside the Data Explorer to query, analyze, and visualize your data using natural language
 - [Resona AI](/data-explorer/ai-overview): Overview of Resona AI inside the Data Explorer — what it can do, how to access it, and where to go next
 - [Workspace & Projects](/data-explorer/ai-workspace): Manage generated reports, organize analysis into projects, and browse your full artifact history in the Data Explorer
-- [Exploring Your Data](/data-explorer/exploring-data): Browse tables, inspect columns, filter rows, and analyze column statistics in the Data Explorer grid
+- [Exploring Your Data](/data-explorer/exploring-data): Master the SW Data Explorer grid. Learn about canvas-based smart column sizing, server-side filtering, and real-time column distributions for PostgreSQL.
 - [Exporting Data](/data-explorer/exporting-data): Export individual tables or entire database schemas to CSV, JSON, NDJSON, Excel, and SQL formats
-- [Data Explorer](/data-explorer): Query your PostgreSQL databases interactively with the Schema Weaver Data Explorer
+- [Data Explorer](/data-explorer): Explore live database rows with the SW Data Explorer. A high-performance PostgreSQL workbench with virtualized grids, smart sizing, and Resona AI analysis.
 - [AI Chat Guide](/resona-ai/ai-chat): How to write effective prompts, use @mentions, iterate on results, and get the best answers from Resona AI in both the SQL Editor and Data Explorer
-- [Resona AI](/resona-ai): Resona is Schema Weaver's AI assistant — available in both the SQL Editor and the Data Explorer with purpose-built architectures for schema design and live data analysis
+- [Resona AI](/resona-ai): Meet Resona AI, the world's first Spatial AI Database Architect. Agentic ReAct loops for surgical DDL editing and natural language data analysis.
 - [Models and Credits](/resona-ai/models): All AI models available in Resona — four tiers (FAST, SMART, ADVANCED, POWERFUL), credit costs per model, plan limits, and how to choose the right model
 - [Team Collaboration](/team-collaboration): Create teams, invite members, connect projects, and share database access — all managed from Settings → Collaboration in Schema Weaver
+- [Feature Comparison](/pricing/comparison): Compare Schema Weaver features across Free, Starter, Pro, and Power plans
+- [Plans and Credits](/pricing): Understand Schema Weaver pricing tiers, AI credit system, and Indian regional pricing

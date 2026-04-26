@@ -86,7 +86,7 @@
   </url>
   <url>
     <loc>https://docs.schemaweaver.vivekmind.com/sql-editor/er-diagram-path-analysis</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-04-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -110,13 +110,13 @@
   </url>
   <url>
     <loc>https://docs.schemaweaver.vivekmind.com/sql-editor</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-04-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://docs.schemaweaver.vivekmind.com/sql-editor/schema-compiler</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-04-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -170,7 +170,7 @@
   </url>
   <url>
     <loc>https://docs.schemaweaver.vivekmind.com/data-explorer/exploring-data</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-04-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -182,7 +182,7 @@
   </url>
   <url>
     <loc>https://docs.schemaweaver.vivekmind.com/data-explorer</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-04-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -194,7 +194,7 @@
   </url>
   <url>
     <loc>https://docs.schemaweaver.vivekmind.com/resona-ai</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-04-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -207,6 +207,18 @@
   <url>
     <loc>https://docs.schemaweaver.vivekmind.com/team-collaboration</loc>
     <lastmod>2026-04-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://docs.schemaweaver.vivekmind.com/pricing/comparison</loc>
+    <lastmod>2026-04-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://docs.schemaweaver.vivekmind.com/pricing</loc>
+    <lastmod>2026-04-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -195,8 +195,7 @@ function applyContentHead(
   tags: string[] | undefined,
   section: string | undefined,
 ) {
-  const categorySuffix = section ? ` - ${section}` : '';
-  const fullTitle = `${title} | SW Docs${categorySuffix}`;
+  const fullTitle = `${title} | SW Docs`;
   const canonical = `${DOCS_BASE_URL}${pathname}`;
 
   document.title = fullTitle;
