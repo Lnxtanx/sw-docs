@@ -140,9 +140,22 @@ Credentials are stored encrypted in Schema Weaver's backend:
 - **SSL Mode:** Require
 
 ### Local / Docker
+
+If you are running Schema Weaver locally on your own computer, you can connect directly to your local database:
 - **Host:** `localhost` or `127.0.0.1`
 - **Port:** `5432` (or whichever port you've mapped)
 - **SSL Mode:** Disable
+
+#### Connecting Local Databases to Cloud Schema Weaver
+
+> **Note:** If you are using the cloud-hosted version of Schema Weaver (or hosting it on a VPS like EC2), the server cannot reach `localhost` on your personal laptop because it is blocked by your router's firewall.
+
+To connect a database running on your laptop to the cloud app, you must expose it securely using a tunnel like **Ngrok**:
+
+1. Install Ngrok on your laptop.
+2. Run `ngrok tcp 5432` in your terminal.
+3. Ngrok will give you a public URL (e.g., `0.tcp.ngrok.io:14322`).
+4. In Schema Weaver, enter `0.tcp.ngrok.io` as the **Host** and `14322` as the **Port**.
 
 ---
 
