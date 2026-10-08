@@ -187,9 +187,17 @@ export function useAIChat(pageTitle?: string, pageContent?: string, pageSlug?: s
                                 );
                                 continue;
                             }
-                            // Real errors
+                            // Real errors from backend
                             if (parsed.error) {
-                                throw new Error(parsed.error);
+                                const errorText = parsed.error;
+                                setMessages(prev =>
+                                    prev.map(m =>
+                                        m.id === assistantId
+                                            ? { ...m, content: errorText, statusMessage: undefined }
+                                            : m
+                                    )
+                                );
+                                continue;
                             }
                             const chunk = parsed.delta ?? parsed.content ?? '';
                             if (chunk) {
@@ -206,6 +214,20 @@ export function useAIChat(pageTitle?: string, pageContent?: string, pageSlug?: s
                         }
                     }
                 }
+
+                // If stream ended without any text or error, provide a polite fallback
+                setMessages(prev =>
+                    prev.map(m =>
+                        m.id === assistantId && !m.content
+                            ? {
+                                  ...m,
+                                  content:
+                                      "I couldn't find a specific answer in the documentation. Please try rephrasing your question or selecting 'All docs'.",
+                                  statusMessage: undefined,
+                              }
+                            : m
+                    )
+                );
             } catch (err) {
                 if (err instanceof Error && err.name === 'AbortError') return;
                 setMessages(prev =>
