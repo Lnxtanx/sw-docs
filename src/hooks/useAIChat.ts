@@ -19,7 +19,7 @@ export interface ChatMessage {
     statusMessage?: string;  // Agent retrieval status (e.g. "Searching docs...")
 }
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || (import.meta.env.PROD ? 'https://api.schemaweaver.dev' : '');
 const DOCS_API     = `${API_BASE}/api/docs/ask`;
 const FEEDBACK_API = `${API_BASE}/api/docs/feedback`;
 
