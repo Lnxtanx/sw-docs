@@ -1,0 +1,164 @@
+---
+title: Statistics & Metrics with AI
+description: Generate an executive business dashboard from your PostgreSQL database with AI — KPI cards, multi-section analytics, executive written insights with actionable recommendations, panel operations, and Resona Dashboard AI
+tags: [data-explorer, dashboard, ai, metrics, statistics, executive, kpi, charts, resona-dashboard-ai]
+order: 3
+sidebar_group: "Data Explorer"
+related:
+  - title: Data Explorer
+    path: /data-explorer
+  - title: Exploring Your Data
+    path: /data-explorer/exploring-data
+  - title: Exporting Data
+    path: /data-explorer/exporting-data
+  - title: Resona Dashboard
+    path: /resona-ai/dashboard
+---
+
+# Statistics & Metrics with AI
+
+The **Dashboard** in Schema Weaver turns your raw PostgreSQL database into an executive-grade analytics platform in one click. 
+
+Instead of requiring you to write dozens of SQL queries or manually configure BI widgets, Schema Weaver's AI inspects your schema, detects core business entities, calculates growth drivers, and generates interactive charts, metric cards, and **written executive recommendations** tailored to your business.
+
+> Quick links: [Exploring Your Data](/data-explorer/exploring-data) · [Resona Dashboard AI](/resona-ai/dashboard) · [Connector Setup](/connector/install)
+
+---
+
+## 1 — Generating a Dashboard from Scratch
+
+When you connect a new PostgreSQL database and switch to Dashboard mode, you are greeted with the initial setup view:
+
+![Empty dashboard state in Schema Weaver Data Explorer explaining the 5-step AI generation workflow before building analytics](/images/de/dashabord/empty-ds.png)
+
+### How AI analyzes and builds your dashboard
+
+When you click **Generate `<database>` Dashboard →** (or **+ Create Dashboard** in the sidebar), the AI follows an autonomous 5-step analysis pipeline:
+
+1. **Schema & Relationship Mapping**: AI inspects your database structure, table definitions, foreign keys, and relationships to map how your business domain is modeled.
+2. **Core Business Metric Discovery**: AI identifies key revenue drivers, user registration flows, order transactions, customer engagement habits, and growth trajectories.
+3. **Safe, Read-Only Execution**: AI analyzes your live database using strictly controlled, read-only SQL queries through the connector. No data is ever mutated or written.
+4. **Synthesis into Executive KPIs & Trends**: Raw aggregations are synthesized into top-level KPIs, growth trends, segment cohorts, and written strategic narratives.
+5. **Interactive Executive Presentation**: Delivers a multi-section dashboard with live charts, drill-downs, and proactive AI recommendations ready for team review.
+
+---
+
+## 2 — The Generated Dashboard Layout
+
+Once generated, your dashboard organizes your metrics into clean, thematic sections with a rich variety of visualization cards:
+
+![Complete generated dashboard in Schema Weaver showing sidebar sections and charts for weekly new signups, cumulative learner base, grade distributions, and board breakdowns](/images/de/dashabord/dashbord.png)
+
+### Left Sidebar Sections
+
+The sidebar automatically clusters related analytics into dedicated navigation sections (e.g. `SECTIONS (7)`):
+
+- **Overview**: High-level executive summary of key performance indicators.
+- **Growth & Acquisition** (e.g. *Learner Growth*): Weekly signups, cumulative user totals, and activation curves.
+- **Outcomes & Performance** (e.g. *Learning Outcomes*): Core user achievements, scores, and completion metrics.
+- **Engagement & Sessions**: Session frequency, activity heatmaps, and retention.
+- **Platform & Infrastructure Cost** (e.g. *AI Platform & Cost*): Operational resource utilization, token consumption, and model expenses.
+- **Directory Lists**: Top users, power users, and account tables.
+- **Executive Analysis**: Written executive summaries and diagnostic insights.
+
+Use the search icon to filter sections, or collapse the sidebar at any time to expand the canvas.
+
+### Visualization Card Types
+
+| Card Type | What it displays | Example in Dashboard |
+|---|---|---|
+| **Line Chart** | Temporal volume trends and cycle fluctuations | `WEEKLY NEW SIGNUPS` |
+| **Area Chart** | Cumulative growth and running lifetime volume | `CUMULATIVE LEARNER BASE` |
+| **Donut Chart** | Proportional segment distribution across categories | `LEARNERS BY GRADE` |
+| **Bar Chart** | Categorical comparisons and discrete frequency bins | `LEARNERS BY BOARD` |
+| **KPI Metric** | Headline value with period-over-period delta badges | Growth % and active user counts |
+| **Executive Read** | Written strategic diagnosis with action recommendations | Engagement ratios and quality risks |
+
+---
+
+## 3 — Executive Analysis & Actionable Insights
+
+Dashboards in Schema Weaver go beyond passive charts by generating **Executive Read** cards that interpret what the data actually means and prescribe what action your team should take next:
+
+![Executive Analysis dashboard view displaying written analytical narratives, headline numbers, confidence badges, and actionable next steps](/images/de/dashabord/excutive-analysis-ds.png)
+
+### Structure of an Executive Read Card
+
+Each insight card is structured for executive decision-making:
+
+- **Headline Metric**: The focal number anchoring the analysis (e.g., `494`, `79.4%`, `28`).
+- **Trend Delta**: Period-over-period percentage shift (e.g., `• 0.0%`).
+- **Diagnostic Narrative**: Plain-English explanation detailing the underlying cause. For example:
+  > *"79% of everything learners type is a correction of the tutor: 392 of 494 learner messages are 'user_correction', sent by 24 of the 31 learners who chat... Only 100 messages are genuine learner questions — learners are doing the tutor's quality control instead of learning from it."*
+- **Actionable Next Step**: Concrete tactical advice you can implement immediately:
+  > ***Next step*** *Instrument the correction stream first: sample and classify the 392 corrections, then patch the 2-3 recurring error classes in the tutor prompt/knowledge base. Cutting corrections by 30% removes ~118 tutoring-the-tutor turns per cycle and hands that time back to actual learning.*
+- **Classification Badges**: Categorizes the finding (e.g., `ENGAGEMENT_INSIGHT`, `TUTOR_QUALITY_RISK`).
+- **Confidence Rating**: AI certainty assessment (e.g., `HIGH CONFIDENCE`).
+- **"Why?" Drill-Down**: Click the **Why?** button to view the underlying SQL queries, sample distributions, and statistical reasoning behind the recommendation.
+
+---
+
+## 4 — Managing Panels & Card Operations
+
+Every card on the dashboard includes individual management controls accessible via the `...` menu in the card header:
+
+![Dashboard card operations menu showing Focus Mode, Resize Width, Collapse, Move Left, Move Right, Hide Card, and Delete Card options](/images/de/dashabord/operation-panel.png)
+
+### Available Panel Operations:
+
+| Operation | Action |
+|---|---|
+| **Refresh** | Re-executes the individual card's SQL query to fetch the freshest database data without reloading the entire dashboard. |
+| **Focus Mode** | Expands the selected card into a maximized fullscreen modal for presentations and deep data inspection. |
+| **Resize Width** | Toggles the card's grid footprint between standard half-width and full-width layout. |
+| **Collapse** | Minimizes the card body while keeping the title bar visible to save vertical canvas space. |
+| **Move Left / Right** | Shifts the card's position earlier or later in the dashboard grid order. |
+| **Hide Card** | Temporarily hides the card from the view without permanently deleting its query definition. |
+| **Delete Card** | Permanently removes the card and its associated query from the dashboard. |
+
+---
+
+## 5 — Resona Dashboard AI
+
+The dashboard is fully interactive and conversational. By opening the **Resona Dashboard AI** side panel (or using the keyboard shortcut `Ctrl` / `Cmd` + `J`), you can collaborate with your dedicated live analytics partner:
+
+![Resona Dashboard AI side panel open next to live dashboard charts with quick prompts and Deep mode query options](/images/de/dashabord/dashabord-ai.png)
+
+### Conversational Dashboard Editing
+
+You don't need to manually configure queries or write SQL to modify your dashboard. Simply tell Dashboard AI what you want to see:
+
+- **Create new cards**:
+  > *"Add a chart showing monthly churn rate segmented by subscription tier"*
+- **Refine existing charts**:
+  > *"Show weekly signups grouped by referral channel instead of total counts"*
+- **Diagnose business anomalies**:
+  > *"What are our primary revenue drivers and growth trends?"*
+  > *"Summarize overall business health and customer retention"*
+  > *"Highlight key executive KPIs and weekly performance"*
+- **Restructure layouts**:
+  > *"Move the revenue cohort section to the top of the Overview"*
+  > *"Remove the legacy staging cards"*
+
+### Flash vs. Deep Mode
+
+Toggle between analysis modes at the bottom of the Dashboard AI chat:
+
+- **Flash Mode**: Fast, single-table metrics and direct layout modifications.
+- **Deep Mode**: Comprehensive multi-table joins, historical cohort comparisons, and complex statistical trend discovery.
+
+---
+
+## Read-Only Security & Team Sharing
+
+- **Strict Read-Only Execution**: All dashboard operations and AI queries run through your local [Connector](/connector/security-architecture) in read-only mode. Production tables can never be altered or updated.
+- **Shared with Your Team**: Once generated, your dashboard is accessible to all team members linked to the connection. Teammates can view, filter, and refresh cards without using extra AI credits.
+
+---
+
+## Next Steps
+
+- [Exploring Your Data](/data-explorer/exploring-data) — inspect raw rows in the Data Explorer grid
+- [Exporting Data](/data-explorer/exporting-data) — download views and charts to CSV, Sheets, Excel, or JSON
+- [Resona AI Chat](/resona-ai/ai-chat) — run deep ad-hoc natural language data analyses
+- [The Connector](/connector) — verify database connectivity and live health

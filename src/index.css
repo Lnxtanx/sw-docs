@@ -18,6 +18,11 @@
   color-scheme: light;
   --scrollbar-thumb: rgba(120, 120, 120, 0.4);
   --scrollbar-thumb-hover: rgba(120, 120, 120, 0.7);
+
+  /* Brand gradient — logo mark, header wordmark, and doc brand titles all use
+     this single token so they cannot drift apart. */
+  --brand-gradient: linear-gradient(135deg, #10b981, #3b82f6);
+  --brand-gradient-end: #3b82f6;
 }
 
 /* Dark mode via system preference */

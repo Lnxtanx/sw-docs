@@ -59,7 +59,7 @@ function generateLlmsTxt() {
     const lines = [
       '# Schema Weaver Documentation',
       '',
-      '> Schema Weaver — modern database schema management with visual diff, migration generation, and drift detection.',
+      '> Schema Weaver — The First Voice-Native Analytics Workspace for PostgreSQL.',
       '',
       '## Pages',
       '',

@@ -1,7 +1,7 @@
 ---
 title: Exploring Your Data
-description: Master the SW Data Explorer grid. Learn about canvas-based smart column sizing, server-side filtering, and real-time column distributions for PostgreSQL.
-tags: [data-explorer, grid, columns, filters, statistics, postgres-browser, sw-grid]
+description: The Data Explorer grid — smart column sizing, filtering in the database or your browser, sorting, column statistics, and pagination in the Schema Weaver data explorer
+tags: [data-explorer, grid, columns, filters, statistics, pagination, postgresql]
 order: 1
 sidebar_group: "Data Explorer"
 related:
@@ -9,319 +9,200 @@ related:
     path: /data-explorer
   - title: Exporting Data
     path: /data-explorer/exporting-data
-  - title: AI Chat Interface
-    path: /data-explorer/ai-chat-interface
+  - title: Resona AI
+    path: /resona-ai
 ---
 
 # Exploring Your Data
 
-Once you've selected a PostgreSQL connection, the interface gives you a two-panel layout for browsing live data — a sidebar of tables on the left and a high-performance data grid on the right. Connections are created in the [SQL Editor](/database/adding-a-connection) and are available here automatically — no separate setup needed.
-
-> Quick links: [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.com/data-explorer/) · [SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/)
+With a connection selected, you get a two-panel layout — a sidebar of tables on the left, a data grid on the right. Connections come from the [Connector](/connector/install) and are available here automatically.
 
 ---
 
-## Interface Layout
+## The sidebar
 
-![The Data Explorer showing the two-column layout with left sidebar and main data grid](/images/data-explorer/data-explorer.png)
+With a connection active, the left sidebar displays all discoverable database schemas and tables.
 
-| Region | Purpose |
-|--------|---------|
-| **Left sidebar** | Schema selector, table search, table list with row estimates |
-| **Right panel** | Action bar (filter, columns, refresh), data grid, pagination |
-| **Column Stats** | Slide-over panel that appears on the right when you click a column header |
+![Data Explorer Left Sidebar showing schema selector, table search filter, and table list with live row counts](/images/de/de-grid/tables.png)
 
----
-
-## Left Sidebar
-
-![The left sidebar showing the schema selector, table search, and table list with row counts](/images/data-explorer/left-sidebar.png)
-
-### Schema Selector
-
-At the top of the sidebar is a **schema dropdown** that lists every schema in the connected database. Changing the schema reloads the table list and clears the current table selection.
-
-- Defaults to `public` for PostgreSQL
-- All schemas visible to the connected user are listed
-- Switching schemas fetches a fresh table list from the server
-
-### Table List
-
-Below the schema selector, you'll see a searchable list of tables.
-
-**Each table row shows:**
-
-| Element | Description |
-|---------|-------------|
-| Table icon | Standard table indicator |
-| Name | Table name (truncated if long) |
-| ⚠️ Warning | Shown if the table has **no primary key** |
-| Row estimate | Approximate row count (`47K`, `3.2M`, etc.) |
-| AI icon | Hover any table to reveal the Resona AI icon — click it to ask AI about that specific table |
-
-**Search & Filter**
-
-Type in the search box at the top to instantly filter the table list. The count bar updates to show how many tables match (e.g., `3 of 24 tables`).
-
-**Table Selection**
-
-Click any table name to load its data in the right-side grid. The selected table is highlighted with a primary-colored left border and highlighted background.
-
-### Collapsible Sidebar
-
-Click the toggle button in the sidebar header to collapse it to a narrow icon strip (48px), giving the data grid maximum width. Click again to expand.
+- **Schema selector** — Switch between any schema in your database (`public`, `analytics`, `audit`, `inventory`, `staging`, etc.), defaulting to `public`. Switching schemas dynamically reloads the table list.
+- **Searchable table list** — Filter tables with the `Filter tables...` search input, which displays a live count badge (e.g. `59` tables).
+- **Row counts & indicators** — Each table item shows an estimated row count badge (e.g., `admin_chat 2.2K`, `ai_token_logs 31.0K`) so you can gauge size at a glance.
+- **Collapsible sidebar** — Click the collapse toggle icon in the top right of the sidebar header to hide the sidebar and give your data grid maximum horizontal screen space.
 
 ---
 
-## Data Grid
+## Smart column sizing
 
-The data grid is the heart of the Data Explorer. It renders your table's rows in a high-performance, scrollable table with fixed column headers.
+Columns size themselves to fit your actual data, measured with the browser's canvas text renderer so the widths match what you see.
 
-### Column Headers
+### How it works
 
-Each column header displays:
+1. **Measured, not guessed** — text widths are measured using the same font the cell renders in
+2. **Sampled from real rows** — the first 8 rows of the current page are measured and the **widest** value sets the column width
+3. **A minimum applies to every column** — a column is never narrower than its header needs, with a 100px floor so key and type labels always fit
+4. **A maximum applies by type**, so a long text value can't push a numeric column out of shape:
 
-| Element | Description |
-|---------|-------------|
-| 🔑 Key icon | Gold key icon for primary key columns |
-| 🔗 Link icon | Blue link icon for foreign key columns |
-| Column name | Bold for PKs, blue-tinted for FKs |
-| Type badge | Monospace type label (e.g., `int4`, `varchar?`) — the `?` indicates nullable |
-| FK reference | On hover, shows `→ referenced_table` for foreign keys |
-| Sort button | Click the sort arrows to cycle through ascending → descending → unsorted |
+| Column type | Maximum width |
+|---|---|
+| Boolean | 110px |
+| Integer, numeric, float | 160px |
+| Date, time, timestamp | 200px |
+| UUID | 280px |
+| Text and everything else | 450px |
 
-### Sorting
+### Changing a width
 
-Click the sort icon on any column header to sort:
+Drag the right edge of a header to resize, or **double-click the edge to reset** it to the calculated width.
 
-1. **First click** — Sort ascending (↑)
-2. **Second click** — Sort descending (↓)
-3. **Third click** — Remove sort (return to default order)
-
-Sorting resets pagination back to page 1. The active sort column is highlighted.
-
-> Sort operations are performed server-side, so they work efficiently on tables with millions of rows.
+Widths you set are remembered per connection, schema, and table, so a table you tuned stays tuned. Writes are debounced while you drag, and the most recently used 50 table layouts are kept.
 
 ---
 
-## Smart Column Sizing
+## Sorting
 
-Column widths are automatically calculated to fit your data using a production-grade sizing engine.
+Click the sort control on any column header to cycle:
 
-### How It Works
+1. **Ascending**
+2. **Descending**
+3. **Off** — back to the default order
 
-1. **Canvas-Based Measurement** — Column widths are calculated using the browser's `CanvasRenderingContext2D` API with the actual font face and size (`13px Inter`), giving pixel-perfect proportional measurements
-2. **95th Percentile Sampling** — Up to 50 rows are sampled per column, and the **95th percentile** width is used. This prevents one abnormally long value from stretching the column far beyond what's useful
-3. **Type-Aware Constraints** — Different data types have different width ranges:
-
-| Column Type | Min Width | Max Width |
-|-------------|-----------|-----------|
-| Integer / Numeric / Boolean | Header width | 160px |
-| Timestamp / Date | 180px | — |
-| UUID | 270px | — |
-| Text / Varchar | 80px | 500px |
-
-### Manual Resizing
-
-- **Drag** the right border of any column header to resize
-- **Double-click** the border to **auto-fit** (reset to calculated width)
-- Manual widths are **persisted** to `localStorage` and restored when you return
-
-### Persistence & Storage
-
-Manual column widths are saved per-connection, per-schema, per-table. The storage layer features:
-
-- **Debounced Saves** — Disk writes are debounced at 400ms during drag resize to prevent UI jank
-- **LRU Cache** — A maximum of 50 saved table configurations are kept. If the limit is exceeded, the least recently used entry is pruned
-- **Adaptive Lock Bypass** — If new data requires more than 2.5× the saved width to be readable, the saved width is automatically discarded in favor of the auto-calculated size
+Sorting runs in the database, so it stays fast on large tables. Changing the sort returns you to the first page.
 
 ---
 
-## Filtering Data
+## Filtering
 
-![The action bar showing the Filter and Columns controls above the data grid](/images/data-explorer/action-bar-filter-columns.png)
+Click **Filter** in the grid toolbar to open the filter popover.
 
-The filter system lets you narrow down rows using typed conditions.
+![Add Filter dialog in Schema Weaver Data Explorer with Instant In-Memory mode and Query entire database option](/images/de/de-grid/fillter.png)
 
-### Adding a Filter
+### Dual-mode filtering
 
-1. Click the **Filter** button in the action bar
-2. Choose a **column** from the dropdown
-3. Choose an **operator**
-4. Enter a **value** (press Enter or click "Add Filter")
+Schema Weaver supports two complementary filtering strategies:
 
-### Available Operators
+1. **Instant In-Memory Filtering (Default)**
+   - Indicated by the green **`Instant In-Memory`** badge in the popover header.
+   - Evaluates filter conditions instantaneously on the client side across all rows currently loaded in your browser memory (e.g., your active 500, 1k, or 2k rows).
+   - Provides instant, zero-latency typing feedback with no roundtrip database latency — ideal for rapid exploratory analysis on the loaded page.
 
-Operators adapt based on column type:
+2. **Query Entire Database**
+   - Check the **Query entire database** checkbox.
+   - Translates your condition into a server-side SQL `WHERE` clause and executes it against the live PostgreSQL database through your connector.
+   - Scans the entire table (even across millions of rows), fetching and displaying matching records regardless of whether they were in your initial page memory.
 
-| Column Type | Available Operators |
-|-------------|-------------------|
-| Text | `=`, `≠`, `~ Contains` |
-| Number | `=`, `≠`, `>`, `≥`, `<`, `≤` |
-| Boolean | `=`, `≠` |
-| Date / Timestamp | `=`, `≠`, `>`, `≥`, `<`, `≤` |
-| All types | `IN (list)`, `IS NULL`, `NOT NULL` |
+### Supported operators
 
-### Filter Chips
+| Column type | Operators |
+|---|---|
+| **Text** | `~ Contains`, `Does not contain`, `Starts with`, `Ends with`, `Is empty`, `=`, `≠` |
+| **Number** | `=`, `≠`, `>`, `≥`, `<`, `≤` |
+| **Boolean** | `=`, `≠` |
+| **Date / time** | `=`, `≠`, `>`, `≥`, `<`, `≤` |
+| **Any type** | `In list`, `Is null`, `Not null` |
 
-Active filters appear as tagged chips in the action bar:
-
-```
-[ Filter (2) ] | [ status = active ✕ ] [ role = admin ✕ ] Clear
-```
-
-- Click the **✕** on any chip to remove that filter
-- Click **Clear** to remove all filters at once
-- Filter changes reset pagination to page 1
-
-> Filters are applied server-side, ensuring accurate results even on large tables.
+Active filters appear as dismissible chips in the action bar. Remove any single filter by clicking its **✕** button, or click **Clear all** to reset the view.
 
 ---
 
-## Toggle Column Visibility
+## Columns
 
-Click the **Columns** button in the action bar to show/hide individual columns:
+The **Columns** button allows you to control which fields appear in your grid view.
 
-- Each column shows an eye icon (visible) or crossed-out eye (hidden)
-- Toggle any column to hide it from the grid
-- The button label updates to show the visible count (e.g., `Columns (8/12)`)
-- Click **Show all columns** at the bottom to reset
+![Columns popover in Schema Weaver Data Explorer showing search bar, column list with data types, and Hide except PK shortcut](/images/de/de-grid/columns-fillter.png)
 
-Hidden columns are session-only — they reset when you navigate away.
-
----
-
-## Refresh Data
-
-Click the **↻ refresh** button in the action bar to re-fetch the current page of data from the database. The icon animates while the request is in progress.
-
-This is useful when:
-- Another process has modified the data
-- You want to verify that a migration or import succeeded
-- You're monitoring live data changes
+- **Visibility counter** — The button label dynamically tracks your active column ratio (e.g. `Columns (12 / 12 visible)`).
+- **Column search** — Quickly filter through wide tables using the `Search columns...` search box.
+- **Data type indicators** — Lists PostgreSQL data types alongside each column name (`integer`, `character varying(50)`, `text`, `text[]`, etc.).
+- **Convenient presets**:
+  - **Show all**: Instantly restores visibility for all columns.
+  - **Hide except PK**: One-click action to hide every column except the primary key (`id`), giving you a clean baseline to add back only the specific fields you need.
+- **Persistent preferences**: Your visibility choices are stored per connection, schema, and table so your customized layouts remain intact when you return.
 
 ---
 
-## Click to Copy
+## Column statistics
 
-Click on any cell in the data grid to copy its value to the clipboard. A brief green **"Copied"** badge appears to confirm. Special values are handled:
+Click a **column header** — not the sort control — to open the stats panel for that column.
 
-| Cell Value | Copied As |
-|-----------|-----------|
-| `NULL` | The string `NULL` |
+| Stat | What it shows |
+|---|---|
+| **Type** | Full data type, with a nullable marker |
+| **Flags** | Primary key and indexed badges |
+| **Null %** | How much of the column is empty |
+| **Distinct count** | How many unique values |
+| **Min / max** | Range, for numbers and dates |
+| **Completeness** | A bar showing the non-null share |
+| **Top values** | Most frequent values with their share |
+| **Sample values** | A quick look at real values |
+
+Close it with the X, or by clicking the same header again.
+
+---
+
+## Click to copy
+
+Click any cell to copy its value directly. A brief **Copied** badge confirms the action.
+
+| Cell value | Copied as |
+|---|---|
+| `NULL` | `NULL` |
 | Boolean | `true` or `false` |
-| JSON object | Pretty-printed JSON string |
-| Date | ISO 8601 string |
-| Any other value | Plain string |
+| JSON | Pretty-printed |
+| Date | ISO 8601 |
+| Text | As shown |
 
 ---
 
-## Column Statistics Panel
+## Cell hover preview & inspector
 
-![Column Statistics Panel showing null percentage, distinct count, min/max values, and top value distribution](/images/data-explorer/columns-stats.png)
+Long strings, multi-sentence messages, JSON structures, and arrays are truncated with an ellipsis (`...`) in the grid to maintain compact row heights. Rather than requiring you to expand columns, drag headers, or open a separate modal, Schema Weaver includes an **instant cell hover preview**:
 
-Click a **column header** (not the sort icon) to open the Column Stats Panel — a slide-over sidebar that shows live statistics for that column.
+![Cell hover preview popover in Schema Weaver Data Explorer showing complete unclipped text content, character count, and full inspector shortcut](/images/de/de-grid/hover-full-message.png)
 
-### Statistics Displayed
+### Key capabilities:
 
-| Stat | Description |
-|------|-------------|
-| **Type** | Full data type with nullable indicator |
-| **Flags** | Primary Key, Indexed badges |
-| **Null %** | Percentage of null values |
-| **Distinct Count** | Number of unique values |
-| **Min / Max** | Minimum and maximum values (for numbers and dates) |
-| **Data Completeness** | Visual progress bar showing non-null percentage |
-
-### Top Values
-
-For columns with repeated values, the panel shows the most frequent values with percentage distribution bars. This is useful for:
-
-- Understanding enum-like columns
-- Spotting data skew
-- Identifying the most common categories
-
-### Sample Preview
-
-A set of sample values is displayed as small tokens, giving you a quick look at what kind of data the column contains without scrolling through the grid.
-
-**Close** the panel by clicking the X button or clicking the same column header again.
+- **Instant zero-click inspection**: Hover over any truncated cell in any column to immediately read the complete, unclipped text.
+- **Context details**: The popover header shows the target column name (e.g. `message`), data type badge (`text`), and row reference (`Row #7`).
+- **Quick actions**:
+  - **Copy**: Copy the complete unclipped text to your clipboard with a single click.
+  - **Expand**: Enlarge the floating card for lengthy paragraphs or complex documents.
+  - **Full inspector**: Jump to the comprehensive cell inspector modal for nested JSON tree inspection or multi-line formatting.
+- **Character count**: Displays the exact length of the cell value (e.g., `276 chars`).
+- **Keyboard friendly**: Press `Esc` anytime to instantly dismiss the preview card.
 
 ---
 
-## Pagination
+## Pagination & page fetch limits
 
-The bottom bar shows cursor-based pagination:
+The grid uses high-performance cursor pagination to seamlessly page through massive PostgreSQL tables. You can customize how many rows are fetched into memory per page using the **Rows per page** selector in the grid toolbar:
 
-```
-1–50 of ~47.0K                                    Page 2   ◀ Prev  Next ▶
-```
+![Page size selector dropdown in Schema Weaver Data Explorer showing 100, 250, 500, 1000, and 2000 rows per page options](/images/de/de-grid/page.png)
 
-| Element | Description |
-|---------|-------------|
-| Row range | Current visible range (e.g., `1–50`) |
-| Estimated total | Approximate total row count |
-| Page indicator | Shown when not on page 1 |
-| Prev / Next | Navigate between pages (50 rows per page) |
+### Rows per page options:
 
-Pagination is **cursor-based** rather than offset-based, which means:
-- Forward pagination is efficient even on tables with millions of rows
-- The page counter is approximate (indicated by the `~` prefix)
+- **100 / page** — Minimal memory footprint for mobile or slower connections
+- **250 / page** — Standard responsive scrolling
+- **500 / page** (Default) — Recommended sweet spot for performance and in-memory exploration
+- **1000 / page (1k)** — Broader working set for batch review
+- **2000 / page (2k)** — Maximum batch fetch for deep client-side in-memory filtering across thousands of rows
+
+The bottom status bar displays your current position alongside an estimated total row count (e.g. `Showing 500 of ~2.0K rows`). Because paging is cursor-based, moving forward through millions of rows stays instantaneous.
 
 ---
 
-## Row Number Column
+## Keyboard shortcut
 
-The leftmost `#` column displays sequential row numbers relative to the current page. Row numbers automatically account for pagination offset — page 2 starts at row 51.
+| Shortcut | Action |
+|---|---|
+| `Ctrl` / `Cmd` + `J` | Open or close the Dashboard AI panel |
 
----
-
-## Cell Formatting
-
-Different data types are styled for readability:
-
-| Data Type | Display |
-|----------|---------|
-| `NULL` | Italic gray "NULL" |
-| `true` / `false` | Colored pill badges (green/red) |
-| Foreign key values | Small arrow indicator (`→`) on hover |
-| JSON objects | Serialized to string with truncation |
-| Long text | Truncated with ellipsis — click to copy the full value |
-
----
-
-## Empty States
-
-The grid handles edge cases gracefully:
-
-| State | What You See |
-|-------|-------------|
-| No connection selected | "No connection selected" with guidance to choose one |
-| No table selected | "Select a table" with arrow pointing to sidebar |
-| Table has no rows | "This table is empty" |
-| Filters return no results | "No rows match your filters" with a clear link |
-| Data load failure | Error message with a **Retry** button |
-
----
-
-## Keyboard Shortcuts
-
-| Action | Shortcut |
-|--------|----------|
-| Copy cell value | Click on any cell |
-| Sort column | Click sort icon in header |
-| Auto-fit column width | Double-click column border |
+Everything else in the grid is pointer-driven: click a cell to copy, click a header to sort or open statistics, drag a header edge to resize.
 
 ---
 
 ## Next Steps
 
-- [Exporting Data](/data-explorer/exporting-data) — download tables in CSV, JSON, Excel, SQL, and more
-- [AI Chat Interface](/data-explorer/ai-chat-interface) — use natural language prompts, @mentions, and chat history inside Data Explorer
-- [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/) — jump back into the live app
-
----
-
-### Evolve Your Schema
-Spotted a data quality issue that requires a structural change? Use the [SW SQL Editor](/sql-editor) to refactor your DDL and apply safe, drift-aware migrations.
-
+- [Exporting Data](/data-explorer/exporting-data) — take the grid to CSV, Sheets, Excel, JSON, or SQL
+- [Resona AI](/resona-ai) — ask questions about what you're looking at
+- [Data Explorer](/data-explorer) — back to the overview

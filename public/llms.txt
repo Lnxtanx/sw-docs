@@ -1,18 +1,16 @@
 # Schema Weaver Documentation
 
-> Schema Weaver — modern database schema management with visual diff, migration generation, and drift detection.
+> Schema Weaver — The First Voice-Native Analytics Workspace for PostgreSQL.
 
 ## Pages
 
-- [Introduction](/introduction): Welcome to Schema Weaver — a PostgreSQL schema management platform with a visual SQL Editor, ER diagram, migration engine, Data Explorer, and AI assistant
-- [Adding a Connection](/database/adding-a-connection): Add a PostgreSQL connection to Schema Weaver — fill in credentials, choose an SSL mode, test the connection, and understand how credentials are stored securely
-- [Connection Dashboard](/database/connection-dashboard): Manage your saved connections, link them to projects, monitor live activity, and use the connection panel in the SQL Editor sidebar
-- [Drift Detection](/database/drift-detection): Detect when your live PostgreSQL database has drifted from your project SQL — understand what causes drift, how Schema Weaver detects it, and how to resolve it
-- [History & Rollback](/database/history-rollback): View the full audit trail of schema migrations for each connection, and roll back applied migrations with automatically generated reverse SQL
-- [Database](/database): Connect Schema Weaver to your live PostgreSQL databases — manage connections, sync schemas, run migrations, detect drift, and explore your data across the SQL Editor and Data Explorer
-- [Migrations](/database/migrations): Apply schema changes to your live PostgreSQL database — understand the migration pipeline, use safe mode for complex type changes, and control destructive operations
-- [Pull, Diff & Push](/database/pull-diff-push): Sync your project SQL with your live PostgreSQL database — import the live schema with pull, compare differences with diff, and preview or apply changes with push
-- [Terminal & sw Commands](/database/terminal): Run database operations directly from the built-in sw terminal in the SQL Editor — complete reference for all sw commands
+- [Introduction](/introduction): Schema Weaver is the first voice-native analytics workspace for PostgreSQL — explore live data, ask Resona AI in plain English, or talk to your database by voice
+- [Your Connections](/connector/connections): Manage the PostgreSQL databases your Connector can reach — add them, switch between them, and see which one is currently active
+- [Health & Execution Logs](/connector/health): Check whether your Connector is online, see its recent activity, and read the queries Schema Weaver has run through it
+- [The Connector](/connector): The Schema Weaver Connector is a small service that runs inside your environment and reaches your PostgreSQL database on your behalf — so your credentials never have to leave it
+- [Install & Run](/connector/install): Install the Schema Weaver Connector CLI on your machine, run it as a 24/7 background service, and register it with Schema Weaver
+- [Security Architecture](/connector/security-architecture): Schema Weaver's connector security architecture — Local Credential Boundary (LCB), Connector-Enforced Read-Only Execution (CERO), and Zero-Ingress Network Isolation
+- [Sharing with Your Team](/connector/sharing): Give teammates access to a Connector and the databases behind it, without sharing credentials, and control who can manage it
 - [AI Tools Reference](/sql-editor/ai-assistant-tools): Complete reference for all 55 tools available to Resona AI in the SQL Editor — schema analysis, file management, database migrations, graph analysis, audits, and more
 - [Workspace Editing](/sql-editor/ai-assistant-workspace): Resona AI makes targeted, surgical edits to your SQL project files — single-block patches, multi-change file edits, and cross-file refactoring with full preview and rollback
 - [Resona AI — SQL Editor](/sql-editor/ai-assistant): An agentic AI assistant built into the SQL Editor — generate DDL, analyze schemas, edit files across your project, run migrations, and reason through your entire schema with 50+ purpose-built tools
@@ -27,17 +25,15 @@
 - [Schema Diff](/sql-editor/schema-diff): Compare two versions of a PostgreSQL schema side-by-side with the SQL Editor's built-in diff tool — highlight additions, removals, and modifications
 - [Version History](/sql-editor/version-history): Browse and restore every saved snapshot of your SQL files in the Schema Weaver SQL Editor — never lose a working schema state
 - [Writing SQL](/sql-editor/writing-sql): Use the SQL Editor's tabs, syntax highlighting, autosave, split view, and fullscreen mode to write PostgreSQL schema definitions efficiently
-- [How Resona AI Works](/data-explorer/agentic-workflows): Understand the agentic loop, tool execution pipeline, and the full set of analysis tools Resona uses to answer your data questions
-- [Charts & Analysis Results](/data-explorer/ai-artifacts): Understand the artifact types Resona AI generates — charts, stat blocks, and data tables — and how to interact with them
-- [AI Chat Interface](/data-explorer/ai-chat-interface): Use Resona AI inside the Data Explorer to query, analyze, and visualize your data using natural language
-- [Resona AI](/data-explorer/ai-overview): Overview of Resona AI inside the Data Explorer — what it can do, how to access it, and where to go next
-- [Workspace & Projects](/data-explorer/ai-workspace): Manage generated reports, organize analysis into projects, and browse your full artifact history in the Data Explorer
-- [Exploring Your Data](/data-explorer/exploring-data): Master the SW Data Explorer grid. Learn about canvas-based smart column sizing, server-side filtering, and real-time column distributions for PostgreSQL.
-- [Exporting Data](/data-explorer/exporting-data): Export individual tables or entire database schemas to CSV, JSON, NDJSON, Excel, and SQL formats
-- [Data Explorer](/data-explorer): Explore live database rows with the SW Data Explorer. A high-performance PostgreSQL workbench with virtualized grids, smart sizing, and Resona AI analysis.
-- [AI Chat Guide](/resona-ai/ai-chat): How to write effective prompts, use @mentions, iterate on results, and get the best answers from Resona AI in both the SQL Editor and Data Explorer
-- [Resona AI](/resona-ai): Meet Resona AI, the world's first Spatial AI Database Architect. Agentic ReAct loops for surgical DDL editing and natural language data analysis.
-- [Models and Credits](/resona-ai/models): All AI models available in Resona — four tiers (FAST, SMART, ADVANCED, POWERFUL), credit costs per model, plan limits, and how to choose the right model
-- [Team Collaboration](/team-collaboration): Create teams, invite members, connect projects, and share database access — all managed from Settings → Collaboration in Schema Weaver
-- [Feature Comparison](/pricing/comparison): Compare Schema Weaver features across Free, Starter, Pro, and Power plans
-- [Plans and Credits](/pricing): Understand Schema Weaver pricing tiers, AI credit system, and Indian regional pricing
+- [Statistics & Metrics with AI](/data-explorer/dashboard): Generate an executive business dashboard from your PostgreSQL database with AI — KPI cards, multi-section analytics, executive written insights with actionable recommendations, panel operations, and Resona Dashboard AI
+- [Exploring Your Data](/data-explorer/exploring-data): The Data Explorer grid — smart column sizing, filtering in the database or your browser, sorting, column statistics, and pagination in the Schema Weaver data explorer
+- [Exporting Data](/data-explorer/exporting-data): Export what you see in the Data Explorer to CSV, Google Sheets, Excel, JSON, or SQL — the current grid view, a selection of tables, or an entire schema as a ZIP archive
+- [Data Explorer](/data-explorer): The Data Explorer is Schema Weaver's analytics workspace for PostgreSQL — browse live rows in a high-performance grid, ask Resona AI in plain English, talk to your database by voice, and export to CSV, Sheets, Excel, JSON, or SQL
+- [Chat Interface](/resona-ai/ai-chat): How to work with Resona in the Data Explorer — asking questions, mentioning tables, attaching files, choosing Flash or Deep, and what comes back
+- [Resona Dashboard AI](/resona-ai/dashboard): Resona Dashboard AI is your dedicated live analytics and visualization partner — build executive dashboards, run multi-query investigations, attach files (PDF, CSV, Excel, images), toggle Deep and Flash modes, and modify metrics conversationally
+- [Resona AI](/resona-ai): Resona is Schema Weaver's assistant. In the Data Explorer it works your live database in four forms — chat, voice, dashboard, and memory. Also covers the SQL Editor assistant
+- [AI Memory](/resona-ai/memory): Resona automatically records what it learns from conversations into persistent memory shared across Chat, Voice, and Dashboard AI — edit directly in place in Settings
+- [Resona Voice](/resona-ai/voice): Talk to your PostgreSQL database out loud. Resona Voice is an ambient conversational data analyst that hears your questions, queries your database, and answers back — minimized and present everywhere across your table grid, dashboard, and chat
+- [Workspace & Projects](/resona-ai/workspace): Organise your Resona AI analyses into projects, keep generated reports in one place, and search your full artifact history
+- [Team Collaboration](/team-collaboration): Manage teams, invite colleagues, share local connectors without passing around passwords, distribute AI projects, and browse shared databases — from Settings → Collaboration
+- [Plans and Credits](/pricing): Schema Weaver pricing — Free, Pro, and Team plans, what AI credits cover, how seats work on Team, and tracking credit usage in Settings

@@ -1,1 +1,15 @@
-{ "order": ["index", "ai-chat", "models"] }
+{
+  "order": [
+    "index",
+    "ai-chat",
+    "voice",
+    "dashboard",
+    "memory",
+    "workspace"
+  ],
+  "ai-chat": "Chat Interface",
+  "voice": "Resona Voice",
+  "dashboard": "Resona Dashboard AI",
+  "memory": "Memory",
+  "workspace": "Workspace & Projects"
+}

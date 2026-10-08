@@ -1,0 +1,176 @@
+---
+title: Install & Run
+description: Install the Schema Weaver Connector CLI on your machine, run it as a 24/7 background service, and register it with Schema Weaver
+tags: [connector, install, setup, cli, node, register, autostart, service, troubleshooting]
+order: 2
+sidebar_group: "Connector"
+related:
+  - title: The Connector
+    path: /connector
+  - title: Your Connections
+    path: /connector/connections
+  - title: Health & Execution Logs
+    path: /connector/health
+---
+
+# Install & Run
+
+Setting up the Connector takes two parts: running it on your host machine or private VPC, then registering it in Schema Weaver.
+
+---
+
+## 1 — Installation
+
+Open a terminal on the machine that has network access to your PostgreSQL database. You can install the CLI globally or run it directly without installing.
+
+### Option A: Global Installation (Recommended)
+
+```bash
+npm i -g @schema-weaver/pg-connector
+```
+
+### Option B: Zero-Install (Run via npx)
+
+If you prefer not to install global packages or are running in an ephemeral container:
+
+```bash
+npx @schema-weaver/pg-connector init
+npx @schema-weaver/pg-connector db add
+npx @schema-weaver/pg-connector start
+```
+
+> **Node.js 18 or newer is required.**
+>
+> The CLI binary is available under `pg-connector` (with aliases `sw-agent`, `db-connector`, and `schemaweaver` also included).
+
+---
+
+## 2 — Quick Setup Workflow
+
+Run these commands on your machine:
+
+```bash
+pg-connector init                  # generates your Connector ID and Connection Key
+pg-connector db add                # attach your PostgreSQL database
+pg-connector start                 # launch the connector process
+```
+
+1. **`init`**: Generates a cryptographically secure **Connector ID** (e.g. `agt_...`) and **Connection Key** (e.g. `swagt_...`). Save these for registration.
+2. **`db add`**: Interactively prompts for your local PostgreSQL host, port, database name, and user credentials. All connection parameters and passwords stay local on your machine and are **never** transmitted to Schema Weaver cloud.
+3. **`start`**: Opens a secure, outbound-only WebSocket to the Schema Weaver relay (Port 443).
+
+![Connect PostgreSQL Database setup dialog in Schema Weaver showing the terminal setup commands for installing the CLI, initializing keys, adding a database, and starting the daemon](/images/de/connector/add-connector-1.png)
+
+---
+
+## 3 — Register in Schema Weaver
+
+In Schema Weaver, click **+ Add Connector** or open the connector menu and follow the guided 3-step registration:
+
+| Step | What you do |
+|---|---|
+| **1. Setup CLI** | Run `npm i -g @schema-weaver/pg-connector`, `pg-connector init`, and attach your database |
+| **2. Register Key** | Paste your Connector ID (`agt_...`) and Connection Key (`swagt_...`), then click **Verify & Connect** |
+| **3. Connected** | Schema Weaver verifies outbound reachability and displays all discovered databases |
+
+![Register Key step in Schema Weaver showing the input fields for Connector ID and Connection Key before verifying and connecting](/images/de/connector/add-connector-2.png)
+
+> **Retrieving your credentials:**
+> If you already initialized your connector earlier and need your credentials again, run:
+> ```bash
+> pg-connector config --token
+> ```
+> This prints your existing Connector ID and token directly from your local config.
+
+The Connection Key is verified over encrypted TLS and never stored in plain text by Schema Weaver.
+
+---
+
+## 4 — 24/7 Autostart Services (Persistent Background Daemon)
+
+When running on a production server or desktop, you often want the connector to start automatically on system boot and stay alive even if your terminal closes or user logs out.
+
+### Native System Service (`pg-connector service`)
+
+`pg-connector` includes a built-in cross-platform service manager:
+
+```bash
+# Install and register the background service
+pg-connector service install
+
+# Check the live daemon status
+pg-connector service status
+
+# Remove the background service
+pg-connector service uninstall
+```
+
+Platform implementation details:
+- **Linux**: Configures and registers a `systemd` user service (`schema-weaver-connector.service`) with automatic restart on failure (`Restart=always`).
+- **macOS**: Configures a `launchd` user daemon plist (`dev.schemaweaver.pg-connector.plist`) with `RunAtLoad` and `KeepAlive`.
+- **Windows**: Configures a persistent Windows Scheduled Task (`SchemaWeaverConnector`) that triggers on user logon.
+
+### PM2 Process Manager
+
+If your team already uses **PM2** for process supervision, you can easily supervise the connector:
+
+```bash
+pm2 start pg-connector --name pg-connector -- start
+pm2 save
+pm2 startup
+```
+
+---
+
+## 5 — CLI Diagnostic Debugger
+
+If a connection fails or you are setting up in a restrictive corporate network, run the built-in diagnostic tool:
+
+```bash
+pg-connector debug
+```
+
+The debugger runs an automated 6-point pre-flight checklist:
+- **Runtime Check**: Node.js engine compatibility (18+) and host OS details.
+- **Config Integrity**: Validates local configuration file (`config.json`) and token formats.
+- **Relay Reachability**: Tests DNS resolution, SSL handshake, and WebSocket handshake to `wss://api.schemaweaver.dev` (Port 443).
+- **PostgreSQL Connectivity**: Verifies local network reachability, DNS/IP fallback (IPv4/IPv6), and database authentication for each configured database.
+- **Corporate Proxy**: Inspects active `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` environment variables.
+
+---
+
+## 6 — Enterprise VPC & Restricted Environments
+
+`pg-connector` is purpose-built for zero-trust private clouds and internal VPCs:
+
+- **Zero Inbound Ports**: The connector makes **outbound connections only** to `api.schemaweaver.dev:443`. No firewall inbound holes, reverse proxies, or public IP addresses are required.
+- **Corporate Proxy Support**: Respects system proxy environment variables:
+  ```bash
+  export HTTPS_PROXY="http://proxy.internal.corp:8080"
+  export NO_PROXY="localhost,127.0.0.1,internal.corp"
+  ```
+- **Custom Config Directory**: For hardened environments where home directories are restricted:
+  ```bash
+  export PG_CONNECTOR_HOME="/opt/schema-weaver/config"
+  pg-connector start
+  ```
+
+---
+
+## If something looks wrong
+
+| Symptom | Diagnosis & Fix |
+|---|---|
+| **No connectors listed** | The Connector daemon is not running. Run `pg-connector start` or `pg-connector service install`. |
+| **Verification fails** | Confirm the Connector ID starts with `agt_` and the Connection Key starts with `swagt_`. Re-run `pg-connector init` if necessary. |
+| **Online but no databases found** | Run `pg-connector db test` locally to test credentials, or `pg-connector db add` to register databases. |
+| **Connection times out behind firewall** | Run `pg-connector debug` to verify outbound access to port 443 and inspect `HTTPS_PROXY` settings. |
+
+---
+
+## Next Steps
+
+- [Your Connections](/connector/connections) — managing multiple attached databases
+- [Security Architecture](/connector/security-architecture) — zero-ingress security model and credential isolation
+- [Health & Execution Logs](/connector/health) — monitoring query execution and daemon health
+- [Sharing with Your Team](/connector/sharing) — sharing databases securely with team members

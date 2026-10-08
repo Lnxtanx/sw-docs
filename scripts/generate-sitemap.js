@@ -13,7 +13,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const docsDir   = path.join(__dirname, '..', 'docs');
 const publicDir = path.join(__dirname, '..', 'public');
 
-const BASE_URL = 'https://docs.schemaweaver.vivekmind.com';
+const BASE_URL = 'https://docs.schemaweaver.dev';
 
 // Priority weights by depth
 const PRIORITY = { 0: '1.0', 1: '0.8', 2: '0.6' };

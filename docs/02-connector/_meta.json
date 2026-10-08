@@ -1,0 +1,14 @@
+{
+  "order": [
+    "install",
+    "connections",
+    "health",
+    "sharing",
+    "security-architecture"
+  ],
+  "install": "Install & Run",
+  "connections": "Your Connections",
+  "health": "Health & Execution Logs",
+  "sharing": "Sharing with Your Team",
+  "security-architecture": "Security Architecture"
+}

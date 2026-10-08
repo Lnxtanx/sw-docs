@@ -9,15 +9,15 @@ related:
     path: /sql-editor/version-history
   - title: Schema Compiler
     path: /sql-editor/schema-compiler
-  - title: Database
-    path: /database
+  - title: The Connector
+    path: /connector
 ---
 
 # Schema Diff
 
 The Schema Diff tool lets you compare two PostgreSQL schema states side-by-side. It highlights every added, removed, and modified object — tables, columns, indexes, constraints, and more — so you can review changes before applying a migration or audit what drifted in production.
 
-> Quick links: [Open SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/) · [SQL Editor Overview](/sql-editor) · [Version History](/sql-editor/version-history)
+> Quick links: [Open SQL Editor](https://sql-editor.schemaweaver.dev/) · [SQL Editor Overview](/sql-editor) · [Version History](/sql-editor/version-history)
 
 ---
 
@@ -163,14 +163,14 @@ The diff between your current schema file and the live database is the foundatio
 2. Generates a safe migration plan (handling type casts, FK order, enum additions)
 3. Shows you the migration SQL for review before applying
 
-See [Database](/database) for details on connecting to a live database and running migrations.
+See [Connector](/connector) for details on connecting to a live database and running migrations.
 
 ---
 
 ## Next Steps
 
 - [Version History](/sql-editor/version-history) — browse past snapshots to use as diff sources
-- [Database](/database) — diff your SQL against a live database
+- [Connector](/connector) — diff your SQL against a live database
 - [Schema Compiler](/sql-editor/schema-compiler) — analyze your schema for issues before diffing
 - [ER Diagram](/sql-editor/er-diagram) — visualize the structural changes alongside the diff
 

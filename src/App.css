@@ -43,11 +43,20 @@
 
 .header-title {
   font-weight: 700;
-  font-size: 1.2rem;
-  background: linear-gradient(135deg, #10b981, #3b82f6);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: 1.25rem;
+  color: #0f172a;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+[data-theme="dark"] .header-title {
+  color: #f8fafc;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .header-title {
+    color: #f8fafc;
+  }
 }
 
 .sidebar-nav {
@@ -69,37 +78,144 @@
   gap: 0.25rem;
 }
 
-.nav-item {
+.nav-item,
+.nav-section-link {
+  flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 0.75rem 1rem;
+  padding: 0.65rem 0.75rem;
   border-radius: 8px;
-  color: var(--text-muted);
-  text-decoration: none;
+  color: var(--text-main);
+  font-size: 0.95rem;
   font-weight: 500;
-  transition: all 0.2s ease;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
-.nav-item:hover {
+.nav-item:hover,
+.nav-section-link:hover {
   background: var(--bg-hover);
   color: var(--text-main);
 }
 
-.nav-item.active {
+.nav-item.active,
+.nav-section-link.active {
   background: var(--bg-active);
   color: var(--accent-color);
   font-weight: 600;
 }
 
-/* Sidebar Group Buttons */
-.nav-group-btn:hover {
-  background: var(--bg-hover);
-  border-radius: 8px;
+.nav-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
 }
 
-.nav-group-btn:active {
-  opacity: 0.8;
+.nav-item:hover .nav-icon,
+.nav-section-link:hover .nav-icon {
+  color: var(--text-secondary);
+}
+
+.nav-item.active .nav-icon,
+.nav-section-link.active .nav-icon {
+  color: var(--accent-color);
+}
+
+/* Sidebar nav rows
+   One icon column across every row so the tree reads as a single system:
+   a chevron on sections (toggles), a page glyph on standalone leaves, and a
+   muted chevron on children. Text steps down 0.95rem -> 0.875rem with
+   indentation rather than bullets. */
+
+.nav-row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.nav-chevron {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.nav-chevron:hover {
+  color: var(--text-main);
+  background: var(--bg-hover);
+}
+
+.nav-chevron.collapsed {
+  transform: rotate(-90deg);
+}
+
+.nav-chevron-placeholder {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+/* Needs the element qualifier to outrank the generic `.sidebar-nav ul` rule. */
+.sidebar-nav ul.nav-children {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0.25rem 0 0.5rem 0.875rem;
+  padding: 0 0 0 0.75rem;
+  border-left: 1px solid var(--border-color);
+}
+
+.nav-subitem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.45rem 0.6rem;
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nav-subitem:hover {
+  background: var(--bg-hover);
+  color: var(--text-main);
+}
+
+.nav-subitem.active {
+  background: var(--bg-active);
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.nav-subitem-icon {
+  flex-shrink: 0;
+  color: var(--text-muted);
+  opacity: 0.65;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-subitem:hover .nav-subitem-icon,
+.nav-subitem.active .nav-subitem-icon {
+  color: var(--accent-color);
+  opacity: 1;
 }
 
 .sidebar-footer {
@@ -520,8 +636,28 @@
   font-size: 2.5rem;
   font-weight: 800;
   letter-spacing: -0.02em;
+  line-height: 1.15;
+  /* Deliberately not `text-wrap: balance`: on the Introduction tagline it
+     evens the copy across three lines instead of the two it fits in. Every
+     other page H1 is a single short line, so nothing else is affected. */
   margin-top: 0;
   margin-bottom: 1.5rem;
+}
+
+/* Brand name inside the page H1 (e.g. "Schema Weaver" on the Introduction
+   overview) uses the logo gradient instead of the plain accent link colour, so
+   the wordmark and the title always read as one brand. */
+.mdx-content h1 a {
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.mdx-content h1 a:hover {
+  border-bottom-color: transparent;
+  background: linear-gradient(135deg, #059669, #2563eb);
 }
 
 .mdx-content h2 {

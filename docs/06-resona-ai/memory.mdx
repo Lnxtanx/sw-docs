@@ -1,0 +1,77 @@
+---
+title: AI Memory
+description: Resona automatically records what it learns from conversations into persistent memory shared across Chat, Voice, and Dashboard AI — edit directly in place in Settings
+tags: [resona-ai, memory, knowledge-base, database-memory, user-profile, postgresql]
+order: 5
+sidebar_group: "Resona AI"
+related:
+  - title: Resona AI Overview
+    path: /resona-ai
+  - title: Chat Interface
+    path: /resona-ai/ai-chat
+  - title: Resona Voice
+    path: /resona-ai/voice
+  - title: Resona Dashboard AI
+    path: /resona-ai/dashboard
+  - title: Plans and Credits
+    path: /pricing
+---
+
+# AI Memory
+
+**AI Memory** is Schema Weaver's shared knowledge system. As you chat, talk, or build dashboards, Resona automatically captures business directives, table relationships, and custom metric definitions into a persistent markdown knowledge base.
+
+Open memory anytime from **Settings → AI Memory**.
+
+![Resona AI Memory settings panel showing Database Memory with Founder Directives, Metric Definitions, and inline click-to-edit surface](/images/de/resona-ai/memeory/overview.png)
+
+> Quick links: [Chat Interface](/resona-ai/ai-chat) · [Resona Voice](/resona-ai/voice) · [Dashboard AI](/resona-ai/dashboard) · [Plans & Credits](/pricing)
+
+---
+
+## 1 — One Shared Memory Across All 3 Agents
+
+Memory is unified across all three AI surfaces. Any definition established or corrected in one agent is immediately known to the other two:
+
+| Agent Surface | How It Uses Shared Memory |
+|---|---|
+| **[Resona AI Chat](/resona-ai/ai-chat)** | Accurately joins custom tables and filters calculations without needing repetitive instructions in prompt messages. |
+| **[Resona Voice](/resona-ai/voice)** | Speaks answers informed by your business context, interpreting verbal shorthand like *"active learners"* or *"habitual usage"* correctly. |
+| **[Resona Dashboard AI](/resona-ai/dashboard)** | Assembles executive cards, KPI metrics, and growth charts adhering to your exact formulas and founder rules. |
+
+Teach Resona how your revenue or user status is computed once, and every conversation across chat, audio, and visual dashboards builds upon that knowledge.
+
+---
+
+## 2 — Automatic Memory Generation Through Conversation
+
+You don't need to manually draft configuration files before using Schema Weaver:
+
+- **Built Conversationally**: As you ask questions and explore tables, Resona autonomously extracts business facts, domain rules, and table conventions from your interactions.
+- **Categorized Sections**:
+  - **Founder Directives**: High-level structural rules and presentation constraints (e.g., `The Executive Analysis section should present KPI and insight cards only, with no charts`).
+  - **Metric Definitions**: Concrete SQL business logic and column mappings (e.g., how `tutor_correction_rate` or `chat_habit` is calculated).
+  - **Table Nuances & Quirks**: Important notes about soft deletes, legacy columns, or tenant isolation columns.
+- **Timestamped & Traceable**: Directives include the date they were established, making it easy to track how definitions evolve.
+
+---
+
+## 3 — Direct In-Place Editing (Click to Edit)
+
+Memory belongs entirely to you. You can review, refine, or rewrite anything the AI has recorded directly in the UI:
+
+- **Click to Edit**: The memory view is an active markdown surface. Click anywhere on the text to open the in-place editor (`Click to edit` tooltip), make your adjustments, and click **Save**.
+- **Two Memory Scopes**:
+  - **Database (`MEMORY.md`)**: Scoped to the selected database connection (e.g., `cloopdb`). Shared across team members who connect to that same database.
+  - **Profile (`USER_PROFILE.md`)**: Scoped to your individual user account. Holds personal preferences and analytical habits across all databases.
+- **Recompile from Live Schema**: Click the recompile button (`RotateCcw`) to refresh and synchronize memory with your latest database schema migrations.
+- **One-Click Copy**: Use the copy button to export your database's memory markdown for internal team documentation or pull requests.
+
+---
+
+## Next Steps
+
+- [Resona AI Chat](/resona-ai/ai-chat) — conversational analysis, file uploads, and reports
+- [Resona Voice](/resona-ai/voice) — ambient, hands-free voice analyst
+- [Resona Dashboard AI](/resona-ai/dashboard) — executive dashboard generation and metric cards
+- [Plans and Credits](/pricing) — credit tiers, seat pricing, and team sharing

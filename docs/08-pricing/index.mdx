@@ -1,88 +1,91 @@
 ---
 title: Plans and Credits
-description: Understand Schema Weaver pricing tiers, AI credit system, and Indian regional pricing
-tags: [pricing, plans, credits, billing, students, open-source]
+description: Schema Weaver pricing — Free, Pro, and Team plans, what AI credits cover, how seats work on Team, and tracking credit usage in Settings
+tags: [pricing, plans, credits, billing, team, seats, ai-usage]
 order: 1
 sidebar_group: "Pricing"
 related:
-  - title: Feature Comparison
-    path: /pricing/comparison
-  - title: Resona AI Models
-    path: /resona-ai/models
+  - title: Resona AI Overview
+    path: /resona-ai
+  - title: AI Memory
+    path: /resona-ai/memory
+  - title: Team Collaboration
+    path: /team-collaboration
 ---
 
 # Plans and Credits
 
-Schema Weaver offers transparent, AI-powered pricing designed to scale with your team. Whether you're a solo developer exploring PostgreSQL or a large team shipping production schemas, there's a plan that fits your craft.
+Three plans: **Free**, **Pro**, and **Team**. Resona works the same way on all of them — the difference is how many credits you get and what you can share with a team.
 
-> Quick links: [Pricing Page](https://schemaweaver.vivekmind.com/pricing) · [SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/) · [Contact Sales](mailto:vivek@vivekmind.com)
-
----
-
-## Pricing Tiers
-
-| Plan | Price (USD) | Price (INR) | Best For |
-| :--- | :--- | :--- | :--- |
-| **Free** | $0 | ₹0 | Solo developers and learners |
-| **Starter** | $15 / mo | ₹1,199 / mo | Developers needing smarter AI models |
-| **Pro** | $29 / mo | ₹2,499 / mo | Teams shipping production schema |
-| **Power** | $79 / mo | ₹6,999 / mo | Power users needing elite AI models |
+> Quick links: [Pricing Page](https://schemaweaver.dev/pricing) · [Contact Sales](mailto:support@schemaweaver.dev)
 
 ---
 
-## What are AI Credits?
+## Plans
 
-AI credits are the universal currency for using **Resona AI** across both the SQL Editor and the Data Explorer. 
-
-- **Unified Pool:** Credits are shared across your entire workspace. A DDL edit in the SQL Editor and a chart generation in the Data Explorer draw from the same monthly pool.
-- **Model Tiers:** Different models cost different amounts. Fast models (like GPT-4o mini) are inexpensive, while Powerful models (like Claude Opus) consume more credits per request.
-- **Monthly Refresh:** Your credit balance resets at the start of every billing cycle.
-
-### Credit Limits by Plan
-
-| Plan | Monthly Credits | Daily Limit |
-| :--- | :--- | :--- |
-| **Free** | 3,000 | 300 |
-| **Starter** | 100,000 | 10,000 |
-| **Pro** | 200,000 | 20,000 |
-| **Power** | 500,000 | 50,000 |
+| Plan | Price | Credits / month | Daily cap |
+|---|---|---|---|
+| **Free** | **$0** | 3,000 | None |
+| **Pro** | **$29 / mo** | 200,000 | 20,000 |
+| **Team** | **$30 / mo** (2 seats) | 100,000 per seat | 10,000 per seat |
 
 ---
 
-## Regional Pricing (India)
+## Team is priced per seat
 
-We offer dedicated regional pricing for users in India. When subscribing from India, you will be automatically presented with the INR rates via our payment gateway (Razorpay). 
+The Team plan bills **$15 per seat**, with a **two-seat base** — so $30 covers the first two people, and each additional seat is $15.
 
-- **Starter:** ₹1,199 / month
-- **Pro:** ₹2,499 / month
-- **Power:** ₹6,999 / month
+Seats are how many people can use the workspace. Your subscription shows how many are in use and how many remain, and owners can add or remove seats from the team billing settings.
 
 ---
 
-## Special Discounts
+## What each plan includes
 
-We are committed to supporting the wider technical community:
+| | Free | Pro | Team |
+|---|---|---|---|
+| **AI credits** | 3,000 / mo | 200,000 / mo | 100,000 per seat |
+| **Daily cap** | None | 20,000 | 10,000 per seat |
+| **Flash & Deep modes** | ✓ | ✓ | ✓ |
+| **Voice AI (speech queries)** | ✓ | ✓ | ✓ |
+| **Team members** | Join by invite | Up to 5 | By seat |
+| **Shared database connections** | ✓ | ✓ | ✓ |
+| **Support** | Community | Priority | Priority |
 
-- **Students & Educators:** 50% off any paid plan for verified academic users.
-- **Open Source:** 100% free Pro plan for registered, active open-source projects.
+**Pro** includes team sharing for up to 5 people, but each member's credits are their own — there's no shared pool.
 
-To apply, please reach out via the [Support Page](https://schemaweaver.vivekmind.com/support) with proof of status.
-
----
-
-## FAQ
-
-### Is there a free trial?
-We don't offer a traditional "timed" trial because our **Free plan is permanent**. You can use the full SQL Editor and 20-layer compiler forever without a credit card.
-
-### Can I cancel anytime?
-Yes. All paid plans are month-to-month. You can cancel at any time from your account settings, and you will retain access to your paid features until the end of your current billing period.
-
-### Does Resona AI see my row-level data?
-No. Resona AI only receives schema metadata (table/column names) and your questions. The generated SQL runs locally in your browser. Your private data never leaves your infrastructure.
+**Team** is what makes the workspace genuinely collaborative: connections and workspaces are shared across everyone on the team. Credits are still **per seat** here too, so each person gets their own 100,000 rather than drawing from one shared balance.
 
 ---
 
-### Next Steps
-- [Feature Comparison](/pricing/comparison) — See a detailed breakdown of every feature across plans.
-- [Resona AI Models](/resona-ai/models) — Learn about the different model tiers and their credit costs.
+## What credits are
+
+Credits are what Resona costs to run. Every message, query, and generated report draws from the balance, and all of your surfaces — chat, voice, and dashboards — draw from the same one.
+
+**Free** has no daily cap: the whole 3,000 is available whenever you want it. Every plan resets at the start of the billing month, and unused credits don't carry over.
+
+---
+
+## Monitoring credit usage (`Settings → AI Usage`)
+
+To check your current credit consumption, remaining balances, and daily resets, navigate to the **AI Usage** panel in the Settings menu:
+
+1. Click the gear icon or your profile avatar in the bottom-left sidebar to open **Settings**.
+2. Select **AI Usage** from the left-hand navigation.
+
+![Schema Weaver Settings showing AI Credit Usage with monthly and daily progress bars, concurrent agents capacity, and plan tier](/images/de/resona-ai/ussage-ai-credit.png)
+
+### Key metrics tracked:
+
+- **Monthly credits** — Displays total credits consumed in the current billing cycle against your monthly allowance (e.g., `364 / 100K credits`, `0% used`, `99.6K credits remaining`), along with a breakdown of credits used today.
+- **Daily safety cap** — Displays today's usage against your plan's daily limit (e.g., `364 / 10K credits`, `4% used`, `9.6K credits remaining`) alongside a live countdown timer until daily quota reset (e.g., `Resets in 12h 50m`).
+- **Concurrent agents** — Reflects active parallel execution capacity (e.g., `0 / 2`), indicating how many simultaneous agentic workflows can run in parallel.
+- **Plan tier** — Identifies your active subscription tier (`Team`, `Pro`, or `Free`).
+- **Live refresh** — Click the refresh icon in the top header anytime to get up-to-the-minute credit metrics.
+
+---
+
+## Next Steps
+
+- [Resona AI](/resona-ai) — what you're spending credits on
+- [AI Memory](/resona-ai/memory) — shared knowledge system and directives
+- [Team Collaboration](/team-collaboration) — sharing with your team

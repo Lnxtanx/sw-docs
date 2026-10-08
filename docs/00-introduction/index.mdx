@@ -1,43 +1,54 @@
 ---
 title: Introduction
-description: Welcome to Schema Weaver — a PostgreSQL schema management platform with a visual SQL Editor, ER diagram, migration engine, Data Explorer, and AI assistant
-tags: [getting-started, overview, schema-weaver, postgresql]
+description: Schema Weaver is the first voice-native analytics workspace for PostgreSQL — explore live data, ask Resona AI in plain English, or talk to your database by voice
+tags: [getting-started, overview, schema-weaver, postgresql, voice, analytics]
 order: 0
 sidebar_group: null
 related:
-  - title: SQL Editor
-    path: /sql-editor
-  - title: Database
-    path: /database
   - title: Data Explorer
     path: /data-explorer
+  - title: SQL Editor
+    path: /sql-editor
+  - title: The Connector
+    path: /connector
 ---
 
-# [Schema Weaver](https://schemaweaver.vivekmind.com/) Documentation
+# [Schema Weaver](/introduction) — The First Voice-Native Analytics Workspace for PostgreSQL
 
-Welcome to the official documentation for Schema Weaver. This guide covers everything from connecting your first PostgreSQL database to running migrations, exploring your data, and collaborating with your team.
+Connect a database. Browse it in a high-performance grid, ask Resona AI in plain English, or talk to it by voice.
 
 ---
 
 ## What is Schema Weaver?
 
-Schema Weaver is a PostgreSQL schema management platform. It gives you a visual SQL Editor for writing and organizing your schema, an auto-generated ER diagram that updates as you type, a migration engine for safely pushing changes to your live database, and an AI-powered Data Explorer for querying and analyzing your data — all in one workspace.
+Two connected surfaces, sharing one account and one set of database connections:
+
+- **Data Explorer** — explore live data, and talk to it.
+- **SQL Editor** — design the schema behind it.
 
 ---
 
 ## The Two Product Surfaces
 
-- **[SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/)**  
-  Write schema, visualize the ER diagram, analyze it with the compiler, and manage migrations against a live database.
+- **[Data Explorer](https://data-explorer.schemaweaver.dev/)** — the analytics workspace. Browse tables, filter and sort live rows, inspect column statistics, ask Resona AI in natural language, talk to your database by voice, build dashboards, and export to CSV, Excel, JSON, SQL, or Google Sheets.
 
-- **[Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/)**  
-  Browse tables, run SQL queries, analyze columns, and use Resona AI to explore your data in natural language.
+- **[SQL Editor](https://sql-editor.schemaweaver.dev/)**  
+  Write schema, visualize the ER diagram, analyze it with the compiler, and manage migrations against a live database.
 
 Both surfaces share the same database connections, projects, and team memberships. You connect a database once and it is available everywhere.
 
 ---
 
 ## What You Can Do
+
+**Data Exploration**
+- Browse any table with a high-performance, filterable data grid
+- Filter with typed operators, sort server-side, and hide columns you don't need
+- Analyze columns — null rates, distinct counts, value distributions
+- Ask Resona AI to write queries and build reports from your data
+- **Talk to your database** — start a voice session and ask questions out loud
+- Generate a dashboard of KPI cards, trends, cohorts, and insights from your whole database
+- Export the current view, selected tables, or an entire schema
 
 **Schema Development**
 - Write PostgreSQL DDL across multiple files and folders in a structured project
@@ -51,12 +62,6 @@ Both surfaces share the same database connections, projects, and team membership
 - Apply migrations safely — with advisory locking, drift detection, and automatic rollback support
 - Detect when someone changed the database outside of Schema Weaver
 
-**Data Exploration**
-- Browse any table with a high-performance, filterable data grid
-- Run custom SQL queries with syntax highlighting and autocomplete
-- Analyze columns — null rates, distinct counts, value distributions
-- Use Resona AI to write queries, generate charts, and build reports from your data
-
 **Team Collaboration**
 - Invite teammates to projects with owner or member roles
 - Share database connections without sharing credentials
@@ -66,22 +71,24 @@ Both surfaces share the same database connections, projects, and team membership
 
 ## Quick Start
 
-1. Open the **[SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/)** and create a new project
-2. Add a `.sql` file and write your first `CREATE TABLE` statement
-3. Watch the **ER Diagram** and **Schema Compiler** update automatically
-4. Connect a PostgreSQL database via the **Connect** button in the footer
-5. Run `sw pull` in the terminal to import the live schema, or `sw push --apply` to push your changes
+1. Open the **[Data Explorer](https://data-explorer.schemaweaver.dev/)** and connect a PostgreSQL database
+2. Pick a schema and click a table — your rows load in the grid
+3. Click a column header for statistics, or **Filter** to narrow rows down
+4. Ask Resona AI a question in plain English, or press the voice orb and **ask it out loud**
+5. **Export** the view, a selection of tables, or the whole schema
+
+Already designing a schema? Open the **[SQL Editor](https://sql-editor.schemaweaver.dev/)**, create a project, add a `.sql` file, and watch the ER Diagram and Schema Compiler update as you type.
 
 ---
 
 ## Explore the Documentation
 
-- [Database](/database) — add connections, pull, diff, push migrations, detect drift
+- [Data Explorer](/data-explorer) — live data grid, voice agent, Dashboard AI, Resona AI, exports
 - [SQL Editor](/sql-editor) — files, schema compiler, ER diagram, AI assistant
-- [Data Explorer](/data-explorer) — browse tables, run queries, AI-assisted analysis
+- [Connector](/connector) — add connections, pull, diff, push migrations, detect drift
 - [Resona AI](/resona-ai) — models, credits, and how the AI assistant works
 - [Team Collaboration](/team-collaboration) — invite members, roles, and shared access
 
 ---
 
-**[schemaweaver.vivekmind.com](https://schemaweaver.vivekmind.com/)** · **[SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/)** · **[Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/)**
+**[schemaweaver.dev](https://schemaweaver.dev/)** · **[Data Explorer](https://data-explorer.schemaweaver.dev/)** · **[SQL Editor](https://sql-editor.schemaweaver.dev/)**

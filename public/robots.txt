@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://docs.schemaweaver.vivekmind.com/sitemap.xml
+Sitemap: https://docs.schemaweaver.dev/sitemap.xml

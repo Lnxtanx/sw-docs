@@ -66,7 +66,7 @@ export function FeedbackDialog({
       setImages([]);
       setIsOpen(false);
     } catch (error) {
-      alert('Failed to submit. Please try again or email support@vivekmind.com');
+      alert('Failed to submit. Please try again or email support@schemaweaver.dev');
     } finally {
       setSubmitting(false);
     }

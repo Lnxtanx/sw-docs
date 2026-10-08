@@ -12,6 +12,38 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const docsDir = path.join(__dirname, '..', 'docs');
 const publicDir = path.join(__dirname, '..', 'public');
 
+/**
+ * Read a folder-level _meta.json, if present.
+ * Supports two shapes:
+ *   { "slug": "Nav Title", ... }        -> title overrides
+ *   { "order": ["slug", ...] }          -> order fallback when frontmatter has none
+ */
+function readFolderMeta(folderPath) {
+  const metaPath = path.join(folderPath, '_meta.json');
+  if (!fs.existsSync(metaPath)) return { titles: {}, order: [] };
+
+  let parsed;
+  try {
+    parsed = JSON.parse(fs.readFileSync(metaPath, 'utf-8'));
+  } catch {
+    console.warn(`⚠ Skipping malformed _meta.json: ${metaPath}`);
+    return { titles: {}, order: [] };
+  }
+
+  const titles = {};
+  let order = [];
+
+  for (const [key, value] of Object.entries(parsed)) {
+    if (key === 'order' && Array.isArray(value)) {
+      order = value;
+    } else if (typeof value === 'string') {
+      titles[key] = value;
+    }
+  }
+
+  return { titles, order };
+}
+
 function generateNavTree() {
   console.log('🗺️  Generating navigation tree...');
 
@@ -39,6 +71,8 @@ function generateNavTree() {
       const indexPath = path.join(folderPath, 'index.mdx');
 
       if (!fs.existsSync(indexPath)) continue;
+
+      const folderMeta = readFolderMeta(folderPath);
 
       // Extract frontmatter from index.mdx
       const content = fs.readFileSync(indexPath, 'utf-8');
@@ -70,10 +104,20 @@ function generateNavTree() {
           const childContent = fs.readFileSync(childPath, 'utf-8');
           const { data: childFm } = matter(childContent);
           const childSlug = file.replace('.mdx', '');
+          // Precedence: frontmatter order > folder _meta.json order array > 999
+          const orderFromMeta = folderMeta.order.indexOf(childSlug);
+          const order =
+            typeof childFm.order === 'number'
+              ? childFm.order
+              : orderFromMeta !== -1
+                ? orderFromMeta
+                : 999;
           return {
-            title: childFm.title || childSlug,
+            // _meta.json is authoritative for the nav label; frontmatter title is
+            // the fallback. The page H1/<title> still comes from frontmatter.
+            title: folderMeta.titles[childSlug] || childFm.title || childSlug,
             href: `${item.href}/${childSlug}`,
-            _order: typeof childFm.order === 'number' ? childFm.order : 999,
+            _order: order,
           };
         });
 

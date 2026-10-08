@@ -1,0 +1,90 @@
+---
+title: Your Connections
+description: Manage the PostgreSQL databases your Connector can reach — add them, switch between them, and see which one is currently active
+tags: [connector, connections, postgresql, databases, selector, manage]
+order: 3
+sidebar_group: "Connector"
+related:
+  - title: The Connector
+    path: /connector
+  - title: Install & Run
+    path: /connector/install
+  - title: Sharing with Your Team
+    path: /connector/sharing
+---
+
+# Your Connections
+
+Each database your Connector can reach appears as a connection. You switch between them from the selector at the top of the Data Explorer.
+
+---
+
+## Picking a database
+
+The selector groups your connections and marks which ones are online. Schema Weaver selects an available one for you when you arrive, and remembers your last choice for next time.
+
+Only online connections are selectable — if the Connector is stopped, its databases won't appear as available.
+
+![Discovered Databases dropdown in Schema Weaver Data Explorer showing online PostgreSQL instances routed through the host connector](/images/de/connector/connected-db.png)
+
+The dropdown menu gives you:
+- **Host provenance**: Shows which host connector serves each database (e.g. `via vivek-laptop-msi`).
+- **Live status indicators**: Green status badges indicate healthy, online connections.
+- **Direct shortcuts**: Quickly launch the **Connector Dashboard** or click **+ Connect database** to attach new instances.
+
+---
+
+## Discovered databases view
+
+You can also inspect, search, and manage all databases across your active connectors from the **Databases** tab in the Connector Dashboard:
+
+![Connector Databases management view listing all discovered PostgreSQL databases across host connectors with status indicators and quick Explore links](/images/de/connector/db-view.png)
+
+From here, you can:
+- **Search & Filter**: Filter discovered databases by name, alias, or host machine.
+- **Inspect Connectivity**: Check real-time online status and host connector ID for each database.
+- **One-Click Explore**: Click **Explore →** to immediately open any database in the Data Explorer without manually searching through menus.
+
+---
+
+## Adding more databases
+
+The Connector can hold more than one. To add another:
+
+```bash
+pg-connector db add
+```
+
+Run it on the same machine as the existing Connector, then refresh. The new database appears in the selector alongside the others.
+
+To reach something different, run a second Connector on a different machine and register it separately — each one is independent.
+
+---
+
+## Removing a connection
+
+Revoking a Connector removes its registration and its databases from Schema Weaver. Your local Connector and its stored credentials are untouched — nothing on your machine changes.
+
+If the Connector is shared with your team, see [Sharing with Your Team](/connector/sharing) first, since revoking affects everyone it's shared with.
+
+---
+
+## PostgreSQL only
+
+Schema Weaver currently supports **PostgreSQL**. Other engines aren't supported yet, and there's nothing to configure — the connection type is fixed.
+
+---
+
+## What Schema Weaver stores
+
+Just enough to show you the connection and route your queries: a display name, and whether it's currently online. Your host, port, username, password, and certificate never reach Schema Weaver at all.
+
+[Security Architecture](/connector/security-architecture) covers the boundary in full.
+
+---
+
+## Next Steps
+
+- [Health & Execution Logs](/connector/health) — checking a connection is working
+- [Sharing with Your Team](/connector/sharing) — giving colleagues access
+- [The Connector](/connector) — back to the overview

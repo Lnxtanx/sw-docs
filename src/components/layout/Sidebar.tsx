@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { ChevronDown, FileText } from 'lucide-react';
+import { ChevronDown, ChevronRight, FileText } from 'lucide-react';
 import type { NavTreeItem } from '../../lib/mdx/types.js';
 
 export function Sidebar() {
@@ -18,16 +18,21 @@ export function Sidebar() {
           const data = await response.json();
           setNavTree(data);
 
-          // Auto-expand groups containing the current route
+          // Auto-expand the section containing the current route. Matches the
+          // exact route or a nested route under it, so sibling paths that
+          // merely share a prefix do not expand each other.
           const newExpanded = new Set<string>();
           const currentPath = location.pathname;
 
           data.forEach((item: NavTreeItem) => {
-            if (item.children) {
-              const hasActive = item.children.some(child => currentPath.includes(child.href));
-              if (hasActive) {
-                newExpanded.add(item.href);
-              }
+            const kids = item.children ?? [];
+            if (kids.length === 0) return;
+            const isOwnPage = currentPath === item.href;
+            const hasActiveChild = kids.some(
+              (child) => currentPath === child.href || currentPath.startsWith(`${child.href}/`)
+            );
+            if (isOwnPage || hasActiveChild) {
+              newExpanded.add(item.href);
             }
           });
 
@@ -81,7 +86,7 @@ export function Sidebar() {
 
       <div className="sidebar-footer">
         <a
-          href="https://schemaweaver.vivekmind.com"
+          href="https://schemaweaver.dev"
           target="_blank"
           rel="noopener noreferrer"
           className="sidebar-footer-link"
@@ -107,88 +112,62 @@ interface SidebarItemProps {
 }
 
 function SidebarItem({ item, expandedGroups, onToggleGroup }: SidebarItemProps) {
-  const hasChildren = item.children && item.children.length > 0;
+  // A section's first child is its own Overview page, so it repeats the
+  // section's href. Drop it — the section title already links there. Any
+  // section left with no real children (Introduction, Team Collaboration)
+  // renders as a single plain link instead of a toggle plus a redundant child.
+  const children = (item.children ?? []).filter((child) => child.href !== item.href);
+  const isLeaf = children.length === 0;
   const isExpanded = expandedGroups.has(item.href);
 
-  return (
-    <li>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        {hasChildren ? (
-          <>
-            <button
-              onClick={() => onToggleGroup(item.href)}
-              className="nav-group-btn"
-              style={{
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                padding: '0.75rem 1rem',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                width: '100%',
-                fontSize: '1rem',
-                fontWeight: 500,
-                transition: 'all 0.2s ease',
-                color: 'var(--text-main)',
-              }}
-            >
-              <ChevronDown
-                size={18}
-                style={{
-                  transform: isExpanded ? 'rotate(0)' : 'rotate(-90deg)',
-                  transition: 'transform 0.2s',
-                  flexShrink: 0,
-                }}
-              />
-              <span style={{ flex: 1, textAlign: 'left' }}>{item.title}</span>
-            </button>
-          </>
-        ) : (
+  if (isLeaf) {
+    return (
+      <li>
+        <div className="nav-row">
           <NavLink
             to={item.href}
-            className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}
-            style={{ flex: 1 }}
+            className={({ isActive }) => isActive ? 'nav-section-link active' : 'nav-section-link'}
           >
             <FileText className="nav-icon" size={18} />
             <span>{item.title}</span>
           </NavLink>
-        )}
+          <span className="nav-chevron-placeholder" aria-hidden="true" />
+        </div>
+      </li>
+    );
+  }
+
+  return (
+    <li>
+      <div className="nav-row">
+        <NavLink
+          to={item.href}
+          end
+          className={({ isActive }) => isActive ? 'nav-section-link active' : 'nav-section-link'}
+        >
+          <FileText className="nav-icon" size={18} />
+          <span>{item.title}</span>
+        </NavLink>
+
+        <button
+          onClick={() => onToggleGroup(item.href)}
+          className={isExpanded ? 'nav-chevron' : 'nav-chevron collapsed'}
+          aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${item.title}`}
+          aria-expanded={isExpanded}
+        >
+          <ChevronDown size={18} />
+        </button>
       </div>
 
-      {/* Child items */}
-      {hasChildren && isExpanded && (
-        <ul
-          style={{
-            marginLeft: '0',
-            borderLeft: '2px solid var(--border-color)',
-            paddingLeft: '0.5rem',
-            listStyle: 'none',
-            padding: '0.5rem 0 0.5rem 0.5rem',
-            margin: '0.25rem 0 0.25rem 1rem',
-          }}
-        >
-          {item.children!.map((child) => (
-            <li key={child.href} style={{ margin: 0 }}>
+      {isExpanded && (
+        <ul className="nav-children">
+          {children.map((child) => (
+            <li key={child.href}>
               <NavLink
                 to={child.href}
-                className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}
-                style={{
-                  paddingLeft: '1rem',
-                  fontSize: '0.9rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                }}
+                className={({ isActive }) => isActive ? 'nav-subitem active' : 'nav-subitem'}
               >
-                <span style={{
-                  width: '4px',
-                  height: '4px',
-                  borderRadius: '50%',
-                  background: 'currentColor',
-                  opacity: 0.5,
-                  flexShrink: 0,
-                }} />
+                <ChevronRight size={14} className="nav-subitem-icon" />
                 <span>{child.title}</span>
               </NavLink>
             </li>

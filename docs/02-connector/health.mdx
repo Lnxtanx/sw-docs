@@ -1,0 +1,96 @@
+---
+title: Health & Execution Logs
+description: Check whether your Connector is online, see its recent activity, and read the queries Schema Weaver has run through it
+tags: [connector, health, logs, activity, monitoring, debugging]
+order: 4
+sidebar_group: "Connector"
+related:
+  - title: The Connector
+    path: /connector
+  - title: Your Connections
+    path: /connector/connections
+  - title: Security Architecture
+    path: /connector/security-architecture
+---
+
+# Health & Execution Logs
+
+Two panels tell you whether things are working: **Health** for whether the Connector is reachable, and **Execution Logs** for what it has actually been asked to do.
+
+---
+
+## Health Monitor
+
+The **Health** tab in the Connector Dashboard monitors latency, daemon connectivity, and query execution health in real time:
+
+![Health Monitor dashboard displaying live relay connectivity, average latency, P95 latency, query success rate, and response time histogram](/images/de/connector/health-monitor.png)
+
+Key diagnostic metrics include:
+
+- **Host & Time Scope**: Filter metrics by individual connector host or aggregate across all active hosts, scoped over time windows (e.g., Last 1 hour).
+- **Relay Status**: Outbound WebSocket tunnel state (`Active`, with active host count).
+- **Average Latency**: Roundtrip query latency across recent operations with health thresholds (flagging queries above `500ms`).
+- **P95 Latency**: 95th percentile response times to identify tail latency spikes.
+- **Success Rate**: Percentage of completed queries without database or socket errors.
+- **Latency & Response Timeline**: Interactive histogram displaying recent query samples with color-coded response buckets:
+  - **`< 100ms` (Green)**: Optimal response time
+  - **`< 500ms` (Blue)**: Normal query execution
+  - **`> 500ms` (Orange / Red)**: Elevated latency
+
+Each Connector also reports an overall state:
+
+| State | What it means |
+|---|---|
+| **Online** | Running, connected to relay, and answering queries |
+| **Offline** | Not running or unreachable |
+| **Revoked** | Registration or key was removed |
+
+---
+
+## Execution Logs
+
+The **Execution Logs** tab provides a real-time audit trail of every database interaction Schema Weaver performs through your connector:
+
+![Real-time Execution Logs tab showing query and schema audit telemetry, duration badges, returned row counts, and statement copy actions](/images/de/connector/excution-logs.png)
+
+### Key Features:
+
+- **Category Filtering**: Quickly filter events between **All**, **Queries** (data reads and user SQL), **Schema** (introspections, table catalogs, column stats), and **Export**.
+- **Search**: Filter live events by table name, column, or SQL keyword.
+- **Execution Telemetry**:
+  - **Operation & Category**: Badges distinguish raw `QUERY` operations from `SCHEMA` catalog probes.
+  - **Target Objects**: Shows targeted tables (e.g. `admin_chat`, `pg_stats`).
+  - **Result Size**: Exact row count returned (e.g. `500 rows`, `12 rows`).
+  - **Execution Duration**: Millisecond timer badges (e.g. `1949ms`, `1116ms`).
+  - **One-Click Copy**: Copy the exact SQL statement directly to your clipboard for local testing.
+
+Logs are held in-memory and buffered locally on your connector daemon, so what is recorded is strictly operational telemetry without storing permanent table snapshots in the cloud.
+
+---
+
+## Using them to debug
+
+Most connection problems show up here:
+
+| What you see | What it usually means |
+|---|---|
+| No recent entries | Nothing has run yet — the Connector may not be receiving work |
+| Failing statements | The SQL is being rejected; the message says why |
+| Queries but no results | The query ran and matched nothing |
+| Nothing at all | The Connector is offline — check [Install & Run](/connector/install) |
+
+---
+
+## What is recorded
+
+Operational detail about *running* queries — statement text, duration, row counts, success or failure, and Connector events. It isn't a copy of your data, and it doesn't contain your credentials.
+
+See [Security Architecture](/connector/security-architecture) for exactly what crosses the boundary and what doesn't.
+
+---
+
+## Next Steps
+
+- [Your Connections](/connector/connections) — switching between databases
+- [Install & Run](/connector/install) — getting the Connector running
+- [The Connector](/connector) — back to the overview

@@ -10,6 +10,88 @@
     ]
   },
   {
+    "title": "The Connector",
+    "href": "/connector",
+    "children": [
+      {
+        "title": "Overview",
+        "href": "/connector"
+      },
+      {
+        "title": "Install & Run",
+        "href": "/connector/install"
+      },
+      {
+        "title": "Your Connections",
+        "href": "/connector/connections"
+      },
+      {
+        "title": "Health & Execution Logs",
+        "href": "/connector/health"
+      },
+      {
+        "title": "Sharing with Your Team",
+        "href": "/connector/sharing"
+      },
+      {
+        "title": "Security Architecture",
+        "href": "/connector/security-architecture"
+      }
+    ]
+  },
+  {
+    "title": "Data Explorer",
+    "href": "/data-explorer",
+    "children": [
+      {
+        "title": "Overview",
+        "href": "/data-explorer"
+      },
+      {
+        "title": "Exploring Your Data",
+        "href": "/data-explorer/exploring-data"
+      },
+      {
+        "title": "Exporting Data",
+        "href": "/data-explorer/exporting-data"
+      },
+      {
+        "title": "Statistics & Metrics with AI",
+        "href": "/data-explorer/dashboard"
+      }
+    ]
+  },
+  {
+    "title": "Resona AI",
+    "href": "/resona-ai",
+    "children": [
+      {
+        "title": "Overview",
+        "href": "/resona-ai"
+      },
+      {
+        "title": "Chat Interface",
+        "href": "/resona-ai/ai-chat"
+      },
+      {
+        "title": "Resona Voice",
+        "href": "/resona-ai/voice"
+      },
+      {
+        "title": "Resona Dashboard AI",
+        "href": "/resona-ai/dashboard"
+      },
+      {
+        "title": "Memory",
+        "href": "/resona-ai/memory"
+      },
+      {
+        "title": "Workspace & Projects",
+        "href": "/resona-ai/workspace"
+      }
+    ]
+  },
+  {
     "title": "SQL Editor",
     "href": "/sql-editor",
     "children": [
@@ -72,100 +154,6 @@
     ]
   },
   {
-    "title": "Data Explorer",
-    "href": "/data-explorer",
-    "children": [
-      {
-        "title": "Overview",
-        "href": "/data-explorer"
-      },
-      {
-        "title": "Exploring Your Data",
-        "href": "/data-explorer/exploring-data"
-      },
-      {
-        "title": "Exporting Data",
-        "href": "/data-explorer/exporting-data"
-      },
-      {
-        "title": "Resona AI",
-        "href": "/data-explorer/ai-overview"
-      },
-      {
-        "title": "AI Chat Interface",
-        "href": "/data-explorer/ai-chat-interface"
-      },
-      {
-        "title": "How Resona AI Works",
-        "href": "/data-explorer/agentic-workflows"
-      },
-      {
-        "title": "Charts & Analysis Results",
-        "href": "/data-explorer/ai-artifacts"
-      },
-      {
-        "title": "Workspace & Projects",
-        "href": "/data-explorer/ai-workspace"
-      }
-    ]
-  },
-  {
-    "title": "Database",
-    "href": "/database",
-    "children": [
-      {
-        "title": "Overview",
-        "href": "/database"
-      },
-      {
-        "title": "Adding a Connection",
-        "href": "/database/adding-a-connection"
-      },
-      {
-        "title": "Connection Dashboard",
-        "href": "/database/connection-dashboard"
-      },
-      {
-        "title": "Pull, Diff & Push",
-        "href": "/database/pull-diff-push"
-      },
-      {
-        "title": "Migrations",
-        "href": "/database/migrations"
-      },
-      {
-        "title": "Drift Detection",
-        "href": "/database/drift-detection"
-      },
-      {
-        "title": "History & Rollback",
-        "href": "/database/history-rollback"
-      },
-      {
-        "title": "Terminal & sw Commands",
-        "href": "/database/terminal"
-      }
-    ]
-  },
-  {
-    "title": "Resona AI",
-    "href": "/resona-ai",
-    "children": [
-      {
-        "title": "Overview",
-        "href": "/resona-ai"
-      },
-      {
-        "title": "AI Chat Guide",
-        "href": "/resona-ai/ai-chat"
-      },
-      {
-        "title": "Models and Credits",
-        "href": "/resona-ai/models"
-      }
-    ]
-  },
-  {
     "title": "Team Collaboration",
     "href": "/team-collaboration",
     "children": [
@@ -182,10 +170,6 @@
       {
         "title": "Overview",
         "href": "/pricing"
-      },
-      {
-        "title": "Feature Comparison",
-        "href": "/pricing/comparison"
       }
     ]
   }

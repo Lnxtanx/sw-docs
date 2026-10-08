@@ -1,0 +1,189 @@
+---
+title: Security Architecture
+description: Schema Weaver's connector security architecture — Local Credential Boundary (LCB), Connector-Enforced Read-Only Execution (CERO), and Zero-Ingress Network Isolation
+tags: [security, connector, credentials, lcb, cero, read-only, data-plane, privacy, zero-ingress]
+order: 6
+sidebar_group: "Connector"
+related:
+  - title: The Connector
+    path: /connector
+  - title: Sharing with Your Team
+    path: /connector/sharing
+  - title: Health & Execution Logs
+    path: /connector/health
+---
+
+# Security Architecture
+
+Schema Weaver's database connector is built around two core architectural principles:
+
+- **Local Credential Boundary (LCB)**: Customer database credentials remain completely isolated inside the customer's private environment.
+- **Connector-Enforced Read-Only Execution (CERO)**: Read-only database access is independently enforced at the connector boundary, never entrusted solely to the cloud or an AI model.
+
+Together, LCB and CERO establish a clear separation between **credential ownership, database execution authority, cloud orchestration, and AI-powered analysis**.
+
+---
+
+## 1. Local Credential Boundary (LCB)
+
+### Customer-Owned Credential Boundary
+
+Under the **Local Credential Boundary (LCB)**, sensitive database credentials stay inside your environment and are never transmitted to Schema Weaver's cloud application layer.
+
+The connector establishes and maintains the PostgreSQL connection locally using credentials controlled exclusively by you.
+
+The following authentication materials **never leave your host machine or VPC**:
+
+- Database host and port
+- Database username and password
+- Full connection strings (`postgres://...`)
+- SSL root certificates, client certificates, and private keys
+
+Schema Weaver Cloud instead identifies and authorizes connections using **connector-scoped tokens** — a Connector ID (`agt_...`) and Connection Key (`swagt_...`) generated locally by the connector itself. These keys identify the connector tunnel; they have zero ability to authenticate to your PostgreSQL database.
+
+> **Architectural Principle: Credentials stay with the customer.**  
+> The cloud control plane never possesses your database credentials. This creates an unbridgeable security boundary between **cloud orchestration** and **database authentication**.
+
+---
+
+## 2. Connector-Enforced Read-Only Execution (CERO)
+
+### The Connector as the Execution Security Boundary
+
+The connector is not a passive network pipe — it is the **database execution boundary**.
+
+Every database operation follows this unidirectional security path:
+
+```
+    Schema Weaver Cloud / Resona AI
+               │
+               │ Controlled query request (TLS 1.3)
+               ▼
+   ┌────────────────────────────────────────┐
+   │        Schema Weaver Connector         │
+   │                                        │
+   │  🛡️ Local Credential Boundary (LCB)    │
+   │     Credentials remain local           │
+   │                                        │
+   │  🔒 Read-Only Enforcement (CERO)       │
+   │     Local query inspection & checks    │
+   └───────────────────┬────────────────────┘
+                       │
+                       │ Permitted read-only operation only
+                       ▼
+              Customer PostgreSQL
+```
+
+Under **CERO**, every incoming SQL request is inspected and evaluated locally by the connector before touching PostgreSQL. For Data Explorer workloads, the connector strictly rejects writes, schema mutations, drops, or unsupported commands at the host boundary.
+
+Database access authority does not originate from what an AI model or cloud application asks for — the local connector remains the final, autonomous enforcement point.
+
+> **Architectural Principle: Execution stays behind the connector.**  
+> An AI model can propose an analytical query, but it receives zero direct authority over the database. The connector validates every query before execution.
+
+---
+
+## 3. Separation of Credential Ownership & Execution Authority
+
+LCB and CERO create two independent, complementary security boundaries:
+
+- **LCB controls: Who possesses the credentials?** → The customer's environment and local connector.
+- **CERO controls: What can actually execute?** → The connector's local execution policy.
+
+```text
+                 SCHEMA WEAVER CLOUD
+              ┌───────────────────────┐
+              │ Cloud Orchestration   │
+              │ AI Analytical Requests│
+              │ Telemetry             │
+              └───────────┬───────────┘
+                          │
+                          │ Controlled request (Port 443)
+                          ▼
+             ┌────────────────────────────┐
+             │   Schema Weaver Connector  │
+             │                            │
+             │ LCB                        │
+             │ Credentials remain local   │
+             │                            │
+             │ CERO                       │
+             │ Read-only enforcement      │
+             └────────────┬───────────────┘
+                          │
+                          │ Permitted read-only SQL only
+                          ▼
+                  CUSTOMER DATABASE
+```
+
+The cloud can request an analytical operation, but it possesses neither your database passwords nor unrestricted database execution authority.
+
+---
+
+## 4. Zero-Ingress Network Isolation (Pure Outbound TLS)
+
+Traditional database management tools require exposing PostgreSQL to the internet via open inbound firewall ports, public IP addresses, or complex VPN tunnels.
+
+`pg-connector` eliminates this attack surface entirely using a **reverse-polling outbound TLS architecture**:
+
+- **0 Inbound Ports**: The connector makes **outbound-only** connections to `api.schemaweaver.dev:443` over TLS 1.3. Your firewall can safely reject 100% of unsolicited inbound traffic.
+- **Enterprise Proxy Compatible**: Fully respects standard enterprise egress forward proxies (`HTTPS_PROXY`, `HTTP_PROXY`, and `NO_PROXY`).
+- **Private VPC & Subnet Deployment**: Runs inside private, air-gapped, or NAT-isolated subnets alongside your database without assigning a public IP to either machine.
+
+---
+
+## 5. Controlled Data Plane & Transient Query Results
+
+The connector creates a controlled, ephemeral data plane between your database and Schema Weaver's cloud services:
+
+| Category | Storage Location | Retention Policy |
+|---|---|---|
+| **Database credentials** | Local machine / VPC only (LCB) | Never leaves host |
+| **Execution policy** | Local connector daemon (CERO) | Enforced locally on host |
+| **Query result rows** | Transient communication layer | Streamed to active session, never stored as a database replica |
+| **Operational telemetry** | Schema Weaver Cloud | Metadata only (execution duration, row counts, timestamps, errors) |
+
+Query-result rows travel only when needed to render the active view or generate a requested chart/report. Schema Weaver does not maintain a copy or replica of your database.
+
+---
+
+## 6. AI-Assisted Analytics Boundary
+
+When using **Resona AI** for analytical questions (identifying trends, generating summaries, comparing records, or building charts), the model receives only the specific result rows required to perform that analysis.
+
+The AI model:
+- **Never** receives database credentials, hostnames, ports, or connection strings.
+- **Never** receives unrestricted execution authority over your database.
+- Every query generated by Resona AI is subject to the exact same **CERO** local policy check before the connector permits it to run.
+
+This boundary is why sharing a connector with team members is completely secure: colleagues can explore and analyze data without anyone having direct access to database passwords. See [Sharing with Your Team](/connector/sharing).
+
+---
+
+## 7. Architectural Positioning: The 4 Boundaries
+
+Schema Weaver minimizes the trust placed in any individual layer by enforcing four distinct responsibility boundaries:
+
+| Responsibility | Boundary | Enforcement Mechanism |
+|---|---|---|
+| **Database credentials** | Customer environment | **Local Credential Boundary (LCB)** |
+| **Execution authority** | Local connector daemon | **Connector-Enforced Read-Only (CERO)** |
+| **Cloud orchestration** | Schema Weaver Cloud | Outbound TLS 1.3 tunnel (`api.schemaweaver.dev:443`) |
+| **Analytical intelligence** | Configured AI model | Resona AI scoped analytical context |
+
+---
+
+## In Summary
+
+1. **Credentials Stay Local (LCB)**: Passwords and connection strings remain safely inside your infrastructure.
+2. **Execution Stays Behind the Connector (CERO)**: Destructive commands are blocked at the host boundary.
+3. **Zero Inbound Ports**: Outbound-only TLS over standard port 443 to `api.schemaweaver.dev`.
+4. **Data Moves Only When Required**: Query results are transient and never replicated into cloud database storage.
+
+---
+
+## Next Steps
+
+- [The Connector](/connector) — overview of the connector architecture
+- [Install & Run](/connector/install) — set up the CLI and autostart background daemon
+- [Sharing with Your Team](/connector/sharing) — collaborate safely without sharing database credentials
+- [Health & Execution Logs](/connector/health) — monitoring query execution and audit logs

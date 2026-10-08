@@ -1,0 +1,81 @@
+---
+title: Sharing with Your Team
+description: Give teammates access to a Connector and the databases behind it, without sharing credentials, and control who can manage it
+tags: [connector, sharing, team, collaboration, access, permissions, credentials]
+order: 5
+sidebar_group: "Connector"
+related:
+  - title: The Connector
+    path: /connector
+  - title: Your Connections
+    path: /connector/connections
+  - title: Security Architecture
+    path: /connector/security-architecture
+---
+
+# Sharing with Your Team
+
+A Connector can be shared with your team so colleagues can query the same databases you have. **They never see your credentials** — they get access to the Connector, which already has them.
+
+---
+
+## What a teammate gets
+
+Access to every database that Connector reaches, through the Data Explorer:
+
+- Browse tables and inspect column statistics
+- Run read-only queries
+- Ask Resona AI questions against your data
+- Build dashboards
+
+They cannot read or write your database credentials, because those never leave your Connector in the first place.
+
+---
+
+## What stays with the owner
+
+Whoever registered the Connector keeps administrative control of it. In the **Settings** tab of the Connector Dashboard, owners can manage credentials and lifecycle options:
+
+![Connector Settings view displaying connector host ownership, active registration status, and administrative revoke/remove controls](/images/de/connector/proxy-setting.png)
+
+Administrative actions available to the owner:
+
+- **Access Level**: Displays `Owner (You)` for the user who registered it. For teammates, management controls are disabled with a note explaining who owns the connector.
+- **Registration & Activity**: Shows the registration date and the last active timestamp when queries or heartbeats were received.
+- **Revoke Credentials**: Immediately invalidates the connection secret (`swagt_...`) to sever tunnel access without deleting connector configurations.
+- **Remove Connector**: Unregisters the connector daemon and detaches all its databases from Schema Weaver.
+
+If an owner leaves the team or you need to change hands, ownership has to be transferred from their account.
+
+---
+
+## Revoking a shared Connector
+
+Revoking or removing a connector detaches it for everyone on the team — that's the behaviour to plan around if others depend on it for exploratory queries or shared dashboards.
+
+Your local Connector installation on your host machine and its stored database passwords remain completely untouched either way.
+
+---
+
+## Managing shared Connectors in Team Settings
+
+You can also view, toggle, or unshare connectors directly from the centralized team hub in **Settings → Collaboration → Connectors**:
+
+![Collaboration Connectors tab displaying active local agent connector with shared status and unshare button](/images/de/team/sharing-connecots.png)
+
+This gives team owners and admins a single view of all connector daemons contributing databases to the organization, including their live online heartbeats and agent IDs.
+
+---
+
+## Why not share credentials instead
+
+Because there's no need to. A shared Connector gives the same access without anyone handling your database password or connection string. If a teammate leaves, you revoke their access without rotating a credential.
+
+---
+
+## Next Steps
+
+- [Team Collaboration](/team-collaboration) — manage members, roles, AI projects, and shared databases
+- [Your Connections](/connector/connections) — what the Connector can reach
+- [Security Architecture](/connector/security-architecture) — the boundary sharing respects
+- [The Connector](/connector) — back to the overview

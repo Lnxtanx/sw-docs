@@ -1,0 +1,130 @@
+---
+title: Resona Dashboard AI
+description: Resona Dashboard AI is your dedicated live analytics and visualization partner — build executive dashboards, run multi-query investigations, attach files (PDF, CSV, Excel, images), toggle Deep and Flash modes, and modify metrics conversationally
+tags: [resona-ai, dashboard-ai, analytics, deep-mode, flash-mode, file-upload, memory, postgresql]
+order: 4
+sidebar_group: "Resona AI"
+related:
+  - title: Statistics & Metrics with AI
+    path: /data-explorer/dashboard
+  - title: Chat Interface
+    path: /resona-ai/ai-chat
+  - title: Memory
+    path: /resona-ai/memory
+  - title: Resona Voice
+    path: /resona-ai/voice
+---
+
+# Resona Dashboard AI
+
+**Resona Dashboard AI** is your dedicated live dashboard analytics and visualization partner. Anchored beside your database dashboards, it transforms complex relational data into intuitive visual cards, runs autonomous multi-query diagnostic loops, and lets you craft or refine business dashboards entirely through conversation.
+
+![Resona Dashboard AI side panel open next to live dashboard charts with quick prompts and Deep mode query options](/images/de/resona-ai/ds-ai/dashabord-ai.png)
+
+> Quick links: [Dashboard Guide](/data-explorer/dashboard) · [Resona AI Chat](/resona-ai/ai-chat) · [Memory Settings](/resona-ai/memory)
+
+---
+
+## 1 — What Dashboard AI Can Do
+
+Rather than requiring you to hand-craft SQL aggregations or manually drag BI widgets, Dashboard AI handles the entire analytics lifecycle:
+
+- **Generate Full Dashboards**: Analyzes your database and builds complete, thematic dashboards with KPI cards, growth curves, cohort grids, and distribution charts.
+- **Modify in Place**: Add new cards, drop obsolete panels, change grouping dimensions, or adjust chart types conversationally.
+- **Surface Executive Recommendations**: Generates **Executive Read** cards that pair headline metrics with plain-English diagnoses and concrete tactical next steps.
+- **Diagnose Anomalies**: Ask why a metric dropped or spiked, and Dashboard AI will write and run targeted SQL queries to pinpoint the root cause.
+- **Keyboard Shortcut**: Press `Ctrl` / `Cmd` + `J` anywhere in Dashboard mode to instantly toggle the Dashboard AI panel.
+
+### Example Prompts
+
+Get started immediately with the quick suggestion chips or type your own instructions:
+
+> *"What are our primary revenue drivers and growth trends?"*  
+> *"Summarize overall business health and customer retention"*  
+> *"Highlight key executive KPIs and weekly performance"*  
+> *"Add a breakdown of active learners by school board and grade level"*  
+> *"Why did signups dip in the first week of September?"*  
+
+---
+
+## 2 — Autonomous Multi-Query Execution
+
+When asked to generate or update a dashboard, Resona Dashboard AI doesn't guess column names or generate static mockups. It executes an autonomous, multi-step agentic plan:
+
+![Resona Dashboard AI generating a business analytics dashboard showing the transparent execution trace of schema context retrieval and 13 database queries](/images/de/resona-ai/ds-ai/ds-generated.png)
+
+### The Agentic Loop
+
+1. **`Get Schema Context`**: Resona introspects your active PostgreSQL tables, data types, primary keys, foreign-key relationships, and enum definitions.
+2. **Planned Query Batches**: The AI plans an optimal set of analytical queries (e.g. `Ran 13 queries`), grouping calculations by business domain.
+3. **`Query Database` Trace**: Each database probe executes through your local [Connector](/connector) in strictly read-only mode. You can expand the trace to inspect individual SQL queries, execution latency, and row results.
+4. **Card & Layout Assembly**: The AI formats the results into appropriate visualization types (line charts, area trends, donut breakdowns, or narrative cards) and mounts them into your active dashboard.
+
+---
+
+## 3 — File & Document Attachments
+
+Dashboard AI is multimodal. Using the **`+` Attach** button beside the prompt bar, you can upload external reference documents directly into your conversation:
+
+![Dashboard AI input bar highlighting the attachment tooltip supporting PDF, CSV, Excel, SQL, code, images, and docs](/images/de/resona-ai/ds-ai/attach-files.png)
+
+### Supported File Types:
+
+- **Spreadsheets (`.csv`, `.xlsx`, `.xls`)**: Upload partner sales exports, offline expense spreadsheets, or legacy BI dumps.
+- **Documents (`.pdf`, `.docx`, `.txt`, `.md`)**: Attach quarterly business reviews, KPI requirement briefs, or investor decks.
+- **Code & Database Scripts (`.sql`, `.ts`, `.py`, `.json`)**: Provide existing SQL scripts, Prisma/Drizzle schemas, or configuration objects.
+- **Images (`.png`, `.jpg`, `.webp`)**: Attach wireframes, design mockups, or chart screenshots to guide the visual styling.
+
+### Practical Use Cases:
+
+- **Reconcile Discrepancies**: Upload a Stripe or Shopify CSV report and ask Dashboard AI to match it against your internal `orders` and `subscriptions` database tables.
+- **Implement Business Briefs**: Upload a product manager's requirements PDF and ask: *"Build the executive dashboard specified on page 3 of this document."*
+- **Replicate Dashboards**: Upload a screenshot of a legacy dashboard from another tool and ask Dashboard AI to rebuild it using your current PostgreSQL schema.
+
+---
+
+## 4 — Analytical Modes: Deep vs. Flash
+
+Dashboard AI provides two distinct execution modes, with **Deep mode active by default**:
+
+| Mode | Characteristics | When to Use |
+|---|---|---|
+| **Deep (Default)** | Multi-turn reasoning, multi-table joins, cross-schema correlation, statistical variance analysis, and written executive recommendations. | Comprehensive dashboard generation, anomaly root-cause investigation, and cohort analysis. |
+| **Flash** | Ultra-fast single-turn execution, direct table queries, minimal credit usage. | Quick layout edits, renaming cards, changing chart colors, or simple scalar lookups. |
+
+Switch between modes anytime using the dropdown selector in the bottom input bar.
+
+---
+
+## 5 — Initial Dashboard Generation
+
+When you connect a database that has no dashboard defined yet, Dashboard AI presents a clear onboarding roadmap:
+
+![Empty dashboard state explaining the 5 core AI capabilities before generating analytics](/images/de/resona-ai/ds-ai/empty-ds.png)
+
+1. **Structure Understanding**: AI maps table relationships and data models automatically.
+2. **Metric Identification**: AI identifies primary metrics, revenue streams, and behavioral cohorts.
+3. **Read-Only Safety**: Strictly isolated queries ensure production data is never touched or modified.
+4. **Executive Synthesis**: Translates raw rows into high-level KPIs and strategic narratives.
+5. **Interactive Delivery**: Generates a persistent dashboard you and your team can interact with.
+
+---
+
+## 6 — Memory & Context Continuity
+
+Dashboard AI is backed by Schema Weaver's [Memory System](/resona-ai/memory). It maintains context across conversation turns and remembers:
+
+- Previously generated cards and layout customizations.
+- Custom business metrics and domain formulas defined during earlier sessions.
+- Pinned terminology and specific table filters.
+
+If you refresh your browser or return tomorrow, Dashboard AI picks up right where you left off.
+
+---
+
+## Next Steps
+
+- [Statistics & Metrics with AI](/data-explorer/dashboard) — interactive card operations, resizing, and focus mode
+- [Resona AI Chat](/resona-ai/ai-chat) — ad-hoc conversational querying and table exports
+- [Memory Settings](/resona-ai/memory) — manage persistent agent memory and business facts
+- [The Connector](/connector) — local credential boundary and query execution architecture

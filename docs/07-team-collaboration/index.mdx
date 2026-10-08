@@ -1,173 +1,126 @@
 ---
 title: Team Collaboration
-description: Create teams, invite members, connect projects, and share database access — all managed from Settings → Collaboration in Schema Weaver
-tags: [collaboration, team, members, roles, projects, invite, access]
-order: 7
+description: Manage teams, invite colleagues, share local connectors without passing around passwords, distribute AI projects, and browse shared databases — from Settings → Collaboration
+tags: [collaboration, team, members, roles, seats, invites, connectors, shared-databases, ai-projects, access]
+order: 1
 sidebar_group: "Team Collaboration"
 related:
-  - title: SQL Editor
-    path: /sql-editor
-  - title: Database
-    path: /database
-  - title: Data Explorer
-    path: /data-explorer
+  - title: Plans and Credits
+    path: /pricing
+  - title: Sharing with Your Team
+    path: /connector/sharing
+  - title: The Connector
+    path: /connector
+  - title: Security Architecture
+    path: /connector/security-architecture
 ---
 
 # Team Collaboration
 
-Schema Weaver's collaboration model is built around **Teams**. You create a team, invite members by email, and connect your projects to that team. Everyone on the team gets access to the connected projects — and the database connections linked to those projects — without any credential sharing.
+Collaboration in Schema Weaver is built around **teams**. Create a team, invite your colleagues, share your local agent connectors, and collaborate on shared AI projects and databases — with zero credential exposure.
 
-> Quick links: [Open SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/) · [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/)
+![Settings Collaboration modal displaying Active Team selector, Owner permissions, seat quota badge, and Member invitation panel](/images/de/team/collabrtion.png)
 
----
-
-## Where to Find Team Settings
-
-All team management is done from the **Settings** panel:
-
-1. Click your profile or the settings icon in the SQL Editor
-2. Open **Settings → Collaboration**
-
-This opens the **Teams & Collaboration** panel where you can create teams, add members, and connect projects.
-
-![The Teams & Collaboration settings panel showing Active Team, access level, Add Teammate form, and Connected Projects](/images/sql-editor/team-collaboration.png)
+> Quick links: [Plans & Credits](/pricing) · [Connector Sharing](/connector/sharing) · [Security Architecture](/connector/security-architecture)
 
 ---
 
-## Creating a Team
+## 1 — Collaboration Hub (`Settings → Collaboration`)
 
-Click **+ New Team** in the top-right corner of the Teams & Collaboration panel. Give your team a name and confirm. The team is created immediately and you are set as its **Owner**.
+Open **Settings → Collaboration** to access your team control center:
 
-The **Active Team** card shows your current team and your role within it. If you belong to multiple teams, use the dropdown to switch between them.
+- **Active Team Switcher**: Switch between organizations or create a new team anytime using **`+ New Team`**.
+- **Your Permission**: Clear indicator of your team authority (`Owner`, `Admin`, or `Member`).
+- **Seat Quotas & Limits**: Displays current seat usage (e.g., `Seats 2/2`). If your seat capacity is reached, an alert prompts the team owner to upgrade on [Plans & Credits](/pricing) before sending additional invites.
+- **Four Core Sub-Tabs**:
+  1. **`Members`**: Invite colleagues and manage member roles.
+  2. **`Connectors`**: Share or unshare local connectors.
+  3. **`Share Projects`**: Distribute AI workspaces and saved chats.
+  4. **`Shared DBs`**: View all team-accessible databases.
 
 ---
 
-## Your Access Level
+## 2 — Members & Role Management
 
-The **Your access level** card shows your current role in the active team.
+Under the **`Members`** tab, owners and admins can invite new teammates and govern permissions:
 
-| Role | Privileges |
+### Inviting Teammates
+
+1. Enter your colleague's corporate email address (`colleague@company.com`).
+2. Select their role (**Member** by default, or **Admin**).
+3. Click **Invite**. 
+
+If the invited person does not yet have a Schema Weaver account, the email invite guides them through account setup. No pre-existing account is required.
+
+### Roles and Permissions
+
+| Role | What They Can Do |
 |---|---|
-| **Owner** | Full management — invite and remove members, connect and disconnect projects, manage all settings |
-| **Member** | Access to connected projects based on project permissions |
-
-As the Owner you see the full management interface. Members see the projects they have been given access to.
-
----
-
-## Adding Team Members
-
-Use the **Add Teammate** section to invite people to your team:
-
-1. Enter the person's email address in the **name@company.com** field
-2. Choose their role from the dropdown — **member** is the default
-3. Click **Invite**
-
-The person receives an email invitation with a link to join. If they already have a Schema Weaver account, they are added immediately upon accepting. If not, the invitation prompts them to create an account first — they do not need an existing account to receive an invite.
-
-> **Note:** Users can create an account after receiving the invitation.
+| **Owner** | Full authority — manage billing, upgrade seat counts, invite and remove members, change roles, share/disconnect projects and connectors, and delete the team. |
+| **Admin** | Manage team members, pending invitations, projects, and shared connectors. Cannot alter subscription billing or delete the team. |
+| **Member** | Browse shared databases in the Data Explorer, run read-only queries, converse with Resona AI, and participate in shared AI projects. |
 
 ---
 
-## Team Members List
+## 3 — Sharing Connectors
 
-The **Team Members** section (ACCESS CONTROL) shows everyone currently on the team, with their email address and role badge.
+Under the **`Connectors`** tab, you can grant team members access to databases reaching through your local Connector daemon:
 
-![The Team Members list and Connected Projects section showing member roles and project access](/images/sql-editor/team-members-project.png)
+![Collaboration Connectors tab displaying active local connector with shared status and unshare button](/images/de/team/sharing-connecots.png)
 
-| Element | Description |
-|---|---|
-| **Profile photo** | The member's account avatar |
-| **Name and email** | Display name and email address |
-| **YOU badge** | Marks your own entry in the list |
-| **OWNER badge** | Highlights the team owner |
-| **MEMBER badge** | Standard member role |
-| **Delete icon** | Remove this member from the team (Owner only) |
+- **One-Click Share/Unshare**: Toggle whether your registered connector daemon (e.g. `vivek-laptop-msi`) is shared with the active team.
+- **Agent Identity & Health**: Displays the unique agent ID (`agt_vivek-laptop-msi_12662b69`) and a live heartbeat indicator (green status dot) showing whether the daemon is online.
+- **Zero Credential Sharing**: Teammates receive tunnel access to execute read-only queries through your connector, but your database passwords, hosts, and secrets **never leave your machine**.
 
-To remove a member, click the trash icon next to their name. Their access is revoked immediately.
+→ Learn more in [Sharing with Your Team](/connector/sharing).
 
 ---
 
-## Connected Projects
+## 4 — Sharing AI Projects
 
-The **Connected Projects** section (PROJECT ACCESS) shows which of your workspace projects are attached to this team. Every project listed here is accessible to all team members.
+Under the **`Share Projects`** tab, team members can collaborate on conversational analyses, dashboards, and research workspaces:
 
-To connect a project to the team, open the project in the SQL Editor and link it to the team from the project settings. Once connected, it appears in the Connected Projects list and becomes available to all team members.
+![Collaboration Share Projects tab showing AI Projects like cloop-dataset with Share with Team action](/images/de/team/ai-rproject-sharing.png)
 
-Team members can open connected projects in the SQL Editor to view and edit schema files, and in the Data Explorer to browse and query live data — all using the project's shared database connection.
-
----
-
-## Shared Database Connections
-
-When a project has a linked [PostgreSQL connection](/database/adding-a-connection), that connection is automatically available to all team members who have access to that project — in both the SQL Editor and the Data Explorer. Nobody needs to enter the database credentials manually.
-
-| Action | Owner | Member |
-|---|---|---|
-| Browse tables in Data Explorer | ✅ | ✅ |
-| Run queries in Data Explorer | ✅ | ✅ |
-| View column statistics | ✅ | ✅ |
-| Export data | ✅ | ✅ |
-| Use Resona AI on live data | ✅ | ✅ |
-| Preview migration (sw push) | ✅ | ✅ |
-| Apply migration (sw push --apply) | ✅ | ✅ |
-| Roll back a migration | ✅ | ✅ |
-| View or change connection credentials | ❌ Owner only | ❌ Never |
-
-Database credentials (host, username, password) are stored encrypted and are never displayed to any team member after the connection is saved — including the person who created it.
+- **Project Workspaces**: Select any private project (e.g., `cloop-dataset` General Workspace) and click **Share with Team**.
+- **Collaborative History**: Once shared, teammates can review conversation history, inspect generated artifacts, re-run queries, and build on existing analyses without duplicating effort.
+- **Unified Memory**: Directives and metric definitions saved in the project's memory dossier become immediately accessible to all team members using [Resona AI](/resona-ai), [Resona Voice](/resona-ai/voice), and [Dashboard AI](/resona-ai/dashboard).
 
 ---
 
-## What Team Members See
+## 5 — Browsing Shared Databases
 
-Once added to a team and granted access to a project, a team member can:
+Under the **`Shared DBs`** tab, team members can see every database currently accessible to the team:
 
-**In the SQL Editor:**
-- Open all SQL files in the connected project
-- View the full ER diagram and Schema Compiler results
-- Run `sw diff` and `sw push` to review and apply migrations
-- See the full migration history for the project's database
+![Collaboration Shared DBs tab displaying all 5 shared databases accessible via local connectors with live status indicators](/images/de/team/db-sharing.png)
 
-**In the Data Explorer:**
-- Select the project's shared connection from the connection dropdown
-- Browse all tables, run queries, and view column statistics
-- Use Resona AI to analyze data and generate reports
+- **Centralized Inventory**: Shows all databases currently tunneled through shared connectors (e.g., `migration-engine-testing`, `schema-weaver`, `sw-analytics`, `postgres`, `cloopdb`).
+- **Live Status & Agent Provenance**: Each card shows an active online status indicator, the host daemon machine name, and an `AGENT` badge.
+- **Instant Availability**: Any database listed here immediately appears in the Data Explorer connection dropdown for all team members.
 
 ---
 
-## Audit Trail
+## 6 — Seats and Billing Governance
 
-Every change made through Schema Weaver is attributed to the person who made it:
+On paid plans, seats govern team capacity:
 
-| Event | What is recorded |
-|---|---|
-| File saved | User, timestamp, file, version |
-| File deleted | User, timestamp, file |
-| Member invited | Inviting user, invited email, role |
-| Migration applied | User, timestamp, DDL summary |
-| Migration rolled back | User, timestamp, migration reference |
+| | Owner | Admin | Member |
+|---|---|---|---|
+| **Invite & Remove Members** | ✓ | ✓ | — |
+| **Change Member Roles** | ✓ | ✓ | — |
+| **Share & Unshare Connectors** | ✓ | ✓ | — |
+| **Share & Unlink Projects** | ✓ | ✓ | — |
+| **Manage Seats & Billing** | ✓ | — | — |
+| **Delete Team** | ✓ | — | — |
 
-The full migration history (visible in the [Connection Dashboard](/database/connection-dashboard)) shows who applied each migration and when — giving teams a complete audit trail for compliance and incident review.
-
----
-
-## Security
-
-- **Credentials encrypted at rest** — AES-256 encryption for all database passwords
-- **Never returned by the API** — credentials cannot be exported or retrieved after saving
-- **Access enforced at two levels** — API middleware validates every request against the user's role; database-level RLS policies enforce row access at the data layer
-
----
-
-## Version
-
-Schema Weaver v1.0
+- The **Team Plan** includes a **two-seat base** ($30/mo) with each additional seat at $15/mo.
+- Each seat receives its own dedicated **100,000 monthly credits** pool and **10,000 daily cap**, ensuring one teammate's queries never exhaust another teammate's quota.
 
 ---
 
 ## Next Steps
 
-- [Database](/database) — connect a PostgreSQL database to your project
-- [SQL Editor](/sql-editor) — work on schema files and migrations
-- [Data Explorer](/data-explorer) — browse and query data with shared connections
-
+- [Plans and Credits](/pricing) — seat pricing, monthly credit pools, and daily caps
+- [Sharing with Your Team](/connector/sharing) — deep dive into connector sharing mechanics
+- [Security Architecture](/connector/security-architecture) — how credentials stay safe on your local machine
+- [Workspace & Projects](/resona-ai/workspace) — organizing AI chats and generated reports

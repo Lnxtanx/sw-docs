@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Search, Menu, Sun, Moon, Monitor, Database, BarChart3, MessageSquare } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme.js';
 import { FeedbackDialog } from './FeedbackDialog.js';
@@ -52,18 +53,18 @@ export function Header({ toggleSidebar, toggleAiPanel, aiPanelOpen }: HeaderProp
             <Menu size={20} />
           </button>
 
-          <a href="https://schemaweaver.vivekmind.com" className="header-logo-container" style={{ display: 'flex', alignItems: 'center', gap: '12px', marginRight: '1.5rem', userSelect: 'none', textDecoration: 'none' }}>
+          <Link to="/" className="header-logo-container" style={{ display: 'flex', alignItems: 'center', gap: '12px', marginRight: '1.5rem', userSelect: 'none', textDecoration: 'none' }}>
              <img src="/resona.png" alt="Schema Weaver Logo" style={{ height: '28px', width: '28px', objectFit: 'contain' }} />
              <span className="header-title">Schema Weaver</span>
-          </a>
+          </Link>
 
           {/* Desktop-only product nav links */}
           <nav className="header-product-nav">
-            <a href="https://sql-editor.schemaweaver.vivekmind.com" className="header-product-link">
+            <a href="https://sql-editor.schemaweaver.dev" className="header-product-link">
               <Database size={15} />
               <span>SQL Editor</span>
             </a>
-            <a href="https://data-explorer.schemaweaver.vivekmind.com" className="header-product-link">
+            <a href="https://data-explorer.schemaweaver.dev" className="header-product-link">
               <BarChart3 size={15} />
               <span>Data Explorer</span>
             </a>

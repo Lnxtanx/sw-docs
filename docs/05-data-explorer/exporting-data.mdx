@@ -1,7 +1,7 @@
 ---
 title: Exporting Data
-description: Export individual tables or entire database schemas to CSV, JSON, NDJSON, Excel, and SQL formats
-tags: [data-explorer, export, csv, json, excel, sql, download]
+description: Export what you see in the Data Explorer to CSV, Google Sheets, Excel, JSON, or SQL — the current grid view, a selection of tables, or an entire schema as a ZIP archive
+tags: [data-explorer, export, csv, json, excel, sql, google-sheets, zip, download]
 order: 2
 sidebar_group: "Data Explorer"
 related:
@@ -10,248 +10,186 @@ related:
   - title: Exploring Your Data
     path: /data-explorer/exploring-data
   - title: Workspace & Projects
-    path: /data-explorer/ai-workspace
+    path: /resona-ai/workspace
 ---
 
 # Exporting Data
 
-The Data Explorer lets you export data in multiple formats — either a single table or your entire database schema as a ZIP archive. Exports are triggered directly from the browser and download instantly.
-
-> Quick links: [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/) · [Data Explorer Overview](https://docs.schemaweaver.vivekmind.com/data-explorer/) · [SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/)
+Anything you can see in the Data Explorer, you can take with you. Export the exact view you're looking at, one or many tables, or every table in a schema bundled into a single ZIP — as **CSV, Google Sheets, Excel, JSON, or SQL**.
 
 ---
 
-## Export Button
+## Export formats
 
-![The Export button and format selection dropdown in the Data Explorer action bar](/images/data-explorer/export.png)
+| | Format | Best for |
+|---|---|---|
+| ![CSV](/images/data-explorer/formats/csv.svg) | **CSV** | Spreadsheets, BI tools, scripts |
+| ![Google Sheets](/images/data-explorer/formats/google-sheets.svg) | **Google&nbsp;Sheets** | Shared spreadsheets |
+| ![Excel](/images/data-explorer/formats/excel.svg) | **Excel** | Formatted Excel workbooks |
+| ![JSON](/images/data-explorer/formats/json.svg) | **JSON** | Apps and API payloads |
+| ![SQL](/images/data-explorer/formats/sql.svg) | **SQL** | Replaying into another database |
 
-The **Export** button appears in the top-right action bar when you have a connection selected. Click it to open a dropdown with two sections:
-
-1. **Export Current Table** — downloads the currently selected table
-2. **Export Entire Database (ZIP)** — bundles all tables in the active schema into a ZIP archive
-
----
-
-## Single Table Export
-
-Select a table in the sidebar, then open the Export dropdown. You'll see the table name with each format option:
-
-| Format | File Extension | Description |
-|--------|---------------|-------------|
-| **CSV** | `.csv` | Comma-separated values, UTF-8 encoded. Universally compatible with spreadsheets, BI tools, and scripting languages |
-| **JSON** | `.json` | Array of objects. Each row is a JSON object with column names as keys |
-| **NDJSON** | `.ndjson` | Newline-delimited JSON. One JSON object per line — ideal for streaming processors, log tools, and `jq` |
-| **Excel** | `.xlsx` | Native Excel spreadsheet. Formatted data with proper column types |
-| **SQL** | `.sql` | `INSERT INTO` statements. Ready to replay into another database |
-
-### Export Parameters
-
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| Max rows | 10,000 | Maximum number of rows exported per table |
-| Schema | Current schema | The schema of the selected table |
-
-### File Naming
-
-Downloaded files are named with the table name and current date:
-
-```
-users_2026-04-04.csv
-orders_2026-04-04.xlsx
-products_2026-04-04.sql
-```
-
-### Example: CSV Export
-
-Clicking `users - CSV` generates a file like:
-
-```csv
-id,email,name,role,created_at
-1,alice@acme.io,Alice Smith,admin,2025-01-15T08:30:00Z
-2,bob@corp.com,Bob Jones,user,2025-02-20T14:22:00Z
-3,carol@dev.io,Carol Lee,editor,2025-03-10T09:15:00Z
-```
-
-### Example: JSON Export
-
-```json
-[
-  {
-    "id": 1,
-    "email": "alice@acme.io",
-    "name": "Alice Smith",
-    "role": "admin",
-    "created_at": "2025-01-15T08:30:00Z"
-  },
-  {
-    "id": 2,
-    "email": "bob@corp.com",
-    "name": "Bob Jones",
-    "role": "user",
-    "created_at": "2025-02-20T14:22:00Z"
-  }
-]
-```
-
-### Example: NDJSON Export
-
-```json
-{"id":1,"email":"alice@acme.io","name":"Alice Smith","role":"admin","created_at":"2025-01-15T08:30:00Z"}
-{"id":2,"email":"bob@corp.com","name":"Bob Jones","role":"user","created_at":"2025-02-20T14:22:00Z"}
-```
-
-### Example: SQL Export
-
-```sql
-INSERT INTO users (id, email, name, role, created_at)
-VALUES (1, 'alice@acme.io', 'Alice Smith', 'admin', '2025-01-15T08:30:00Z');
-
-INSERT INTO users (id, email, name, role, created_at)
-VALUES (2, 'bob@corp.com', 'Bob Jones', 'user', '2025-02-20T14:22:00Z');
-```
+These are the same icons you see in the export popover, so you can match a format to its icon at a glance.
 
 ---
 
-## Full Database Export (ZIP)
+## The three export scopes
 
-To export **all tables** in the current schema at once, click the green **"Export Entire Database (ZIP)"** section in the export dropdown.
+Not sure which format? Pick what you want to take with you first — the **Export** button in the top-right of the Data Explorer lets you choose the scope before you choose the format.
 
-### How It Works
-
-1. Click the collapsible "Export Entire Database (ZIP)" header to reveal format options
-2. Select a format (CSV, JSON, NDJSON, Excel, or SQL)
-3. A toast notification confirms the export has started:
-
-> *Exporting schema 'public'... Preparing ZIP archive of CSV files. This may take a moment depending on database size.*
-
-4. The server bundles every table in the schema into a single ZIP file and streams it to your browser
-
-### ZIP Structure
-
-```
-schema_export_2026-04-04.zip
-├── users.csv
-├── orders.csv
-├── products.csv
-├── invoices.csv
-├── sessions.csv
-└── ...
-```
-
-Each file inside the ZIP follows the same format as a single-table export.
-
-### Timing
-
-Export time depends on:
-- Number of tables in the schema
-- Total row count across all tables
-- Network speed between the server and database
-- Chosen format (SQL and Excel are slightly slower than CSV)
-
-> For large databases, the export button shows a loading spinner and disables re-clicking while the ZIP is being prepared.
+| Scope | What you get | Grid state applied? |
+|---|---|---|
+| **View** | Exactly what you're looking at — current filters, sort order, and visible columns | Yes |
+| **Table** | Full data for one or more tables you select | No |
+| **Database** | Every table in one or more schemas, bundled as a ZIP archive | No |
 
 ---
 
-## Export States & Edge Cases
+### 1. View Scope — WYSIWYG Grid Export
 
-| State | Behavior |
-|-------|----------|
-| **No connection** | Dropdown shows "Select a connection to export data" |
-| **No table selected** | Table export section shows "Select a table to export rows" |
-| **Export in progress** | Button shows spinning loader, dropdown is disabled |
-| **Database export** | Green-themed options, collapsible section, toast notification |
+The **View** tab exports the current grid state exactly as you have configured it on screen.
 
----
+![Export View popover in Schema Weaver Data Explorer showing active view summary, row count, column dimensions, format selector, and row limits](/images/de/export/view-export.png)
 
-## API Reference
-
-Exports use direct URL-based downloads. No authentication token is passed in the URL — the browser's session cookie handles auth.
-
-### Single Table Export
-
-```
-GET /api/data/{connectionId}/tables/{tableName}/export
-    ?schemaName=public
-    &maxRows=10000
-    &format=csv
-```
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `schemaName` | string | `public` | Database schema |
-| `maxRows` | number | `10000` | Row limit |
-| `format` | string | `csv` | One of: `csv`, `json`, `ndjson`, `excel`, `sql` |
-
-### Full Schema Export
-
-```
-GET /api/data/{connectionId}/export-all
-    ?schemaName=public
-    &format=csv
-```
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `schemaName` | string | `public` | Database schema to export |
-| `format` | string | `csv` | One of: `csv`, `json`, `ndjson`, `excel`, `sql` |
-
-Response: ZIP archive streamed as `application/zip`.
+- **Active View Summary**: Anchored to the active table (e.g. `public.admin_chat`) with an `Active View` badge.
+- **Grid Dimensions**: Displays estimated visible rows (e.g., `~500 rows`) and column count (`12/12 columns`).
+- **Preserved State**: Retains all active filter conditions, column sorting orders, and hidden column configurations.
+- **Safety Limit**: Select a row cap (default `10k rows`).
+- **Action**: Click **Export View (<Format>)** to download your formatted export immediately.
 
 ---
 
-## Use Cases
+### 2. Table Scope — Targeted Table Selection
 
-### Data Migration
+The **Table** tab allows you to export raw, unfiltered data from one or more selected tables within the active schema.
 
-Export your schema as SQL and replay it in another environment:
+![Table Export popover showing multi-table selection checkboxes, live search filter, estimated row counts, format options, and row limits](/images/de/export/table-export.png)
 
-```bash
-# Export from Schema Weaver, then import
-psql -h new-host -d newdb -f users_2026-04-04.sql
-```
-
-### Reporting & Analysis
-
-Export as CSV or Excel for use in:
-- Google Sheets / Microsoft Excel
-- Tableau / Power BI / Metabase
-- Pandas / R / Jupyter notebooks
-
-### Backup Snapshots
-
-Use the full database export to create periodic data snapshots:
-
-```bash
-# Automate with curl
-curl -o backup.zip \
-  "https://data-explorer.schemaweaver.vivekmind.com/api/data/{connId}/export-all?schemaName=public&format=csv"
-```
-
-### Data Processing Pipelines
-
-Export as NDJSON for streaming ingestion:
-
-```bash
-# Process with jq
-cat users.ndjson | jq 'select(.role == "admin")' > admins.ndjson
-```
+- **Search & Filter**: Use the `Filter tables...` search input to quickly isolate tables in large schemas.
+- **Checklist & Select All**: Select individual tables or click **Select all** to batch export multiple tables.
+- **Row Estimates**: Shows live row count estimates directly next to each table (e.g. `admin_chat ~1962`, `ai_token_logs ~30984`).
+- **Selection Summary**: The footer displays total selected tables and schema name (e.g., `1 table selected (admin_chat)`, `Schema: public`).
+- **Unfiltered Data**: Unlike the View scope, Table exports bypass UI filters and sorts to export the canonical table data.
 
 ---
 
-## Limits
+### 3. Database Scope — Multi-Schema ZIP Archive
 
-| Constraint | Value |
-|-----------|-------|
-| Max rows per table export | 10,000 (configurable) |
-| Max tables per ZIP | All tables in selected schema |
-| Supported formats | CSV, JSON, NDJSON, Excel (.xlsx), SQL |
-| Max concurrent exports | 1 per browser session |
+The **Database** tab bundles all tables across your selected schemas into a single, downloadable `.zip` archive.
+
+![Full Database Export popover showing schema checklist with table counts, format options, and Export Database as ZIP action](/images/de/export/database-full-export.png)
+
+- **All Schemas Checklist**: Toggle **All schemas** (`63 tables`) or check individual schemas (e.g. `public (21)`, `analytics (2)`, `audit (1)`, `inventory (1)`, `staging (1)`).
+- **Format Selection**: Choose between CSV, Excel, JSON, or SQL for every table in the archive.
+- **Archive Structure**: Packages each table into an individual file inside the ZIP archive (e.g., `schema_export_2026-04-04.zip`).
+- **Google Sheets Note**: Google Sheets is disabled for multi-schema ZIP archives because it requires creating individual cloud documents.
+
+This distinction between scopes matters: **View** is WYSIWYG, while **Table** and **Database** exports ignore filters and sorts to export complete datasets.
+
+---
+
+## Row limits
+
+Exports are capped so a single request can't run away on a large table.
+
+| Preset | Rows |
+|---|---|
+| 1k rows | 1,000 |
+| 5k rows | 5,000 |
+| **10k rows** | **10,000 — default** |
+| 25k rows | 25,000 |
+| 50k rows | 50,000 |
+
+The default is **10,000 rows per table**. Pick a higher preset if you need more — the limit is applied server-side, so a larger export simply takes longer.
+
+If your export hits the cap you'll see a confirmation noting it, for example *"Capped at 10,000 rows."*
+
+> **Database (ZIP) exports ignore the row limit.** The limit only applies to the **View** and **Table** scopes. For a full-schema export, the backend decides how much it writes per table.
+
+---
+
+## Google Sheets export
+
+Google Sheets creates a spreadsheet directly in your Drive and hands you a link to it.
+
+1. Select **Google Sheets** as your format.
+2. Click the export button.
+3. Sign in to Google when prompted and approve access.
+4. Your spreadsheet opens in a new tab, and a link is also shown in the export panel.
+
+A few things worth knowing:
+
+- **Requested permission is `drive.file`** — Schema Weaver can only create files. It cannot read, edit, or delete anything else in your Drive.
+- **Authorization is remembered** for about an hour, so you won't be prompted on every export. Expired authorization re-prompts automatically on the next attempt.
+- **Sheet names** follow `schema.table (YYYY-MM-DD)`, for example `public.users (2026-04-04)`.
+- **Recent Sheets exports** are listed inside the export panel, so you can jump back to a spreadsheet you created earlier without re-exporting.
+- **Not available for the Database scope.** Google Sheets is disabled for ZIP exports — pick CSV, Excel, JSON, or SQL for those.
+
+---
+
+## Choosing tables and schemas
+
+**Table scope** lists every table in the current schema. Search the list when it gets long, and use the checkbox to select several tables at once. The panel footer shows how many are selected and, for a single table, which one.
+
+**Database scope** lets you pick which schemas to include. By default all schemas that contain tables are included; untick individual schemas to narrow it down, or untick everything except one to export a single schema.
+
+---
+
+## File names
+
+| Scope | How the name is built |
+|---|---|
+| **View / Table** | Set by the server from the table name and format |
+| **Database (ZIP)** | An archive containing one file per table — for example `schema_export_2026-04-04.zip` |
+| **Google Sheets** | `schema.table (YYYY-MM-DD)` |
+
+---
+
+## Export states
+
+| Situation | What happens |
+|---|---|
+| No connection selected | **Export** is disabled |
+| No table selected | **View** is unavailable; **Database** opens by default |
+| No tables selected in Table scope | Export button disabled |
+| Sheets selected with Database scope | Export button disabled, with an inline note explaining why |
+| Export in progress | Button shows a spinner and a progress counter; inputs are locked |
+| Export cancelled | A confirmation appears |
+| Export failed | An error appears and the export panel stays open so you can retry |
+| Some tables in a multi-table export failed | The confirmation reports how many succeeded |
+
+---
+
+## Export from an AI artifact
+
+Data tables and reports produced by Resona AI have their own export action in the artifact toolbar — separate from the grid export described above.
+
+---
+
+## Use cases
+
+**Hand a result to someone else**
+
+Export the **View** scope after filtering and sorting — the file contains exactly the question you asked, with no extra rows to trim.
+
+**Load into a notebook**
+
+JSON for pandas, R, or Jupyter. Point your loader at the downloaded file.
+
+**Move data between environments**
+
+Export as SQL and replay the statements in another database.
+
+> **Note:** the SQL export contains `INSERT INTO` statements for the data only — it does not include table definitions. Create the schema first, then replay the inserts.
+
+**Snapshot a whole environment**
+
+Export every schema as a ZIP on a schedule and keep the archives as dated backups.
 
 ---
 
 ## Next Steps
 
 - [Exploring Your Data](/data-explorer/exploring-data) — filtering, sorting, and column statistics
-- [AI Chat Interface](/data-explorer/ai-chat-interface) — use natural language to analyze and export data
-- [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/) — launch the live app
-
+- [Resona AI](/resona-ai) — exporting results from an AI analysis
+- [Security Architecture](/connector/security-architecture) — where exported data goes

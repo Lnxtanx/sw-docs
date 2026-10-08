@@ -1,9 +1,10 @@
 {
-  "index": "Overview",
-  "exploring-data": "Exploring Data",
+  "order": [
+    "exploring-data",
+    "exporting-data",
+    "dashboard"
+  ],
+  "exploring-data": "Exploring Your Data",
   "exporting-data": "Exporting Data",
-  "ai-chat-interface": "AI Chat Interface",
-  "agentic-workflows": "Agentic Workflows",
-  "ai-artifacts": "Artifacts & Visualizations",
-  "ai-workspace": "Workspace & Organization"
+  "dashboard": "Statistics & Metrics with AI"
 }

@@ -1,0 +1,10 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Excel spreadsheet">
+  <rect x="5" y="3" width="22" height="26" rx="3.5" fill="#107C41"/>
+  <path d="M19 3L27 11H21.5C20.12 11 19 9.88 19 8.5V3Z" fill="#159C52"/>
+  <rect x="7" y="14" width="18" height="13" rx="1.5" fill="#0E6435" opacity="0.6"/>
+  <line x1="7" y1="18.5" x2="25" y2="18.5" stroke="#4ADE80" stroke-width="1" stroke-opacity="0.4"/>
+  <line x1="7" y1="23" x2="25" y2="23" stroke="#4ADE80" stroke-width="1" stroke-opacity="0.4"/>
+  <line x1="16" y1="14" x2="16" y2="27" stroke="#4ADE80" stroke-width="1" stroke-opacity="0.4"/>
+  <rect x="7" y="6" width="10" height="7" rx="1.5" fill="#22C55E"/>
+  <text x="12" y="11.5" fill="#FFFFFF" font-size="6.5" font-weight="bold" font-family="system-ui, -apple-system, sans-serif" text-anchor="middle">XLS</text>
+</svg>

@@ -1,147 +1,111 @@
 ---
 title: Data Explorer
-description: Explore live database rows with the SW Data Explorer. A high-performance PostgreSQL workbench with virtualized grids, smart sizing, and Resona AI analysis.
-tags: [data-explorer, queries, sql, postgresql, databases, data-workbench, sw-explorer]
-order: 4
+description: The Data Explorer is Schema Weaver's analytics workspace for PostgreSQL — browse live rows in a high-performance grid, ask Resona AI in plain English, talk to your database by voice, and export to CSV, Sheets, Excel, JSON, or SQL
+tags: [data-explorer, analytics, voice, resona-ai, dashboard, export, postgresql, grid]
+order: 0
 sidebar_group: "Data Explorer"
 related:
   - title: Exploring Your Data
     path: /data-explorer/exploring-data
   - title: Exporting Data
     path: /data-explorer/exporting-data
-  - title: Resona AI Overview
-    path: /data-explorer/ai-overview
+  - title: Statistics & Metrics with AI
+    path: /data-explorer/dashboard
+  - title: Resona AI
+    path: /resona-ai
 ---
 
 # Data Explorer
 
-The Data Explorer is a built-in SQL workbench that lets you connect to your databases, run queries, and explore your data — all inside Schema Weaver. It integrates with Resona AI so you can ask questions in plain English and get runnable SQL back instantly.
-
-![The Data Explorer showing the two-column layout with left sidebar and main data grid](/images/data-explorer/data-explorer.png)
-
-> Quick links: [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/) · [Docs Home](https://docs.schemaweaver.vivekmind.com/) · [Schema Weaver Landing](https://schemaweaver.vivekmind.com/) · [SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/)
+The Data Explorer is where you work with live data. Connect a PostgreSQL database and you can browse it, ask it questions, or talk to it out loud.
 
 ---
 
-## What can you do in Data Explorer?
+## Three ways to work
 
-- **Browse live data** — Two-panel layout with a table sidebar and a high-performance data grid.
-- **Smart column sizing** — Canvas-measured, 95th-percentile column widths that auto-fit your data.
-- **Filter & sort** — Server-side filtering with typed operators and one-click column sorting.
-- **Toggle columns** — Show/hide columns to focus on the data that matters.
-- **Column statistics** — Click any column header to see null %, distinct count, top values, and more.
-- **Click-to-copy** — Click any cell to copy its value to the clipboard.
-- **Export data** — Download single tables or entire schemas as CSV, JSON, NDJSON, Excel, or SQL.
-- **Full database export** — ZIP archive of every table in the current schema.
-- **Write and run SQL** — Full-featured Monaco editor with syntax highlighting and autocomplete.
-- **AI-assisted analysis** — Resona AI writes SQL, analyzes tables, generates visual charts, and compiles PowerPoint reports.
-- **Agentic Workflows** — Thinking, Tool Execution, and Synthesis phases for deep data exploration.
-- **Rich Artifacts** — Interactive tables, charts, stat blocks, and Mermaid diagrams embedded in chat.
-- **Workspace Storage** — Persist generated reports, slide decks, and PDF exports.
+Three top-level modes — move between them at any time without losing your place.
+
+| Mode | What it's for |
+|---|---|
+| **Data Explorer** | Read raw data in a high-performance grid — filter, sort, inspect |
+| **Resona AI** | An autonomous agent that deep-dives your data and writes the report |
+| **Dashboard** | One click, and it builds the executive dashboard from your database |
 
 ---
 
-## Which databases does Data Explorer support today?
+## Explore your data
 
-| Database | Version | Status |
-|----------|---------|--------|
-| PostgreSQL | 12+ | Fully supported |
+Every table in your database, in a grid built for large ones. Filter with instant in-memory search or full database queries, customize page fetch sizes (from 100 to 2k rows), hover over any cell to read the full unclipped message or JSON without expanding, and inspect column statistics with a single click.
 
----
-
-## How do you access Data Explorer?
-
-### Cloud Platform
-
-Open [data-explorer.schemaweaver.vivekmind.com](https://data-explorer.schemaweaver.vivekmind.com/) and click **Data Explorer** in the left sidebar if you're entering from the main Schema Weaver experience.
+→ [Exploring Your Data](/data-explorer/exploring-data)
 
 ---
 
-## Overview of the Interface
+## Ask Resona AI
 
-The Data Explorer is designed for efficiency, offering a clear view of your data and an integrated AI assistant for deep analysis.
+![Resona AI in Data Explorer with natural-language prompt bar, table suggestion chips, and voice launch shortcut](/images/de/resona-ai/de/de.png)
 
-![Resona AI open in the Data Explorer showing the natural-language chat interface with query results and chart output](/images/data-explorer/resona-ai.png)
+Resona is the assistant throughout Schema Weaver. It comes in a different form depending on where you are:
 
-### Left Sidebar
+| Agent | Where it lives | What it's for |
+|---|---|---|
+| **Resona** | Full panel in Resona AI mode | Your main analyst — ask anything, get answers and files back |
+| **Dashboard AI** | Panel beside your dashboard | Builds the dashboard and explains what each metric means |
+| **Voice** | A floating orb, over every mode | Ask out loud instead of typing |
 
-- **Schema Selector** — Dropdown to switch between database schemas.
-- **Table Search** — Filter the table list instantly as you type.
-- **Table List** — Scrollable list with row estimates, PK warnings, and AI shortcuts.
-- **Resona AI [AI]** — Toggle the integrated agentic chat interface.
-- **Dashboard [D]** — View your pinned charts and metrics.
-- **Workspace [W]** — Manage persisted files and reports.
+Depth is your choice — **Flash** for quick questions, **Deep** for multi-table analysis.
 
-### Right Panel — Data Grid
+The voice orb is the one that follows you: start a session in the grid and it's still running when you switch to a chat or a dashboard.
 
-- **Action Bar** — Filter controls, column visibility toggle, refresh, export button, and row count.
-- **Column Headers** — Type badges, PK/FK indicators, sortable, resizable, and click for statistics.
-- **Row Grid** — Paginated rows with click-to-copy, NULL formatting, boolean badges, and FK arrows.
-- **Pagination** — Cursor-based, 50 rows per page, with row range and estimated total.
+→ [Resona AI](/resona-ai)
 
 ---
 
-## Quick Start Workflow
+## Build a dashboard
 
-1. Open [Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/) and select a PostgreSQL connection from the connection selector — connections are added from the [SQL Editor](/database/adding-a-connection).
-2. Browse the schema tree on the left to find a table.
-3. Click the table name to open a quick preview.
-4. Use **AI Assist** or the chat interface if you need help writing a query.
-5. Use `@table_name` in the AI chat to focus the analysis on specific context.
-6. Pin interesting charts to your dashboard for ongoing monitoring.
+![Schema Weaver Dashboard mode displaying executive business metrics, learner growth curves, and category breakdowns](/images/de/dashabord/dashbord.png)
 
----
+One click and Schema Weaver reads your database, works out which metrics matter, and builds the executive dashboard — KPI cards, growth curves, segment distributions, and written actionable insights. Shared with your team automatically.
 
-## Resona AI Integration
-
-Resona AI is more than just a chatbot; it's a co-pilot for your data. It understands your schema and can perform complex multi-step analysis without you writing a single line of SQL.
-
-- **Mentions** — Type `@` to select tables and provide context to the agent.
-- **Live Progress** — Watch the agent plan its steps and execute tools against your database in real-time.
-- **Rich Visualization** — Get bar charts, line graphs, and correlation matrices instantly.
-- **Professional Reports** — Ask Resona to "generate a slide deck for investors" and download it as a PPTX from your workspace.
+→ [Statistics & Metrics with AI](/data-explorer/dashboard)
 
 ---
 
-## Security and Permissions
+## Export your data
 
-By default, the Data Explorer operates in a secure **read-only mode**, restricted to `SELECT` statements. This architectural safeguard ensures that analytical exploration never results in accidental data loss or mutations in your production environment.
+![Schema Weaver Data Explorer export popover showing format and scope options](/images/de/export/view-export.png)
 
-For environments where data modification is required (such as development or staging), write access can be enabled on a per-connection basis. This allows you to perform `INSERT`, `UPDATE`, and `DELETE` operations directly from the SQL workbench when necessary.
+| | | | | |
+|---|---|---|---|---|
+| ![CSV](/images/data-explorer/formats/csv.svg) | ![Google Sheets](/images/data-explorer/formats/google-sheets.svg) | ![Excel](/images/data-explorer/formats/excel.svg) | ![JSON](/images/data-explorer/formats/json.svg) | ![SQL](/images/data-explorer/formats/sql.svg) |
 
-> **Best practice:** Always maintain `read-only` status for production database connections. For heavy analytical workloads, we recommend connecting to a read-replica to avoid impacting primary database performance.
+Export with three distinct scopes: the **current view** (WYSIWYG with active filters and sorting), **selected tables**, or a **full database schema** bundled into a ZIP archive.
 
-### Row-Level Data Masking
+→ [Exporting Data](/data-explorer/exporting-data)
 
-Schema Weaver includes built-in support for **Row-Level Data Masking** to protect sensitive information (PII). When configured for specific tables and columns, sensitive data is automatically redacted before it reaches the interface.
+---
 
-Common masking types include:
-- **Email Masking:** Transforms `alice@example.com` into `a***@***.com`.
-- **Phone Masking:** Redacts all but the last four digits of a phone number.
-- **Full Redaction:** Completely replaces sensitive values with a `[REDACTED]` placeholder.
+## Read-only by design
 
-This ensures that developers and analysts can work with the database structure and non-sensitive data without being exposed to private user information.
+The connector authenticates locally and rejects anything that would modify your database, so exploring can never mutate production — whatever the AI generates. Your credentials never leave your environment.
+
+→ [Security Architecture](/connector/security-architecture)
+
+---
+
+## Before you start
+
+You need a PostgreSQL connection. Schema Weaver reaches your database through a connector that runs inside your environment, so it never holds your credentials.
+
+→ [Install & Run](/connector/install)
 
 ---
 
 ## Next Steps
 
-- [Exploring Your Data](/data-explorer/exploring-data) — filters, column stats, smart sizing, and grid features.
-- [Exporting Data](/data-explorer/exporting-data) — CSV, JSON, Excel, SQL, and full-database ZIP export.
-- [AI Chat Interface](/data-explorer/ai-chat-interface) — @mentions, model selection, and voice input.
-- [Agentic Workflows](/data-explorer/agentic-workflows) — understanding planning, tools, and synthesis.
-- [Artifacts & Visualizations](/data-explorer/ai-artifacts) — interactive charts, stats, and dashboard pinning.
-- [Workspace & Organization](/data-explorer/ai-workspace) — projects, file persistence, and artifact history.
-
-## Related Schema Weaver Links
-
-- [Open Data Explorer](https://data-explorer.schemaweaver.vivekmind.com/) — launch the live Data Explorer app.
-- [Open SQL Editor](https://sql-editor.schemaweaver.vivekmind.com/) — move into deeper SQL workflows.
-- [Schema Weaver Landing](https://schemaweaver.vivekmind.com/) — product overview and entry point.
-- [Docs Home](https://docs.schemaweaver.vivekmind.com/) — browse the rest of the documentation.
-
----
-
-### Design Your Schema
-Need to modify your database structure? Use the [SW SQL Editor](/sql-editor) to write modular DDL, visualize relationships with Dijkstra-powered ER diagrams, and run 20-layer schema audits.
-
+- [Exploring Your Data](/data-explorer/exploring-data) — the grid, filters, sorting, and column statistics
+- [Exporting Data](/data-explorer/exporting-data) — formats, scopes, and row limits
+- [Statistics & Metrics with AI](/data-explorer/dashboard) — executive dashboard, written insights, and Dashboard AI
+- [Resona AI](/resona-ai) — what the agent can do for you
+- [Workspace & Projects](/resona-ai/workspace) — organising your analyses
+- [Security Architecture](/connector/security-architecture) — credentials, read-only enforcement, and the data plane

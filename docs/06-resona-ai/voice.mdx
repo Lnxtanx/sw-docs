@@ -1,0 +1,141 @@
+---
+title: Resona Voice
+description: Talk to your PostgreSQL database out loud. Resona Voice is an ambient conversational data analyst that hears your questions, queries your database, and answers back — minimized and present everywhere across your table grid, dashboard, and chat
+tags: [data-explorer, resona-ai, voice, conversational, hands-free, audio, ambient, minimized]
+order: 3
+sidebar_group: "Resona AI"
+related:
+  - title: Resona AI Overview
+    path: /resona-ai
+  - title: Chat Interface
+    path: /resona-ai/ai-chat
+  - title: Resona Dashboard AI
+    path: /resona-ai/dashboard
+  - title: Exploring Your Data
+    path: /data-explorer/exploring-data
+  - title: Security Architecture
+    path: /connector/security-architecture
+---
+
+# Resona Voice
+
+**Resona Voice** is Schema Weaver's conversational voice data analyst. Speak to your database naturally out loud — Resona listens, introspects your schema, queries your PostgreSQL tables through the local read-only connector, and speaks answers back to you in real time without requiring manual SQL writing or keyboard typing.
+
+![Resona Voice connected and actively conversing in Data Explorer showing live speech bubbles, glowing voice orb, credit tracking, and session controls](/images/de/resona-ai/va/resona-voice-connected.png)
+
+> Quick links: [Chat Interface](/resona-ai/ai-chat) · [Resona Dashboard AI](/resona-ai/dashboard) · [Exploring Data](/data-explorer/exploring-data) · [Memory](/resona-ai/memory)
+
+---
+
+## 1 — Starting a Voice Session
+
+You can start a Resona Voice session from anywhere in the application:
+
+### Direct Launch from Resona AI Input Bar
+
+Inside the [Resona AI Chat](/resona-ai/ai-chat) panel, look at the right side of the prompt input bar:
+
+![Launching Resona Voice directly from the audio waveform button in the Resona AI prompt input bar](/images/de/resona-ai/va/resona-voice.png)
+
+- Click the **audio waveform button** (tooltip: **`Start Resona Voice`**) or the microphone button.
+- Your session initializes immediately without navigating away from your active work.
+- You can also toggle Voice anytime using the global keyboard shortcut `Ctrl` / `Cmd` + `K`.
+
+---
+
+## 2 — The Connection & Orb Lifecycle
+
+When a voice session begins, Resona establishes a low-latency, bidirectional audio stream. The dynamic orb reflects the agent's real-time state:
+
+![Resona Voice initializing connection stage with amber Connecting status indicator and glowing orb](/images/de/resona-ai/va/connecting-stage.png)
+
+| Orb State | Color & Indicator | What's Happening |
+|---|---|---|
+| **Connecting** | Amber pulsing orb (`Connecting...`) | Establishing secure WebRTC / WebSocket audio channel |
+| **Listening** | Aquatic green/teal pulsing waves | Capturing your spoken words via microphone |
+| **Thinking** | Shimmering violet/blue orb | Introspecting schema, formulating SQL queries, and analyzing row results |
+| **Speaking** | Active teal concentric ripple | Streaming synthesized spoken response and updating live speech bubbles |
+| **Idle** | Calming steady glow | Waiting for you or colleague to speak |
+
+---
+
+## 3 — Ambient & Persistent: Minimized Everywhere
+
+A voice session is never trapped inside a single tab or dialog. When minimized, Resona Voice transforms into a compact, floating ambient companion that travels with you across every view in Schema Weaver.
+
+### Floating on the Data Explorer Grid
+
+Inspect raw records while conversing with your analyst:
+
+![Resona Voice minimized as a floating orb on the Data Explorer table grid while browsing live rows](/images/de/resona-ai/va/va-on-de.png)
+
+- Navigate tables, scroll through 500 / 1k / 2k rows, apply instant in-memory filters, or open full JSON/text inspection popovers.
+- Speak aloud: *"What is the distribution of message types in this table?"* or *"Which user has the most records here?"*
+- Resona queries the database in the background and answers into your headphones while your eyes stay focused on the grid.
+
+### Floating on the Executive Dashboard
+
+Examine high-level metrics with voice-driven drill-downs:
+
+![Resona Voice minimized as a floating widget on the live Dashboard canvas with quick mic, mute, drag, and expand controls](/images/de/resona-ai/va/on-ds.png)
+
+- **Drag to Move**: Hover over the widget (`Click to expand · Drag to move`) and drag it anywhere on screen so it never obstructs your charts, KPI cards, or cohort graphs.
+- **One-Click Mute**: Click the red mic icon to instantly mute your microphone while keeping the audio session alive.
+- **Expand Anytime**: Click the expand icon (`⤢`) to bring back the full-screen conversation view and transcript history.
+- Ask questions about live visuals: *"Why did the daily average score dip on September 16?"* or *"Which subject has the highest accuracy?"*
+
+---
+
+## 4 — Conversational Experience & Capabilities
+
+Resona Voice is engineered to converse like an experienced colleague rather than a robotic text-to-speech engine:
+
+- **Natural Spoken Answers**: Resona synthesizes findings into concise, clear takeaways. It will never read raw row dumps or verbose SQL syntax at you over audio.
+- **Barge-In Interruptibility**: You can interrupt at any moment. The instant you speak, Resona immediately stops talking, listens to your correction, and adjusts course.
+- **Temporal & Relative Awareness**: The current timestamp is always part of the context window. Phrases like *"last Tuesday"*, *"this past quarter"*, or *"year-to-date"* resolve to exact SQL date ranges automatically.
+- **Web & Domain Context**: If a query involves external context (such as industry benchmarks or public exchange rates), Voice can fetch live reference data.
+- **Session Memory**: Checks your connection's [Memory Dossier](/resona-ai/memory) for saved KPI definitions, table aliases, and business rules.
+
+---
+
+## 5 — Voice Controls & Keyboard Mode
+
+The floating voice control bar provides complete hands-free and hybrid control:
+
+| Control | Action |
+|---|---|
+| **`+ Type`** | Opens a quick inline keyboard input to type numbers, spelling corrections, or specific email addresses without hanging up the call. |
+| **Microphone Button** | Toggles voice recording on or off. |
+| **Mute / Unmute** | Quick-mute toggle available directly on the minimized floating orb. |
+| **Expand (`⤢`) / Minimize** | Switches between full conversation mode with transcript bubbles and ambient floating orb. |
+| **End Session (`X` / Power)** | Safely terminates the audio connection and concludes credit tracking. You can also simply say *"Goodbye"* or *"End call"*. |
+
+---
+
+## 6 — Credit Usage
+
+Voice interactions draw from your standard unified credit pool:
+
+- Credits are metered transparently per conversational turn (visible on each message bubble, e.g. `29 credits used`, `269 credits used`).
+- Voice queries share the exact same quota with [Resona AI Chat](/resona-ai/ai-chat) and [Dashboard AI](/resona-ai/dashboard).
+- If your account reaches its monthly credit threshold, the session gently pauses and alerts you to top up or switch to manual grid browsing.
+
+---
+
+## When to Use Voice vs. Chat
+
+| Capability | Resona Voice | Resona AI Chat |
+|---|---|---|
+| **Best For** | Fast exploratory questions, hands-free drill-downs while looking at charts or grids | Formal executive reports, downloadable exports, complex schema refactoring |
+| **Interaction** | Hands-free natural speech, barge-in interrupts | Keyboard prompt, `@` table mentions, `+` file uploads |
+| **Output** | Natural spoken audio + live transcript bubbles | Rich markdown tables, charts, CSV / Excel / PDF exports |
+| **Presence** | Ambient floating orb (minimized across Grid & Dashboard) | Dedicated workspace and side copilot panel |
+
+---
+
+## Next Steps
+
+- [Chat Interface](/resona-ai/ai-chat) — text questions, `@` table mentions, and file uploads
+- [Resona Dashboard AI](/resona-ai/dashboard) — generating executive dashboards and metric cards
+- [Exploring Your Data](/data-explorer/exploring-data) — using the high-performance table grid
+- [Memory Settings](/resona-ai/memory) — managing saved terminology and custom formulas
