@@ -162,7 +162,7 @@
           "title": "Next Steps"
         }
       ],
-      "content": "The Connector\n\nSchema Weaver reaches your database through the Connector — a small service you run yourself, on the machine that already has access to PostgreSQL.\n\nEverything else in Schema Weaver depends on it. Browse a table, run a query, build a dashboard — all of it goes through the Connector first.\n\n![The Schema Weaver Connector Overview dashboard displaying active connectors, relay status, average response latency, query activity, and recent query execution stream](/images/de/connector/con",
+      "content": "The Connector\n\nSchema Weaver reaches your database through the Connector — a small service you run yourself, on the machine that already has access to PostgreSQL.\n\nEverything else in Schema Weaver depends on it. Browse a table, run a query, build a dashboard — all of it goes through the Connector first.\n\n<div style=\"margin: 1.75rem 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color, #334155); background: #000; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);\">\n  <video\n   ",
       "snippet": "Schema Weaver reaches your database through **the Connector** — a small service you run yourself, on the machine that already has access to PostgreSQL."
     },
     {

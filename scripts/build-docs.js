@@ -15,6 +15,7 @@ import remarkRehype from 'remark-rehype';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeStringify from 'rehype-stringify';
+import rehypeRaw from 'rehype-raw';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const docsDir = path.join(__dirname, '..', 'docs');
@@ -69,6 +70,7 @@ function compileToHtml(body) {
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkRehype, { allowDangerousHtml: true })
+    .use(rehypeRaw)
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, {
       behavior: 'append',
@@ -80,7 +82,7 @@ function compileToHtml(body) {
         children: [{ type: 'text', value: '¶' }]
       }
     })
-    .use(rehypeStringify)
+    .use(rehypeStringify, { allowDangerousHtml: true })
     .processSync(body);
   return String(result);
 }
