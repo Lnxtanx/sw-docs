@@ -153,7 +153,7 @@ function buildStaticShell({ title, description, canonicalUrl, htmlContent, relat
   const assets = extractAssetTags();
 
   return `<!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -187,10 +187,9 @@ function buildStaticShell({ title, description, canonicalUrl, htmlContent, relat
 
     <script>
       (function () {
-        var t = localStorage.getItem('sw-docs-theme') || 'system';
-        var dark = t === 'dark' || (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-        if (dark) document.documentElement.classList.add('dark');
-        if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+        document.documentElement.classList.add('dark');
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('sw-docs-theme', 'dark');
       })();
     </script>
     <style>

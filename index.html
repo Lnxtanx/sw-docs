@@ -1,9 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="author" content="Schema Weaver" />
   <meta name="robots" content="index,follow,max-image-preview:large" />
@@ -47,10 +50,9 @@
 
   <script>
     (function () {
-      var t = localStorage.getItem('sw-docs-theme') || 'system';
-      var dark = t === 'dark' || (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-      if (dark) document.documentElement.classList.add('dark');
-      if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      document.documentElement.classList.add('dark');
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('sw-docs-theme', 'dark');
     })();
   </script>
 </head>

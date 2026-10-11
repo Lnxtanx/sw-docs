@@ -15,7 +15,7 @@
 }
 
 .code-block-container {
-  background: #1e1e1e;
+  background: #0d131f;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   overflow: hidden;
@@ -26,7 +26,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 1rem;
-  background: #16213e;
+  background: #090d16;
   border-bottom: 1px solid var(--border-color);
   gap: 1rem;
 }
@@ -80,9 +80,9 @@
   padding: 1.5rem;
   overflow-x: auto;
   margin: 0;
-  background: #1e1e1e;
+  background: #0d131f;
   color: #e0e0e0;
-  font-family: 'Courier New', monospace;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-size: 0.9rem;
   line-height: 1.5;
   -webkit-overflow-scrolling: touch;
@@ -126,7 +126,7 @@
 /* Syntax highlighting colors (Atom One Dark) */
 .hljs {
   color: #abb2bf;
-  background: #1e1e1e;
+  background: #0d131f;
 }
 
 .hljs-attr,

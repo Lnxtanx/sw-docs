@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Menu, Sun, Moon, Monitor, Database, BarChart3, MessageSquare } from 'lucide-react';
-import { useTheme } from '../../hooks/useTheme.js';
+import { Search, Menu, MessageSquare } from 'lucide-react';
 import { FeedbackDialog } from './FeedbackDialog.js';
-import type { Theme } from '../../hooks/useTheme.js';
 
 interface HeaderProps {
   toggleSidebar: () => void;
@@ -11,27 +9,8 @@ interface HeaderProps {
   aiPanelOpen: boolean;
 }
 
-const THEME_ICONS: Record<Theme, React.ReactNode> = {
-  light: <Sun size={17} />,
-  dark:  <Moon size={17} />,
-  system: <Monitor size={17} />,
-};
-
-const NEXT_THEME: Record<Theme, Theme> = {
-  light: 'dark',
-  dark: 'system',
-  system: 'light',
-};
-
-const THEME_LABELS: Record<Theme, string> = {
-  light: 'Light',
-  dark: 'Dark',
-  system: 'System',
-};
-
 export function Header({ toggleSidebar, toggleAiPanel, aiPanelOpen }: HeaderProps) {
   const [searchOpen, setSearchOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
 
   // Handle Cmd+K / Ctrl+K for search
   useEffect(() => {
@@ -58,18 +37,6 @@ export function Header({ toggleSidebar, toggleAiPanel, aiPanelOpen }: HeaderProp
              <span className="header-title">Schema Weaver</span>
           </Link>
 
-          {/* Desktop-only product nav links */}
-          <nav className="header-product-nav">
-            <a href="https://sql-editor.schemaweaver.dev" className="header-product-link">
-              <Database size={15} />
-              <span>SQL Editor</span>
-            </a>
-            <a href="https://data-explorer.schemaweaver.dev" className="header-product-link">
-              <BarChart3 size={15} />
-              <span>Data Explorer</span>
-            </a>
-          </nav>
-
           <div className="search-bar" onClick={() => setSearchOpen(true)}>
             <Search size={16} className="search-icon" />
             <input type="text" placeholder="Search docs..." readOnly />
@@ -88,16 +55,6 @@ export function Header({ toggleSidebar, toggleAiPanel, aiPanelOpen }: HeaderProp
               </button>
             }
           />
-
-          {/* Theme toggle — cycles light → dark → system */}
-          <button
-            className="header-icon-link"
-            onClick={() => setTheme(NEXT_THEME[theme])}
-            title={`Theme: ${THEME_LABELS[theme]} (click to cycle)`}
-            aria-label="Toggle theme"
-          >
-            {THEME_ICONS[theme]}
-          </button>
 
           <button
             className={`header-icon-link header-ai-btn${aiPanelOpen ? ' active' : ''}`}

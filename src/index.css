@@ -1,90 +1,45 @@
 :root {
-  --bg-main: #ffffff;
-  --bg-sidebar: #f8fafc;
-  --bg-header: rgba(255, 255, 255, 0.85);
-  --bg-hover: #f1f5f9;
-  --bg-active: #ecfdf5;
-  --bg-input: #f1f5f9;
+  --bg-main: #090d16;
+  --bg-sidebar: #0d131f;
+  --bg-header: rgba(9, 13, 22, 0.85);
+  --bg-hover: rgba(255, 255, 255, 0.05);
+  --bg-active: rgba(16, 185, 129, 0.15);
+  --bg-input: #111827;
 
-  --text-main: #0f172a;
-  --text-secondary: #334155;
-  --text-muted: #64748b;
+  --text-main: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
 
-  --border-color: #e2e8f0;
+  --border-color: rgba(255, 255, 255, 0.08);
 
   --accent-color: #10b981;
   --accent-hover: #059669;
-  --focus-ring: rgba(16, 185, 129, 0.2);
-  color-scheme: light;
-  --scrollbar-thumb: rgba(120, 120, 120, 0.4);
-  --scrollbar-thumb-hover: rgba(120, 120, 120, 0.7);
+  --focus-ring: rgba(16, 185, 129, 0.25);
+  color-scheme: dark;
+  --scrollbar-thumb: rgba(255, 255, 255, 0.15);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.25);
 
-  /* Brand gradient — logo mark, header wordmark, and doc brand titles all use
-     this single token so they cannot drift apart. */
   --brand-gradient: linear-gradient(135deg, #10b981, #3b82f6);
   --brand-gradient-end: #3b82f6;
 }
 
-/* Dark mode via system preference */
-@media (prefers-color-scheme: dark) {
-  html:not([data-theme="light"]) {
-    --bg-main: #1e1e1e;
-    --bg-sidebar: #252526;
-    --bg-header: rgba(37, 37, 38, 0.85);
-    --bg-hover: #2a2d2e;
-    --bg-active: rgba(16, 185, 129, 0.15);
-    --bg-input: #3c3c3c;
-    --text-main: #d4d4d4;
-    --text-secondary: #cccccc;
-    --text-muted: #858585;
-    --border-color: #3c3c3c;
-    --accent-color: #34d399;
-    --accent-hover: #10b981;
-    --focus-ring: rgba(52, 211, 153, 0.2);
-    color-scheme: dark;
-    --scrollbar-thumb: rgba(255, 255, 255, 0.2);
-    --scrollbar-thumb-hover: rgba(255, 255, 255, 0.3);
-  }
-}
-
-/* Dark mode via manual toggle */
 html.dark {
-  --bg-main: #1e1e1e;
-  --bg-sidebar: #252526;
-  --bg-header: rgba(37, 37, 38, 0.85);
-  --bg-hover: #2a2d2e;
+  --bg-main: #090d16;
+  --bg-sidebar: #0d131f;
+  --bg-header: rgba(9, 13, 22, 0.85);
+  --bg-hover: rgba(255, 255, 255, 0.05);
   --bg-active: rgba(16, 185, 129, 0.15);
-  --bg-input: #3c3c3c;
-  --text-main: #d4d4d4;
-  --text-secondary: #cccccc;
-  --text-muted: #858585;
-  --border-color: #3c3c3c;
-  --accent-color: #34d399;
-  --accent-hover: #10b981;
-  --focus-ring: rgba(52, 211, 153, 0.2);
-  color-scheme: dark;
-  --scrollbar-thumb: rgba(255, 255, 255, 0.2);
-  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.3);
-}
-
-/* Light override */
-html[data-theme="light"] {
-  --bg-main: #ffffff;
-  --bg-sidebar: #f8fafc;
-  --bg-header: rgba(255, 255, 255, 0.85);
-  --bg-hover: #f1f5f9;
-  --bg-active: #ecfdf5;
-  --bg-input: #f1f5f9;
-  --text-main: #0f172a;
-  --text-secondary: #334155;
-  --text-muted: #64748b;
-  --border-color: #e2e8f0;
+  --bg-input: #111827;
+  --text-main: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-color: rgba(255, 255, 255, 0.08);
   --accent-color: #10b981;
   --accent-hover: #059669;
-  --focus-ring: rgba(16, 185, 129, 0.2);
-  color-scheme: light;
-  --scrollbar-thumb: rgba(120, 120, 120, 0.4);
-  --scrollbar-thumb-hover: rgba(120, 120, 120, 0.7);
+  --focus-ring: rgba(16, 185, 129, 0.25);
+  color-scheme: dark;
+  --scrollbar-thumb: rgba(255, 255, 255, 0.15);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.25);
 }
 
 * {
