@@ -77,9 +77,20 @@ function generateSitemap() {
       ].join('\n');
     });
 
+    const homeIndex = pages.find((p) => p.slug === 'introduction');
+    const homeUrl = [
+      '  <url>',
+      `    <loc>${BASE_URL}/</loc>`,
+      `    <lastmod>${homeIndex?.lastmod || new Date().toISOString().split('T')[0]}</lastmod>`,
+      '    <changefreq>weekly</changefreq>',
+      '    <priority>1.0</priority>',
+      '  </url>',
+    ].join('\n');
+
     const xml = [
       '<?xml version="1.0" encoding="UTF-8"?>',
       '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+      homeUrl,
       ...urls,
       '</urlset>',
       '',

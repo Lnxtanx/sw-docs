@@ -54,7 +54,7 @@ function flattenNav(items, parentTrail = []) {
   return result;
 }
 
-function buildBreadcrumbJsonLd(trail, canonicalUrl, pageTitle) {
+function buildBreadcrumbJsonLd(trail) {
   const itemListElement = [
     {
       '@type': 'ListItem',
@@ -62,13 +62,19 @@ function buildBreadcrumbJsonLd(trail, canonicalUrl, pageTitle) {
       name: 'Docs',
       item: docsBaseUrl,
     },
-    ...trail.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 2,
-      name: index === trail.length - 1 ? pageTitle : item.title,
-      item: `${docsBaseUrl}${item.href}`,
-    })),
   ];
+
+  for (const item of trail) {
+    const url = `${docsBaseUrl}${item.href}`;
+    const last = itemListElement[itemListElement.length - 1];
+    if (last && last.item === url) continue;
+    itemListElement.push({
+      '@type': 'ListItem',
+      position: itemListElement.length + 1,
+      name: item.title,
+      item: url,
+    });
+  }
 
   return {
     '@context': 'https://schema.org',
@@ -96,7 +102,7 @@ function buildTechArticleJsonLd(title, description, canonicalUrl, tags, section)
       url: appBaseUrl,
       logo: {
         '@type': 'ImageObject',
-        url: `${docsBaseUrl}/favicon.ico`,
+        url: `${docsBaseUrl}/resona.png`,
       },
     },
     inLanguage: 'en',
@@ -147,7 +153,7 @@ function buildStaticShell({ title, description, canonicalUrl, htmlContent, relat
   const section = trail[0]?.title;
   const breadcrumbHtml = buildBreadcrumbHtml(trail);
   const relatedHtml = buildRelatedHtml(related);
-  const breadcrumbLd = buildBreadcrumbJsonLd(trail, canonicalUrl, title);
+  const breadcrumbLd = buildBreadcrumbJsonLd(trail);
   const techArticleLd = buildTechArticleJsonLd(title, description, canonicalUrl, tags, section);
 
   const assets = extractAssetTags();
@@ -173,8 +179,8 @@ function buildStaticShell({ title, description, canonicalUrl, htmlContent, relat
     <meta property="og:url" content="${canonicalUrl}" />
     <meta property="og:image" content="${defaultOgImage}" />
     <meta property="og:image:alt" content="Schema Weaver Logo" />
-    <meta property="og:image:width" content="512" />
-    <meta property="og:image:height" content="512" />
+    <meta property="og:image:width" content="300" />
+    <meta property="og:image:height" content="300" />
 
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="${escapeHtml(fullTitle)}" />
