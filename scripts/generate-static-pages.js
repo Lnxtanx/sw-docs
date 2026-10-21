@@ -9,7 +9,7 @@ const distDir = path.join(docsRoot, 'dist');
 const docsBaseUrl = 'https://docs.schemaweaver.dev';
 const appBaseUrl = 'https://schemaweaver.dev';
 const defaultOgImage = `${docsBaseUrl}/resona.png`;
-const defaultDescription = 'Schema Weaver is the first voice-native analytics workspace for PostgreSQL. Browse live data in a high-performance grid, ask Resona AI in plain English, talk to your database by voice, and export to CSV, Excel, JSON, SQL, or Google Sheets.';
+const defaultDescription = 'Schema Weaver is the first voice-native analytics platform for databases. Browse live data in a high-performance grid, ask Resona AI in plain English, talk to your database by voice, and export to CSV, Excel, JSON, SQL, or Google Sheets.';
 
 function ensureDir(dirPath) {
   if (!fs.existsSync(dirPath)) {

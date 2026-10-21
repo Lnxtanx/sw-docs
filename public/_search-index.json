@@ -3,7 +3,7 @@
     {
       "slug": "00-introduction/index",
       "title": "Introduction",
-      "description": "Schema Weaver is the first voice-native analytics workspace for PostgreSQL — explore live data, ask Resona AI in plain English, or talk to your database by voice",
+      "description": "Schema Weaver is the first voice-native analytics platform for databases — explore live data, ask Resona AI in plain English, or talk to your database by voice",
       "tags": [
         "getting-started",
         "overview",
@@ -34,7 +34,7 @@
           "title": "Explore the Documentation"
         }
       ],
-      "content": "[Schema Weaver](/introduction) — The First Voice-Native Analytics Workspace for PostgreSQL\r\n\r\nConnect a database. Browse it in a high-performance grid, ask Resona AI in plain English, or talk to it by voice.\r\n\r\n---\r\n\r\nWhat is Schema Weaver?\r\n\r\nTwo connected surfaces, sharing one account and one set of database connections:\r\n\r\n- Data Explorer — explore live data, and talk to it.\r\n- SQL Editor — design the schema behind it.\r\n\r\n---\r\n\r\nThe Two Product Surfaces\r\n\r\n- [Data Explorer](https://data-explo",
+      "content": "[Schema Weaver](/introduction) — The First Voice-Native Analytics Platform for Databases\r\n\r\nConnect a database. Browse it in a high-performance grid, ask Resona AI in plain English, or talk to it by voice. Schema Weaver launches with native, production-grade support for PostgreSQL, with active expansion to additional database engines in progress.\r\n\r\n---\r\n\r\nWhat is Schema Weaver?\r\n\r\nTwo connected surfaces, sharing one account and one set of database connections:\r\n\r\n- Data Explorer — explore live ",
       "snippet": ""
     },
     {
@@ -68,7 +68,7 @@
         },
         {
           "level": 2,
-          "title": "PostgreSQL only"
+          "title": "Database Engine Support & Roadmap"
         },
         {
           "level": 2,
@@ -1662,7 +1662,7 @@
     {
       "slug": "05-data-explorer/index",
       "title": "Data Explorer",
-      "description": "The Data Explorer is Schema Weaver's analytics workspace for PostgreSQL — browse live rows in a high-performance grid, ask Resona AI in plain English, talk to your database by voice, and export to CSV, Sheets, Excel, JSON, or SQL",
+      "description": "The Data Explorer is Schema Weaver's analytics workspace — browse live rows in a high-performance grid, ask Resona AI in plain English, talk to your database by voice, and export to CSV, Sheets, Excel, JSON, or SQL",
       "tags": [
         "data-explorer",
         "analytics",
@@ -1707,8 +1707,8 @@
           "title": "Next Steps"
         }
       ],
-      "content": "Data Explorer\n\nThe Data Explorer is where you work with live data. Connect a PostgreSQL database and you can browse it, ask it questions, or talk to it out loud.\n\n---\n\nThree ways to work\n\nThree top-level modes — move between them at any time without losing your place.\n\n| Mode | What it's for |\n|---|---|\n| Data Explorer | Read raw data in a high-performance grid — filter, sort, inspect |\n| Resona AI | An autonomous agent that deep-dives your data and writes the report |\n| Dashboard | One click, a",
-      "snippet": "The Data Explorer is where you work with live data. Connect a PostgreSQL database and you can browse it, ask it questions, or talk to it out loud."
+      "content": "Data Explorer\n\nThe Data Explorer is where you work with live data. Connect a database (with native PostgreSQL support, and more engines coming soon) and you can browse it, ask it questions, or talk to it out loud.\n\n---\n\nThree ways to work\n\nThree top-level modes — move between them at any time without losing your place.\n\n| Mode | What it's for |\n|---|---|\n| Data Explorer | Read raw data in a high-performance grid — filter, sort, inspect |\n| Resona AI | An autonomous agent that deep-dives your dat",
+      "snippet": "The Data Explorer is where you work with live data. Connect a database (with native PostgreSQL support, and more engines coming soon) and you can browse it, ask it questions, or talk to it out loud."
     },
     {
       "slug": "06-resona-ai/ai-chat",

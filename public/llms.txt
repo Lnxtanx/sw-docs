@@ -1,10 +1,10 @@
 # Schema Weaver Documentation
 
-> Schema Weaver — The First Voice-Native Analytics Workspace for PostgreSQL.
+> Schema Weaver — The First Voice-Native Analytics Platform for Databases.
 
 ## Pages
 
-- [Introduction](/introduction): Schema Weaver is the first voice-native analytics workspace for PostgreSQL — explore live data, ask Resona AI in plain English, or talk to your database by voice
+- [Introduction](/introduction): Schema Weaver is the first voice-native analytics platform for databases — explore live data, ask Resona AI in plain English, or talk to your database by voice
 - [Your Connections](/connector/connections): Manage the PostgreSQL databases your Connector can reach — add them, switch between them, and see which one is currently active
 - [Health & Execution Logs](/connector/health): Check whether your Connector is online, see its recent activity, and read the queries Schema Weaver has run through it
 - [The Connector](/connector): The Schema Weaver Connector is a small service that runs inside your environment and reaches your PostgreSQL database on your behalf — so your credentials never have to leave it
@@ -28,7 +28,7 @@
 - [Statistics & Metrics with AI](/data-explorer/dashboard): Generate an executive business dashboard from your PostgreSQL database with AI — KPI cards, multi-section analytics, executive written insights with actionable recommendations, panel operations, and Resona Dashboard AI
 - [Exploring Your Data](/data-explorer/exploring-data): The Data Explorer grid — smart column sizing, filtering in the database or your browser, sorting, column statistics, and pagination in the Schema Weaver data explorer
 - [Exporting Data](/data-explorer/exporting-data): Export what you see in the Data Explorer to CSV, Google Sheets, Excel, JSON, or SQL — the current grid view, a selection of tables, or an entire schema as a ZIP archive
-- [Data Explorer](/data-explorer): The Data Explorer is Schema Weaver's analytics workspace for PostgreSQL — browse live rows in a high-performance grid, ask Resona AI in plain English, talk to your database by voice, and export to CSV, Sheets, Excel, JSON, or SQL
+- [Data Explorer](/data-explorer): The Data Explorer is Schema Weaver's analytics workspace — browse live rows in a high-performance grid, ask Resona AI in plain English, talk to your database by voice, and export to CSV, Sheets, Excel, JSON, or SQL
 - [Chat Interface](/resona-ai/ai-chat): How to work with Resona in the Data Explorer — asking questions, mentioning tables, attaching files, choosing Flash or Deep, and what comes back
 - [Resona Dashboard AI](/resona-ai/dashboard): Resona Dashboard AI is your dedicated live analytics and visualization partner — build executive dashboards, run multi-query investigations, attach files (PDF, CSV, Excel, images), toggle Deep and Flash modes, and modify metrics conversationally
 - [Resona AI](/resona-ai): Resona is Schema Weaver's assistant. In the Data Explorer it works your live database in four forms — chat, voice, dashboard, and memory. Also covers the SQL Editor assistant

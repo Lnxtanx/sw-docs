@@ -14,8 +14,8 @@ import type { Heading, NavTreeItem } from '../lib/mdx/types.js';
 
 const DOCS_BASE_URL = 'https://docs.schemaweaver.dev';
 const APP_BASE_URL = 'https://schemaweaver.dev';
-const DEFAULT_TITLE = 'Schema Weaver — The First Voice-Native Analytics Workspace for PostgreSQL | SW Docs';
-const DEFAULT_DESCRIPTION = 'Schema Weaver is the first voice-native analytics workspace for PostgreSQL. Browse live data in a high-performance grid, ask Resona AI in plain English, talk to your database by voice, and export to CSV, Excel, JSON, SQL, or Google Sheets.';
+const DEFAULT_TITLE = 'Schema Weaver — The First Voice-Native Analytics Platform for Databases | SW Docs';
+const DEFAULT_DESCRIPTION = 'Schema Weaver is the first voice-native analytics platform for databases. Browse live data in a high-performance grid, ask Resona AI in plain English, talk to your database by voice, and export to CSV, Excel, JSON, SQL, or Google Sheets.';
 const DEFAULT_OG_IMAGE = `${DOCS_BASE_URL}/resona.png`;
 const DEFAULT_ROBOTS = 'index,follow,max-image-preview:large';
 const NOT_FOUND_ROBOTS = 'noindex,follow';

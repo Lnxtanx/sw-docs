@@ -59,7 +59,7 @@ function generateLlmsTxt() {
     const lines = [
       '# Schema Weaver Documentation',
       '',
-      '> Schema Weaver — The First Voice-Native Analytics Workspace for PostgreSQL.',
+      '> Schema Weaver — The First Voice-Native Analytics Platform for Databases.',
       '',
       '## Pages',
       '',
